@@ -1,6 +1,6 @@
 import uuid
 from datetime import UTC, datetime
-from typing import Annotated
+from typing import Annotated, cast
 
 from fastapi import APIRouter, Depends
 from sqlalchemy import func, select
@@ -151,7 +151,7 @@ def admin_overview(
             .where(*filters, column.is_not(None))
             .group_by(func.strftime("%Y-%m", column))
         )
-        return {str(month): int(count) for month, count in rows if month}
+        return {str(month): int(cast(int, count)) for month, count in rows if month}
 
     schools_by_month = monthly(School.created_at, School, School.deleted_at.is_(None))
     students_by_month = monthly(
