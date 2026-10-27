@@ -276,7 +276,7 @@
 .role-admin .ka-home-shortcut-arrow .icon { width: 15px; height: 15px; transform: rotate(-45deg); }
 .role-admin .ka-home-panel-description { color: #748997; font-size: 11px; margin-top: -12px; margin-bottom: 21px; }
 .role-admin .ka-home-timeline { position: relative; min-height: 226px; }
-.role-admin .ka-home-timeline-event { display: flex; gap: 12px; padding: 0 0 23px; }
+.role-admin .ka-home-timeline-event { position: relative; display: flex; gap: 12px; padding: 0 0 23px; }
 .role-admin .ka-home-timeline-event:not(:last-child) { border-left: 1px solid #dceae8; margin-left: 6px; padding-left: 18px; }
 .role-admin .ka-home-timeline-event:last-child { margin-left: 6px; padding-left: 18px; }
 .role-admin .ka-home-timeline-dot {
