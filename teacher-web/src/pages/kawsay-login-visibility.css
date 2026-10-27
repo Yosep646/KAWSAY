@@ -352,3 +352,51 @@
     background-repeat: no-repeat !important;
   }
 }
+
+
+/* KAWSAY · encuadre fiel a referencia #2 · 2026-10-27
+   Eliminar la franja de arriba creada por auto min(91svh, 860px)
+   y la transición negra a la derecha. No cambiar controles React. */
+@media (min-width: 901px) {
+  .login-reimagined {
+    position: relative !important;
+    min-height: 100svh !important;
+    grid-template-columns: minmax(0,72%) minmax(0,28%) !important;
+    background: #041b2b !important;
+  }
+  .login-reimagined::before {
+    inset: 0 !important;
+    background-image: linear-gradient(90deg,rgba(2,21,36,.24),rgba(2,21,36,0) 40%,rgba(2,21,36,.08) 100%),
+      url('/kawsay-fondo-final.jpg?v=encuadre-fiel-20261027') !important;
+    background-size: 100% 100%, 100% 100% !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+  }
+  .login-reimagined .login-story {
+    min-height: 100svh !important;
+    padding-top: clamp(18px,2.5vw,40px) !important;
+  }
+  .login-reimagined .login-form-panel {
+    background: transparent !important;
+    padding: clamp(14px,2.2vw,28px) clamp(14px,2vw,32px) !important;
+  }
+  .login-reimagined .login-form-panel > .login {
+    width: 100% !important;
+    max-width: 380px !important;
+    max-height: calc(100svh - 28px) !important;
+  }
+}
+@media (max-width: 900px) {
+  .login-reimagined .login-story::before {
+    background-image:
+      linear-gradient(90deg,rgba(2,21,36,.37),rgba(2,21,36,.04) 85%),
+      url('/kawsay-fondo-final.jpg?v=encuadre-fiel-20261027') !important;
+    background-size: 100% 100%, 100% auto !important;
+    background-position: center center, center top !important;
+    background-repeat: no-repeat !important;
+  }
+  .login-reimagined .login-form-panel > .login {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
