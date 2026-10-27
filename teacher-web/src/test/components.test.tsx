@@ -47,10 +47,10 @@ describe("Login y control de acceso", () => {
   it("ofrece administrador, docente y estudiante con controles accesibles y recuperación honesta", async () => {
     render(<MemoryRouter><AuthProvider><Login /></AuthProvider></MemoryRouter>);
     expect(screen.getByRole("button", {name:"Administrador"})).toHaveAttribute("aria-pressed","true");
-    await userEvent.click(screen.getByRole("button", {name:"Docente",exact:true}));
-    expect(screen.getByRole("button", {name:"Docente",exact:true})).toHaveAttribute("aria-pressed","true");
-    await userEvent.click(screen.getByRole("button", {name:"Estudiante",exact:true}));
-    expect(screen.getByRole("button", {name:"Estudiante",exact:true})).toHaveAttribute("aria-pressed","true");
+    await userEvent.click(screen.getByRole("button", {name:"Docente"}));
+    expect(screen.getByRole("button", {name:"Docente"})).toHaveAttribute("aria-pressed","true");
+    await userEvent.click(screen.getByRole("button", {name:"Estudiante"}));
+    expect(screen.getByRole("button", {name:"Estudiante"})).toHaveAttribute("aria-pressed","true");
     expect(screen.getByRole("button", {name:"Código y PIN"})).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", {name:"¿Olvidaste tu contraseña?"}));
     expect(screen.getByRole("status")).toHaveTextContent("Solicita a tu docente");
