@@ -17,17 +17,17 @@ export function Dashboard() {
     <div className="teacher-dashboard">
       <header className="teacher-dashboard-hero">
         <div className="teacher-dashboard-intro"><p className="eyebrow"><Icon name="leaf" /> ESPACIO DOCENTE · KAWSAY AI</p>
-          <h2>Enseñar es acompañar<br/><span>cada aprendizaje.</span></h2>
-          <p>Gestiona tus aulas, registra estudiantes y acompaña su progreso con información real.</p>
+          <h2>Bienvenido a tu <span>aula KAWSAY</span></h2>
+          <p>Gestiona tus aulas y acompaña el aprendizaje de tus estudiantes, con herramientas y datos reales.</p>
           <div className="teacher-dashboard-actions"><Link className="button teacher-register-action" to="/estudiantes"><Icon name="students" /> Registrar estudiante</Link><Link className="button teacher-outline-action" to="/actividades/nueva"><Icon name="tasks" /> Crear actividad</Link></div>
         </div>
         <span className="teacher-hero-motto"><Icon name="book" /> Aprender · Crecer · Acompañar</span>
       </header>
       <div className="teacher-quick-grid" aria-label="Accesos rápidos del docente">
-        <Link to="/aulas"><span className="teacher-quick-icon t-blue"><Icon name="classroom" /></span><strong>Mis aulas</strong><small>Crea y organiza tus secciones</small><Icon name="arrow" /></Link>
-        <Link to="/estudiantes"><span className="teacher-quick-icon t-emerald"><Icon name="students" /></span><strong>Estudiantes</strong><small>Registra correos y contraseñas</small><Icon name="arrow" /></Link>
-        <Link to="/planificacion"><span className="teacher-quick-icon t-gold"><Icon name="book" /></span><strong>Planificación</strong><small>Contenidos según tu currículo</small><Icon name="arrow" /></Link>
-        <Link to="/alertas"><span className="teacher-quick-icon t-violet"><Icon name="chart" /></span><strong>Seguimiento</strong><small>Revisa alertas y avances</small><Icon name="arrow" /></Link>
+        <Link to="/estudiantes"><span className="teacher-quick-icon t-emerald"><Icon name="students" /></span><strong>Registrar estudiantes</strong><small>Crea sus cuentas y credenciales</small><Icon name="arrow" /></Link>
+        <Link to="/actividades/nueva"><span className="teacher-quick-icon t-blue"><Icon name="tasks" /></span><strong>Asignar tareas</strong><small>Prepara actividades educativas</small><Icon name="arrow" /></Link>
+        <Link to="/planificacion"><span className="teacher-quick-icon t-gold"><Icon name="book" /></span><strong>Planificación</strong><small>Organiza contenidos por grado</small><Icon name="arrow" /></Link>
+        <Link to="/alertas"><span className="teacher-quick-icon t-violet"><Icon name="chart" /></span><strong>Ver reportes</strong><small>Monitorea progreso y alertas</small><Icon name="arrow" /></Link>
       </div>
       <ErrorBox message={rooms.error} />
       <div className="room-selector">
