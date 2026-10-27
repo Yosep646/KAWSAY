@@ -313,3 +313,42 @@
    background-repeat:no-repeat !important;
  }
 }
+
+/* Composición panorámica definitiva: la foto conserva todo su contenido
+   en la región izquierda, el login queda sobre un panel independiente. */
+@media (min-width: 901px) {
+  .login-reimagined {
+    grid-template-columns: minmax(0, 72%) minmax(0, 28%) !important;
+    background: #051b2c !important;
+  }
+  .login-reimagined::before {
+    background-image:
+      linear-gradient(90deg,rgba(1,18,32,.37) 0%,rgba(1,18,32,.04) 36%,rgba(1,18,32,0) 68%,#051b2c 79%),
+      url('/kawsay-fondo-final.jpg?v=encuadre-escena-20261027') !important;
+    /* La foto deja de ampliarse con "cover" a todo el navegador. */
+    background-size: 100% 100%, auto min(91svh, 860px) !important;
+    background-position: center, left bottom !important;
+    background-repeat: no-repeat !important;
+    background-color: #051b2c;
+  }
+  .login-reimagined .login-form-panel {
+    padding: 14px clamp(9px,1.1vw,20px) 14px 0 !important;
+    align-items: center !important;
+  }
+  .login-reimagined .login-form-panel > .login {
+    max-width: min(370px,100%) !important;
+  }
+}
+@media (max-width: 900px) {
+  .login-reimagined .login-story {
+    background-color: #051b2c !important;
+  }
+  .login-reimagined .login-story::before {
+    background-image:
+      linear-gradient(to bottom,transparent 55%,#051b2c 100%),
+      url('/kawsay-fondo-final.jpg?v=encuadre-escena-20261027') !important;
+    background-size: 100% 100%, 100% auto !important;
+    background-position: center center, center top !important;
+    background-repeat: no-repeat !important;
+  }
+}
