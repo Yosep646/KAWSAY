@@ -1,5 +1,5 @@
 /* KAWSAY AI: solamente caché de interfaz. Nunca cachear API ni datos personales. */
-const CACHE = "kawsay-shell-v1";
+const CACHE = "kawsay-shell-v2";
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(["/", "/index.html"])));
   self.skipWaiting();
