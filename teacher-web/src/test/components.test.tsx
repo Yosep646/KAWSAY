@@ -87,7 +87,7 @@ describe("Login y control de acceso", () => {
     expect(await screen.findByText("Mi tarea")).toBeInTheDocument();
     expect(screen.getByText("70 % de progreso")).toBeInTheDocument();
     expect(screen.queryByText("Mis aulas")).not.toBeInTheDocument();
-    expect(screen.getByText(/Esta vista necesita conexión/)).toBeInTheDocument();
+    expect(screen.getByText(/Puedes responder actividades descargadas sin conexión/)).toBeInTheDocument();
   });
 
   it("consulta actividades por páginas usando el límite admitido por la API", async () => {
