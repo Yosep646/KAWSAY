@@ -167,7 +167,7 @@ function ClassroomStudents({ classroomId, languages }: { classroomId: string; la
           <button type="button" onClick={() => setShowResetPassword(!showResetPassword)} aria-label={showResetPassword ? "Ocultar contraseña" : "Mostrar contraseña"}><Icon name={showResetPassword ? "eye-off" : "eye"} />{showResetPassword ? "Ocultar" : "Mostrar"}</button>
         </div>
         <div className="row"><button type="submit" disabled={resetBusy || newPassword.length < 12}>{resetBusy ? "Guardando…" : "Cambiar contraseña"}</button><button type="button" className="ghost" onClick={() => setResetTarget(null)}>Cancelar</button></div>
-      </form>}}
+      </form>}
 
       {selected && <LanguageEditor key={selected.id} student={selected} languages={languages} onClose={() => setSelected(null)} onSaved={() => setLanguageRevision((value) => value + 1)} />}
     </Card>
