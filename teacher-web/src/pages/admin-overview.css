@@ -43,8 +43,8 @@
 .role-admin .workspace-footer { background:#06162a; color:#6f9baa; border-color:#173b53; }
 .role-admin .kd-overview { display:flex; flex-direction:column; gap:16px; color:#e9f3ff; }
 .role-admin .kd-hero { position:relative; isolation:isolate; overflow:hidden; min-height:215px; margin:0 -24px; padding:35px 34px 25px; background:#103052; display:flex; align-items:center; justify-content:space-between; gap:20px; }
-.role-admin .kd-hero::before { content:''; position:absolute; inset:0 0 0 34%; background:url('/kawsay-hero-rural.jpg') center 34%/cover no-repeat; z-index:-2; }
-.role-admin .kd-hero::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,#092444 0%,#0a2b4bea 29%,#0a315b8a 53%,#061a3433 86%,#06193670 100%); z-index:-1; }
+.role-admin .kd-hero::before { content:''; position:absolute; inset:0 0 0 34%; background:url('/kawsay-hero-rural.jpg?v=20261027-hero-fix') center 34%/cover no-repeat; z-index:-2; }
+.role-admin .kd-hero::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,#092444 0%,#0a2b4bed 27%,#0a315b8a 50%,#061a3426 85%,#0619364c 100%); z-index:-1; }
 .role-admin .kd-hero-copy { flex:1; max-width:630px; }
 .role-admin .kd-hero-kicker { font-size:9px; letter-spacing:2.2px; font-weight:850; color:#8bf2d4; margin-bottom:12px; }
 .role-admin .kd-hero h1 { font-size:clamp(24px,2.7vw,40px); letter-spacing:-1.1px; line-height:1.18; margin-bottom:7px; font-weight:820; color:#fff; }
