@@ -84,7 +84,7 @@ function Shell() {
               <div className="admin-header-search">
                 <Icon name="search" />
                 <input type="search" aria-label="Buscar secciones de administración" placeholder="Buscar instituciones, docentes, estudiantes…" value={adminSearch}
-                  onChange={e=>setAdminSearch(e.target.value)} onKeyDown={e=>{if(e.key==="Enter" && matchedLinks.length){navigate(matchedLinks[0].to);setAdminSearch("");}}}/>
+                  onChange={e=>setAdminSearch(e.target.value)} onKeyDown={e=>{if(e.key==="Enter" && matchedLinks.length){navigate(matchedLinks[0]?.to ?? "/admin");setAdminSearch("");}}}/>
                 {adminSearch.trim() && <div className="admin-search-results" role="region" aria-label="Resultados de búsqueda">
                   {matchedLinks.length? matchedLinks.map(l=><NavLink to={l.to} key={l.to} onClick={()=>setAdminSearch("")}><Icon name={l.icon}/>{l.label}</NavLink>) :
                   <span className="admin-search-empty">No hay secciones con ese nombre.</span>}
