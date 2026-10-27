@@ -56,21 +56,27 @@ function Shell() {
   const [adminSearch, setAdminSearch] = useState("");
   const [adminLight, setAdminLight] = useState(false);
   const [sidebarCompact, setSidebarCompact] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const matchedLinks = adminSearch.trim() ? adminLinks.filter(l=>l.label.toLocaleLowerCase("es").includes(adminSearch.trim().toLocaleLowerCase("es"))) : [];
   const links = user?.role === "ADMIN" ? adminLinks : user?.role === "STUDENT" ? studentLinks : teacherLinks;
   const section = [...links].sort((a,b) => b.to.length - a.to.length).find((link) => link.to === "/" ? pathname === "/" : (pathname === link.to || pathname.startsWith(link.to + "/")))?.label ?? "Panel";
   const initials = user?.display_name.trim().split(/\s+/).slice(0, 2).map((word) => word[0]).join("").toUpperCase();
   return (
-    <div className={`shell role-${user?.role.toLowerCase()} ${adminLight && user?.role==="ADMIN" ? "admin-sun-mode" : ""} ${sidebarCompact && user?.role==="ADMIN" ? "sidebar-compact" : ""}`}>
+    <div className={`shell role-${user?.role.toLowerCase()} ${adminLight && user?.role==="ADMIN" ? "admin-sun-mode" : ""} ${sidebarCompact && user?.role==="ADMIN" ? "sidebar-compact" : ""} ${mobileNavOpen ? "mobile-nav-open" : ""}`}>
       <a className="skip-link" href="#contenido">Saltar al contenido</a>
       <aside className="sidebar">
         <Brand />
+        <button type="button" className="mobile-nav-toggle" aria-controls="kawsay-primary-nav"
+          aria-expanded={mobileNavOpen} aria-label={mobileNavOpen ? "Cerrar menú principal" : "Abrir menú principal"}
+          onClick={() => setMobileNavOpen((open) => !open)}>
+          <Icon name={mobileNavOpen ? "x" : "menu"} /> <span>{mobileNavOpen ? "Cerrar" : "Menú"}</span>
+        </button>
         {user?.role !== "ADMIN" && <p className="nav-caption">ESPACIO DE {user?.role === "STUDENT" ? "APRENDIZAJE" : "DOCENCIA"}</p>}
-        <nav aria-label="Principal" className="primary-nav">
+        <nav id="kawsay-primary-nav" aria-label="Principal" className="primary-nav">
           {links.map((link, index) => <div className="admin-nav-group" key={link.to}>
             {user?.role === "ADMIN" && index === 1 && <p className="nav-caption">GESTIÓN ACADÉMICA</p>}
             {user?.role === "ADMIN" && index === 7 && <p className="nav-caption">SISTEMA</p>}
-            <NavLink to={link.to} end={link.to === "/" || link.to === "/admin"}><Icon name={link.icon} /><span>{link.label}</span></NavLink>
+            <NavLink to={link.to} end={link.to === "/" || link.to === "/admin"} onClick={() => setMobileNavOpen(false)}><Icon name={link.icon} /><span>{link.label}</span></NavLink>
           </div>)}
         </nav>
         <div className="sidebar-note"><Icon name="leaf" /><strong>Cada estudiante cuenta.</strong><p>La evidencia orienta.<br />Tú decides cómo acompañar.</p></div>
