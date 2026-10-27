@@ -1,21 +1,22 @@
 import { useState, type FormEvent } from "react";
 import { Card, ErrorBox } from "../components/ui";
 import { Icon } from "../components/Icon";
-import { AdminOverview } from "./AdminOverview";
+import { AdminOverview, type AdminStatistics } from "./AdminOverview";
 import { useAsync } from "../hooks/useAsync";
 import { api } from "../services/api";
 import { errMsg } from "../utils/format";
 
-interface School { id: string; name: string }
+interface School { id: string; name: string; region?: string | null }
 interface Audit { id: string; action: string; target_type: string; created_at: string; request_id: string | null }
 interface Ev { id: string; type: string; status: string; attempts: number; last_error: string | null }
 interface Staff { id: string; email: string | null; display_name: string; role: string; is_active: boolean }
 
-export function Admin({ section = "overview" }: { section?: "overview" | "schools" | "teachers" | "curriculum" | "system" }) {
+export function Admin({ section = "overview" }: { section?: "overview" | "schools" | "teachers" | "curriculum" | "system" | "students" | "tasks" | "reports" | "users" | "configuration" | "backups" }) {
   const schools = useAsync(() => api.get<School[]>("/schools"), []);
   const audit = useAsync(() => api.get<Audit[]>("/audit-log?limit=20"), []);
   const events = useAsync(() => api.get<Ev[]>("/automation/events?limit=20"), []);
   const staff = useAsync(() => api.get<Staff[]>("/users?limit=100"), []);
+  const stats = useAsync(() => api.get<AdminStatistics>("/analytics/admin/overview"), []);
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [school, setSchool] = useState("");
@@ -60,9 +61,10 @@ export function Admin({ section = "overview" }: { section?: "overview" | "school
           staff={staff.data}
           audits={audit.data}
           events={events.data}
-          loading={schools.loading || staff.loading || audit.loading || events.loading}
-          errors={[schools.error, staff.error, audit.error, events.error].filter((value): value is string => Boolean(value))}
-          onRefresh={async () => { await Promise.all([schools.reload(), staff.reload(), audit.reload(), events.reload()]); }}
+          stats={stats.data}
+          loading={schools.loading || staff.loading || audit.loading || events.loading || stats.loading}
+          errors={[schools.error, staff.error, audit.error, events.error, stats.error].filter((value): value is string => Boolean(value))}
+          onRefresh={async () => { await Promise.all([schools.reload(), staff.reload(), audit.reload(), events.reload(), stats.reload()]); }}
         />
       ) : (
       <header className="role-hero admin-hero">
@@ -187,6 +189,39 @@ export function Admin({ section = "overview" }: { section?: "overview" | "school
       {section === "system" && <Card title="Auditoría de accesos a datos de estudiantes (últimos 20)"><ul>{audit.data?.map((a) => <li key={a.id}>{new Date(a.created_at).toLocaleString()} · {a.action} · {a.target_type}</li>)}</ul></Card>}
       {section === "system" && <Card title="Eventos de automatización (n8n es opcional)"><ul>{events.data?.map((e) => <li key={e.id}>{e.type} · {e.status} · intentos {e.attempts}{e.last_error ? ` · ${e.last_error}` : ""}</li>)}</ul>
         <button className="ghost" onClick={() => void run(() => api.post("/automation/dispatch"), "Despacho ejecutado").then(() => events.reload())}>Despachar pendientes</button></Card>}
+
+      {section === "students" && <section className="admin-supplement">
+        <h2>Estudiantes de la plataforma</h2>
+        <p>Visión general de los estudiantes activos, sin revelar datos personales. La gestión individual corresponde a los docentes autorizados.</p>
+        <div className="admin-sup-grid">
+          <div><Icon name="graduation"/><strong>{stats.data?.students ?? "—"}</strong><span>Estudiantes activos</span></div>
+          <div><Icon name="classroom"/><strong>{stats.data?.institutions ?? "—"}</strong><span>Instituciones</span></div>
+        </div>
+        <h3>Distribución por grado</h3>
+        <div className="admin-sup-rows">{stats.data?.grades.length ? stats.data.grades.map(g=><div key={g.level+g.grade}><span>{g.grade}.° {g.level.toLowerCase()}</span><strong>{g.count}</strong></div>) : <p>Aún no hay estudiantes con grados registrados.</p>}</div>
+      </section>}
+      {section === "tasks" && <section className="admin-supplement">
+        <h2>Asignaciones y tareas</h2><p>Resumen global de las tareas. Solo los docentes pueden crear, revisar y publicar actividades educativas.</p>
+        <div className="admin-sup-grid"><div><Icon name="tasks"/><strong>{stats.data?.published_assignments ?? "—"}</strong><span>Tareas publicadas</span></div><div><Icon name="check"/><strong>{stats.data?.student_assignments ?? "—"}</strong><span>Asignaciones a estudiantes</span></div></div>
+      </section>}
+      {section === "reports" && <section className="admin-supplement">
+        <h2>Reportes de aprendizaje</h2><p>Indicadores agregados para administrar la plataforma. Estos valores proceden del servidor; no son resultados simulados de IA.</p>
+        <div className="admin-sup-grid">{[["Instituciones",stats.data?.institutions],["Docentes",stats.data?.teachers],["Estudiantes",stats.data?.students],["Tareas publicadas",stats.data?.published_assignments]].map(([label,value])=><div key={String(label)}><Icon name="chart"/><strong>{value ?? "—"}</strong><span>{label}</span></div>)}</div>
+        <p>Los análisis pedagógicos individuales se mantienen en las cuentas docentes autorizadas.</p>
+      </section>}
+      {section === "users" && <section className="admin-supplement">
+        <h2>Usuarios y roles</h2><p>Directorio de usuarios del personal. Los accesos están protegidos por permisos de administrador y docente.</p>
+        <div className="admin-sup-rows">{staff.data?.filter(u=>u.role!=="STUDENT").map(u=><div key={u.id}><span>{u.display_name} · {u.role==="ADMIN"?"Administrador":"Docente"}</span><strong>{u.is_active?"Activo":"Inactivo"}</strong></div>)}</div>
+      </section>}
+      {section === "configuration" && <section className="admin-supplement">
+        <h2>Configuración</h2><p>KAWSAY AI utiliza permisos por roles, autenticación y registro de auditoría. Las opciones de configuración del servidor se administran de forma privada desde Render.</p>
+        <div className="admin-sup-rows"><div><span>Autenticación</span><strong>Habilitada</strong></div><div><span>Acceso administrativo</span><strong>Restringido</strong></div></div>
+      </section>}
+      {section === "backups" && <section className="admin-supplement">
+        <h2>Respaldos</h2><p>Atención: esta demostración utiliza SQLite en el sistema de archivos efímero de Render Free. El contenido puede perderse durante reinicios o despliegues.</p>
+        <p>Para datos escolares reales se necesita una base de datos persistente, respaldos automatizados y una política de recuperación antes de usar este servicio.</p>
+        <div className="admin-sup-rows"><div><span>Persistencia garantizada</span><strong>No disponible en esta demo</strong></div></div>
+      </section>}
     </div>
   );
 }
