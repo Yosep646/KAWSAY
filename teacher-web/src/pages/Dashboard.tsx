@@ -15,7 +15,7 @@ export function Dashboard() {
 
   return (
     <div>
-      <div className="page-heading"><div><p className="eyebrow">UNA MIRADA A TU AULA</p><h2>Dashboard</h2><p className="muted">Reconoce los avances. Encuentra dónde acompañar.</p></div><Link className="button" to="/actividades/nueva"><Icon name="tasks" />Crear actividad</Link></div>
+      <div className="page-heading"><div><p className="eyebrow">UNA MIRADA A TU AULA</p><h2>Dashboard</h2><p className="muted">Reconoce los avances. Encuentra dónde acompañar.</p></div><div className="teacher-dashboard-actions"><Link className="button teacher-register-action" to="/estudiantes"><Icon name="students" /> Registrar estudiante</Link><Link className="button" to="/actividades/nueva"><Icon name="tasks" /> Crear actividad</Link></div></div>
       <div className="welcome-banner"><span className="welcome-icon"><Icon name="leaf" /></span><div><h3>Pequeños avances, grandes oportunidades.</h3><p>Tu mirada hace la diferencia. Aquí encontrarás evidencia para acompañar a cada estudiante.</p></div><span className="banner-tag">El docente decide</span></div>
       <ErrorBox message={rooms.error} />
       <div className="room-selector">
