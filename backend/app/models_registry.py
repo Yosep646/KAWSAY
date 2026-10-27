@@ -28,6 +28,7 @@ from app.modules.schools.models import (
     UgelUnit,  # noqa: F401
 )
 from app.modules.students.models import StudentProfile  # noqa: F401
+from app.modules.students.email_models import StudentEmailLogin  # noqa: F401
 from app.modules.support_flags.models import SupportFlag  # noqa: F401
 from app.modules.sync.models import SyncEvent  # noqa: F401
 from app.modules.teachers.models import TeacherProfile  # noqa: F401
