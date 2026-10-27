@@ -117,6 +117,12 @@ export async function studentLogin(loginCode: string, pin: string, deviceId: str
   setTokens(t);
   return t;
 }
+
+export async function studentEmailLogin(email: string, password: string, deviceId: string): Promise<TokenOut> {
+  const t = await request<TokenOut>("POST", "/auth/student-email-login", { email, password, device_id: deviceId });
+  setTokens(t);
+  return t;
+}
 export async function restoreSession(): Promise<TokenOut["user"] | null> {
   if (!(await refreshTokens())) return null;
   return request<TokenOut["user"]>("GET", "/auth/me");
