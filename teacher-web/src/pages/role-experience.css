@@ -207,3 +207,53 @@
 @media(prefers-reduced-motion:reduce){
   .role-teacher .teacher-quick-grid a:hover,.role-student .student-overview-stats>a:hover{transform:none;}
 }
+
+
+/* Administración operativa: listados y controles con información accesible */
+.role-admin .admin-schools-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(265px,.8fr);gap:20px;align-items:start;}
+.role-admin .admin-schools-layout>.card{margin:0;background:#fff;color:#18374a;border-color:#d8e8ed;border-radius:17px;box-shadow:0 12px 32px rgba(11,46,73,.09);}
+.role-admin .admin-schools-layout>.card h3{color:#183e51;font-size:17px;}
+.role-admin .admin-schools-layout label{color:#315667;font-weight:750;}
+.role-admin .admin-schools-layout input{background:#f9fcfe;color:#1c3d51;-webkit-text-fill-color:#1c3d51;border-color:#c9dee7;}
+.role-admin .admin-schools-layout input::placeholder{color:#778e9b;}
+.role-admin .admin-schools-layout .muted{color:#57768a;}
+.role-admin .admin-schools-layout button[type=submit]{display:flex;align-items:center;justify-content:center;gap:8px;border-radius:11px;min-height:45px;background:#087d79;color:#fff;}
+.role-admin .admin-school-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px;margin-top:17px;}
+.role-admin .admin-school-card{display:flex;gap:13px;align-items:center;border:1px solid #d6e9e9;border-radius:13px;padding:16px;background:#f3fafb;}
+.role-admin .admin-school-card>span{display:grid;place-items:center;flex:0 0 auto;border-radius:11px;width:42px;height:42px;background:#d8f5ef;color:#09886f;}
+.role-admin .admin-school-card>div{min-width:0;}
+.role-admin .admin-school-card strong{display:block;font-size:12px;color:#1d4658;overflow-wrap:anywhere;}
+.role-admin .admin-school-card small{display:block;color:#64808c;font-size:10px;margin-top:3px;}
+.role-admin .admin-directory-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;}
+.role-admin .admin-directory-toolbar input{font-size:12px;background:#f9fcfe;border:1px solid #ccdee7;border-radius:10px;color:#164153;-webkit-text-fill-color:#164153;min-height:38px;width:min(220px,100%);}
+.role-admin .admin-directory-toolbar input::placeholder{color:#7b929d;}
+.role-admin .admin-status-actions{display:flex;flex-direction:column;align-items:flex-end;gap:7px;}
+.role-admin .admin-status-actions button,.role-admin .admin-user-rows-end button{padding:6px 10px;font-size:10px;min-height:33px;color:#226981;border:1px solid #b8d8e2;border-radius:8px;}
+.role-admin .admin-status-actions button:hover,.role-admin .admin-user-rows-end button:hover{background:#e1f5f4;}
+.role-admin .admin-user-rows-end{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end;}
+.role-admin .admin-sup-rows>div{overflow-wrap:anywhere;}
+.role-admin .admin-user-rows-end strong{white-space:nowrap;}
+.role-admin .role-hero.admin-hero{background:linear-gradient(110deg,#0c3049,#125e79 68%,#0c8785);border:1px solid #278a92;}
+@media(max-width:960px){
+ .role-admin .admin-schools-layout{grid-template-columns:minmax(0,1fr);}
+ .role-admin .admin-sup-rows>div{flex-wrap:wrap;}
+}
+/* El menú conserva todas las rutas en teléfonos: permite deslizamiento en lugar de ocultar funciones. */
+@media(max-width:800px){
+ .role-teacher .sidebar,.role-student .sidebar{width:100%;height:auto;position:static;padding:17px 14px;}
+ .role-teacher .primary-nav,.role-student .primary-nav{display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin;padding-bottom:6px;}
+ .role-teacher .primary-nav .admin-nav-group,.role-student .primary-nav .admin-nav-group{flex:0 0 auto;}
+ .role-teacher .primary-nav a,.role-student .primary-nav a{flex-direction:row;width:max-content;min-height:43px;padding:10px 14px;}
+ .role-teacher .sidebar .brand,.role-student .sidebar .brand{margin-bottom:16px;}
+ .role-teacher .topbar,.role-student .topbar{min-height:62px;padding:12px 17px;}
+ .role-teacher .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:450px){
+ .role-admin .admin-school-grid{grid-template-columns:minmax(0,1fr);}
+ .role-admin .admin-directory-toolbar{align-items:stretch;}
+ .role-admin .admin-directory-toolbar input{width:100%;}
+ .role-admin .admin-person{flex-wrap:wrap;}
+ .role-admin .admin-status-actions{width:100%;flex-direction:row;justify-content:space-between;align-items:center;}
+ .role-teacher .teacher-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+ .role-student .student-task-list li{padding:12px!important;}
+}
