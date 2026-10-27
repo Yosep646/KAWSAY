@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { useAuth } from "../app/AuthContext";
 import { Card, ErrorBox } from "../components/ui";
 import { Icon } from "../components/Icon";
 import { AdminOverview, type AdminStatistics } from "./AdminOverview";
@@ -12,6 +13,7 @@ interface Ev { id: string; type: string; status: string; attempts: number; last_
 interface Staff { id: string; email: string | null; display_name: string; role: string; is_active: boolean }
 
 export function Admin({ section = "overview" }: { section?: "overview" | "schools" | "teachers" | "curriculum" | "system" | "students" | "tasks" | "reports" | "users" | "configuration" | "backups" }) {
+  const { user } = useAuth();
   const schools = useAsync(() => api.get<School[]>("/schools"), []);
   const audit = useAsync(() => api.get<Audit[]>("/audit-log?limit=20"), []);
   const events = useAsync(() => api.get<Ev[]>("/automation/events?limit=20"), []);
@@ -20,13 +22,33 @@ export function Admin({ section = "overview" }: { section?: "overview" | "school
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [school, setSchool] = useState("");
+  const [schoolQuery, setSchoolQuery] = useState("");
+  const [staffQuery, setStaffQuery] = useState("");
+  const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [t, setT] = useState({ email: "", name: "", password: "", school_id: "" });
   const [fwJson, setFwJson] = useState("");
   const [showTeacherPassword, setShowTeacherPassword] = useState(false);
   const [teacherBusy, setTeacherBusy] = useState(false);
 
   const run = async (fn: () => Promise<unknown>, ok: string) => { try { setErr(null); await fn(); setMsg(ok); await schools.reload(); } catch (x) { setErr(errMsg(x)); } };
-  const addSchool = (e: FormEvent) => { e.preventDefault(); void run(() => api.post("/schools", { name: school }), "Escuela creada"); };
+  const addSchool = async (e: FormEvent) => {
+    e.preventDefault();
+    setErr(null);setMsg(null);
+    try { await api.post("/schools", {name:school.trim()});setSchool("");setMsg("Institución creada correctamente.");await schools.reload();await stats.reload(); }
+    catch (error) {setErr(errMsg(error));}
+  };
+  const changeStaffStatus = async (member: Staff) => {
+    if (member.id === user?.id) {setErr("No puedes modificar el estado de tu propia cuenta.");return;}
+    const action = member.is_active ? "desactivar" : "reactivar";
+    if (!window.confirm(`¿Deseas ${action} el acceso de ${member.display_name}? ${member.is_active ? "Las sesiones activas quedarán revocadas." : ""}`)) return;
+    setUpdatingId(member.id);setErr(null);setMsg(null);
+    try {
+      await api.patch(`/users/${member.id}`,{is_active:!member.is_active});
+      await staff.reload();
+      setMsg(`Acceso de ${member.display_name} actualizado correctamente.`);
+    } catch (error) {setErr(errMsg(error));}
+    finally {setUpdatingId(null);}
+  };
   const addTeacher = async (e: FormEvent) => {
     e.preventDefault();
     if (teacherBusy) return;
@@ -70,7 +92,7 @@ export function Admin({ section = "overview" }: { section?: "overview" | "school
       <header className="role-hero admin-hero">
         <div className="admin-hero-copy">
           <p className="eyebrow">KAWSAY AI <span className="admin-hero-separator">/</span> CENTRO DE ADMINISTRACIÓN</p>
-          <h2>{section === "schools" ? "Instituciones educativas" : section === "teachers" ? "Tu equipo docente." : section === "curriculum" ? "Currículo educativo" : "Sistema y auditoría"}</h2>
+          <h2>{({schools:"Instituciones educativas",teachers:"Equipo docente",curriculum:"Currículo educativo",system:"Sistema y auditoría",students:"Estudiantes de KAWSAY",tasks:"Asignaciones y tareas",reports:"Reportes de aprendizaje",users:"Usuarios y permisos",configuration:"Configuración",backups:"Respaldos"})[section] ?? "Centro de administración"}</h2>
           <p>{section === "teachers" ? "Organiza los accesos del personal docente de manera segura y sencilla." : "Una visión clara para acompañar a las instituciones y sus comunidades."}</p>
         </div>
         <div className="admin-hero-emblem" aria-hidden="true"><Icon name="leaf" /></div>
@@ -79,8 +101,19 @@ export function Admin({ section = "overview" }: { section?: "overview" | "school
       <ErrorBox message={section === "overview" ? null : schools.error ?? (section === "system" ? audit.error ?? events.error : null)} />
       <ErrorBox message={err} />
       {msg && <p role="status" className="notice">{msg}</p>}
-      {section === "schools" && <Card title="Escuelas"><ul>{schools.data?.length === 0 && <li>Aún no hay instituciones registradas.</li>}{schools.data?.map((s) => <li key={s.id}>{s.name}</li>)}</ul>
-        <form className="row" onSubmit={addSchool}><label>Nombre<input value={school} onChange={(e) => setSchool(e.target.value)} required /></label><button>Crear escuela</button></form></Card>}
+      {section === "schools" && <div className="admin-schools-layout">
+        <Card title="Instituciones registradas">
+          <label>Buscar institución<input type="search" value={schoolQuery} onChange={e=>setSchoolQuery(e.target.value)} placeholder="Nombre de escuela o colegio" /></label>
+          {schools.loading && <p className="muted">Cargando instituciones…</p>}
+          {!schools.loading && schools.data?.length === 0 && <p className="muted">Aún no hay instituciones registradas.</p>}
+          <div className="admin-school-grid">{schools.data?.filter(s=>s.name.toLocaleLowerCase().includes(schoolQuery.trim().toLocaleLowerCase())).map(s=>
+            <div className="admin-school-card" key={s.id}><span><Icon name="classroom"/></span><div><strong>{s.name}</strong><small>{s.region ?? "Institución educativa"}</small></div></div>)}</div>
+        </Card>
+        <Card title="Agregar institución">
+          <p className="muted">Registra primero la institución. Después podrás asociarle docentes, aulas y estudiantes.</p>
+          <form className="stack" onSubmit={(e)=>void addSchool(e)}><label>Nombre de la institución<input value={school} onChange={e=>setSchool(e.target.value)} placeholder="Ej. I. E. Rural San José" maxLength={180} required /></label><button type="submit">Crear institución <Icon name="arrow"/></button></form>
+        </Card>
+      </div>}
       {section === "teachers" && (
         <div className="admin-teacher-layout">
           <section className="admin-form-card" aria-labelledby="teacher-form-title">
@@ -164,19 +197,19 @@ export function Admin({ section = "overview" }: { section?: "overview" | "school
                 <p className="admin-kicker">DIRECTORIO</p>
                 <h3 id="registered-teachers-title">Personal docente registrado</h3>
               </div>
-              <span className="admin-directory-count">{staff.data?.filter((u) => u.role === "TEACHER").length ?? "—"} docentes</span>
+              <div className="admin-directory-toolbar"><span className="admin-directory-count">{staff.data?.filter((u) => u.role === "TEACHER").length ?? "—"} docentes</span><input type="search" aria-label="Buscar docentes" value={staffQuery} onChange={e=>setStaffQuery(e.target.value)} placeholder="Buscar docente…" /></div>
             </div>
             {staff.loading && <p className="muted">Consultando docentes…</p>}
             {staff.error && <ErrorBox message={staff.error} />}
             {staff.data?.filter((u) => u.role === "TEACHER").length === 0 && <p className="admin-empty">Aún no se han registrado docentes.</p>}
             <div className="admin-directory-grid">
-              {staff.data?.filter((u) => u.role === "TEACHER").map((u) => (
+              {staff.data?.filter((u) => u.role === "TEACHER" && `${u.display_name} ${u.email ?? ""}`.toLocaleLowerCase().includes(staffQuery.toLocaleLowerCase().trim())).map((u) => (
                 <div className="admin-person" key={u.id}>
                   <span className="admin-person-avatar">{u.display_name.trim().slice(0, 1).toUpperCase()}</span>
                   <div><strong>{u.display_name}</strong><small>{u.email}</small></div>
-                  <span className={u.is_active ? "admin-person-status" : "admin-person-status disabled"}>
+                  <div className="admin-status-actions"><span className={u.is_active ? "admin-person-status" : "admin-person-status disabled"}>
                     {u.is_active ? "Activo" : "Inactivo"}
-                  </span>
+                  </span><button type="button" className="ghost" disabled={updatingId===u.id || u.id===user?.id} onClick={()=>void changeStaffStatus(u)}>{updatingId===u.id?"Actualizando…":u.is_active?"Desactivar":"Reactivar"}</button></div>
                 </div>
               ))}
             </div>
@@ -211,7 +244,7 @@ export function Admin({ section = "overview" }: { section?: "overview" | "school
       </section>}
       {section === "users" && <section className="admin-supplement">
         <h2>Usuarios y roles</h2><p>Directorio de usuarios del personal. Los accesos están protegidos por permisos de administrador y docente.</p>
-        <div className="admin-sup-rows">{staff.data?.filter(u=>u.role!=="STUDENT").map(u=><div key={u.id}><span>{u.display_name} · {u.role==="ADMIN"?"Administrador":"Docente"}</span><strong>{u.is_active?"Activo":"Inactivo"}</strong></div>)}</div>
+        <div className="admin-sup-rows">{staff.data?.filter(u=>u.role!=="STUDENT").map(u=><div key={u.id}><span>{u.display_name} · {u.role==="ADMIN"?"Administrador":"Docente"} · {u.email}</span><span className="admin-user-rows-end"><strong>{u.is_active?"Activo":"Inactivo"}</strong>{u.id!==user?.id&&<button type="button" className="ghost" disabled={updatingId===u.id} onClick={()=>void changeStaffStatus(u)}>{updatingId===u.id?"Guardando…":u.is_active?"Desactivar":"Reactivar"}</button>}</span></div>)}</div>
       </section>}
       {section === "configuration" && <section className="admin-supplement">
         <h2>Configuración</h2><p>KAWSAY AI utiliza permisos por roles, autenticación y registro de auditoría. Las opciones de configuración del servidor se administran de forma privada desde Render.</p>
