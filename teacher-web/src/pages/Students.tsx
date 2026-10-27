@@ -14,7 +14,7 @@ export function Students() {
   const rooms = useAsync(() => api.get<Classroom[]>("/classrooms"), []);
   const languages = useAsync(() => api.get<Language[]>("/languages"), []);
   const [classroomId, setClassroomId] = useState("");
-  useEffect(() => { if (!classroomId && rooms.data?.length === 1) setClassroomId(rooms.data[0].id); }, [rooms.data, classroomId]);
+  useEffect(() => { if (!classroomId && rooms.data?.length === 1 && rooms.data[0]) setClassroomId(rooms.data[0].id); }, [rooms.data, classroomId]);
 
   return (
     <div className="student-management">
