@@ -15,7 +15,7 @@ describe("Experiencia por rol KAWSAY", () => {
     vi.spyOn(svc.api, "get").mockImplementation(async () => []);
     render(<MemoryRouter><Dashboard /></MemoryRouter>);
     expect(screen.getByRole("link", { name: /Registrar estudiante/ })).toHaveAttribute("href", "/estudiantes");
-    expect(screen.getByRole("link", { name: /Crear mi primera aula/ })).toHaveAttribute("href", "/aulas");
+    expect(await screen.findByRole("link", { name: /Crear mi primera aula/ })).toHaveAttribute("href", "/aulas");
     await waitFor(() => expect(screen.getByText(/Para agregar estudiantes y asignar tareas/)).toBeInTheDocument());
   });
 
