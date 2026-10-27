@@ -164,3 +164,66 @@
 @media (max-width:800px){.role-admin .sidebar{position:static;width:100%;height:auto;padding:12px 16px}.role-admin .sidebar .brand{margin-bottom:12px}.role-admin .primary-nav{flex-direction:row;overflow-x:auto;gap:5px}.role-admin .primary-nav a{flex:0 0 auto;padding:9px 12px;font-size:11px;min-height:41px}.role-admin .sidebar-note,.role-admin .sidebar-footer,.role-admin .nav-caption{display:none}.role-admin .topbar{padding:9px 16px}.role-admin .main-content{padding:0 14px 23px}.role-admin .kd-hero{margin:0 -14px;padding:27px 18px;min-height:208px}.role-admin .kd-hero::before{inset:0 0 0 42%}.role-admin .kd-hero::after{background:linear-gradient(90deg,#082340 0%,#082840ef 42%,#082a4490 100%)}.role-admin .admin-header .account-name{display:none}.role-admin .admin-header{gap:8px}.role-admin .admin-header-search{max-width:none}.role-admin .admin-header-actions{gap:5px}.role-admin .kd-shortcut-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:590px){.role-admin .kd-kpis{gap:9px}.role-admin .kd-kpi{padding:11px;min-height:111px;gap:8px}.role-admin .kd-kpi-icon{width:36px;height:36px}.role-admin .kd-kpi-icon svg{width:18px;height:18px}.role-admin .kd-kpi-copy>span{font-size:10px}.role-admin .kd-kpi-copy>strong{font-size:25px}.role-admin .kd-row-bottom{grid-template-columns:1fr}.role-admin .kd-audit{grid-column:auto}.role-admin .kd-audit-list{grid-template-columns:1fr}.role-admin .kd-shortcuts{padding:12px}.role-admin .kd-shortcut{padding:13px;min-height:126px}.role-admin .kd-shortcut strong{font-size:11px}.role-admin .kd-shortcut p{font-size:9px}.role-admin .kd-panel-heading h3{font-size:14px}.role-admin .kd-donut-layout{flex-direction:column}.role-admin .kd-school-list{grid-template-columns:1fr}.role-admin .kd-hero h1{font-size:28px}.role-admin .kd-hero h2{font-size:12px}.role-admin .kd-motto{gap:9px}.role-admin .kd-motto span{font-size:8px;padding-right:6px}.role-admin .kd-hero::before{inset:0 0 0 26%}.role-admin .kd-hero::after{background:linear-gradient(90deg,#082340 0%,#092943ec 58%,#082a4499 100%)}.role-admin .admin-header .logout{padding:5px}.role-admin .admin-header-icon{width:30px;height:32px}.role-admin .admin-header-search{padding:0 8px}.role-admin .admin-header-search input{font-size:10px}}
 @media (prefers-reduced-motion:reduce){.role-admin .kd-kpi,.role-admin .kd-shortcut{transition:none}.role-admin .kd-kpi:hover,.role-admin .kd-shortcut:hover{transform:none}}
+/* Menú y vistas auxiliares del administrador */
+.role-admin .admin-nav-group { min-width:0; width:100%; }
+.role-admin .admin-nav-group .nav-caption { margin:19px 10px 9px; font-size:9px; letter-spacing:1.35px; color:#9bb5cc; }
+.role-admin .admin-search-empty { display:block; padding:12px; font-size:11px; color:#b5cee1; }
+.role-admin .sidebar-compact { width:73px; }
+.role-admin.sidebar-compact .sidebar { width:78px; padding-inline:8px; }
+.role-admin.sidebar-compact .sidebar .brand > span:last-child,
+.role-admin.sidebar-compact .sidebar .nav-caption,
+.role-admin.sidebar-compact .sidebar .primary-nav a span,
+.role-admin.sidebar-compact .sidebar .sidebar-note,
+.role-admin.sidebar-compact .sidebar .sidebar-footer { display:none; }
+.role-admin.sidebar-compact .sidebar .primary-nav a { justify-content:center; padding:12px 7px; }
+.role-admin.sidebar-compact .sidebar .brand { justify-content:center; }
+.role-admin .admin-supplement { background:linear-gradient(145deg,#071c35,#06162a); color:#e6f6ff; border:1px solid #1b4f6d; border-radius:17px; padding:clamp(20px,3vw,32px); margin-top:18px; }
+.role-admin .admin-supplement h2 { color:#f2fcff; }
+.role-admin .admin-supplement h3 { color:#b4f5df; margin-top:24px; }
+.role-admin .admin-supplement > p { color:#b5cedd; }
+.role-admin .admin-sup-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; margin:20px 0; }
+.role-admin .admin-sup-grid > div { background:#0c2c48; border:1px solid #1a4b68; border-radius:13px; padding:18px; display:flex; flex-direction:column; gap:7px; }
+.role-admin .admin-sup-grid svg { width:24px; height:24px; color:#34dfc7; }
+.role-admin .admin-sup-grid strong { font-size:29px; color:#fff; }
+.role-admin .admin-sup-grid span { color:#aac5d7; font-size:12px; }
+.role-admin .admin-sup-rows { border:1px solid #21455f; border-radius:12px; overflow:hidden; }
+.role-admin .admin-sup-rows > div { display:flex; gap:14px; justify-content:space-between; align-items:center; background:#0a2741; padding:13px 17px; border-bottom:1px solid #194260; font-size:12px; }
+.role-admin .admin-sup-rows > div:last-child { border-bottom:0; }
+.role-admin .admin-sup-rows strong { color:#85e8d1; }
+/* El interruptor de modo claro solo modifica la sesión actual, sin almacenamiento local. */
+.role-admin.admin-sun-mode { background:#f0f6f9; color:#213b53; }
+.role-admin.admin-sun-mode .workspace { background:#f0f6f9; }
+.role-admin.admin-sun-mode .topbar { background:#eff9fc; border-color:#c8dfe8; color:#244458; }
+.role-admin.admin-sun-mode .admin-header-search { background:#fff; border-color:#b8d7e4; }
+.role-admin.admin-sun-mode .admin-header-search input { color:#1e3d55; -webkit-text-fill-color:#1e3d55; }
+.role-admin.admin-sun-mode .admin-header-search input::placeholder { color:#617d8f; }
+.role-admin.admin-sun-mode .admin-header-icon { color:#176f7c; }
+.role-admin.admin-sun-mode .admin-header .account-name strong { color:#1e3d55; }
+.role-admin.admin-sun-mode .admin-header .account-name small { color:#4e7187; }
+.role-admin.admin-sun-mode .admin-header .logout { color:#24546b; }
+.role-admin.admin-sun-mode .kd-panel,
+.role-admin.admin-sun-mode .admin-supplement { background:#fff; color:#1c4057; border-color:#d2e3e9; box-shadow:0 8px 30px #20466810; }
+.role-admin.admin-sun-mode .kd-panel-heading h3,
+.role-admin.admin-sun-mode .admin-supplement h2,
+.role-admin.admin-sun-mode .admin-supplement h3 { color:#244458; }
+.role-admin.admin-sun-mode .kd-subtext,
+.role-admin.admin-sun-mode .kd-institutions .kd-panel-heading p,
+.role-admin.admin-sun-mode .admin-supplement > p { color:#557487; }
+.role-admin.admin-sun-mode .kd-empty { color:#57798c; }
+.role-admin.admin-sun-mode .kd-institutions .kd-search { background:#f2f8fc; border-color:#d4e5ed; }
+.role-admin.admin-sun-mode .kd-search input { color:#1d3d53; -webkit-text-fill-color:#1d3d53; }
+.role-admin.admin-sun-mode .kd-school-list > div,
+.role-admin.admin-sun-mode .admin-sup-rows > div,
+.role-admin.admin-sun-mode .admin-sup-grid > div { background:#f0f8fb; border-color:#d6e7ef; }
+.role-admin.admin-sun-mode .kd-school-list strong,
+.role-admin.admin-sun-mode .admin-sup-rows span,
+.role-admin.admin-sun-mode .admin-sup-grid strong { color:#21415a; }
+.role-admin.admin-sun-mode .kd-outline,.role-admin.admin-sun-mode .kd-refresh { color:#285368; background:#f4fafb; border-color:#c9e0e6; }
+.role-admin.admin-sun-mode .kd-audit-row { border-color:#d9e8ee; }
+.role-admin.admin-sun-mode .kd-audit-row strong { color:#244658; }
+.role-admin.admin-sun-mode .kd-audit-row small { color:#597b8e; }
+.role-admin.admin-sun-mode .kd-donut::after { background:#fff; }
+.role-admin.admin-sun-mode .kd-donut strong { color:#204057; }
+.role-admin.admin-sun-mode .kd-donut small { color:#536e7f; }
+.role-admin.admin-sun-mode .kd-donut-legend div,.role-admin.admin-sun-mode .kd-donut-legend b { color:#244458; }
+@media(max-width:800px) { .role-admin.sidebar-compact .sidebar { width:100%; } .role-admin.sidebar-compact .sidebar .brand > span:last-child, .role-admin.sidebar-compact .sidebar .primary-nav a span { display:initial; } .role-admin .admin-nav-group { width:auto; flex:0 0 auto; } .role-admin .admin-nav-group .nav-caption { display:none; } .role-admin .primary-nav a { width:max-content; } }
