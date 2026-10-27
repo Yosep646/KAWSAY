@@ -9,6 +9,7 @@ import "./pages/kawsay-welcome-responsive.css";
 import "./pages/kawsay-encuadre-fix.css";
 import "./pages/kawsay-design-reference.css";
 import "./pages/kawsay-fidelity.css";
+import "./pages/kawsay-login-visibility.css";
 
 class StartupBoundary extends React.Component<{ children: React.ReactNode }, { failed: boolean }> {
   state = { failed: false };
