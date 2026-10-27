@@ -200,3 +200,85 @@
     background-position:69% center !important;
   }
 }
+
+
+/* Ajuste fino de composición para la referencia enviada (920 × 633).
+   Mantiene la foto como imagen de fondo y los campos como controles interactivos. */
+@media (min-width:901px) {
+ .login-reimagined {
+   grid-template-columns:minmax(0,68%) minmax(0,32%) !important;
+   min-height:100svh;
+   background:#061a2a !important;
+ }
+ .login-reimagined::before {
+   background-image:linear-gradient(90deg,rgba(2,20,36,.21) 0%,transparent 47%,rgba(2,19,34,.08) 100%),
+     url('/kawsay-fondo-final.jpg?v=ajuste-encuadre-20261027') !important;
+   background-size:cover !important;
+   background-position:center center !important;
+ }
+ .login-reimagined .login-story {
+   padding:clamp(22px,3.3vw,41px) clamp(24px,4vw,51px) 30px !important;
+ }
+ .login-reimagined .login-story-copy {
+   max-width:min(430px,89%) !important;
+   margin:auto 0 !important;
+   padding:15px 0 24px !important;
+ }
+ .login-reimagined .login-story-copy>.eyebrow {
+   margin-bottom:15px !important;
+   font-size:9px !important;
+ }
+ .login-reimagined .login-story h1 {
+   font-size:clamp(30px,3.6vw,53px) !important;
+   line-height:1.07 !important;
+   letter-spacing:-1.3px !important;
+   margin-bottom:14px !important;
+ }
+ .login-reimagined .login-story-copy>p {
+   font-size:clamp(11px,1.2vw,14px) !important;
+   line-height:1.6 !important;
+   max-width:330px !important;
+   margin-bottom:15px !important;
+ }
+ .login-reimagined .login-form-panel {
+   align-items:center !important;
+   justify-content:center !important;
+   padding:clamp(16px,2.4vw,30px) clamp(15px,2.2vw,25px) !important;
+ }
+ .login-reimagined .login-form-panel>.login {
+   width:100% !important;
+   max-width:355px !important;
+   max-height:calc(100svh - 28px) !important;
+   padding:clamp(14px,1.8vw,24px) !important;
+   border-radius:17px !important;
+ }
+ .login-reimagined .login-card-head {margin-bottom:11px !important;}
+ .login-reimagined .login-symbol {width:39px;height:39px;margin-bottom:4px;}
+ .login-reimagined .login-symbol .icon {width:35px;height:35px;}
+ .login-reimagined .login-card-head h2 {font-size:clamp(22px,2.2vw,29px) !important;}
+ .login-reimagined .login-card-head .login-description {font-size:11px !important;}
+ .login-reimagined .login-role-tabs {margin-bottom:10px !important;}
+ .login-reimagined .login-role-tabs button {min-height:34px;font-size:10px;padding:7px 3px;}
+ .login-reimagined .student-login-method {margin-bottom:10px !important;}
+ .login-reimagined .student-login-method button {min-height:31px;padding:6px 3px;font-size:9px;}
+ .login-reimagined form.login-access-form .kawsay-login-field {margin-bottom:10px !important;gap:4px !important;}
+ .login-reimagined form.login-access-form .kawsay-login-field>.login-field-label {font-size:10px !important;}
+ .login-reimagined form.login-access-form .kawsay-login-field>.login-input-wrap {min-height:39px !important;}
+ .login-reimagined .login-input-wrap input {min-height:37px !important;font-size:11px !important;}
+ .login-reimagined .login-preferences {margin-bottom:11px !important;}
+ .login-reimagined .login-submit {min-height:42px !important;font-size:12px !important;}
+ .login-reimagined .login-help {margin:13px 0 10px !important;font-size:9px !important;}
+ .login-reimagined .login-footnote {padding-top:10px !important;font-size:9px !important;}
+}
+@media (max-width:900px) {
+ .login-reimagined .login-story::before {
+   background-image:linear-gradient(90deg,rgba(3,21,39,.49),rgba(3,21,39,.04) 90%),
+   url('/kawsay-fondo-final.jpg?v=ajuste-encuadre-20261027') !important;
+   background-size:contain !important;
+   background-position:center top !important;
+   background-repeat:no-repeat !important;
+ }
+ .login-reimagined .login-story {
+   min-height:max(244px,calc(100vw * .65)) !important;
+ }
+}
