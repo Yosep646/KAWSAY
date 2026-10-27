@@ -37,7 +37,7 @@ function Chart({data,year}:{data:AdminStatistics['monthly_new'];year:number}){
   const cumul = [0,1,2].map((s)=>{
     let sum=0;
     const keys = ['students_new','teachers_new','schools_new'] as const;
-    return months.map((_,i)=>{sum+=data.find(v=>v.month===i+1)?.[keys[s]]??0;return sum;});
+    return months.map((_,i)=>{const key=keys[s]??'students_new';sum+=data.find(v=>v.month===i+1)?.[key]??0;return sum;});
   });
   const max=Math.max(1,...cumul.flat());
   const colors=['#03e3b4','#2a9fff','#ffc654'];
@@ -52,7 +52,7 @@ function Chart({data,year}:{data:AdminStatistics['monthly_new'];year:number}){
       {months.map((m,i)=><text key={m} x={px(i)} y="196" fill="#9cb2c5" textAnchor="middle" fontSize="10">{m}</text>)}
       {cumul.map((list,s)=><g key={s}><polyline points={list.map((v,i)=>`${px(i)},${py(v)}`).join(' ')} fill="none" stroke={colors[s]} strokeWidth="2.7" strokeLinejoin="round" strokeLinecap="round"/>{list.map((v,i)=><circle key={i} cx={px(i)} cy={py(v)} r={focus===i?4:2.6} fill={colors[s]} stroke="#06182e" strokeWidth="1.2"/>)}</g>)}
       {months.map((m,i)=><rect key={m} x={px(i)-16} y="24" width="32" height="159" fill="transparent" onMouseEnter={()=>setFocus(i)}/>)}
-      {focus!==null&&<g><line x1={px(focus)} x2={px(focus)} y1="25" y2="179" stroke="#b3cde1" opacity=".6" strokeDasharray="3 3"/><rect x={Math.min(px(focus)+8,350)} y="19" width="111" height="62" rx="7" fill="#143754" stroke="#45718b"/><text x={Math.min(px(focus)+17,359)} y="34" fontSize="10" fill="white">{months[focus]}</text>{names.map((n,i)=><text key={n} x={Math.min(px(focus)+17,359)} y={47+i*11} fontSize="9" fill={colors[i]}>{n}: {cumul[i][focus]}</text>)}</g>}
+      {focus!==null&&<g><line x1={px(focus)} x2={px(focus)} y1="25" y2="179" stroke="#b3cde1" opacity=".6" strokeDasharray="3 3"/><rect x={Math.min(px(focus)+8,350)} y="19" width="111" height="62" rx="7" fill="#143754" stroke="#45718b"/><text x={Math.min(px(focus)+17,359)} y="34" fontSize="10" fill="white">{months[focus]}</text>{names.map((n,i)=><text key={n} x={Math.min(px(focus)+17,359)} y={47+i*11} fontSize="9" fill={colors[i]}>{n}: {cumul[i]?.[focus]??0}</text>)}</g>}
       {cumul.every(a=>a.every(v=>v===0))&&<text x="245" y="100" textAnchor="middle" fill="#b7c9d5" fontSize="12">Sin altas registradas en {year}</text>}
     </svg>
     <div className="kd-legend">{names.map((n,i)=><span key={n}><i style={{background:colors[i]}}/>{n}</span>)}</div>
