@@ -175,3 +175,28 @@
   .login-reimagined form.login-access-form .kawsay-login-field{margin-bottom:15px !important;}
   .login-reimagined .login-preferences{margin-bottom:15px !important;}
 }
+
+/* Imagen definitiva elegida: paisaje Andes-Amazonia y cuatro estudiantes. */
+.login-reimagined::before {
+  background-image:
+    linear-gradient(90deg,rgba(3,21,39,.54),rgba(3,21,39,.04) 65%,rgba(3,21,39,.22)),
+    url('/kawsay-fondo-final.jpg?v=definitivo-20261027') !important;
+  background-size:cover !important;
+  background-position:center center !important;
+  background-repeat:no-repeat !important;
+}
+@media (max-width:850px) {
+  .login-reimagined .login-story::before {
+    background-image:
+      linear-gradient(90deg,rgba(3,21,39,.81),rgba(3,21,39,.09)),
+      linear-gradient(0deg,#041b2d,transparent 50%),
+      url('/kawsay-fondo-final.jpg?v=definitivo-20261027') !important;
+    background-size:cover !important;
+    background-position:68% center !important;
+  }
+}
+@media (max-width:540px) {
+  .login-reimagined .login-story::before {
+    background-position:69% center !important;
+  }
+}
