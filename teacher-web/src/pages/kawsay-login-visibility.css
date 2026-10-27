@@ -282,3 +282,34 @@
    min-height:max(244px,calc(100vw * .65)) !important;
  }
 }
+
+/* 2026-10-27: Corrección del encuadre solicitado: cuatro niños a la vista.
+   A diferencia de cover, auto 100% impide agrandar/cortar la escena.
+   El espacio derecho se reserva a la tarjeta real de autenticación. */
+@media(min-width:901px){
+ .login-reimagined {
+   background:#061a2a !important;
+   grid-template-columns:minmax(0,73%) minmax(0,27%) !important;
+ }
+ .login-reimagined::before {
+   background-image:
+     linear-gradient(90deg,rgba(2,21,36,.15) 0%,rgba(2,21,36,0) 51%,#061a2a 88%),
+     url('/kawsay-fondo-final.jpg?v=ninos-completos-20261027') !important;
+   background-size:100% 100%, auto 100% !important;
+   background-position:center center, left center !important;
+   background-repeat:no-repeat !important;
+   background-color:#061a2a;
+ }
+ .login-reimagined .login-form-panel {padding:14px clamp(10px,1.1vw,20px) 14px 0 !important;}
+ .login-reimagined .login-form-panel>.login {max-width:360px !important;}
+}
+@media(max-width:900px){
+ .login-reimagined .login-story::before {
+   background-image:
+     linear-gradient(to bottom,rgba(2,21,36,.15),rgba(2,21,36,.05) 60%,#061a2a),
+     url('/kawsay-fondo-final.jpg?v=ninos-completos-20261027') !important;
+   background-size:100% 100%, contain !important;
+   background-position:center center,center top !important;
+   background-repeat:no-repeat !important;
+ }
+}
