@@ -1,0 +1,192 @@
+{
+  "model_id": "kawsay-diff-20261021201327-fe6b38",
+  "data_kind": "SYNTHETIC",
+  "dataset_version": "ds-fe6b38793caf",
+  "params": {
+    "history": 10,
+    "horizon": 5,
+    "target_min_difficult": 3,
+    "kind": "SYNTHETIC",
+    "seed": 7,
+    "students": 2500
+  },
+  "samples": {
+    "dev": 32000,
+    "test": 8000
+  },
+  "prevalence_test": 0.212,
+  "cv": {
+    "folds": 5,
+    "grouped_by": "student",
+    "results": {
+      "logreg_C0.1": {
+        "roc_auc": 0.9081,
+        "pr_auc": 0.7443,
+        "brier": 0.1248,
+        "ece": 0.1343,
+        "f1_at_best_threshold": 0.6894
+      },
+      "logreg_C1.0": {
+        "roc_auc": 0.908,
+        "pr_auc": 0.7442,
+        "brier": 0.1249,
+        "ece": 0.1342,
+        "f1_at_best_threshold": 0.6896
+      },
+      "logreg_C10.0": {
+        "roc_auc": 0.908,
+        "pr_auc": 0.7441,
+        "brier": 0.1249,
+        "ece": 0.1341,
+        "f1_at_best_threshold": 0.6895
+      },
+      "hgb_d2_lr0.05": {
+        "roc_auc": 0.9075,
+        "pr_auc": 0.7436,
+        "brier": 0.1273,
+        "ece": 0.1347,
+        "f1_at_best_threshold": 0.6865
+      },
+      "hgb_d2_lr0.1": {
+        "roc_auc": 0.9075,
+        "pr_auc": 0.7439,
+        "brier": 0.1273,
+        "ece": 0.1341,
+        "f1_at_best_threshold": 0.6874
+      },
+      "hgb_d3_lr0.05": {
+        "roc_auc": 0.9074,
+        "pr_auc": 0.7445,
+        "brier": 0.1272,
+        "ece": 0.1338,
+        "f1_at_best_threshold": 0.687
+      },
+      "hgb_d3_lr0.1": {
+        "roc_auc": 0.9073,
+        "pr_auc": 0.7444,
+        "brier": 0.1271,
+        "ece": 0.1332,
+        "f1_at_best_threshold": 0.6865
+      },
+      "hgb_d4_lr0.05": {
+        "roc_auc": 0.9069,
+        "pr_auc": 0.7436,
+        "brier": 0.127,
+        "ece": 0.1327,
+        "f1_at_best_threshold": 0.6862
+      },
+      "hgb_d4_lr0.1": {
+        "roc_auc": 0.9067,
+        "pr_auc": 0.7427,
+        "brier": 0.1268,
+        "ece": 0.1316,
+        "f1_at_best_threshold": 0.6866
+      }
+    }
+  },
+  "chosen": "hgb_d3_lr0.05",
+  "calibration": "sigmoid (Platt), CV agrupada",
+  "threshold": 0.36,
+  "test": {
+    "roc_auc": 0.9088,
+    "pr_auc": 0.7491,
+    "brier": 0.0936,
+    "ece": 0.0183,
+    "precision": 0.6299,
+    "recall": 0.7518,
+    "f1": 0.6855,
+    "confusion": {
+      "tn": 5555,
+      "fp": 749,
+      "fn": 421,
+      "tp": 1275
+    }
+  },
+  "test_ci95": {
+    "roc_auc": [
+      0.8891,
+      0.926
+    ],
+    "pr_auc": [
+      0.6921,
+      0.7953
+    ],
+    "f1": [
+      0.6377,
+      0.7205
+    ]
+  },
+  "baselines_test": {
+    "regla_R-SUP-001_ultimos5": {
+      "precision": 0.7669,
+      "recall": 0.4617,
+      "f1": 0.5764,
+      "confusion": {
+        "tn": 6066,
+        "fp": 238,
+        "fn": 913,
+        "tp": 783
+      }
+    },
+    "heuristica_media5<0.5": {
+      "precision": 0.6538,
+      "recall": 0.7005,
+      "f1": 0.6763,
+      "confusion": {
+        "tn": 5675,
+        "fp": 629,
+        "fn": 508,
+        "tp": 1188
+      }
+    },
+    "siempre_positivo": {
+      "precision": 0.212,
+      "recall": 1.0,
+      "f1": 0.3498,
+      "confusion": {
+        "tn": 0,
+        "fp": 6304,
+        "fn": 0,
+        "tp": 1696
+      }
+    }
+  },
+  "error_by_grade_band": {
+    "grados_1-2": {
+      "n": 2640,
+      "positivos": 459,
+      "tasa_fn": 0.2397,
+      "tasa_fp": 0.0807
+    },
+    "grados_3-4": {
+      "n": 2608,
+      "positivos": 625,
+      "tasa_fn": 0.2832,
+      "tasa_fp": 0.1362
+    },
+    "grados_5-6": {
+      "n": 2752,
+      "positivos": 612,
+      "tasa_fn": 0.219,
+      "tasa_fp": 0.1416
+    }
+  },
+  "features": [
+    "mean_score_10",
+    "mean_score_5",
+    "min_score_10",
+    "std_score_10",
+    "frac_difficult_10",
+    "frac_difficult_5",
+    "hints_per_ex_10",
+    "wrong_per_ex_10",
+    "trend_10",
+    "last3_mean",
+    "grade"
+  ],
+  "limitations": [
+    "Entrenado con datos SINTÉTICOS: mide cuánto recupera la estructura del simulador, NO el desempeño en aulas reales.",
+    "Predice dificultad en los próximos ejercicios; no es un diagnóstico del estudiante.",
+    "Requiere revisión humana (docentes/pedagogos) antes de cualquier uso; no sustituye al docente."
+  ]
+}

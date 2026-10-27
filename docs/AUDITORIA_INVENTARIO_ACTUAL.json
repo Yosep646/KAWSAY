@@ -1,0 +1,1775 @@
+{
+  "metodo": "inventario de archivos + checksums, no auditoría manual exhaustiva",
+  "archivos": [
+    {
+      "ruta": ".env.example",
+      "modulo": "infra_documentacion",
+      "bytes": 379,
+      "sha256": "54efa41b9917f022c1d5a0759468d8100826518dab28106dfd6763b0a8e14e9f"
+    },
+    {
+      "ruta": ".github/workflows/ci.yml",
+      "modulo": "infra_documentacion",
+      "bytes": 1275,
+      "sha256": "91b7fde1296a380f6a2fc25bda662b7abb7fca561ad6892223f57f4a002bd48f"
+    },
+    {
+      "ruta": ".gitignore",
+      "modulo": "infra_documentacion",
+      "bytes": 386,
+      "sha256": "cffd40d980c0ee8a0424a5d5457d09cd57a31e4fa0625fbc5f87f444be3cc025"
+    },
+    {
+      "ruta": "README.md",
+      "modulo": "infra_documentacion",
+      "bytes": 4014,
+      "sha256": "12fc3903a13963c5ca52770fd52a0646cc7f0db810ac7fa8dce2e25be2e170ba"
+    },
+    {
+      "ruta": "README_DEPLOY_RAPIDO.md",
+      "modulo": "infra_documentacion",
+      "bytes": 3286,
+      "sha256": "9e7f0967ac071c662969fd23d5d076c87a6a678a8bf4d1c3a3a6377a99505d1a"
+    },
+    {
+      "ruta": "ai/README.md",
+      "modulo": "infra_documentacion",
+      "bytes": 298,
+      "sha256": "977e489887f1f476c531652feb30d5b75e3d5a7929b7fba0e648c2362450fab4"
+    },
+    {
+      "ruta": "automation/README.md",
+      "modulo": "infra_documentacion",
+      "bytes": 2220,
+      "sha256": "f4557bd2c28521ab038fadec1f645fb7a44288f245c4dd988a4a12ea51e79632"
+    },
+    {
+      "ruta": "automation/n8n/workflows/01_support_flag_notify.json",
+      "modulo": "infra_documentacion",
+      "bytes": 3788,
+      "sha256": "c2616fa4d69e5de55999830657216d7dbb01cd04d2575480576b7678dc5cf370"
+    },
+    {
+      "ruta": "backend/.dockerignore",
+      "modulo": "backend",
+      "bytes": 151,
+      "sha256": "040040d0f994dc16dbe77afe1e22a1174a67c0991bf0ef4180a2d26c4df9cd9b"
+    },
+    {
+      "ruta": "backend/Dockerfile",
+      "modulo": "backend",
+      "bytes": 614,
+      "sha256": "290c929613b24e1195d5a151642898a69627574e600d67836a42216467aee3cb"
+    },
+    {
+      "ruta": "backend/alembic.ini",
+      "modulo": "backend",
+      "bytes": 431,
+      "sha256": "151bd6b14c409cfd27ec098851e7bb1cab24fc1a317b0387e082052563ca2d43"
+    },
+    {
+      "ruta": "backend/app/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/cli.py",
+      "modulo": "backend",
+      "bytes": 3060,
+      "sha256": "21f3a3ef33294ea4e24aee9df149d216355dbf9a26b10d69d3ea05bdce9cccb4"
+    },
+    {
+      "ruta": "backend/app/core/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/core/config.py",
+      "modulo": "backend",
+      "bytes": 2255,
+      "sha256": "0c93289c5251974fbe293974465f6cd563570e196249ad5c07d767f543b8f804"
+    },
+    {
+      "ruta": "backend/app/core/database.py",
+      "modulo": "backend",
+      "bytes": 2838,
+      "sha256": "b7121a1b50dd09d9eb63b0d6f24884a2d5a4695ed71e7513dd887711d9935ee5"
+    },
+    {
+      "ruta": "backend/app/core/exceptions.py",
+      "modulo": "backend",
+      "bytes": 2550,
+      "sha256": "6c531629f5b4be5c1c80d236fb87fa70dce6583b4cd4d72d927de5bee3dab467"
+    },
+    {
+      "ruta": "backend/app/core/logging.py",
+      "modulo": "backend",
+      "bytes": 1150,
+      "sha256": "e876006e32f16e420a6ee5643e6d2cf5acc161efe6f42dc2d7a890148fa5f72d"
+    },
+    {
+      "ruta": "backend/app/core/middleware.py",
+      "modulo": "backend",
+      "bytes": 3090,
+      "sha256": "bccfb39872daf2c7fe186f3c474612ab6a45844d78aa213a83fbc30d1bd446aa"
+    },
+    {
+      "ruta": "backend/app/core/password_policy.py",
+      "modulo": "backend",
+      "bytes": 1499,
+      "sha256": "b976e5ba7411eac8596b660add84d6c143f0e956d817d7448b9ba938071b604e"
+    },
+    {
+      "ruta": "backend/app/core/permissions.py",
+      "modulo": "backend",
+      "bytes": 1497,
+      "sha256": "811fa8f41a3b444bac01107ad0d9f39cb99cb4c600ced7cb46f3219c99a4cf9b"
+    },
+    {
+      "ruta": "backend/app/core/rate_limit.py",
+      "modulo": "backend",
+      "bytes": 1159,
+      "sha256": "9994171e3bc9a362d3eac774cbb3f6a19908403a01dc3319bcd9b3179bd83677"
+    },
+    {
+      "ruta": "backend/app/core/security.py",
+      "modulo": "backend",
+      "bytes": 2365,
+      "sha256": "9a4e1a16724300b82f71bbb0448c6dbda7d44c2976cbb83f838ffcc6a4255952"
+    },
+    {
+      "ruta": "backend/app/core/types.py",
+      "modulo": "backend",
+      "bytes": 756,
+      "sha256": "47e699e2abc3d28d8fa5d7c8ce7bb18aecf87c1b947a8d81f69a985ec3ef133a"
+    },
+    {
+      "ruta": "backend/app/domain/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/domain/adaptive.py",
+      "modulo": "backend",
+      "bytes": 10014,
+      "sha256": "8a42374ae78bd9c6633574a4513df434232db3cc3f96594fcff8ebb269dff9c2"
+    },
+    {
+      "ruta": "backend/app/main.py",
+      "modulo": "backend",
+      "bytes": 3192,
+      "sha256": "39dbb437bafdd29a2dedabf424843eb2695148e58bfafe8ca30f682eec049be9"
+    },
+    {
+      "ruta": "backend/app/models_registry.py",
+      "modulo": "backend",
+      "bytes": 1618,
+      "sha256": "53c5750dbb86e06a34c5164ec0cff477f265ebc2b2d7bd1583c1dbb62408df77"
+    },
+    {
+      "ruta": "backend/app/modules/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/ai/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/ai/adaptation.py",
+      "modulo": "backend",
+      "bytes": 4894,
+      "sha256": "ca570b41a52695b1ce227919ef10c4d3a05e1caa0acbc7fb1f79fc9d375d793a"
+    },
+    {
+      "ruta": "backend/app/modules/ai/gateway.py",
+      "modulo": "backend",
+      "bytes": 4410,
+      "sha256": "2d3e5bc4264461619fd54f0b530b0e2d06c005314b9202a78524fb9cc887139e"
+    },
+    {
+      "ruta": "backend/app/modules/ai/models.py",
+      "modulo": "backend",
+      "bytes": 1234,
+      "sha256": "ac028eb553b75409b597dde1f4b3048f29685e666071d02d3f5b79e7db76bc61"
+    },
+    {
+      "ruta": "backend/app/modules/ai/validators.py",
+      "modulo": "backend",
+      "bytes": 4467,
+      "sha256": "f5bc79350bb1d9c0e0e7d466c0e7c2e9640b7b8637905802246a773063622173"
+    },
+    {
+      "ruta": "backend/app/modules/analytics/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/analytics/routes.py",
+      "modulo": "backend",
+      "bytes": 6344,
+      "sha256": "533c2bc20e36db6a6e2d31e47c022ec6cf187996c5c7720c0027ad2725bbac8b"
+    },
+    {
+      "ruta": "backend/app/modules/assignments/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/assignments/models.py",
+      "modulo": "backend",
+      "bytes": 7508,
+      "sha256": "465ede8824e254a0e5d0ca7b694c7e892785802c5f3cc2f6aedb15e8eb6c66c9"
+    },
+    {
+      "ruta": "backend/app/modules/assignments/routes.py",
+      "modulo": "backend",
+      "bytes": 6806,
+      "sha256": "74fa1e6ad5f72cfebe4e141e4c8c3dc490f819b2ebacde9d6407ac583bdff576"
+    },
+    {
+      "ruta": "backend/app/modules/assignments/schemas.py",
+      "modulo": "backend",
+      "bytes": 1930,
+      "sha256": "9aeb5d63ce21b8940bb10024a3630db5135e2fe9165ab8ea2f34eeb4ba7b2e15"
+    },
+    {
+      "ruta": "backend/app/modules/assignments/service.py",
+      "modulo": "backend",
+      "bytes": 14929,
+      "sha256": "c724bde496f83eb01348caf64a18f65a8986d267d01f16253cc8f54c3945e376"
+    },
+    {
+      "ruta": "backend/app/modules/audit/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/audit/models.py",
+      "modulo": "backend",
+      "bytes": 861,
+      "sha256": "4653706dcf917f97725bea5b038a4dddaf717c8a2f4bae06c5b90e872378ea49"
+    },
+    {
+      "ruta": "backend/app/modules/audit/routes.py",
+      "modulo": "backend",
+      "bytes": 1009,
+      "sha256": "eeb2e53859a638e92a33fc5e8531fac67c88f17e138adc47361493775dbb2cec"
+    },
+    {
+      "ruta": "backend/app/modules/audit/service.py",
+      "modulo": "backend",
+      "bytes": 513,
+      "sha256": "4297ce5e8834b43d898a79899563def1c71c13665871bd522b685bcea240fdd0"
+    },
+    {
+      "ruta": "backend/app/modules/auth/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/auth/models.py",
+      "modulo": "backend",
+      "bytes": 1086,
+      "sha256": "bcd440660bddbf486f5bfb90b1ef49c354f3a479f5db0104ed46d9bb1f15210e"
+    },
+    {
+      "ruta": "backend/app/modules/auth/routes.py",
+      "modulo": "backend",
+      "bytes": 1854,
+      "sha256": "a18d5c88981819979be4e5a0db41dadb21ebff50b28b4599aa41b12b289230c6"
+    },
+    {
+      "ruta": "backend/app/modules/auth/schemas.py",
+      "modulo": "backend",
+      "bytes": 930,
+      "sha256": "9bde9dd803681b9f7e58e2314041226ae0529e612ea6a9f422ac317c83efa0a8"
+    },
+    {
+      "ruta": "backend/app/modules/auth/service.py",
+      "modulo": "backend",
+      "bytes": 6231,
+      "sha256": "5740dfcdfd8503e113163ad3de92bbd280ba9bda718d4eccec2d6c1a0d8f3dd8"
+    },
+    {
+      "ruta": "backend/app/modules/automation/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/automation/dispatch.py",
+      "modulo": "backend",
+      "bytes": 3509,
+      "sha256": "998efe9c7ea5037c8df640fac3456f317b3a3c3f3f86c904914e252c6792b4b7"
+    },
+    {
+      "ruta": "backend/app/modules/automation/events.py",
+      "modulo": "backend",
+      "bytes": 577,
+      "sha256": "368036f58cd28c2f8c1bcd71f908294b62230438fef26c7d2227ab057ed08d65"
+    },
+    {
+      "ruta": "backend/app/modules/automation/models.py",
+      "modulo": "backend",
+      "bytes": 1366,
+      "sha256": "3cd093a62ab946fcf536a3e38b5f410bf0e98805fb88273cc774a0db095cd68b"
+    },
+    {
+      "ruta": "backend/app/modules/automation/routes.py",
+      "modulo": "backend",
+      "bytes": 1879,
+      "sha256": "4f1f2e95b7c86aff00cfea3b21ab8dad71a3095bdb0822bb7b6d8c98d4a65224"
+    },
+    {
+      "ruta": "backend/app/modules/classrooms/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/classrooms/models.py",
+      "modulo": "backend",
+      "bytes": 2023,
+      "sha256": "426106f20b2e6d3d7d0d5e8458b53e317a0a9af070c1f23560ac40a57f49437a"
+    },
+    {
+      "ruta": "backend/app/modules/classrooms/routes.py",
+      "modulo": "backend",
+      "bytes": 2160,
+      "sha256": "db9090837d907d8f7397450f64c1b30d4a0c54b4a179c92989fdedcd9bcf7379"
+    },
+    {
+      "ruta": "backend/app/modules/classrooms/service.py",
+      "modulo": "backend",
+      "bytes": 3285,
+      "sha256": "71568c284fad6680fbc5d52210115d34a269478f84bbd7425087ede703b2de9c"
+    },
+    {
+      "ruta": "backend/app/modules/curriculum/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/curriculum/models.py",
+      "modulo": "backend",
+      "bytes": 3119,
+      "sha256": "12ca9da5ae523f005ad952f386e7171d6a98de1b4ee15f68e31d6eda7f7c806f"
+    },
+    {
+      "ruta": "backend/app/modules/curriculum/routes.py",
+      "modulo": "backend",
+      "bytes": 4764,
+      "sha256": "6ba40b65b3a0c404f0a48069e8ce647d7c0b1f0e48daf2d4eccd8ac75c4f4ed7"
+    },
+    {
+      "ruta": "backend/app/modules/forecast/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/forecast/service.py",
+      "modulo": "backend",
+      "bytes": 3280,
+      "sha256": "3bb8cea9f9c687f1a3f9e62bd4b42c435507104bac35a9f8f1fd469084d9e180"
+    },
+    {
+      "ruta": "backend/app/modules/health/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/health/routes.py",
+      "modulo": "backend",
+      "bytes": 983,
+      "sha256": "f18d92d59eda641f5e1b657d99dab7117c385f802371d0445e3acdbe74d2cbda"
+    },
+    {
+      "ruta": "backend/app/modules/interventions/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/interventions/models.py",
+      "modulo": "backend",
+      "bytes": 1143,
+      "sha256": "376c07cd6519a694c9bbc60f834a5f0094415a46eb436794a57756b73465d9c2"
+    },
+    {
+      "ruta": "backend/app/modules/interventions/routes.py",
+      "modulo": "backend",
+      "bytes": 3959,
+      "sha256": "ec95e45cbaf9bac920543e1285e51c85a490ed55a8534aa134b149d651a43d46"
+    },
+    {
+      "ruta": "backend/app/modules/languages/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/languages/models.py",
+      "modulo": "backend",
+      "bytes": 3431,
+      "sha256": "ff83096499fcd47e49be3a7b43cb12c40266d020d75bf5315efaabf681babc1b"
+    },
+    {
+      "ruta": "backend/app/modules/languages/routes.py",
+      "modulo": "backend",
+      "bytes": 9573,
+      "sha256": "20f617262519b89e1731b0a1746ac1f61d90a472c152656cd5cc7ff15814d904"
+    },
+    {
+      "ruta": "backend/app/modules/learning/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/learning/models.py",
+      "modulo": "backend",
+      "bytes": 3173,
+      "sha256": "67e6ad641b703c04a755e52630cbd6027ace99380db53ada266e268907eb2cc4"
+    },
+    {
+      "ruta": "backend/app/modules/learning/routes.py",
+      "modulo": "backend",
+      "bytes": 4880,
+      "sha256": "fd5b0974d269dd959511dcdf817aa4be3f43e3a2c54907316b2c5e2566796a22"
+    },
+    {
+      "ruta": "backend/app/modules/learning/service.py",
+      "modulo": "backend",
+      "bytes": 4496,
+      "sha256": "0f6eca417f035d8367d9fba70df5b2b8c4e4178267815600c9e245ed9918789b"
+    },
+    {
+      "ruta": "backend/app/modules/planning/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/planning/models.py",
+      "modulo": "backend",
+      "bytes": 5319,
+      "sha256": "b4d5233f3bef92fe7bbededdd2211da7366f8801f586cbafd120ed3a077ea6f0"
+    },
+    {
+      "ruta": "backend/app/modules/planning/routes.py",
+      "modulo": "backend",
+      "bytes": 4887,
+      "sha256": "f36d76c55363ed9319446efb9b094311ab837e87472d1f6ecf0eb1af2dfb4191"
+    },
+    {
+      "ruta": "backend/app/modules/planning/service.py",
+      "modulo": "backend",
+      "bytes": 11720,
+      "sha256": "9f159d4b715054d7d53b81b6990652e3fd93096edbbf2ee2fe925be71a6cca74"
+    },
+    {
+      "ruta": "backend/app/modules/progress/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/progress/routes.py",
+      "modulo": "backend",
+      "bytes": 2020,
+      "sha256": "286acee3f9e3ea25d07c6622d88394dfaca90a29fd667b3382036a1fae839bc2"
+    },
+    {
+      "ruta": "backend/app/modules/schools/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/schools/models.py",
+      "modulo": "backend",
+      "bytes": 1300,
+      "sha256": "a692ab50a09fd1944b705709695021614be25faa2d9ec8ac9412ea15166f9599"
+    },
+    {
+      "ruta": "backend/app/modules/schools/routes.py",
+      "modulo": "backend",
+      "bytes": 2770,
+      "sha256": "ab14e727df1ffdf885896b81e64ce57724beb1760153b83769d3e771113115a2"
+    },
+    {
+      "ruta": "backend/app/modules/students/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/students/models.py",
+      "modulo": "backend",
+      "bytes": 668,
+      "sha256": "c486403186fe3a5b578080de2210f06baff57e9375c3cb65f10aeaffbc8b0d7b"
+    },
+    {
+      "ruta": "backend/app/modules/students/routes.py",
+      "modulo": "backend",
+      "bytes": 2086,
+      "sha256": "79a929f7a1dc49e006524da585dd6fa5cc3f7e6667bb40b35871a8015a6d5d36"
+    },
+    {
+      "ruta": "backend/app/modules/students/service.py",
+      "modulo": "backend",
+      "bytes": 2675,
+      "sha256": "e38f96fcaa9d8058c4e7ebdb79be00e9a6120db0844e55e484c00adaeb5ca0a3"
+    },
+    {
+      "ruta": "backend/app/modules/support_flags/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/support_flags/models.py",
+      "modulo": "backend",
+      "bytes": 1633,
+      "sha256": "26f229cda63da674ea21882639434758469e019fecaba890ec7f4f4b4d3611fe"
+    },
+    {
+      "ruta": "backend/app/modules/support_flags/routes.py",
+      "modulo": "backend",
+      "bytes": 4240,
+      "sha256": "04c90956a5671d3c0c56d70ab9e83c94d9d3256415e82da3624f4297eaf5f1cf"
+    },
+    {
+      "ruta": "backend/app/modules/sync/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/sync/models.py",
+      "modulo": "backend",
+      "bytes": 1051,
+      "sha256": "97f7b8483548eba7b4e4233a66ac6827b1dc2ff17be2da6cdd4c441d3eb1645c"
+    },
+    {
+      "ruta": "backend/app/modules/sync/routes.py",
+      "modulo": "backend",
+      "bytes": 2838,
+      "sha256": "bc3a6e871e3b5fb4ab45a6b028b086db26dd8219602dd21f94df12a85a924098"
+    },
+    {
+      "ruta": "backend/app/modules/sync/service.py",
+      "modulo": "backend",
+      "bytes": 11113,
+      "sha256": "ca17f92a607063fd0438c0cec5e49d20da9a3b72782634b488cfdf0ef4055fef"
+    },
+    {
+      "ruta": "backend/app/modules/teachers/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/teachers/models.py",
+      "modulo": "backend",
+      "bytes": 419,
+      "sha256": "13d0a9578a46e98e26b3ee52d80e504dcc00ab33bbbdcc1e20fc3249ae1db7ca"
+    },
+    {
+      "ruta": "backend/app/modules/tutor/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/tutor/routes.py",
+      "modulo": "backend",
+      "bytes": 1109,
+      "sha256": "df1f365b8c0e298299b1ec133148e0a8662f18488fb06c0156d0cafcaf26f59d"
+    },
+    {
+      "ruta": "backend/app/modules/tutor/service.py",
+      "modulo": "backend",
+      "bytes": 5493,
+      "sha256": "d4cda58a83d87c17b6619e5a6e50b46bf447114cb8aef01380cc65086a1b8659"
+    },
+    {
+      "ruta": "backend/app/modules/users/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/modules/users/models.py",
+      "modulo": "backend",
+      "bytes": 1731,
+      "sha256": "94ebef81e906fa88641002f469557c6f882ab0fd8c3aac5dc90522e6b4cb2b99"
+    },
+    {
+      "ruta": "backend/app/modules/users/routes.py",
+      "modulo": "backend",
+      "bytes": 1138,
+      "sha256": "dc4de587a0b4d58907d84c7b5542ece31c62be6cd5279b2f60bf73042e223440"
+    },
+    {
+      "ruta": "backend/app/modules/users/schemas.py",
+      "modulo": "backend",
+      "bytes": 977,
+      "sha256": "579e2ed9c2a3ee5a92d20183b2fed8af86172cf4b1a077fa6b2054a6cbfbef23"
+    },
+    {
+      "ruta": "backend/app/modules/users/service.py",
+      "modulo": "backend",
+      "bytes": 2270,
+      "sha256": "f770dd08ec87f1bd07e25a372fe6568e5a78d931881733e2fa488843e8c67d38"
+    },
+    {
+      "ruta": "backend/app/shared/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/workers/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/app/workers/dispatcher.py",
+      "modulo": "backend",
+      "bytes": 793,
+      "sha256": "35d311ecaf50173ce6828f3878a67f8c47a0562d7e476f5920aa450ddf1be008"
+    },
+    {
+      "ruta": "backend/migrations/env.py",
+      "modulo": "backend",
+      "bytes": 972,
+      "sha256": "cca7fd1548b8ac5d88b846c024dbe67215ca4cd4e4c582209d9163afdcf93725"
+    },
+    {
+      "ruta": "backend/migrations/versions/20261019_0001_esquema_inicial_sqlite.py",
+      "modulo": "backend",
+      "bytes": 42831,
+      "sha256": "78a4241378d3b48e82354443a53d9cb73e60c88bd4763af517c2764eb1448bc7"
+    },
+    {
+      "ruta": "backend/pyproject.toml",
+      "modulo": "backend",
+      "bytes": 341,
+      "sha256": "cb3d170758f3e5bd11a2cfd95ea5c356059c0087d11cea943105fd7f74ca32a1"
+    },
+    {
+      "ruta": "backend/requirements-dev.txt",
+      "modulo": "backend",
+      "bytes": 59,
+      "sha256": "69b829d58b3d464af317c1e792907d2de3b11b208341255c20d547a12ca577ab"
+    },
+    {
+      "ruta": "backend/requirements.txt",
+      "modulo": "backend",
+      "bytes": 208,
+      "sha256": "e66641036e7e8c32d9b9258827ec6e6d6ccabe6914abedf14a1af14ccbb97887"
+    },
+    {
+      "ruta": "backend/tests/__init__.py",
+      "modulo": "backend",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "backend/tests/conftest.py",
+      "modulo": "backend",
+      "bytes": 4721,
+      "sha256": "f0645deb5450ae0ceedaeb951e236d73369786933080743a694c97ffeecc1173"
+    },
+    {
+      "ruta": "backend/tests/fakes.py",
+      "modulo": "backend",
+      "bytes": 1969,
+      "sha256": "1f3ed07bb458670df2adf30bea54724dd9dd53fd6a71fd3015452a1c8ad1ddf6"
+    },
+    {
+      "ruta": "backend/tests/test_ai_gateway.py",
+      "modulo": "backend",
+      "bytes": 10102,
+      "sha256": "f9d2dd9058f78911fc2ec85966c9c470b4fe6630f9e640fc017c408d25218435"
+    },
+    {
+      "ruta": "backend/tests/test_assignments.py",
+      "modulo": "backend",
+      "bytes": 11807,
+      "sha256": "0854272bfdfdbf286ef5c81460fcd44d86b9bc6b1cdd15e8ffb08fb15a9a1210"
+    },
+    {
+      "ruta": "backend/tests/test_auth.py",
+      "modulo": "backend",
+      "bytes": 5670,
+      "sha256": "5e8d2caf50f37df452572492199ccd547d7e9b043220654bd01662e01f05c3e4"
+    },
+    {
+      "ruta": "backend/tests/test_authorization_and_multigrade.py",
+      "modulo": "backend",
+      "bytes": 6082,
+      "sha256": "01423eb0627661a227ec0c19183c5bfa35f7dfe119cb4c664167ac16ddab0c37"
+    },
+    {
+      "ruta": "backend/tests/test_automation_languages_tutor.py",
+      "modulo": "backend",
+      "bytes": 16769,
+      "sha256": "61bd3996a3fcf71019dcd6bd367a77c41cbb797a1afb7574578060e44d3032a4"
+    },
+    {
+      "ruta": "backend/tests/test_concurrency_sqlite.py",
+      "modulo": "backend",
+      "bytes": 3813,
+      "sha256": "9e368c742dcde9ecd432efe327be8e4cd432b89c401185bb867488dc6d3cb6c9"
+    },
+    {
+      "ruta": "backend/tests/test_domain_adaptive.py",
+      "modulo": "backend",
+      "bytes": 3972,
+      "sha256": "dcef454c2819c7d0a6ae9792f8eb29df50a0847db6c505b33da4b829ff11f373"
+    },
+    {
+      "ruta": "backend/tests/test_forecast.py",
+      "modulo": "backend",
+      "bytes": 5662,
+      "sha256": "c1a83f89f51130383f30d0a00edf2a182f180e93a4f42cdf6c9f70639d81281e"
+    },
+    {
+      "ruta": "backend/tests/test_health.py",
+      "modulo": "backend",
+      "bytes": 1345,
+      "sha256": "3ab55f349fc4ca2d5a53914786715aa07d27331fb3d9c33e1bcde982a995fdac"
+    },
+    {
+      "ruta": "backend/tests/test_learn.py",
+      "modulo": "backend",
+      "bytes": 3554,
+      "sha256": "bafd731a45901eadd9b3a25449760bddaa7dc0437f12e6c24bce2b80579e9d25"
+    },
+    {
+      "ruta": "backend/tests/test_planning.py",
+      "modulo": "backend",
+      "bytes": 9481,
+      "sha256": "9d9cb3ae0488334561b875d6be1621ef27951edf9800c1afc409194ea68631d9"
+    },
+    {
+      "ruta": "backend/tests/test_platform.py",
+      "modulo": "backend",
+      "bytes": 1899,
+      "sha256": "34dd054927cc6a078940b71aeab958289e1697433445d8763769c42cb50ff6b6"
+    },
+    {
+      "ruta": "backend/tests/test_rule_vectors.py",
+      "modulo": "backend",
+      "bytes": 1364,
+      "sha256": "c4f478435c69d3965e053431713bc212053d4434debb63c840819de85d54121f"
+    },
+    {
+      "ruta": "backend/tests/test_security_hardening.py",
+      "modulo": "backend",
+      "bytes": 8938,
+      "sha256": "4f1e8474c0d9a782a1cac56d0bf133abce0960e6429dae221f46c5d0658a8102"
+    },
+    {
+      "ruta": "backend/tests/test_sync_reto10.py",
+      "modulo": "backend",
+      "bytes": 13805,
+      "sha256": "9eadec686449f01718f58c360664c4b0e8f7159b89bf13c0c32191fdc05397ea"
+    },
+    {
+      "ruta": "database/README.md",
+      "modulo": "infra_documentacion",
+      "bytes": 883,
+      "sha256": "9f40ce588b1c908ebce19e26b771a356758bd3c423dc1cd20745545e2f52c513"
+    },
+    {
+      "ruta": "docker-compose.yml",
+      "modulo": "infra_documentacion",
+      "bytes": 1700,
+      "sha256": "26b4a4df825b26cbc0b6cbb3c02f940bc907bfe53ff8d6874c19de6dd068b6ca"
+    },
+    {
+      "ruta": "docs/00-analisis-riesgos.md",
+      "modulo": "infra_documentacion",
+      "bytes": 5095,
+      "sha256": "673294407809bce803bb3091f50afa21192323d08589b76e302251e0e811e7cd"
+    },
+    {
+      "ruta": "docs/00-repository-audit.md",
+      "modulo": "infra_documentacion",
+      "bytes": 7677,
+      "sha256": "fb2266e9a7f8a9bb8dbbb343c2af25cf43d3913fd59849658f90c6a478275097"
+    },
+    {
+      "ruta": "docs/01-vision.md",
+      "modulo": "infra_documentacion",
+      "bytes": 1747,
+      "sha256": "c63cf081c14e20fc6a300950c5e0b30d7a9467de11531d87078540fb286eec25"
+    },
+    {
+      "ruta": "docs/02-scope.md",
+      "modulo": "infra_documentacion",
+      "bytes": 1408,
+      "sha256": "f6cf59d6c425bd5573882ce9645c8e428f1e0bad9c6517ba2a4cba93fadc30d6"
+    },
+    {
+      "ruta": "docs/03-functional-requirements.md",
+      "modulo": "infra_documentacion",
+      "bytes": 2596,
+      "sha256": "bd8b66a29f2ebf7ae061876beeb28514d24e2eb1722b484b34e51cd2f4cb1cb3"
+    },
+    {
+      "ruta": "docs/04-non-functional-requirements.md",
+      "modulo": "infra_documentacion",
+      "bytes": 1707,
+      "sha256": "936b3333c540c4d49c4974c6277bb5b7e7688ca3a291f3e3966f116361454272"
+    },
+    {
+      "ruta": "docs/05-architecture.md",
+      "modulo": "infra_documentacion",
+      "bytes": 2794,
+      "sha256": "17e01fe59cd433609103580aae7a26ffed9b10e8429736930fad859f52e1b7bd"
+    },
+    {
+      "ruta": "docs/06-database-design.md",
+      "modulo": "infra_documentacion",
+      "bytes": 4158,
+      "sha256": "79db170111bf38c713aa9d05cc33a02655a8d469d727a3d4323223c1f6aec0e4"
+    },
+    {
+      "ruta": "docs/07-er-diagram.md",
+      "modulo": "infra_documentacion",
+      "bytes": 12721,
+      "sha256": "2fe6914f68360d6b0cacb047345623aebee4ceb654be124cd443c51f2c5c59c2"
+    },
+    {
+      "ruta": "docs/08-api.md",
+      "modulo": "infra_documentacion",
+      "bytes": 7236,
+      "sha256": "0e7b2d3ff0107bdf0be5e815941f65f177cbbf2a73ca97c3083cfa17c7658537"
+    },
+    {
+      "ruta": "docs/09-offline-architecture.md",
+      "modulo": "infra_documentacion",
+      "bytes": 1554,
+      "sha256": "ade0fa7644a49c9671d9e067cf500b1b4df03955299f4aa038f31b7413e2404d"
+    },
+    {
+      "ruta": "docs/10-sync-strategy.md",
+      "modulo": "infra_documentacion",
+      "bytes": 2466,
+      "sha256": "cf3663e3786f22882e7e1e33fef14c56e34039abaae76f1221779a5d16e186fd"
+    },
+    {
+      "ruta": "docs/11-ai-architecture.md",
+      "modulo": "infra_documentacion",
+      "bytes": 1941,
+      "sha256": "0fb16e7f7a37697f036774218c2eb2ab96f7e4af1ab9c393abf560ef3643ba48"
+    },
+    {
+      "ruta": "docs/12-adaptive-learning.md",
+      "modulo": "infra_documentacion",
+      "bytes": 2685,
+      "sha256": "3e63acdea44b6bb7c03bcd16296d57d85e4452a96eff0cedb6b1f84706f9e53a"
+    },
+    {
+      "ruta": "docs/13-multigrade-learning.md",
+      "modulo": "infra_documentacion",
+      "bytes": 1101,
+      "sha256": "aba0e29928faad90c61135c30c04978f5ad8750f8f329e0ed417efd2a371d12f"
+    },
+    {
+      "ruta": "docs/14-security.md",
+      "modulo": "infra_documentacion",
+      "bytes": 3734,
+      "sha256": "d9b36a2f009f3d97fc90644b7f8c6805a09888c71186b8b0f2462e51c4cb3e3a"
+    },
+    {
+      "ruta": "docs/15-privacy.md",
+      "modulo": "infra_documentacion",
+      "bytes": 1113,
+      "sha256": "2fb5c0c40e1d77e0c374f6b49cbdd9ce5afc500571755fd5588e5f81675e9473"
+    },
+    {
+      "ruta": "docs/16-testing.md",
+      "modulo": "infra_documentacion",
+      "bytes": 5084,
+      "sha256": "1c83a97d1fbea7994dea7bebae7681fda2aeb6f16cc739d873f69e8328cc1ba9"
+    },
+    {
+      "ruta": "docs/17-deployment.md",
+      "modulo": "infra_documentacion",
+      "bytes": 1250,
+      "sha256": "5d1551d4b8e7f4ec4b0c746aa3f37fe3edeec4063fa99cdf4f92069cd036a9ea"
+    },
+    {
+      "ruta": "docs/18-roadmap.md",
+      "modulo": "infra_documentacion",
+      "bytes": 1827,
+      "sha256": "d971f2e738ea38a6ac39db920e757d311eae3f334fed1764342affd26f7976f8"
+    },
+    {
+      "ruta": "docs/19-decisions/ADR-001-Flutter.md",
+      "modulo": "infra_documentacion",
+      "bytes": 718,
+      "sha256": "94b0750e312633e6cdfc6c19de9bb6185b545f15ca6687722df8365fe89375db"
+    },
+    {
+      "ruta": "docs/19-decisions/ADR-002-FastAPI.md",
+      "modulo": "infra_documentacion",
+      "bytes": 523,
+      "sha256": "fb696c7151a995329dc9a6abaa480094c2fa58119bf42ec37e8b191e079d6604"
+    },
+    {
+      "ruta": "docs/19-decisions/ADR-003-PostgreSQL.md",
+      "modulo": "infra_documentacion",
+      "bytes": 514,
+      "sha256": "c503df53ce00d06842709d605dd25c620a5dff29104de76327238ed185d9aea4"
+    },
+    {
+      "ruta": "docs/19-decisions/ADR-004-SQLite-Offline.md",
+      "modulo": "infra_documentacion",
+      "bytes": 483,
+      "sha256": "5f2ef43c70b229ac22f63b306b7ca3c0359eba8f10a70f51df34af45abaa8885"
+    },
+    {
+      "ruta": "docs/19-decisions/ADR-005-React-TypeScript.md",
+      "modulo": "infra_documentacion",
+      "bytes": 521,
+      "sha256": "7ab005f2a564e468dd6a33b6361edaafce4bbca24eaa7d98370d9ec9aa546f2c"
+    },
+    {
+      "ruta": "docs/19-decisions/ADR-006-AI-Gateway.md",
+      "modulo": "infra_documentacion",
+      "bytes": 547,
+      "sha256": "4193b79846f83bd1efc4d204600ad99879af76ea4ab0f4973a5c37b4f9b8f9cc"
+    },
+    {
+      "ruta": "docs/19-decisions/ADR-007-Offline-First.md",
+      "modulo": "infra_documentacion",
+      "bytes": 629,
+      "sha256": "c380eb7d89bfd0d0f4907dd910389b6ae40dbcf1864f1fad21c7057685c11603"
+    },
+    {
+      "ruta": "docs/19-decisions/ADR-008-Monolito-Modular.md",
+      "modulo": "infra_documentacion",
+      "bytes": 509,
+      "sha256": "d01b81279aa61e32eb61064294600aec747a507e2ab28a9b025b384846cd08a5"
+    },
+    {
+      "ruta": "docs/19-decisions/ADR-009-Cuentas-Estudiantes.md",
+      "modulo": "infra_documentacion",
+      "bytes": 440,
+      "sha256": "389650edc7ba76b752f514aee201a52cae5174390a8d3d6d2e85f4575a74d421"
+    },
+    {
+      "ruta": "docs/19-decisions/ADR-010-SQLite-servidor.md",
+      "modulo": "infra_documentacion",
+      "bytes": 1075,
+      "sha256": "5176a62ada207c0a8e0699413025880151253d9d9a5d2f6aeb0f76bf51714702"
+    },
+    {
+      "ruta": "docs/AUDITORIA_PANELES.md",
+      "modulo": "infra_documentacion",
+      "bytes": 5167,
+      "sha256": "d279c2fe4c852916c4e63e26fa1b42697dbb61f870844136beb692bf198ef37f"
+    },
+    {
+      "ruta": "docs/AUDITORIA_TECNICA.md",
+      "modulo": "infra_documentacion",
+      "bytes": 14890,
+      "sha256": "47a9b0f7a4ea28b3fbc4f8586518aacb4c58216fa94e1433c919d9db52c0acfe"
+    },
+    {
+      "ruta": "docs/COMPILACION_REACT_DIAGNOSTICO.md",
+      "modulo": "infra_documentacion",
+      "bytes": 1273,
+      "sha256": "fb32d9af390b95789006e46560ee8a416826593e77e0927e486f4ba7b15e7af0"
+    },
+    {
+      "ruta": "docs/ENTREGA_REVISION_2026-10-27.md",
+      "modulo": "infra_documentacion",
+      "bytes": 2244,
+      "sha256": "95cc39a7e3d8508181cf6f9d19fa62ae156603f3cfd417e61ea62cb3a2976520"
+    },
+    {
+      "ruta": "docs/ESTADO_INSTALACION_2026-10-27.md",
+      "modulo": "infra_documentacion",
+      "bytes": 1456,
+      "sha256": "40f3b29062e04f8a3bd83be925a4dcae9f25910c80c0b9b4b5eaa3cd3b506ef9"
+    },
+    {
+      "ruta": "docs/GUIA_VSCODE.md",
+      "modulo": "infra_documentacion",
+      "bytes": 4793,
+      "sha256": "ed0e85bba2ffc2ba9cb83b8c0c5b2852a56a1a418ff3ab8df291232489088e7a"
+    },
+    {
+      "ruta": "docs/IMPLEMENTACION_2026_10_26.md",
+      "modulo": "infra_documentacion",
+      "bytes": 1252,
+      "sha256": "f9fb6607bdee8c9d0f6876e57f74db4aedfdea8409e69ba03457629df1cb1c96"
+    },
+    {
+      "ruta": "docs/IMPLEMENTACION_REVISION_CHATGPT.md",
+      "modulo": "infra_documentacion",
+      "bytes": 2081,
+      "sha256": "2e12c23dc2a33b0f80f0efaa737e951dd9297961daeda04653155334d4daf999"
+    },
+    {
+      "ruta": "docs/IMPLEMENTACION_VERIFICADA_2026-10-27.md",
+      "modulo": "infra_documentacion",
+      "bytes": 2277,
+      "sha256": "1a14de277a2f27db3edd74e0da769d7b95156d254101831d65a2b31fe1acac59"
+    },
+    {
+      "ruta": "docs/IMPLEMENTACION_Y_PRUEBAS_2026-10-26.md",
+      "modulo": "infra_documentacion",
+      "bytes": 2678,
+      "sha256": "bad400a1127d221b4ec8a6a6cdc1d46bd98e60f16f5deebf7b4c0ced09d74997"
+    },
+    {
+      "ruta": "docs/INTEGRACION_API.md",
+      "modulo": "infra_documentacion",
+      "bytes": 5863,
+      "sha256": "65a4b76baa84721d2c42046336fbbef09a799642f5fac2f64041ad0c0e6bffb2"
+    },
+    {
+      "ruta": "docs/INVENTARIO_ARCHIVOS.json",
+      "modulo": "infra_documentacion",
+      "bytes": 70339,
+      "sha256": "4afc97c96280f5301f746ded6bb88f9aa7c79748f0fe944c08299078d1b74831"
+    },
+    {
+      "ruta": "docs/INVENTARIO_ARCHIVOS.md",
+      "modulo": "infra_documentacion",
+      "bytes": 26417,
+      "sha256": "651f99265bcdfa77cff7cdedcc1f48b5085b8419cd9bccce14ded40e67a63a0d"
+    },
+    {
+      "ruta": "docs/LIMPIEZA_REPOSITORIO.md",
+      "modulo": "infra_documentacion",
+      "bytes": 3356,
+      "sha256": "2a07d54d7f7dbe3347c963cf4d17f39de86ce740d8085e5c06c7df6c091423ea"
+    },
+    {
+      "ruta": "docs/REPORTE_AUDITORIA_Y_PRUEBAS_LOCAL.md",
+      "modulo": "infra_documentacion",
+      "bytes": 7202,
+      "sha256": "9c81402c5257f438ad0c22697994bd4f3a74b251c52b07a186a60983c20a9f65"
+    },
+    {
+      "ruta": "docs/REPORTE_COMPILACION_CONECTIVIDAD_2026-10-27.md",
+      "modulo": "infra_documentacion",
+      "bytes": 1990,
+      "sha256": "a77c9a6f1aab13c225c34fe7b29d943d7244a10df0237b0568b90786bc9e53aa"
+    },
+    {
+      "ruta": "docs/REPORTE_PRUEBAS_ACTUALES.md",
+      "modulo": "infra_documentacion",
+      "bytes": 2206,
+      "sha256": "bda7d2ab330d24f43539cbfe394503ba1c63b9ab50fb20d09b97b75e7eb90d5c"
+    },
+    {
+      "ruta": "docs/REPORTE_REACT_OFFLINE_2026-10-27.md",
+      "modulo": "infra_documentacion",
+      "bytes": 2048,
+      "sha256": "c2f39af47a010b323acc7b508a630c98aa2eb3bde9e376481dff8723997cf848"
+    },
+    {
+      "ruta": "docs/VERIFICACION_2026-10-26.md",
+      "modulo": "infra_documentacion",
+      "bytes": 10836,
+      "sha256": "ab673012436f001ef5bb21b12db3b6e2732e64ae849c43a757747c88ff75b8e6"
+    },
+    {
+      "ruta": "docs/VERIFICACION_INTEGRAL_2026-10-27.md",
+      "modulo": "infra_documentacion",
+      "bytes": 1967,
+      "sha256": "dc60407e6a7b0e24c427f7410df59f56a0438f26f7d4e266e1a6279d315ee224"
+    },
+    {
+      "ruta": "docs/VERIFICACION_Y_CORRECCION_2026-10-27.md",
+      "modulo": "infra_documentacion",
+      "bytes": 1816,
+      "sha256": "1df57c17efe3435787a42b00eee92cad2f9b5ef5b38fec66737221984c0d8ded"
+    },
+    {
+      "ruta": "docs/ai.md",
+      "modulo": "infra_documentacion",
+      "bytes": 1493,
+      "sha256": "26df9720c08fcf7ebd3d7755df52465c385a10d83e02d8255eef6a57c6e35779"
+    },
+    {
+      "ruta": "docs/ml-model-card.md",
+      "modulo": "infra_documentacion",
+      "bytes": 3844,
+      "sha256": "d1342b8f5d901f5cab69bcbe3ccc1605fab2139ae5b5c86d8c5961f6048530e5"
+    },
+    {
+      "ruta": "docs/ml.md",
+      "modulo": "infra_documentacion",
+      "bytes": 2176,
+      "sha256": "c77375094898545f37f1426c8d1659ead72937aa4db4f4a704d15cd962d92024"
+    },
+    {
+      "ruta": "docs/openapi.json",
+      "modulo": "infra_documentacion",
+      "bytes": 143121,
+      "sha256": "31d7fa3f4220d1a56d92c49431582148d61589678dd8ec29ea5e5a5738718a23"
+    },
+    {
+      "ruta": "infrastructure/README.md",
+      "modulo": "infra_documentacion",
+      "bytes": 328,
+      "sha256": "71148c67b266e67aa5268629c823d0a5d4154204f0e9248a4b5298d16498b2b7"
+    },
+    {
+      "ruta": "iniciar_kawsay_windows.ps1",
+      "modulo": "infra_documentacion",
+      "bytes": 1545,
+      "sha256": "76bd69578054aa14b1db9b2fac0ef07e0bd3b1cbbb74826f96082ad5e444f09c"
+    },
+    {
+      "ruta": "instalar_kawsay_windows.ps1",
+      "modulo": "infra_documentacion",
+      "bytes": 2942,
+      "sha256": "594ffd84b8802063f0828ac809e13967cee339e4cfae0307f78bbc0c0341129c"
+    },
+    {
+      "ruta": "ml/__init__.py",
+      "modulo": "ml",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "ml/common.py",
+      "modulo": "ml",
+      "bytes": 1267,
+      "sha256": "8538c98434dc2b8384965456962b66212c19008a749f1f7d4555a07fbed3affb"
+    },
+    {
+      "ruta": "ml/export_real.py",
+      "modulo": "ml",
+      "bytes": 3795,
+      "sha256": "56ca22c75b2c2cfaa8ea71c16560326a97ba926f9013a6d3fc8d90317c0c24d2"
+    },
+    {
+      "ruta": "ml/features.py",
+      "modulo": "ml",
+      "bytes": 4147,
+      "sha256": "21fe46850a2b6afc6b28215d84c49e5bb00d71cc0ce6cce7c3ddb8dbc3170710"
+    },
+    {
+      "ruta": "ml/make_model_card.py",
+      "modulo": "ml",
+      "bytes": 6020,
+      "sha256": "a42235a5998dd26e90e7d7ad5dc4bb65bf7f6051d7b20b3c99df234997d0d0b0"
+    },
+    {
+      "ruta": "ml/predict.py",
+      "modulo": "ml",
+      "bytes": 1665,
+      "sha256": "2f8c6d3448768c62722db9acc85cf95c5617dddc86991e3bc45cc1335b35069a"
+    },
+    {
+      "ruta": "ml/registry/registry.json",
+      "modulo": "ml",
+      "bytes": 2312,
+      "sha256": "1fa44a00d48a89d977e066ed321fa599313c8b4ece87d3377c3b2902d5862f07"
+    },
+    {
+      "ruta": "ml/registry.py",
+      "modulo": "ml",
+      "bytes": 1495,
+      "sha256": "24b3a2be5af2a16465c5e9c1bf87c2a85abbfca83676d932a3d631d9248889f2"
+    },
+    {
+      "ruta": "ml/reports/kawsay-diff-20261021201327-fe6b38.json",
+      "modulo": "ml",
+      "bytes": 4143,
+      "sha256": "efd6f2e450a96b9339029fc935a6d9c22bea688a5b0fde3ff1c59d354e52516e"
+    },
+    {
+      "ruta": "ml/reports/kawsay-diff-20261026203213-cce4aa.json",
+      "modulo": "ml",
+      "bytes": 3207,
+      "sha256": "f297eafa913172b4d635083824434d3bb1e9769cd89bf66cdaac0cc5e2dddc5e"
+    },
+    {
+      "ruta": "ml/reports/kawsay-diff-20261026221136-cce4aa.json",
+      "modulo": "ml",
+      "bytes": 3359,
+      "sha256": "c194573f57e5d8ecf2d388c090e65cc66962ecbeb1ea5ba4236164f7245de306"
+    },
+    {
+      "ruta": "ml/reports/robustness.json",
+      "modulo": "ml",
+      "bytes": 3155,
+      "sha256": "2bde7d68caf171bc51aaf56a1019e236ff352ccfe32438c5144d243051ddbd84"
+    },
+    {
+      "ruta": "ml/requirements.txt",
+      "modulo": "ml",
+      "bytes": 47,
+      "sha256": "4b4ea3c0d2c01589a356117826ccb34a1829f8a65f3278085437db087f02fe13"
+    },
+    {
+      "ruta": "ml/robustness.py",
+      "modulo": "ml",
+      "bytes": 1921,
+      "sha256": "e40f1a8b5ee24d481d129d6e00efa8a77692c3d9357307d4f767fb8cd0c9f910"
+    },
+    {
+      "ruta": "ml/synthetic.py",
+      "modulo": "ml",
+      "bytes": 2162,
+      "sha256": "c5450f64d46515d7e4a941f74144facfef6027395c7014a435cf947cb9ec0854"
+    },
+    {
+      "ruta": "ml/tests/__init__.py",
+      "modulo": "ml",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "ruta": "ml/tests/test_ml_pipeline.py",
+      "modulo": "ml",
+      "bytes": 8179,
+      "sha256": "e9d1ddcbd02430ba2caa4fcfbc1a23f94e57099cdf5083ff4b1ddf45b65b4d9b"
+    },
+    {
+      "ruta": "ml/train.py",
+      "modulo": "ml",
+      "bytes": 11739,
+      "sha256": "d17b9035c68707e41554b50b9d3102bd2e093324e5456d2c2b552517729ae4ea"
+    },
+    {
+      "ruta": "ml/train_authorized.py",
+      "modulo": "ml",
+      "bytes": 1485,
+      "sha256": "ef029eb9ab32e07916c47d12f4a47b344484a6511efed4ab15b981031b192507"
+    },
+    {
+      "ruta": "mobile/README.md",
+      "modulo": "mobile",
+      "bytes": 2139,
+      "sha256": "dc548de60b433ae5070fbc3fe9434e28ce9c97093982f681cc18a390b1b82336"
+    },
+    {
+      "ruta": "mobile/analysis_options.yaml",
+      "modulo": "mobile",
+      "bytes": 128,
+      "sha256": "f1f8d44a2e1894eaa9abe43540fc1df99472ec0df378c72927bab4d0a54264f9"
+    },
+    {
+      "ruta": "mobile/lib/app/app.dart",
+      "modulo": "mobile",
+      "bytes": 596,
+      "sha256": "2b9e5d81898a0705e055f9868cde50474191705cd81bfef261ebe675868910ce"
+    },
+    {
+      "ruta": "mobile/lib/app/session.dart",
+      "modulo": "mobile",
+      "bytes": 2192,
+      "sha256": "1a41edb840cc486d7cbe6b3753e92f7bdc7f85689f877163c190f77a254fc4d2"
+    },
+    {
+      "ruta": "mobile/lib/app/theme.dart",
+      "modulo": "mobile",
+      "bytes": 760,
+      "sha256": "abaad061fc6d8b482b07827360543cb8c6951ce6241548c6d1729b5ce71c427c"
+    },
+    {
+      "ruta": "mobile/lib/core/api/api_client.dart",
+      "modulo": "mobile",
+      "bytes": 5947,
+      "sha256": "f4f03cc3d5e7acfb3bbd63a6feb0d78e6644c1df3fff7d0f7f4e92e90d2a6787"
+    },
+    {
+      "ruta": "mobile/lib/core/config.dart",
+      "modulo": "mobile",
+      "bytes": 436,
+      "sha256": "e873b436a3a7897a1924446b885ea54bf3bf7bf93220a67d1907f5d870e3a820"
+    },
+    {
+      "ruta": "mobile/lib/core/data/repository.dart",
+      "modulo": "mobile",
+      "bytes": 11119,
+      "sha256": "d5d21403123a69fc341139b1ec972b3c2b7c3ddd091a82a3061625ae24ce9de2"
+    },
+    {
+      "ruta": "mobile/lib/core/database/app_database.dart",
+      "modulo": "mobile",
+      "bytes": 3316,
+      "sha256": "f6024d53e6a760fc556ed089691857a513086c177db5890f60b28159f053a1a8"
+    },
+    {
+      "ruta": "mobile/lib/core/network/connectivity_monitor.dart",
+      "modulo": "mobile",
+      "bytes": 930,
+      "sha256": "fbf52ddf5cc7f47ad36f24768fbdbb5bb3856f708da3128e6cc86ee53afbe6d1"
+    },
+    {
+      "ruta": "mobile/lib/core/offline/rules.dart",
+      "modulo": "mobile",
+      "bytes": 4823,
+      "sha256": "898508556987e57d3aff0290cd5a4d3387b38df757122e79745f02515d8d70f5"
+    },
+    {
+      "ruta": "mobile/lib/core/security/token_store.dart",
+      "modulo": "mobile",
+      "bytes": 699,
+      "sha256": "5505dee04bb0af0a498509113d7b9c3474f33e34b68d14a4b1ccb696772cbebb"
+    },
+    {
+      "ruta": "mobile/lib/core/sync/sync_manager.dart",
+      "modulo": "mobile",
+      "bytes": 5963,
+      "sha256": "30328921b529e1001b6d7dfaedaa34447435669969366f4404453606809f3279"
+    },
+    {
+      "ruta": "mobile/lib/features/assignments/activity_screen.dart",
+      "modulo": "mobile",
+      "bytes": 5939,
+      "sha256": "9f48da1045cde6e9e444cd3d185aabb9882aa80d8f4a34eed39d25545c05aac2"
+    },
+    {
+      "ruta": "mobile/lib/features/assignments/tasks_screen.dart",
+      "modulo": "mobile",
+      "bytes": 1821,
+      "sha256": "43844f07baef6267bcce8c0b3a4894a6f96c4b155795b356519a52ff2f2d77af"
+    },
+    {
+      "ruta": "mobile/lib/features/auth/login_screen.dart",
+      "modulo": "mobile",
+      "bytes": 2225,
+      "sha256": "d1ac0af229ef4e43ab15ea838a83171a465bd36556b45e240396ff45b773ca53"
+    },
+    {
+      "ruta": "mobile/lib/features/home/home_screen.dart",
+      "modulo": "mobile",
+      "bytes": 3578,
+      "sha256": "90e050ee3d0b42c6f326f50fab062945b98f82bd058ba3bff234daa0b318f279"
+    },
+    {
+      "ruta": "mobile/lib/features/learn/learn_screen.dart",
+      "modulo": "mobile",
+      "bytes": 4769,
+      "sha256": "cb15c976254ebc02818d819b332e4a1ddae289b22ca37c2b661e2ded8726de77"
+    },
+    {
+      "ruta": "mobile/lib/features/progress/progress_screen.dart",
+      "modulo": "mobile",
+      "bytes": 2004,
+      "sha256": "b6977a24c4faf804832d447b562571f901e0e210602a66b08adae94e848c3cb5"
+    },
+    {
+      "ruta": "mobile/lib/features/settings/settings_screen.dart",
+      "modulo": "mobile",
+      "bytes": 4879,
+      "sha256": "747a58ffe5f822fc4fc56b64a5aca2ddd165beca0a44eaf14bbfb5140d7647b2"
+    },
+    {
+      "ruta": "mobile/lib/main.dart",
+      "modulo": "mobile",
+      "bytes": 1360,
+      "sha256": "8d0d6b3fd1d04c714c239f8bdc0fb82e38267bb5f74ea380335745e584a4606f"
+    },
+    {
+      "ruta": "mobile/lib/shared/widgets/big_button.dart",
+      "modulo": "mobile",
+      "bytes": 987,
+      "sha256": "c5ec79d65a681f01c02b38a87960ac369de835317b324c8251f89811d44f75b7"
+    },
+    {
+      "ruta": "mobile/pubspec.lock",
+      "modulo": "mobile",
+      "bytes": 19433,
+      "sha256": "b14fe1e4f8680645df0e15085c7a41290902bd63b3c89e27bebb1ec04af5cfcc"
+    },
+    {
+      "ruta": "mobile/pubspec.yaml",
+      "modulo": "mobile",
+      "bytes": 615,
+      "sha256": "9c210bdf707ffea74db7b528c549a485cbc8b33352b782ab53732d8758d6fb9f"
+    },
+    {
+      "ruta": "mobile/test/offline_sync_test.dart",
+      "modulo": "mobile",
+      "bytes": 5215,
+      "sha256": "ad9f6656af28aa0042ec92a59fd55ac0529f3ccd00c89ef40505c854f2fa69af"
+    },
+    {
+      "ruta": "mobile/test/rules_test.dart",
+      "modulo": "mobile",
+      "bytes": 2487,
+      "sha256": "4e097bc4e8a4d312520172913ce9eea66776b2e93710c9223f7a527dd663e365"
+    },
+    {
+      "ruta": "scripts/audit_inventory.py",
+      "modulo": "infra_documentacion",
+      "bytes": 3947,
+      "sha256": "0173563c3c1fc84b1a8c5eab382602369cd81bf7d7df666576c4b4f16bd614e3"
+    },
+    {
+      "ruta": "scripts/browser_e2e.py",
+      "modulo": "infra_documentacion",
+      "bytes": 5513,
+      "sha256": "aeca48ec9a10c95f6a079582a9bf87024431da43860d523cce3fc947c572492e"
+    },
+    {
+      "ruta": "scripts/demo_e2e.py",
+      "modulo": "infra_documentacion",
+      "bytes": 10185,
+      "sha256": "ea38e714ea5e10db843b4855d2a01c2947a13dee34ce6c56c4a38dac204b9712"
+    },
+    {
+      "ruta": "scripts/dev.py",
+      "modulo": "infra_documentacion",
+      "bytes": 5934,
+      "sha256": "eb0cb407dc2f2ba653900a1a31da1d9f2671e219811bdd6d5a23571414664157"
+    },
+    {
+      "ruta": "scripts/gen_docs.py",
+      "modulo": "infra_documentacion",
+      "bytes": 5068,
+      "sha256": "a6618c95c9f927c3a93c5ae3297e472d94cb3c548702d2c7931af7d0d782726b"
+    },
+    {
+      "ruta": "scripts/gen_rule_vectors.py",
+      "modulo": "infra_documentacion",
+      "bytes": 3131,
+      "sha256": "1566acae2399c32e17e64245b9a72d70151655f3941a1d3e72e86631365d5c10"
+    },
+    {
+      "ruta": "scripts/run_local.sh",
+      "modulo": "infra_documentacion",
+      "bytes": 969,
+      "sha256": "73229cad810ee7488c51675f80b9bb3f19cb0d2861b44f2b829664f57afdd949"
+    },
+    {
+      "ruta": "scripts/smoke_local_stack.py",
+      "modulo": "infra_documentacion",
+      "bytes": 1560,
+      "sha256": "0d33634a75f96db76898f60418da6cd368b7ec9b6033de023f7f3cb9c464bfcd"
+    },
+    {
+      "ruta": "scripts/test_offline_browser.py",
+      "modulo": "infra_documentacion",
+      "bytes": 4749,
+      "sha256": "c1e8ca87b6110609c2b5d5dd6d50476a08339d17e5ee7bede94a35b7f9aa5167"
+    },
+    {
+      "ruta": "scripts/verify_web_role_wiring.py",
+      "modulo": "infra_documentacion",
+      "bytes": 931,
+      "sha256": "2a44b8e4e63a422d53f047677b57cafc9d656cdbbe686d08abe9d5ea2f4a6aa1"
+    },
+    {
+      "ruta": "shared/rules_vectors.json",
+      "modulo": "infra_documentacion",
+      "bytes": 8627,
+      "sha256": "d900a60523382fb257af4fda20f8801d0b6d053d46bfa1381e069ac70ce2d972"
+    },
+    {
+      "ruta": "teacher-web/.dockerignore",
+      "modulo": "frontend",
+      "bytes": 101,
+      "sha256": "38ba92f8768d7fd8960a5de115fe4df31016183b62c7451b3393e5209f70d46e"
+    },
+    {
+      "ruta": "teacher-web/.npmrc",
+      "modulo": "frontend",
+      "bytes": 55,
+      "sha256": "4bac7089617d6b4f574eee2d5d0f573940cb922a62e368a8db8ad02a4d85b597"
+    },
+    {
+      "ruta": "teacher-web/.nvmrc",
+      "modulo": "frontend",
+      "bytes": 8,
+      "sha256": "b911698dc3cf3227d34d0ad6727f1c4408791203c9665de99ab959331a1fb07d"
+    },
+    {
+      "ruta": "teacher-web/Dockerfile",
+      "modulo": "frontend",
+      "bytes": 232,
+      "sha256": "fd57248b90718f0bb2316d4b96bfb2674523677bf93a6e96e161cbeaf6893941"
+    },
+    {
+      "ruta": "teacher-web/README.md",
+      "modulo": "frontend",
+      "bytes": 1663,
+      "sha256": "e7290a439a33a8dbf20aa15df85510b70538f62e8753a08c3d7873bdd2fd8aa9"
+    },
+    {
+      "ruta": "teacher-web/e2e/run.cjs",
+      "modulo": "frontend",
+      "bytes": 532,
+      "sha256": "18a71543d5c57a6e487f530a61c98df41edcf13c95d53b66b760092db054f2a2"
+    },
+    {
+      "ruta": "teacher-web/e2e/teacher.spec.ts",
+      "modulo": "frontend",
+      "bytes": 10641,
+      "sha256": "dff39152813db3bbf471c4ab83c2d5cd76733470442467b1250449e86a892108"
+    },
+    {
+      "ruta": "teacher-web/index.html",
+      "modulo": "frontend",
+      "bytes": 311,
+      "sha256": "058e7d5b19ded349cd4548c0ddef18dfd0372deee852913e5e66b288ca50390a"
+    },
+    {
+      "ruta": "teacher-web/nginx.conf",
+      "modulo": "frontend",
+      "bytes": 3747,
+      "sha256": "55f44344d1dbaedf3903fc5ed6020467a4027af7dc1b760cd9784365d42f3be4"
+    },
+    {
+      "ruta": "teacher-web/package-lock.json",
+      "modulo": "frontend",
+      "bytes": 74304,
+      "sha256": "b1c4bf93ed7708a0b7e99e6545ee7a8da87e316bff5008973f7adce0c8b8d92d"
+    },
+    {
+      "ruta": "teacher-web/package.json",
+      "modulo": "frontend",
+      "bytes": 1018,
+      "sha256": "cba6137ca08739c7288460e94fd33003d66dbdca4eeb0718acf4c793c8478ce1"
+    },
+    {
+      "ruta": "teacher-web/playwright.config.ts",
+      "modulo": "frontend",
+      "bytes": 380,
+      "sha256": "7edf3c1b70e5a6ea3cb287bf51ce548444945c7ed839b0d783b84a11ce8fc787"
+    },
+    {
+      "ruta": "teacher-web/public/sw.js",
+      "modulo": "frontend",
+      "bytes": 1199,
+      "sha256": "2c0cef629aabb0a16b11e8f31a0606d70e2809f148a865497fab341d877ffa19"
+    },
+    {
+      "ruta": "teacher-web/scripts/preflight.mjs",
+      "modulo": "frontend",
+      "bytes": 826,
+      "sha256": "c63f90ac95d151c5b4ef388df7753ca729a9f93266e8124dbc08926c2abbebc8"
+    },
+    {
+      "ruta": "teacher-web/src/app/App.tsx",
+      "modulo": "frontend",
+      "bytes": 7038,
+      "sha256": "9aaceea621f53d270cfe325cf83e275e12b310d38e715f60729bde529612de69"
+    },
+    {
+      "ruta": "teacher-web/src/app/AuthContext.tsx",
+      "modulo": "frontend",
+      "bytes": 2110,
+      "sha256": "69c644da24bbe742cf501a382e5ae7e7fe57e491953d05680b2a15f6ed4963ff"
+    },
+    {
+      "ruta": "teacher-web/src/components/FlagCard.tsx",
+      "modulo": "frontend",
+      "bytes": 3867,
+      "sha256": "95d25129e9f62c774bdebee6b966557f8eb8addca5483408f2218c6a0b6e53a5"
+    },
+    {
+      "ruta": "teacher-web/src/components/Icon.tsx",
+      "modulo": "frontend",
+      "bytes": 1577,
+      "sha256": "9521c6160bf353216afec29c371e755a81b89af79b84f812fafcc9ffb5dfe865"
+    },
+    {
+      "ruta": "teacher-web/src/components/QuestionsEditor.tsx",
+      "modulo": "frontend",
+      "bytes": 3243,
+      "sha256": "6915869208f1a3f656ffa8758fc29402c42d7304c917d4f8b506c830cbf43c6d"
+    },
+    {
+      "ruta": "teacher-web/src/components/ui.tsx",
+      "modulo": "frontend",
+      "bytes": 754,
+      "sha256": "ac65140048b4082350ade6c00a80ed9e74f931fc69f92a307c8902141eb0af2b"
+    },
+    {
+      "ruta": "teacher-web/src/hooks/useAsync.ts",
+      "modulo": "frontend",
+      "bytes": 1042,
+      "sha256": "bc5e1277b614736dacfc5da2f303d7c8ec705b12df6b32d921574457d6fd77a4"
+    },
+    {
+      "ruta": "teacher-web/src/main.tsx",
+      "modulo": "frontend",
+      "bytes": 653,
+      "sha256": "6b1332b401da388118ec310e3ed2b43a05d58713cc89111085bf23be880b5e6e"
+    },
+    {
+      "ruta": "teacher-web/src/pages/Admin.tsx",
+      "modulo": "frontend",
+      "bytes": 5992,
+      "sha256": "fa5291e702e123c7c21e3a78aeef7c95384966ab57c168daec2bd475c60c0bfe"
+    },
+    {
+      "ruta": "teacher-web/src/pages/Alerts.tsx",
+      "modulo": "frontend",
+      "bytes": 1262,
+      "sha256": "796a8ef3eea4b5afe572faecb499289bb4590e6c1850263f38af5fb0efce7b54"
+    },
+    {
+      "ruta": "teacher-web/src/pages/Assignments.tsx",
+      "modulo": "frontend",
+      "bytes": 10101,
+      "sha256": "0f2bcda42302b998ceaf5b35ef1a7ad2cfa3f00034906a0e124116219180231e"
+    },
+    {
+      "ruta": "teacher-web/src/pages/Classrooms.tsx",
+      "modulo": "frontend",
+      "bytes": 4393,
+      "sha256": "4c3f42a6ad5d4ec9424fcf3b9dc80c9de7ff062ce7ef00041268ac4cc4404b79"
+    },
+    {
+      "ruta": "teacher-web/src/pages/Dashboard.tsx",
+      "modulo": "frontend",
+      "bytes": 8689,
+      "sha256": "03af53d7525aa9c9941ec35701aef0b721cb6ff2871bd255b59fca7b85a0c775"
+    },
+    {
+      "ruta": "teacher-web/src/pages/Login.tsx",
+      "modulo": "frontend",
+      "bytes": 4059,
+      "sha256": "8a6ed2b74d7157e622646eabf9f816f7b1653bcf85a2b96cd158b0242c6e34de"
+    },
+    {
+      "ruta": "teacher-web/src/pages/Planning.tsx",
+      "modulo": "frontend",
+      "bytes": 8186,
+      "sha256": "c511a83e192a83e55f79c10a508914395388f1f3cf6cfc72de514f29ce4f3aa2"
+    },
+    {
+      "ruta": "teacher-web/src/pages/StudentActivity.tsx",
+      "modulo": "frontend",
+      "bytes": 9229,
+      "sha256": "0d18a807625460d5240a18106323bf7fb26f6c94947ab8820042b4b310cc97fc"
+    },
+    {
+      "ruta": "teacher-web/src/pages/StudentHome.tsx",
+      "modulo": "frontend",
+      "bytes": 6219,
+      "sha256": "6904241cb6eae9dc66f6f7449ac4d5f97553aa605e739e00eee537ed7f008001"
+    },
+    {
+      "ruta": "teacher-web/src/pages/Students.tsx",
+      "modulo": "frontend",
+      "bytes": 9464,
+      "sha256": "875bca0a30d07d6fbe2a03ab46b8ee8b6a3e875c7aecb183438da523d378edbb"
+    },
+    {
+      "ruta": "teacher-web/src/services/api.ts",
+      "modulo": "frontend",
+      "bytes": 5235,
+      "sha256": "53e5007ee271ab2a4a26962cf91eb3ca25569518230b06aaaa944e28efdc5271"
+    },
+    {
+      "ruta": "teacher-web/src/services/offlineTasks.ts",
+      "modulo": "frontend",
+      "bytes": 2942,
+      "sha256": "418574985c81eba5eb59114137580bb524a2790e34db26305b8ef27a3151255f"
+    },
+    {
+      "ruta": "teacher-web/src/services/pendingAttempts.ts",
+      "modulo": "frontend",
+      "bytes": 3240,
+      "sha256": "c22146bf4bd1417eb8f9a5599a4e5f4cfbb1262fa62ec84be50e82151f309007"
+    },
+    {
+      "ruta": "teacher-web/src/styles.css",
+      "modulo": "frontend",
+      "bytes": 28325,
+      "sha256": "c73f070afc7cb064a469902db873547b527ec53168bf18147ecc77c3e2fe4d89"
+    },
+    {
+      "ruta": "teacher-web/src/test/api.test.ts",
+      "modulo": "frontend",
+      "bytes": 4895,
+      "sha256": "99445994e650a3537c44cd3c0f764e5a11a33b94afcd7407c55d757097e287ca"
+    },
+    {
+      "ruta": "teacher-web/src/test/components.test.tsx",
+      "modulo": "frontend",
+      "bytes": 10560,
+      "sha256": "c02d7e7c72ed2e1bbe95ab620df5ecf910a036748439c4130ef32c3e603c4440"
+    },
+    {
+      "ruta": "teacher-web/src/test/integration.test.ts",
+      "modulo": "frontend",
+      "bytes": 1652,
+      "sha256": "07c8b70e71befb61359b297b053ff4f96d9ce64e4ba436e9050056fee78791d0"
+    },
+    {
+      "ruta": "teacher-web/src/test/setup.ts",
+      "modulo": "frontend",
+      "bytes": 43,
+      "sha256": "9b328c4843431fa76d8de00008fc159e95f99a840211085ff3b8f25e53d14409"
+    },
+    {
+      "ruta": "teacher-web/src/test/useAsync.test.tsx",
+      "modulo": "frontend",
+      "bytes": 795,
+      "sha256": "450a25b675a7638c3a1a26a5054bf8c4b329ad86194758dc9f3bf2097480f8b7"
+    },
+    {
+      "ruta": "teacher-web/src/types/api.ts",
+      "modulo": "frontend",
+      "bytes": 5203,
+      "sha256": "696a5e7825dadb65ac5bea227f21f81ed432a77e8b1f4f07c8b40b2a62b74440"
+    },
+    {
+      "ruta": "teacher-web/src/utils/format.ts",
+      "modulo": "frontend",
+      "bytes": 657,
+      "sha256": "a15782883fc513d08c716d8edd687d939d13dba886cb11de1e8d6f1ca61fbcca"
+    },
+    {
+      "ruta": "teacher-web/tsconfig.e2e.json",
+      "modulo": "frontend",
+      "bytes": 89,
+      "sha256": "45b9f8c8bf70aa68c3bcf60509da074a9346f3050253458993fbab7effd7fc43"
+    },
+    {
+      "ruta": "teacher-web/tsconfig.json",
+      "modulo": "frontend",
+      "bytes": 496,
+      "sha256": "14f0bed6716e5c29b876382f1656802d0e0ddec172f8b68c6d41acc4b4e4191e"
+    },
+    {
+      "ruta": "teacher-web/vite.config.ts",
+      "modulo": "frontend",
+      "bytes": 394,
+      "sha256": "56e58fc4e849316c03a6bc34b59dfdbc572d7226b4184b0a680c990bf420eef4"
+    },
+    {
+      "ruta": "tests/README.md",
+      "modulo": "infra_documentacion",
+      "bytes": 193,
+      "sha256": "ada4b5f8d37904b0637e40cc7081c341a3503a904b00928d68771135ddbd80af"
+    }
+  ]
+}

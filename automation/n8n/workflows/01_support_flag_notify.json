@@ -1,0 +1,45 @@
+{
+  "name": "KAWSAY 01 - Alerta educativa nueva (notificación al docente)",
+  "nodes": [
+    {
+      "parameters": {"httpMethod": "POST", "path": "kawsay", "responseMode": "responseNode", "options": {"rawBody": true}},
+      "name": "Webhook KAWSAY", "type": "n8n-nodes-base.webhook", "typeVersion": 2, "position": [240, 300], "webhookId": "kawsay-events"
+    },
+    {
+      "parameters": {"jsCode": "// Verifica la firma HMAC de KAWSAY (anti-manipulación y anti-replay). Secreto en variable de entorno de n8n.\nconst crypto = require('crypto');\nconst secret = $env.KAWSAY_WEBHOOK_SECRET;\nconst item = $input.first();\nconst raw = item.binary && item.binary.data ? Buffer.from(item.binary.data.data, 'base64').toString('utf8') : JSON.stringify(item.json.body);\nconst ts = item.json.headers['x-kawsay-timestamp'];\nconst sig = item.json.headers['x-kawsay-signature'] || '';\nconst expected = 'sha256=' + crypto.createHmac('sha256', secret).update(`${ts}.${raw}`).digest('hex');\nconst fresh = Math.abs(Date.now() / 1000 - Number(ts)) < 300;\nconst ok = fresh && sig.length === expected.length && crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected));\nreturn [{ json: { valid: ok, event: ok ? JSON.parse(raw) : null } }];"},
+      "name": "Verificar firma HMAC", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [460, 300]
+    },
+    {
+      "parameters": {"conditions": {"boolean": [{"value1": "={{$json.valid}}", "value2": true}]}},
+      "name": "¿Firma válida?", "type": "n8n-nodes-base.if", "typeVersion": 1, "position": [680, 300]
+    },
+    {
+      "parameters": {"conditions": {"string": [{"value1": "={{$json.event.type}}", "value2": "student.support_flag.created"}]}},
+      "name": "¿Alerta nueva?", "type": "n8n-nodes-base.if", "typeVersion": 1, "position": [880, 180]
+    },
+    {
+      "parameters": {"jsCode": "// Mensaje SIN nombres de estudiantes (minimización de datos). El docente abre KAWSAY para ver la evidencia.\nconst e = $json.event;\nreturn [{ json: { teacher_ids: e.payload.teacher_ids, text: 'KAWSAY: hay una nueva alerta educativa en tu aula. Ingresa al panel para ver la evidencia y decidir cómo acompañar.', flag_id: e.payload.flag_id } }];"},
+      "name": "Preparar mensaje", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [1080, 120]
+    },
+    {
+      "parameters": {"respondWith": "json", "responseBody": "={{ {ok: true} }}", "options": {"responseCode": 200}},
+      "name": "Responder 200", "type": "n8n-nodes-base.respondToWebhook", "typeVersion": 1, "position": [1300, 220]
+    },
+    {
+      "parameters": {"respondWith": "json", "responseBody": "={{ {ok: false} }}", "options": {"responseCode": 401}},
+      "name": "Responder 401", "type": "n8n-nodes-base.respondToWebhook", "typeVersion": 1, "position": [900, 400]
+    },
+    {
+      "parameters": {"respondWith": "json", "responseBody": "={{ {ok: false, reason: 'notification_not_configured'} }}", "options": {"responseCode": 503}},
+      "name": "Notificación no configurada", "type": "n8n-nodes-base.respondToWebhook", "typeVersion": 1, "position": [1300, 80]
+    }
+  ],
+  "connections": {
+    "Webhook KAWSAY": {"main": [[{"node": "Verificar firma HMAC", "type": "main", "index": 0}]]},
+    "Verificar firma HMAC": {"main": [[{"node": "¿Firma válida?", "type": "main", "index": 0}]]},
+    "¿Firma válida?": {"main": [[{"node": "¿Alerta nueva?", "type": "main", "index": 0}], [{"node": "Responder 401", "type": "main", "index": 0}]]},
+    "¿Alerta nueva?": {"main": [[{"node": "Preparar mensaje", "type": "main", "index": 0}], [{"node": "Responder 200", "type": "main", "index": 0}]]},
+    "Preparar mensaje": {"main": [[{"node": "Notificación no configurada", "type": "main", "index": 0}]]}
+  },
+  "settings": {"executionOrder": "v1"}
+}

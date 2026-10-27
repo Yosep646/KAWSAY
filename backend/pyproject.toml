@@ -1,0 +1,14 @@
+[tool.ruff]
+line-length = 140
+target-version = "py312"
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S"]
+ignore = ["S101"]
+[tool.ruff.lint.per-file-ignores]
+"migrations/*" = ["E501", "I"]
+"tests/*" = ["S", "E501", "B"]
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true

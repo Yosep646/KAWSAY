@@ -1,0 +1,48 @@
+# Opcional: la forma más simple de ejecutar es `python scripts/dev.py demo` (sin Docker).
+# La base de datos es SQLite en un volumen (/srv/data). NO escales el backend a varias réplicas (un solo escritor).
+services:
+  backend:
+    build: ./backend
+    environment:
+      APP_ENV: ${APP_ENV:-development}
+      DATABASE_URL: sqlite:////srv/data/kawsay.db
+      JWT_SECRET: ${JWT_SECRET:?defínelo en .env (>= 32 caracteres)}
+      CORS_ORIGINS: ${CORS_ORIGINS:-}
+      AI_PROVIDER: ${AI_PROVIDER:-disabled}
+      AI_MODEL: ${AI_MODEL:-}
+      AI_API_KEY: ${AI_API_KEY:-}
+      AUTOMATION_WEBHOOK_URL: ${AUTOMATION_WEBHOOK_URL:-}
+      AUTOMATION_WEBHOOK_SECRET: ${AUTOMATION_WEBHOOK_SECRET:-}
+    volumes:
+      - kawsay_data:/srv/data
+    ports:
+      - "127.0.0.1:8000:8000"
+    restart: unless-stopped
+    command: sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000 --proxy-headers"
+
+  teacher-web:
+    build: ./teacher-web
+    depends_on:
+      backend:
+        condition: service_started
+    ports:
+      # 127.0.0.1: solo tu PC. Para LAN, establece WEB_BIND_IP=0.0.0.0 con firewall y red confiable.
+      - "${WEB_BIND_IP:-127.0.0.1}:8080:80"
+    restart: unless-stopped
+
+  dispatcher:
+    build: ./backend
+    environment:
+      DATABASE_URL: sqlite:////srv/data/kawsay.db
+      JWT_SECRET: ${JWT_SECRET:?defínelo en .env}
+      AUTOMATION_WEBHOOK_URL: ${AUTOMATION_WEBHOOK_URL:-}
+      AUTOMATION_WEBHOOK_SECRET: ${AUTOMATION_WEBHOOK_SECRET:-}
+    volumes:
+      - kawsay_data:/srv/data
+    depends_on:
+      - backend
+    command: python -m app.workers.dispatcher
+    profiles: ["automation"]   # docker compose --profile automation up
+
+volumes:
+  kawsay_data:

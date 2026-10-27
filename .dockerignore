@@ -1,0 +1,17 @@
+**/.env
+**/.env.*
+!**/.env.example
+**/*.db
+**/*.sqlite
+**/*.sqlite3
+**/data/
+**/node_modules/
+**/dist/
+**/.venv/
+**/venv/
+**/__pycache__/
+**/.pytest_cache/
+.git/
+.gitignore
+**/test-results/
+**/playwright-report/

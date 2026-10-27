@@ -1,0 +1,28 @@
+# Variables y secretos
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+# React
+**/node_modules/
+**/dist/
+**/.vite/
+**/coverage/
+**/playwright-report/
+**/test-results/
+# Python
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.venv/
+**/venv/
+# Datos del servidor (NO versionar estudiantes)
+**/data/*.db
+**/data/*.db-*
+**/*.sqlite
+**/*.sqlite3
+# Sistema
+.DS_Store
+Thumbs.db

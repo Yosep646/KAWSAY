@@ -1,0 +1,1920 @@
+{
+  "scope": "Inventario y análisis estructural, no auditoría semántica completa",
+  "files": [
+    {
+      "path": ".env.example",
+      "bytes": 1110,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "137e48dd42dd30b17d84aeac62e4e6df684d2bf7dfc8963f776e17c0c31558b2",
+      "lines": 27
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "bytes": 1201,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "fbccff19f068246c3a723c4f31859bb5c8731cff4cdb94c372c40d02853d31f4",
+      "lines": 34
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 507,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "f32b56880d794e5d23d0539cf715c66d1222404f2a4c68c88f267738a8a59c6c",
+      "lines": 42
+    },
+    {
+      "path": ".vscode/extensions.json",
+      "bytes": 167,
+      "check": "JSON válido; no certifica contrato",
+      "sha256": "1ab41062fd89f9ba3d618807a661580db2fd7f439ee88230104bdcda2d4d807f",
+      "lines": 1
+    },
+    {
+      "path": ".vscode/launch.json",
+      "bytes": 840,
+      "check": "JSON válido; no certifica contrato",
+      "sha256": "c528fcec09a3a743e59d64e54136785f996e26e259009ea298a3755805c347c6",
+      "lines": 31
+    },
+    {
+      "path": ".vscode/settings.json",
+      "bytes": 404,
+      "check": "JSON válido; no certifica contrato",
+      "sha256": "a38ed9d59a78a3a640bd7ec73c59379e82c64f0c7d323659e891d0742b6035ac",
+      "lines": 18
+    },
+    {
+      "path": ".vscode/tasks.json",
+      "bytes": 727,
+      "check": "JSON válido; no certifica contrato",
+      "sha256": "3089e975b1059148661cfb182c2dd2e2fef46825fb5a6383f710a7ae9b40a474",
+      "lines": 10
+    },
+    {
+      "path": "ai/README.md",
+      "bytes": 298,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "977e489887f1f476c531652feb30d5b75e3d5a7929b7fba0e648c2362450fab4",
+      "lines": 4
+    },
+    {
+      "path": "automation/n8n/workflows/01_support_flag_notify.json",
+      "bytes": 3474,
+      "check": "JSON válido; no certifica contrato",
+      "sha256": "adc611301f9589605b44495aa5e21d07fa762cd0259506f96abd24d506c236c3",
+      "lines": 41
+    },
+    {
+      "path": "automation/README.md",
+      "bytes": 1700,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "85ddc0fe745991dfa7b972d8a3c1089d5e9112a14fbbd72a4b70800dd1b9dd57",
+      "lines": 22
+    },
+    {
+      "path": "backend/.dockerignore",
+      "bytes": 74,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "d47e8efaf3bc341426a48a324d308acb2b654a70de506b0f98262ae2f9d66553",
+      "lines": 8
+    },
+    {
+      "path": "backend/alembic.ini",
+      "bytes": 431,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "151bd6b14c409cfd27ec098851e7bb1cab24fc1a317b0387e082052563ca2d43",
+      "lines": 21
+    },
+    {
+      "path": "backend/app/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/cli.py",
+      "bytes": 3060,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "21f3a3ef33294ea4e24aee9df149d216355dbf9a26b10d69d3ea05bdce9cccb4",
+      "lines": 75
+    },
+    {
+      "path": "backend/app/core/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/core/config.py",
+      "bytes": 2255,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "0c93289c5251974fbe293974465f6cd563570e196249ad5c07d767f543b8f804",
+      "lines": 67
+    },
+    {
+      "path": "backend/app/core/database.py",
+      "bytes": 2838,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "b7121a1b50dd09d9eb63b0d6f24884a2d5a4695ed71e7513dd887711d9935ee5",
+      "lines": 85
+    },
+    {
+      "path": "backend/app/core/exceptions.py",
+      "bytes": 2550,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "6c531629f5b4be5c1c80d236fb87fa70dce6583b4cd4d72d927de5bee3dab467",
+      "lines": 73
+    },
+    {
+      "path": "backend/app/core/logging.py",
+      "bytes": 1150,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e876006e32f16e420a6ee5643e6d2cf5acc161efe6f42dc2d7a890148fa5f72d",
+      "lines": 33
+    },
+    {
+      "path": "backend/app/core/middleware.py",
+      "bytes": 3090,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "bccfb39872daf2c7fe186f3c474612ab6a45844d78aa213a83fbc30d1bd446aa",
+      "lines": 62
+    },
+    {
+      "path": "backend/app/core/password_policy.py",
+      "bytes": 1499,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "b976e5ba7411eac8596b660add84d6c143f0e956d817d7448b9ba938071b604e",
+      "lines": 27
+    },
+    {
+      "path": "backend/app/core/permissions.py",
+      "bytes": 1497,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "811fa8f41a3b444bac01107ad0d9f39cb99cb4c600ced7cb46f3219c99a4cf9b",
+      "lines": 43
+    },
+    {
+      "path": "backend/app/core/rate_limit.py",
+      "bytes": 1159,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "9994171e3bc9a362d3eac774cbb3f6a19908403a01dc3319bcd9b3179bd83677",
+      "lines": 41
+    },
+    {
+      "path": "backend/app/core/security.py",
+      "bytes": 2365,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "9a4e1a16724300b82f71bbb0448c6dbda7d44c2976cbb83f838ffcc6a4255952",
+      "lines": 78
+    },
+    {
+      "path": "backend/app/core/types.py",
+      "bytes": 756,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "47e699e2abc3d28d8fa5d7c8ce7bb18aecf87c1b947a8d81f69a985ec3ef133a",
+      "lines": 22
+    },
+    {
+      "path": "backend/app/domain/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/domain/adaptive.py",
+      "bytes": 9053,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "4cfdd16f64fa3ddddca6ef14419922dac3bb3a5fc89b1f0c297679c34b5c87ae",
+      "lines": 212
+    },
+    {
+      "path": "backend/app/main.py",
+      "bytes": 3192,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "39dbb437bafdd29a2dedabf424843eb2695148e58bfafe8ca30f682eec049be9",
+      "lines": 72
+    },
+    {
+      "path": "backend/app/models_registry.py",
+      "bytes": 1618,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "53c5750dbb86e06a34c5164ec0cff477f265ebc2b2d7bd1583c1dbb62408df77",
+      "lines": 34
+    },
+    {
+      "path": "backend/app/modules/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/ai/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/ai/adaptation.py",
+      "bytes": 4894,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "ca570b41a52695b1ce227919ef10c4d3a05e1caa0acbc7fb1f79fc9d375d793a",
+      "lines": 82
+    },
+    {
+      "path": "backend/app/modules/ai/gateway.py",
+      "bytes": 4410,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "2d3e5bc4264461619fd54f0b530b0e2d06c005314b9202a78524fb9cc887139e",
+      "lines": 119
+    },
+    {
+      "path": "backend/app/modules/ai/models.py",
+      "bytes": 1234,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "ac028eb553b75409b597dde1f4b3048f29685e666071d02d3f5b79e7db76bc61",
+      "lines": 24
+    },
+    {
+      "path": "backend/app/modules/ai/validators.py",
+      "bytes": 4467,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "f5bc79350bb1d9c0e0e7d466c0e7c2e9640b7b8637905802246a773063622173",
+      "lines": 110
+    },
+    {
+      "path": "backend/app/modules/analytics/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/analytics/routes.py",
+      "bytes": 6062,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "f81121bd4384dd56ad9a0641d3c7af308c11608752e4c90e3aa0da24cdb23481",
+      "lines": 103
+    },
+    {
+      "path": "backend/app/modules/assignments/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/assignments/models.py",
+      "bytes": 7508,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "465ede8824e254a0e5d0ca7b694c7e892785802c5f3cc2f6aedb15e8eb6c66c9",
+      "lines": 125
+    },
+    {
+      "path": "backend/app/modules/assignments/routes.py",
+      "bytes": 6806,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "74fa1e6ad5f72cfebe4e141e4c8c3dc490f819b2ebacde9d6407ac583bdff576",
+      "lines": 157
+    },
+    {
+      "path": "backend/app/modules/assignments/schemas.py",
+      "bytes": 1930,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "9aeb5d63ce21b8940bb10024a3630db5135e2fe9165ab8ea2f34eeb4ba7b2e15",
+      "lines": 40
+    },
+    {
+      "path": "backend/app/modules/assignments/service.py",
+      "bytes": 14929,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "c724bde496f83eb01348caf64a18f65a8986d267d01f16253cc8f54c3945e376",
+      "lines": 272
+    },
+    {
+      "path": "backend/app/modules/audit/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/audit/models.py",
+      "bytes": 861,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "4653706dcf917f97725bea5b038a4dddaf717c8a2f4bae06c5b90e872378ea49",
+      "lines": 20
+    },
+    {
+      "path": "backend/app/modules/audit/routes.py",
+      "bytes": 1009,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "eeb2e53859a638e92a33fc5e8531fac67c88f17e138adc47361493775dbb2cec",
+      "lines": 23
+    },
+    {
+      "path": "backend/app/modules/audit/service.py",
+      "bytes": 513,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "4297ce5e8834b43d898a79899563def1c71c13665871bd522b685bcea240fdd0",
+      "lines": 14
+    },
+    {
+      "path": "backend/app/modules/auth/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/auth/models.py",
+      "bytes": 1086,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "bcd440660bddbf486f5bfb90b1ef49c354f3a479f5db0104ed46d9bb1f15210e",
+      "lines": 24
+    },
+    {
+      "path": "backend/app/modules/auth/routes.py",
+      "bytes": 1854,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "a18d5c88981819979be4e5a0db41dadb21ebff50b28b4599aa41b12b289230c6",
+      "lines": 46
+    },
+    {
+      "path": "backend/app/modules/auth/schemas.py",
+      "bytes": 930,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "9bde9dd803681b9f7e58e2314041226ae0529e612ea6a9f422ac317c83efa0a8",
+      "lines": 42
+    },
+    {
+      "path": "backend/app/modules/auth/service.py",
+      "bytes": 6231,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "5740dfcdfd8503e113163ad3de92bbd280ba9bda718d4eccec2d6c1a0d8f3dd8",
+      "lines": 150
+    },
+    {
+      "path": "backend/app/modules/automation/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/automation/dispatch.py",
+      "bytes": 3375,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "b720d23e15c5295a6a897761e9fb0a992c760dc4f0aaf8010a5238adcb4373f5",
+      "lines": 75
+    },
+    {
+      "path": "backend/app/modules/automation/events.py",
+      "bytes": 577,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "368036f58cd28c2f8c1bcd71f908294b62230438fef26c7d2227ab057ed08d65",
+      "lines": 14
+    },
+    {
+      "path": "backend/app/modules/automation/models.py",
+      "bytes": 1366,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "3cd093a62ab946fcf536a3e38b5f410bf0e98805fb88273cc774a0db095cd68b",
+      "lines": 29
+    },
+    {
+      "path": "backend/app/modules/automation/routes.py",
+      "bytes": 1127,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "bcf4f9ae82b4e435537e68bffca671406a89c53332a92aac897743cfdc6a55d5",
+      "lines": 29
+    },
+    {
+      "path": "backend/app/modules/classrooms/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/classrooms/models.py",
+      "bytes": 2023,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "426106f20b2e6d3d7d0d5e8458b53e317a0a9af070c1f23560ac40a57f49437a",
+      "lines": 40
+    },
+    {
+      "path": "backend/app/modules/classrooms/routes.py",
+      "bytes": 2160,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "db9090837d907d8f7397450f64c1b30d4a0c54b4a179c92989fdedcd9bcf7379",
+      "lines": 65
+    },
+    {
+      "path": "backend/app/modules/classrooms/service.py",
+      "bytes": 3285,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "71568c284fad6680fbc5d52210115d34a269478f84bbd7425087ede703b2de9c",
+      "lines": 72
+    },
+    {
+      "path": "backend/app/modules/curriculum/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/curriculum/models.py",
+      "bytes": 3119,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "12ca9da5ae523f005ad952f386e7171d6a98de1b4ee15f68e31d6eda7f7c806f",
+      "lines": 74
+    },
+    {
+      "path": "backend/app/modules/curriculum/routes.py",
+      "bytes": 4764,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "6ba40b65b3a0c404f0a48069e8ce647d7c0b1f0e48daf2d4eccd8ac75c4f4ed7",
+      "lines": 114
+    },
+    {
+      "path": "backend/app/modules/forecast/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/forecast/service.py",
+      "bytes": 3280,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "3bb8cea9f9c687f1a3f9e62bd4b42c435507104bac35a9f8f1fd469084d9e180",
+      "lines": 64
+    },
+    {
+      "path": "backend/app/modules/health/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/health/routes.py",
+      "bytes": 983,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "f18d92d59eda641f5e1b657d99dab7117c385f802371d0445e3acdbe74d2cbda",
+      "lines": 30
+    },
+    {
+      "path": "backend/app/modules/interventions/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/interventions/models.py",
+      "bytes": 1143,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "376c07cd6519a694c9bbc60f834a5f0094415a46eb436794a57756b73465d9c2",
+      "lines": 21
+    },
+    {
+      "path": "backend/app/modules/interventions/routes.py",
+      "bytes": 3959,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "ec95e45cbaf9bac920543e1285e51c85a490ed55a8534aa134b149d651a43d46",
+      "lines": 78
+    },
+    {
+      "path": "backend/app/modules/languages/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/languages/models.py",
+      "bytes": 3431,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "ff83096499fcd47e49be3a7b43cb12c40266d020d75bf5315efaabf681babc1b",
+      "lines": 62
+    },
+    {
+      "path": "backend/app/modules/languages/routes.py",
+      "bytes": 9573,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "20f617262519b89e1731b0a1746ac1f61d90a472c152656cd5cc7ff15814d904",
+      "lines": 210
+    },
+    {
+      "path": "backend/app/modules/learning/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/learning/models.py",
+      "bytes": 3173,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "67e6ad641b703c04a755e52630cbd6027ace99380db53ada266e268907eb2cc4",
+      "lines": 62
+    },
+    {
+      "path": "backend/app/modules/learning/routes.py",
+      "bytes": 4880,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "fd5b0974d269dd959511dcdf817aa4be3f43e3a2c54907316b2c5e2566796a22",
+      "lines": 94
+    },
+    {
+      "path": "backend/app/modules/learning/service.py",
+      "bytes": 4496,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "0f6eca417f035d8367d9fba70df5b2b8c4e4178267815600c9e245ed9918789b",
+      "lines": 77
+    },
+    {
+      "path": "backend/app/modules/planning/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/planning/models.py",
+      "bytes": 5319,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "b4d5233f3bef92fe7bbededdd2211da7366f8801f586cbafd120ed3a077ea6f0",
+      "lines": 99
+    },
+    {
+      "path": "backend/app/modules/planning/routes.py",
+      "bytes": 4887,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "f36d76c55363ed9319446efb9b094311ab837e87472d1f6ecf0eb1af2dfb4191",
+      "lines": 136
+    },
+    {
+      "path": "backend/app/modules/planning/service.py",
+      "bytes": 11720,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "9f159d4b715054d7d53b81b6990652e3fd93096edbbf2ee2fe925be71a6cca74",
+      "lines": 241
+    },
+    {
+      "path": "backend/app/modules/progress/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/progress/routes.py",
+      "bytes": 2020,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "286acee3f9e3ea25d07c6622d88394dfaca90a29fd667b3382036a1fae839bc2",
+      "lines": 40
+    },
+    {
+      "path": "backend/app/modules/schools/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/schools/models.py",
+      "bytes": 1300,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "a692ab50a09fd1944b705709695021614be25faa2d9ec8ac9412ea15166f9599",
+      "lines": 29
+    },
+    {
+      "path": "backend/app/modules/schools/routes.py",
+      "bytes": 2770,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "ab14e727df1ffdf885896b81e64ce57724beb1760153b83769d3e771113115a2",
+      "lines": 82
+    },
+    {
+      "path": "backend/app/modules/students/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/students/models.py",
+      "bytes": 668,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "c486403186fe3a5b578080de2210f06baff57e9375c3cb65f10aeaffbc8b0d7b",
+      "lines": 16
+    },
+    {
+      "path": "backend/app/modules/students/routes.py",
+      "bytes": 2086,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "79a929f7a1dc49e006524da585dd6fa5cc3f7e6667bb40b35871a8015a6d5d36",
+      "lines": 62
+    },
+    {
+      "path": "backend/app/modules/students/service.py",
+      "bytes": 2675,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e38f96fcaa9d8058c4e7ebdb79be00e9a6120db0844e55e484c00adaeb5ca0a3",
+      "lines": 61
+    },
+    {
+      "path": "backend/app/modules/support_flags/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/support_flags/models.py",
+      "bytes": 1633,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "26f229cda63da674ea21882639434758469e019fecaba890ec7f4f4b4d3611fe",
+      "lines": 30
+    },
+    {
+      "path": "backend/app/modules/support_flags/routes.py",
+      "bytes": 4240,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "04c90956a5671d3c0c56d70ab9e83c94d9d3256415e82da3624f4297eaf5f1cf",
+      "lines": 80
+    },
+    {
+      "path": "backend/app/modules/sync/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/sync/models.py",
+      "bytes": 1051,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "97f7b8483548eba7b4e4233a66ac6827b1dc2ff17be2da6cdd4c441d3eb1645c",
+      "lines": 23
+    },
+    {
+      "path": "backend/app/modules/sync/routes.py",
+      "bytes": 1418,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "c557cfd1794e4a2cd90587d2a432fdfb499d6222f391ba8ce577dc1b943e04f9",
+      "lines": 41
+    },
+    {
+      "path": "backend/app/modules/sync/service.py",
+      "bytes": 9880,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "87d4fccc01cb2934f53db6ae975a7b6fd4022b7cbb9ffc1292694df4a4db770d",
+      "lines": 195
+    },
+    {
+      "path": "backend/app/modules/teachers/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/teachers/models.py",
+      "bytes": 419,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "13d0a9578a46e98e26b3ee52d80e504dcc00ab33bbbdcc1e20fc3249ae1db7ca",
+      "lines": 12
+    },
+    {
+      "path": "backend/app/modules/tutor/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/tutor/routes.py",
+      "bytes": 1109,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "df1f365b8c0e298299b1ec133148e0a8662f18488fb06c0156d0cafcaf26f59d",
+      "lines": 29
+    },
+    {
+      "path": "backend/app/modules/tutor/service.py",
+      "bytes": 5493,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "d4cda58a83d87c17b6619e5a6e50b46bf447114cb8aef01380cc65086a1b8659",
+      "lines": 99
+    },
+    {
+      "path": "backend/app/modules/users/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/modules/users/models.py",
+      "bytes": 1731,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "94ebef81e906fa88641002f469557c6f882ab0fd8c3aac5dc90522e6b4cb2b99",
+      "lines": 41
+    },
+    {
+      "path": "backend/app/modules/users/routes.py",
+      "bytes": 1138,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "dc4de587a0b4d58907d84c7b5542ece31c62be6cd5279b2f60bf73042e223440",
+      "lines": 31
+    },
+    {
+      "path": "backend/app/modules/users/schemas.py",
+      "bytes": 977,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "579e2ed9c2a3ee5a92d20183b2fed8af86172cf4b1a077fa6b2054a6cbfbef23",
+      "lines": 35
+    },
+    {
+      "path": "backend/app/modules/users/service.py",
+      "bytes": 2270,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "f770dd08ec87f1bd07e25a372fe6568e5a78d931881733e2fa488843e8c67d38",
+      "lines": 57
+    },
+    {
+      "path": "backend/app/shared/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/workers/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/app/workers/dispatcher.py",
+      "bytes": 793,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "35d311ecaf50173ce6828f3878a67f8c47a0562d7e476f5920aa450ddf1be008",
+      "lines": 28
+    },
+    {
+      "path": "backend/data/.gitkeep",
+      "bytes": 0,
+      "check": "binario/datos preservados; contenido no inspeccionado"
+    },
+    {
+      "path": "backend/data/kawsay.db",
+      "bytes": 585728,
+      "check": "binario/datos preservados; contenido no inspeccionado"
+    },
+    {
+      "path": "backend/data/kawsay.db-shm",
+      "bytes": 32768,
+      "check": "binario/datos preservados; contenido no inspeccionado"
+    },
+    {
+      "path": "backend/data/kawsay.db-wal",
+      "bytes": 626272,
+      "check": "binario/datos preservados; contenido no inspeccionado"
+    },
+    {
+      "path": "backend/Dockerfile",
+      "bytes": 614,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "290c929613b24e1195d5a151642898a69627574e600d67836a42216467aee3cb",
+      "lines": 13
+    },
+    {
+      "path": "backend/migrations/env.py",
+      "bytes": 972,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "cca7fd1548b8ac5d88b846c024dbe67215ca4cd4e4c582209d9163afdcf93725",
+      "lines": 29
+    },
+    {
+      "path": "backend/migrations/script.py.mako",
+      "bytes": 468,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "114d2c8daf1106848ce42d0c5f13a4d0056ec4205dfc568999d988c131bb8c54",
+      "lines": 22
+    },
+    {
+      "path": "backend/migrations/versions/20261019_0001_esquema_inicial_sqlite.py",
+      "bytes": 42831,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "78a4241378d3b48e82354443a53d9cb73e60c88bd4763af517c2764eb1448bc7",
+      "lines": 725
+    },
+    {
+      "path": "backend/pyproject.toml",
+      "bytes": 341,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "cb3d170758f3e5bd11a2cfd95ea5c356059c0087d11cea943105fd7f74ca32a1",
+      "lines": 14
+    },
+    {
+      "path": "backend/requirements-dev.txt",
+      "bytes": 59,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "69b829d58b3d464af317c1e792907d2de3b11b208341255c20d547a12ca577ab",
+      "lines": 4
+    },
+    {
+      "path": "backend/requirements.txt",
+      "bytes": 208,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "e66641036e7e8c32d9b9258827ec6e6d6ccabe6914abedf14a1af14ccbb97887",
+      "lines": 11
+    },
+    {
+      "path": "backend/tests/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "backend/tests/conftest.py",
+      "bytes": 4721,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "f0645deb5450ae0ceedaeb951e236d73369786933080743a694c97ffeecc1173",
+      "lines": 135
+    },
+    {
+      "path": "backend/tests/fakes.py",
+      "bytes": 1969,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "1f3ed07bb458670df2adf30bea54724dd9dd53fd6a71fd3015452a1c8ad1ddf6",
+      "lines": 54
+    },
+    {
+      "path": "backend/tests/test_ai_gateway.py",
+      "bytes": 10102,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "f9d2dd9058f78911fc2ec85966c9c470b4fe6630f9e640fc017c408d25218435",
+      "lines": 181
+    },
+    {
+      "path": "backend/tests/test_assignments.py",
+      "bytes": 11807,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "0854272bfdfdbf286ef5c81460fcd44d86b9bc6b1cdd15e8ffb08fb15a9a1210",
+      "lines": 205
+    },
+    {
+      "path": "backend/tests/test_auth.py",
+      "bytes": 5670,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "5e8d2caf50f37df452572492199ccd547d7e9b043220654bd01662e01f05c3e4",
+      "lines": 122
+    },
+    {
+      "path": "backend/tests/test_authorization_and_multigrade.py",
+      "bytes": 6082,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "01423eb0627661a227ec0c19183c5bfa35f7dfe119cb4c664167ac16ddab0c37",
+      "lines": 116
+    },
+    {
+      "path": "backend/tests/test_automation_languages_tutor.py",
+      "bytes": 15495,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "abb735b61887ddb89c78904439344c5795b574a98b38fbe3f15743fd2fe9ce0d",
+      "lines": 258
+    },
+    {
+      "path": "backend/tests/test_concurrency_sqlite.py",
+      "bytes": 3813,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "9e368c742dcde9ecd432efe327be8e4cd432b89c401185bb867488dc6d3cb6c9",
+      "lines": 91
+    },
+    {
+      "path": "backend/tests/test_domain_adaptive.py",
+      "bytes": 3442,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "d4e3b33f95bc4fd6b3bb6185a523f104bbfb8ca6aad67a69e1027d5c65e7ccef",
+      "lines": 69
+    },
+    {
+      "path": "backend/tests/test_forecast.py",
+      "bytes": 5662,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "c1a83f89f51130383f30d0a00edf2a182f180e93a4f42cdf6c9f70639d81281e",
+      "lines": 120
+    },
+    {
+      "path": "backend/tests/test_health.py",
+      "bytes": 1345,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "3ab55f349fc4ca2d5a53914786715aa07d27331fb3d9c33e1bcde982a995fdac",
+      "lines": 43
+    },
+    {
+      "path": "backend/tests/test_learn.py",
+      "bytes": 3554,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "bafd731a45901eadd9b3a25449760bddaa7dc0437f12e6c24bce2b80579e9d25",
+      "lines": 53
+    },
+    {
+      "path": "backend/tests/test_planning.py",
+      "bytes": 9481,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "9d9cb3ae0488334561b875d6be1621ef27951edf9800c1afc409194ea68631d9",
+      "lines": 154
+    },
+    {
+      "path": "backend/tests/test_platform.py",
+      "bytes": 1899,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "34dd054927cc6a078940b71aeab958289e1697433445d8763769c42cb50ff6b6",
+      "lines": 58
+    },
+    {
+      "path": "backend/tests/test_rule_vectors.py",
+      "bytes": 1364,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "c4f478435c69d3965e053431713bc212053d4434debb63c840819de85d54121f",
+      "lines": 25
+    },
+    {
+      "path": "backend/tests/test_security_hardening.py",
+      "bytes": 8938,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "4f1e8474c0d9a782a1cac56d0bf133abce0960e6429dae221f46c5d0658a8102",
+      "lines": 151
+    },
+    {
+      "path": "backend/tests/test_sync_reto10.py",
+      "bytes": 12240,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "c20c1ef15b139d23f7977750a532931de6fbd1bae236536d2bbb1b7af51c8e57",
+      "lines": 231
+    },
+    {
+      "path": "database/README.md",
+      "bytes": 883,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "9f40ce588b1c908ebce19e26b771a356758bd3c423dc1cd20745545e2f52c513",
+      "lines": 9
+    },
+    {
+      "path": "docker-compose.yml",
+      "bytes": 1514,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "a5193c325e15827e0dd6a0b85444ba7e5a5c21e5a5c1720520341f4d2775c52a",
+      "lines": 44
+    },
+    {
+      "path": "docs/00-analisis-riesgos.md",
+      "bytes": 5095,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "673294407809bce803bb3091f50afa21192323d08589b76e302251e0e811e7cd",
+      "lines": 46
+    },
+    {
+      "path": "docs/00-repository-audit.md",
+      "bytes": 7677,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "fb2266e9a7f8a9bb8dbbb343c2af25cf43d3913fd59849658f90c6a478275097",
+      "lines": 78
+    },
+    {
+      "path": "docs/01-vision.md",
+      "bytes": 1747,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "c63cf081c14e20fc6a300950c5e0b30d7a9467de11531d87078540fb286eec25",
+      "lines": 27
+    },
+    {
+      "path": "docs/02-scope.md",
+      "bytes": 1408,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "f6cf59d6c425bd5573882ce9645c8e428f1e0bad9c6517ba2a4cba93fadc30d6",
+      "lines": 22
+    },
+    {
+      "path": "docs/03-functional-requirements.md",
+      "bytes": 2596,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "bd8b66a29f2ebf7ae061876beeb28514d24e2eb1722b484b34e51cd2f4cb1cb3",
+      "lines": 35
+    },
+    {
+      "path": "docs/04-non-functional-requirements.md",
+      "bytes": 1707,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "936b3333c540c4d49c4974c6277bb5b7e7688ca3a291f3e3966f116361454272",
+      "lines": 19
+    },
+    {
+      "path": "docs/05-architecture.md",
+      "bytes": 2794,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "17e01fe59cd433609103580aae7a26ffed9b10e8429736930fad859f52e1b7bd",
+      "lines": 47
+    },
+    {
+      "path": "docs/06-database-design.md",
+      "bytes": 4158,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "79db170111bf38c713aa9d05cc33a02655a8d469d727a3d4323223c1f6aec0e4",
+      "lines": 49
+    },
+    {
+      "path": "docs/07-er-diagram.md",
+      "bytes": 12721,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "96397e88fa4868967a9d00fb4d9f5fb881600e9e2aaab43488d7d92620137c63",
+      "lines": 433
+    },
+    {
+      "path": "docs/08-api.md",
+      "bytes": 7163,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "ca73b84250f614f402243cbf00fc406a759eb8c7cdc0ccbec055ca03f326df5f",
+      "lines": 170
+    },
+    {
+      "path": "docs/09-offline-architecture.md",
+      "bytes": 1554,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "ade0fa7644a49c9671d9e067cf500b1b4df03955299f4aa038f31b7413e2404d",
+      "lines": 22
+    },
+    {
+      "path": "docs/10-sync-strategy.md",
+      "bytes": 2466,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "cf3663e3786f22882e7e1e33fef14c56e34039abaae76f1221779a5d16e186fd",
+      "lines": 34
+    },
+    {
+      "path": "docs/11-ai-architecture.md",
+      "bytes": 1941,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "0fb16e7f7a37697f036774218c2eb2ab96f7e4af1ab9c393abf560ef3643ba48",
+      "lines": 25
+    },
+    {
+      "path": "docs/12-adaptive-learning.md",
+      "bytes": 2017,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "6c0b1aa56fe9c91381f3ddcb1639a823ae5b5be87ad48e6375f04e1810ac5deb",
+      "lines": 25
+    },
+    {
+      "path": "docs/13-multigrade-learning.md",
+      "bytes": 1101,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "aba0e29928faad90c61135c30c04978f5ad8750f8f329e0ed417efd2a371d12f",
+      "lines": 11
+    },
+    {
+      "path": "docs/14-security.md",
+      "bytes": 3734,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "d9b36a2f009f3d97fc90644b7f8c6805a09888c71186b8b0f2462e51c4cb3e3a",
+      "lines": 35
+    },
+    {
+      "path": "docs/15-privacy.md",
+      "bytes": 1113,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "2fb5c0c40e1d77e0c374f6b49cbdd9ce5afc500571755fd5588e5f81675e9473",
+      "lines": 10
+    },
+    {
+      "path": "docs/16-testing.md",
+      "bytes": 5084,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "1c83a97d1fbea7994dea7bebae7681fda2aeb6f16cc739d873f69e8328cc1ba9",
+      "lines": 47
+    },
+    {
+      "path": "docs/17-deployment.md",
+      "bytes": 1250,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "5d1551d4b8e7f4ec4b0c746aa3f37fe3edeec4063fa99cdf4f92069cd036a9ea",
+      "lines": 17
+    },
+    {
+      "path": "docs/18-roadmap.md",
+      "bytes": 1827,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "d971f2e738ea38a6ac39db920e757d311eae3f334fed1764342affd26f7976f8",
+      "lines": 27
+    },
+    {
+      "path": "docs/19-decisions/ADR-001-Flutter.md",
+      "bytes": 718,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "94b0750e312633e6cdfc6c19de9bb6185b545f15ca6687722df8365fe89375db",
+      "lines": 10
+    },
+    {
+      "path": "docs/19-decisions/ADR-002-FastAPI.md",
+      "bytes": 523,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "fb696c7151a995329dc9a6abaa480094c2fa58119bf42ec37e8b191e079d6604",
+      "lines": 10
+    },
+    {
+      "path": "docs/19-decisions/ADR-003-PostgreSQL.md",
+      "bytes": 514,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "c503df53ce00d06842709d605dd25c620a5dff29104de76327238ed185d9aea4",
+      "lines": 10
+    },
+    {
+      "path": "docs/19-decisions/ADR-004-SQLite-Offline.md",
+      "bytes": 483,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "5f2ef43c70b229ac22f63b306b7ca3c0359eba8f10a70f51df34af45abaa8885",
+      "lines": 10
+    },
+    {
+      "path": "docs/19-decisions/ADR-005-React-TypeScript.md",
+      "bytes": 521,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "7ab005f2a564e468dd6a33b6361edaafce4bbca24eaa7d98370d9ec9aa546f2c",
+      "lines": 10
+    },
+    {
+      "path": "docs/19-decisions/ADR-006-AI-Gateway.md",
+      "bytes": 547,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "4193b79846f83bd1efc4d204600ad99879af76ea4ab0f4973a5c37b4f9b8f9cc",
+      "lines": 10
+    },
+    {
+      "path": "docs/19-decisions/ADR-007-Offline-First.md",
+      "bytes": 629,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "c380eb7d89bfd0d0f4907dd910389b6ae40dbcf1864f1fad21c7057685c11603",
+      "lines": 10
+    },
+    {
+      "path": "docs/19-decisions/ADR-008-Monolito-Modular.md",
+      "bytes": 509,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "d01b81279aa61e32eb61064294600aec747a507e2ab28a9b025b384846cd08a5",
+      "lines": 10
+    },
+    {
+      "path": "docs/19-decisions/ADR-009-Cuentas-Estudiantes.md",
+      "bytes": 440,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "389650edc7ba76b752f514aee201a52cae5174390a8d3d6d2e85f4575a74d421",
+      "lines": 10
+    },
+    {
+      "path": "docs/19-decisions/ADR-010-SQLite-servidor.md",
+      "bytes": 1075,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "5176a62ada207c0a8e0699413025880151253d9d9a5d2f6aeb0f76bf51714702",
+      "lines": 13
+    },
+    {
+      "path": "docs/ai.md",
+      "bytes": 1493,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "26df9720c08fcf7ebd3d7755df52465c385a10d83e02d8255eef6a57c6e35779",
+      "lines": 15
+    },
+    {
+      "path": "docs/AUDITORIA_TECNICA.md",
+      "bytes": 13045,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "b755f5fad744ecba6eef4b397c72f50fd7f4a90c911c6c362b5d32333a09c85c",
+      "lines": 113
+    },
+    {
+      "path": "docs/GUIA_VSCODE.md",
+      "bytes": 4793,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "ed0e85bba2ffc2ba9cb83b8c0c5b2852a56a1a418ff3ab8df291232489088e7a",
+      "lines": 82
+    },
+    {
+      "path": "docs/INTEGRACION_API.md",
+      "bytes": 5281,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "67cb9fe4e81d68dbbbfd2ac09a2191033352994e232f92121cece53d41e76755",
+      "lines": 121
+    },
+    {
+      "path": "docs/LIMPIEZA_REPOSITORIO.md",
+      "bytes": 3356,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "2a07d54d7f7dbe3347c963cf4d17f39de86ce740d8085e5c06c7df6c091423ea",
+      "lines": 41
+    },
+    {
+      "path": "docs/ml-model-card.md",
+      "bytes": 3844,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "e13c16bb9fb26576bcc6754d17f78663ca013356c17f3120e3420a20d928807c",
+      "lines": 60
+    },
+    {
+      "path": "docs/ml.md",
+      "bytes": 2176,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "c77375094898545f37f1426c8d1659ead72937aa4db4f4a704d15cd962d92024",
+      "lines": 25
+    },
+    {
+      "path": "docs/openapi.json",
+      "bytes": 141731,
+      "check": "JSON válido; no certifica contrato",
+      "sha256": "95e3817be87f7b85d1c3c0451c1661001779250a198ee74c873fd5aefb6f7699",
+      "lines": 5367
+    },
+    {
+      "path": "docs/VERIFICACION_2026-10-26.md",
+      "bytes": 3249,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "b7c483dc838ca36e964f9f985903fd6c366099ef1391663224953ba7c13a869e",
+      "lines": 30
+    },
+    {
+      "path": "infrastructure/README.md",
+      "bytes": 328,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "71148c67b266e67aa5268629c823d0a5d4154204f0e9248a4b5298d16498b2b7",
+      "lines": 5
+    },
+    {
+      "path": "ml/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "ml/common.py",
+      "bytes": 1267,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "8538c98434dc2b8384965456962b66212c19008a749f1f7d4555a07fbed3affb",
+      "lines": 30
+    },
+    {
+      "path": "ml/export_real.py",
+      "bytes": 3795,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "56ca22c75b2c2cfaa8ea71c16560326a97ba926f9013a6d3fc8d90317c0c24d2",
+      "lines": 78
+    },
+    {
+      "path": "ml/features.py",
+      "bytes": 4147,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "21fe46850a2b6afc6b28215d84c49e5bb00d71cc0ce6cce7c3ddb8dbc3170710",
+      "lines": 83
+    },
+    {
+      "path": "ml/make_model_card.py",
+      "bytes": 6020,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "a42235a5998dd26e90e7d7ad5dc4bb65bf7f6051d7b20b3c99df234997d0d0b0",
+      "lines": 70
+    },
+    {
+      "path": "ml/models/kawsay-diff-20261021201327-fe6b38.joblib",
+      "bytes": 2002353,
+      "check": "binario/datos preservados; contenido no inspeccionado"
+    },
+    {
+      "path": "ml/models/kawsay-diff-20261026203213-cce4aa.joblib",
+      "bytes": 312209,
+      "check": "binario/datos preservados; contenido no inspeccionado"
+    },
+    {
+      "path": "ml/predict.py",
+      "bytes": 1665,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "2f8c6d3448768c62722db9acc85cf95c5617dddc86991e3bc45cc1335b35069a",
+      "lines": 35
+    },
+    {
+      "path": "ml/registry/registry.json",
+      "bytes": 1535,
+      "check": "JSON válido; no certifica contrato",
+      "sha256": "16a555bbdc99c7090da3606d56e854b6205386163dfce295f39eb009702a23c2",
+      "lines": 57
+    },
+    {
+      "path": "ml/registry.py",
+      "bytes": 1495,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "24b3a2be5af2a16465c5e9c1bf87c2a85abbfca83676d932a3d631d9248889f2",
+      "lines": 45
+    },
+    {
+      "path": "ml/reports/kawsay-diff-20261021201327-fe6b38.json",
+      "bytes": 4143,
+      "check": "JSON válido; no certifica contrato",
+      "sha256": "efd6f2e450a96b9339029fc935a6d9c22bea688a5b0fde3ff1c59d354e52516e",
+      "lines": 192
+    },
+    {
+      "path": "ml/reports/kawsay-diff-20261026203213-cce4aa.json",
+      "bytes": 3353,
+      "check": "JSON válido; no certifica contrato",
+      "sha256": "1b54a3d1251c52038e07ff52891414c0bfd8e54561ce01f382accbda5919c07a",
+      "encoding_note": "Codificación heredada cp1252; normalizar al editar",
+      "lines": 154
+    },
+    {
+      "path": "ml/reports/robustness.json",
+      "bytes": 3155,
+      "check": "JSON válido; no certifica contrato",
+      "sha256": "2bde7d68caf171bc51aaf56a1019e236ff352ccfe32438c5144d243051ddbd84",
+      "lines": 166
+    },
+    {
+      "path": "ml/requirements.txt",
+      "bytes": 47,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "4b4ea3c0d2c01589a356117826ccb34a1829f8a65f3278085437db087f02fe13",
+      "lines": 3
+    },
+    {
+      "path": "ml/robustness.py",
+      "bytes": 1921,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e40f1a8b5ee24d481d129d6e00efa8a77692c3d9357307d4f767fb8cd0c9f910",
+      "lines": 36
+    },
+    {
+      "path": "ml/synthetic.py",
+      "bytes": 2162,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "c5450f64d46515d7e4a941f74144facfef6027395c7014a435cf947cb9ec0854",
+      "lines": 48
+    },
+    {
+      "path": "ml/tests/__init__.py",
+      "bytes": 0,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "ml/tests/test_ml_pipeline.py",
+      "bytes": 7827,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "5270e5f27fb161c894438b9b9b1df5b7d65f32c5e01a7b6ee3bda899a6ba2bad",
+      "lines": 153
+    },
+    {
+      "path": "ml/train.py",
+      "bytes": 11483,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "e13388bc37e67277b5055cdcd4a7ccfe8a0a1531ae9686b58221f5249b09d140",
+      "lines": 202
+    },
+    {
+      "path": "mobile/analysis_options.yaml",
+      "bytes": 92,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "0cc2260bd6bd5aa5d78a901f27a2df342ee74f7a253b4d7144c6b41b1edd9f92",
+      "lines": 4
+    },
+    {
+      "path": "mobile/lib/app/app.dart",
+      "bytes": 596,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "2b9e5d81898a0705e055f9868cde50474191705cd81bfef261ebe675868910ce",
+      "lines": 17
+    },
+    {
+      "path": "mobile/lib/app/session.dart",
+      "bytes": 2192,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "1a41edb840cc486d7cbe6b3753e92f7bdc7f85689f877163c190f77a254fc4d2",
+      "lines": 60
+    },
+    {
+      "path": "mobile/lib/app/theme.dart",
+      "bytes": 760,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "abaad061fc6d8b482b07827360543cb8c6951ce6241548c6d1729b5ce71c427c",
+      "lines": 10
+    },
+    {
+      "path": "mobile/lib/core/api/api_client.dart",
+      "bytes": 5947,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "f4f03cc3d5e7acfb3bbd63a6feb0d78e6644c1df3fff7d0f7f4e92e90d2a6787",
+      "lines": 138
+    },
+    {
+      "path": "mobile/lib/core/config.dart",
+      "bytes": 436,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "e873b436a3a7897a1924446b885ea54bf3bf7bf93220a67d1907f5d870e3a820",
+      "lines": 5
+    },
+    {
+      "path": "mobile/lib/core/data/repository.dart",
+      "bytes": 11119,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "d5d21403123a69fc341139b1ec972b3c2b7c3ddd091a82a3061625ae24ce9de2",
+      "lines": 231
+    },
+    {
+      "path": "mobile/lib/core/database/app_database.dart",
+      "bytes": 3316,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "f6024d53e6a760fc556ed089691857a513086c177db5890f60b28159f053a1a8",
+      "lines": 53
+    },
+    {
+      "path": "mobile/lib/core/network/connectivity_monitor.dart",
+      "bytes": 930,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "fbf52ddf5cc7f47ad36f24768fbdbb5bb3856f708da3128e6cc86ee53afbe6d1",
+      "lines": 31
+    },
+    {
+      "path": "mobile/lib/core/offline/rules.dart",
+      "bytes": 4823,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "898508556987e57d3aff0290cd5a4d3387b38df757122e79745f02515d8d70f5",
+      "lines": 122
+    },
+    {
+      "path": "mobile/lib/core/security/token_store.dart",
+      "bytes": 699,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "5505dee04bb0af0a498509113d7b9c3474f33e34b68d14a4b1ccb696772cbebb",
+      "lines": 19
+    },
+    {
+      "path": "mobile/lib/core/sync/sync_manager.dart",
+      "bytes": 5963,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "30328921b529e1001b6d7dfaedaa34447435669969366f4404453606809f3279",
+      "lines": 169
+    },
+    {
+      "path": "mobile/lib/features/assignments/activity_screen.dart",
+      "bytes": 5939,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "9f48da1045cde6e9e444cd3d185aabb9882aa80d8f4a34eed39d25545c05aac2",
+      "lines": 130
+    },
+    {
+      "path": "mobile/lib/features/assignments/tasks_screen.dart",
+      "bytes": 1821,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "43844f07baef6267bcce8c0b3a4894a6f96c4b155795b356519a52ff2f2d77af",
+      "lines": 36
+    },
+    {
+      "path": "mobile/lib/features/auth/login_screen.dart",
+      "bytes": 2225,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "d1ac0af229ef4e43ab15ea838a83171a465bd36556b45e240396ff45b773ca53",
+      "lines": 52
+    },
+    {
+      "path": "mobile/lib/features/home/home_screen.dart",
+      "bytes": 3578,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "90e050ee3d0b42c6f326f50fab062945b98f82bd058ba3bff234daa0b318f279",
+      "lines": 66
+    },
+    {
+      "path": "mobile/lib/features/learn/learn_screen.dart",
+      "bytes": 4769,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "cb15c976254ebc02818d819b332e4a1ddae289b22ca37c2b661e2ded8726de77",
+      "lines": 95
+    },
+    {
+      "path": "mobile/lib/features/progress/progress_screen.dart",
+      "bytes": 2004,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "b6977a24c4faf804832d447b562571f901e0e210602a66b08adae94e848c3cb5",
+      "lines": 34
+    },
+    {
+      "path": "mobile/lib/features/settings/settings_screen.dart",
+      "bytes": 4879,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "747a58ffe5f822fc4fc56b64a5aca2ddd165beca0a44eaf14bbfb5140d7647b2",
+      "lines": 97
+    },
+    {
+      "path": "mobile/lib/main.dart",
+      "bytes": 1360,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "8d0d6b3fd1d04c714c239f8bdc0fb82e38267bb5f74ea380335745e584a4606f",
+      "lines": 36
+    },
+    {
+      "path": "mobile/lib/shared/widgets/big_button.dart",
+      "bytes": 987,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "c5ec79d65a681f01c02b38a87960ac369de835317b324c8251f89811d44f75b7",
+      "lines": 30
+    },
+    {
+      "path": "mobile/pubspec.yaml",
+      "bytes": 615,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "9c210bdf707ffea74db7b528c549a485cbc8b33352b782ab53732d8758d6fb9f",
+      "lines": 28
+    },
+    {
+      "path": "mobile/README.md",
+      "bytes": 2113,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "b6aca64f8174c73d0a0f1b89169b04f25f0dbd00989d4c82df995d1e323acda6",
+      "lines": 25
+    },
+    {
+      "path": "mobile/test/offline_sync_test.dart",
+      "bytes": 5215,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "ad9f6656af28aa0042ec92a59fd55ac0529f3ccd00c89ef40505c854f2fa69af",
+      "lines": 114
+    },
+    {
+      "path": "mobile/test/rules_test.dart",
+      "bytes": 2487,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "4e097bc4e8a4d312520172913ce9eea66776b2e93710c9223f7a527dd663e365",
+      "lines": 51
+    },
+    {
+      "path": "README.md",
+      "bytes": 3968,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "b0be0b9783503d9efb848698db9235d5a55f0991e480882bfbbfc09afdaa2249",
+      "lines": 47
+    },
+    {
+      "path": "scripts/audit_inventory.py",
+      "bytes": 3947,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "0173563c3c1fc84b1a8c5eab382602369cd81bf7d7df666576c4b4f16bd614e3",
+      "lines": 84
+    },
+    {
+      "path": "scripts/browser_e2e.py",
+      "bytes": 5513,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "aeca48ec9a10c95f6a079582a9bf87024431da43860d523cce3fc947c572492e",
+      "lines": 146
+    },
+    {
+      "path": "scripts/demo_e2e.py",
+      "bytes": 9746,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "fa025261fc380c633d9e9e4fa274f754918cc983aea6b504fb59edbce2cffdf7",
+      "lines": 156
+    },
+    {
+      "path": "scripts/dev.py",
+      "bytes": 5934,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "eb0cb407dc2f2ba653900a1a31da1d9f2671e219811bdd6d5a23571414664157",
+      "lines": 140
+    },
+    {
+      "path": "scripts/gen_docs.py",
+      "bytes": 5068,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "a6618c95c9f927c3a93c5ae3297e472d94cb3c548702d2c7931af7d0d782726b",
+      "lines": 90
+    },
+    {
+      "path": "scripts/gen_rule_vectors.py",
+      "bytes": 3131,
+      "check": "sintaxis Python válida; no certifica ejecución",
+      "sha256": "1566acae2399c32e17e64245b9a72d70151655f3941a1d3e72e86631365d5c10",
+      "lines": 57
+    },
+    {
+      "path": "scripts/run_local.sh",
+      "bytes": 804,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "96dec780d2a695f3016e96dca650102c7db988228b54623bb55010f6aa78ae6f",
+      "lines": 13
+    },
+    {
+      "path": "shared/rules_vectors.json",
+      "bytes": 8627,
+      "check": "JSON válido; no certifica contrato",
+      "sha256": "d900a60523382fb257af4fda20f8801d0b6d053d46bfa1381e069ac70ce2d972",
+      "lines": 606
+    },
+    {
+      "path": "teacher-web/.gitignore",
+      "bytes": 20,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "790e3169bc19b046fe55ba1da6d13b976c28363c8c00462a2195fe5faf260910",
+      "lines": 2
+    },
+    {
+      "path": "teacher-web/Dockerfile",
+      "bytes": 232,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "8fee7f51500a94197e52b9931a2c1bb7a07a90ae24ecfac68ddef75d469de654",
+      "lines": 10
+    },
+    {
+      "path": "teacher-web/e2e/run.cjs",
+      "bytes": 532,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "18a71543d5c57a6e487f530a61c98df41edcf13c95d53b66b760092db054f2a2",
+      "lines": 12
+    },
+    {
+      "path": "teacher-web/e2e/teacher.spec.ts",
+      "bytes": 8938,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "1747d208531fefeac91cf535eea0f80ce40435438aec44203b3277cc0adf994b",
+      "lines": 137
+    },
+    {
+      "path": "teacher-web/index.html",
+      "bytes": 311,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "058e7d5b19ded349cd4548c0ddef18dfd0372deee852913e5e66b288ca50390a",
+      "lines": 12
+    },
+    {
+      "path": "teacher-web/nginx.conf",
+      "bytes": 506,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "d819c3295eb29f8422e4363115572407f6473dc50acf947d50de3a65eb163eb1",
+      "lines": 10
+    },
+    {
+      "path": "teacher-web/package-lock.json",
+      "bytes": 74304,
+      "check": "JSON válido; no certifica contrato",
+      "sha256": "b1c4bf93ed7708a0b7e99e6545ee7a8da87e316bff5008973f7adce0c8b8d92d",
+      "lines": 2202
+    },
+    {
+      "path": "teacher-web/package.json",
+      "bytes": 908,
+      "check": "JSON válido; no certifica contrato",
+      "sha256": "4fcec3681659586ec84f4ccaa931675539ea1838c88880ea66839cb05f6dc597",
+      "lines": 32
+    },
+    {
+      "path": "teacher-web/playwright.config.ts",
+      "bytes": 380,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "7edf3c1b70e5a6ea3cb287bf51ce548444945c7ed839b0d783b84a11ce8fc787",
+      "lines": 15
+    },
+    {
+      "path": "teacher-web/README.md",
+      "bytes": 1663,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "e7290a439a33a8dbf20aa15df85510b70538f62e8753a08c3d7873bdd2fd8aa9",
+      "lines": 21
+    },
+    {
+      "path": "teacher-web/src/app/App.tsx",
+      "bytes": 4898,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "d0a19b8eb507f1b4abef3676c231300ba57762b7ffe438ff39bca8a8e770e4c1",
+      "lines": 85
+    },
+    {
+      "path": "teacher-web/src/app/AuthContext.tsx",
+      "bytes": 1678,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "6b0e925d454131a7eb5260b76d8d51429815ed4400d79d76d6d43407df95af74",
+      "lines": 37
+    },
+    {
+      "path": "teacher-web/src/components/FlagCard.tsx",
+      "bytes": 3867,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "95d25129e9f62c774bdebee6b966557f8eb8addca5483408f2218c6a0b6e53a5",
+      "lines": 67
+    },
+    {
+      "path": "teacher-web/src/components/Icon.tsx",
+      "bytes": 1577,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "9521c6160bf353216afec29c371e755a81b89af79b84f812fafcc9ffb5dfe865",
+      "lines": 26
+    },
+    {
+      "path": "teacher-web/src/components/QuestionsEditor.tsx",
+      "bytes": 3243,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "6915869208f1a3f656ffa8758fc29402c42d7304c917d4f8b506c830cbf43c6d",
+      "lines": 32
+    },
+    {
+      "path": "teacher-web/src/components/ui.tsx",
+      "bytes": 754,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "ac65140048b4082350ade6c00a80ed9e74f931fc69f92a307c8902141eb0af2b",
+      "lines": 11
+    },
+    {
+      "path": "teacher-web/src/hooks/useAsync.ts",
+      "bytes": 1042,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "bc5e1277b614736dacfc5da2f303d7c8ec705b12df6b32d921574457d6fd77a4",
+      "lines": 24
+    },
+    {
+      "path": "teacher-web/src/main.tsx",
+      "bytes": 350,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "d30c61f459f7b13975f467b2032f1192f35dfdc0f09a5cb16dcd3d468e9963c3",
+      "lines": 13
+    },
+    {
+      "path": "teacher-web/src/pages/Admin.tsx",
+      "bytes": 4021,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "18d3797315e471cf7579287f50d9117dc57dcac930bcfed1f4541dee69753b42",
+      "lines": 48
+    },
+    {
+      "path": "teacher-web/src/pages/Alerts.tsx",
+      "bytes": 1262,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "796a8ef3eea4b5afe572faecb499289bb4590e6c1850263f38af5fb0efce7b54",
+      "lines": 22
+    },
+    {
+      "path": "teacher-web/src/pages/Assignments.tsx",
+      "bytes": 10101,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "0f2bcda42302b998ceaf5b35ef1a7ad2cfa3f00034906a0e124116219180231e",
+      "lines": 144
+    },
+    {
+      "path": "teacher-web/src/pages/Classrooms.tsx",
+      "bytes": 4393,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "4c3f42a6ad5d4ec9424fcf3b9dc80c9de7ff062ce7ef00041268ac4cc4404b79",
+      "lines": 85
+    },
+    {
+      "path": "teacher-web/src/pages/Dashboard.tsx",
+      "bytes": 8352,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "bef19df4a30aca75a417d08679c7279d4ad693e789a01e830dc0ef882ae101b3",
+      "lines": 115
+    },
+    {
+      "path": "teacher-web/src/pages/Login.tsx",
+      "bytes": 3462,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "beb30095a0c315fcd176a52d41f3550b3448ad33cdcae2d8f0b9109c8b13ed66",
+      "lines": 49
+    },
+    {
+      "path": "teacher-web/src/pages/Planning.tsx",
+      "bytes": 8186,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "c511a83e192a83e55f79c10a508914395388f1f3cf6cfc72de514f29ce4f3aa2",
+      "lines": 93
+    },
+    {
+      "path": "teacher-web/src/pages/Students.tsx",
+      "bytes": 9464,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "875bca0a30d07d6fbe2a03ab46b8ee8b6a3e875c7aecb183438da523d378edbb",
+      "lines": 174
+    },
+    {
+      "path": "teacher-web/src/services/api.ts",
+      "bytes": 4978,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "469f78936847dd21fbab4800f8353a4ad2221c3086fb56ccf20d95e075c2d7f9",
+      "lines": 118
+    },
+    {
+      "path": "teacher-web/src/styles.css",
+      "bytes": 20683,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "68f738c847eeba1d93e368a9e30c7560e7fc627bf56cd8ed435b2778e32f1b75",
+      "lines": 273
+    },
+    {
+      "path": "teacher-web/src/test/api.test.ts",
+      "bytes": 4895,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "99445994e650a3537c44cd3c0f764e5a11a33b94afcd7407c55d757097e287ca",
+      "lines": 89
+    },
+    {
+      "path": "teacher-web/src/test/components.test.tsx",
+      "bytes": 7497,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "cd045b9c3ee5c22041f6411c1381d1eb9e9bb7828035b6242151b8d41002c0d1",
+      "lines": 126
+    },
+    {
+      "path": "teacher-web/src/test/integration.test.ts",
+      "bytes": 1652,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "07c8b70e71befb61359b297b053ff4f96d9ce64e4ba436e9050056fee78791d0",
+      "lines": 29
+    },
+    {
+      "path": "teacher-web/src/test/setup.ts",
+      "bytes": 43,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "9b328c4843431fa76d8de00008fc159e95f99a840211085ff3b8f25e53d14409",
+      "lines": 1
+    },
+    {
+      "path": "teacher-web/src/test/useAsync.test.tsx",
+      "bytes": 795,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "450a25b675a7638c3a1a26a5054bf8c4b329ad86194758dc9f3bf2097480f8b7",
+      "lines": 14
+    },
+    {
+      "path": "teacher-web/src/types/api.ts",
+      "bytes": 4975,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "3de230c20e19656ec35795221d743682765ee8bbca5a883a48ac477649eebf4b",
+      "lines": 49
+    },
+    {
+      "path": "teacher-web/src/utils/format.ts",
+      "bytes": 657,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "a15782883fc513d08c716d8edd687d939d13dba886cb11de1e8d6f1ca61fbcca",
+      "lines": 9
+    },
+    {
+      "path": "teacher-web/tsconfig.e2e.json",
+      "bytes": 89,
+      "check": "JSON válido; no certifica contrato",
+      "sha256": "45b9f8c8bf70aa68c3bcf60509da074a9346f3050253458993fbab7effd7fc43",
+      "lines": 4
+    },
+    {
+      "path": "teacher-web/tsconfig.json",
+      "bytes": 496,
+      "check": "JSON válido; no certifica contrato",
+      "sha256": "14f0bed6716e5c29b876382f1656802d0e0ddec172f8b68c6d41acc4b4e4191e",
+      "lines": 9
+    },
+    {
+      "path": "teacher-web/vite.config.ts",
+      "bytes": 394,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "56e58fc4e849316c03a6bc34b59dfdbc572d7226b4184b0a680c990bf420eef4",
+      "lines": 9
+    },
+    {
+      "path": "tests/README.md",
+      "bytes": 193,
+      "check": "inventariado; revisión funcional no demostrada",
+      "sha256": "ada4b5f8d37904b0637e40cc7081c341a3503a904b00928d68771135ddbd80af",
+      "lines": 4
+    }
+  ],
+  "excluded_directories_or_secrets": {
+    ".git": 1,
+    ".kawsay-e2e-3sgo5fvg": 1,
+    ".kawsay-e2e-q1aesaes": 1,
+    ".mypy_cache": 2,
+    ".pytest_cache": 2,
+    ".ruff_cache": 2,
+    ".venv": 1,
+    "configuración secreta (contenido no leído)": 1,
+    "__pycache__": 32,
+    "dist": 1,
+    "node_modules": 1,
+    "test-results": 1
+  },
+  "identical_nonempty_text_files": []
+}

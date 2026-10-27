@@ -1,0 +1,606 @@
+{
+ "evaluate": [
+  {
+   "type": "MULTIPLE_CHOICE",
+   "correct": {
+    "index": 1
+   },
+   "answer": {
+    "index": 1
+   },
+   "expected": true
+  },
+  {
+   "type": "MULTIPLE_CHOICE",
+   "correct": {
+    "index": 1
+   },
+   "answer": {
+    "index": 0
+   },
+   "expected": false
+  },
+  {
+   "type": "MULTIPLE_CHOICE",
+   "correct": {
+    "index": 1
+   },
+   "answer": {
+    "index": "1"
+   },
+   "expected": null
+  },
+  {
+   "type": "NUMERIC",
+   "correct": {
+    "value": 3.5,
+    "tolerance": 0.1
+   },
+   "answer": {
+    "value": 3.45
+   },
+   "expected": true
+  },
+  {
+   "type": "NUMERIC",
+   "correct": {
+    "value": 3.5,
+    "tolerance": 0.1
+   },
+   "answer": {
+    "value": 3.7
+   },
+   "expected": false
+  },
+  {
+   "type": "NUMERIC",
+   "correct": {
+    "value": 3
+   },
+   "answer": {
+    "value": "3"
+   },
+   "expected": null
+  },
+  {
+   "type": "NUMERIC",
+   "correct": {
+    "value": 12
+   },
+   "answer": {
+    "value": 12
+   },
+   "expected": true
+  },
+  {
+   "type": "SHORT_TEXT",
+   "correct": {
+    "accepted": [
+     "Lima",
+     "lima peru"
+    ]
+   },
+   "answer": {
+    "text": "  LIMA  "
+   },
+   "expected": true
+  },
+  {
+   "type": "SHORT_TEXT",
+   "correct": {
+    "accepted": [
+     "Lima"
+    ]
+   },
+   "answer": {
+    "text": "Cusco"
+   },
+   "expected": false
+  },
+  {
+   "type": "SHORT_TEXT",
+   "correct": {
+    "accepted": [
+     "a b"
+    ]
+   },
+   "answer": {
+    "text": "a    b"
+   },
+   "expected": true
+  },
+  {
+   "type": "SHORT_TEXT",
+   "correct": {
+    "accepted": [
+     "Lima"
+    ]
+   },
+   "answer": {
+    "text": 5
+   },
+   "expected": null
+  },
+  {
+   "type": "DESCONOCIDO",
+   "correct": {},
+   "answer": {},
+   "expected": null
+  }
+ ],
+ "scenarios": [
+  {
+   "name": "clean_streak",
+   "attempts": [
+    {
+     "q": "q0",
+     "n": 1,
+     "ok": true,
+     "hints": 0,
+     "minute": 0
+    },
+    {
+     "q": "q1",
+     "n": 1,
+     "ok": true,
+     "hints": 0,
+     "minute": 1
+    },
+    {
+     "q": "q2",
+     "n": 1,
+     "ok": true,
+     "hints": 0,
+     "minute": 2
+    },
+    {
+     "q": "q3",
+     "n": 1,
+     "ok": true,
+     "hints": 0,
+     "minute": 3
+    },
+    {
+     "q": "q4",
+     "n": 1,
+     "ok": true,
+     "hints": 0,
+     "minute": 4
+    },
+    {
+     "q": "q5",
+     "n": 1,
+     "ok": true,
+     "hints": 0,
+     "minute": 5
+    }
+   ],
+   "results": {
+    "q0": {
+     "score": 1.0,
+     "closed": true,
+     "hints": 0
+    },
+    "q1": {
+     "score": 1.0,
+     "closed": true,
+     "hints": 0
+    },
+    "q2": {
+     "score": 1.0,
+     "closed": true,
+     "hints": 0
+    },
+    "q3": {
+     "score": 1.0,
+     "closed": true,
+     "hints": 0
+    },
+    "q4": {
+     "score": 1.0,
+     "closed": true,
+     "hints": 0
+    },
+    "q5": {
+     "score": 1.0,
+     "closed": true,
+     "hints": 0
+    }
+   },
+   "progress": 1.0,
+   "evidence_count": 6,
+   "streak_message": "Resolviste 6 ejercicios seguidos sin ayuda en Cantidad.",
+   "improve_message": null
+  },
+  {
+   "name": "mixed_help",
+   "attempts": [
+    {
+     "q": "a",
+     "n": 1,
+     "ok": true,
+     "hints": 0,
+     "minute": 0
+    },
+    {
+     "q": "b",
+     "n": 1,
+     "ok": false,
+     "hints": 1,
+     "minute": 1
+    },
+    {
+     "q": "b",
+     "n": 2,
+     "ok": true,
+     "hints": 0,
+     "minute": 2
+    },
+    {
+     "q": "c",
+     "n": 1,
+     "ok": true,
+     "hints": 2,
+     "minute": 3
+    },
+    {
+     "q": "d",
+     "n": 1,
+     "ok": false,
+     "hints": 0,
+     "minute": 4
+    },
+    {
+     "q": "d",
+     "n": 2,
+     "ok": false,
+     "hints": 0,
+     "minute": 5
+    },
+    {
+     "q": "d",
+     "n": 3,
+     "ok": false,
+     "hints": 0,
+     "minute": 6
+    },
+    {
+     "q": "e",
+     "n": 1,
+     "ok": true,
+     "hints": 1,
+     "minute": 7
+    },
+    {
+     "q": "f",
+     "n": 1,
+     "ok": true,
+     "hints": 0,
+     "minute": 8
+    }
+   ],
+   "results": {
+    "a": {
+     "score": 1.0,
+     "closed": true,
+     "hints": 0
+    },
+    "b": {
+     "score": 0.7,
+     "closed": true,
+     "hints": 1
+    },
+    "c": {
+     "score": 0.4,
+     "closed": true,
+     "hints": 2
+    },
+    "d": {
+     "score": 0.0,
+     "closed": true,
+     "hints": 0
+    },
+    "e": {
+     "score": 0.7,
+     "closed": true,
+     "hints": 1
+    },
+    "f": {
+     "score": 1.0,
+     "closed": true,
+     "hints": 0
+    }
+   },
+   "progress": 0.6341,
+   "evidence_count": 6,
+   "streak_message": null,
+   "improve_message": null
+  },
+  {
+   "name": "open_question_only",
+   "attempts": [
+    {
+     "q": "a",
+     "n": 1,
+     "ok": false,
+     "hints": 1,
+     "minute": 0
+    },
+    {
+     "q": "a",
+     "n": 2,
+     "ok": false,
+     "hints": 0,
+     "minute": 1
+    }
+   ],
+   "results": {
+    "a": {
+     "score": 0.0,
+     "closed": false,
+     "hints": 1
+    }
+   },
+   "progress": null,
+   "evidence_count": 0,
+   "streak_message": null,
+   "improve_message": null
+  },
+  {
+   "name": "improving_12",
+   "attempts": [
+    {
+     "q": "q0",
+     "n": 1,
+     "ok": false,
+     "hints": 1,
+     "minute": 0
+    },
+    {
+     "q": "q1",
+     "n": 1,
+     "ok": false,
+     "hints": 1,
+     "minute": 2
+    },
+    {
+     "q": "q2",
+     "n": 1,
+     "ok": false,
+     "hints": 1,
+     "minute": 4
+    },
+    {
+     "q": "q3",
+     "n": 1,
+     "ok": false,
+     "hints": 1,
+     "minute": 6
+    },
+    {
+     "q": "q4",
+     "n": 1,
+     "ok": false,
+     "hints": 1,
+     "minute": 8
+    },
+    {
+     "q": "q5",
+     "n": 1,
+     "ok": false,
+     "hints": 1,
+     "minute": 10
+    },
+    {
+     "q": "q0",
+     "n": 2,
+     "ok": true,
+     "hints": 1,
+     "minute": 1
+    },
+    {
+     "q": "q1",
+     "n": 2,
+     "ok": true,
+     "hints": 1,
+     "minute": 3
+    },
+    {
+     "q": "q2",
+     "n": 2,
+     "ok": true,
+     "hints": 1,
+     "minute": 5
+    },
+    {
+     "q": "q3",
+     "n": 2,
+     "ok": true,
+     "hints": 1,
+     "minute": 7
+    },
+    {
+     "q": "q4",
+     "n": 2,
+     "ok": true,
+     "hints": 1,
+     "minute": 9
+    },
+    {
+     "q": "q5",
+     "n": 2,
+     "ok": true,
+     "hints": 1,
+     "minute": 11
+    },
+    {
+     "q": "r0",
+     "n": 1,
+     "ok": true,
+     "hints": 0,
+     "minute": 100
+    },
+    {
+     "q": "r1",
+     "n": 1,
+     "ok": true,
+     "hints": 0,
+     "minute": 101
+    },
+    {
+     "q": "r2",
+     "n": 1,
+     "ok": true,
+     "hints": 0,
+     "minute": 102
+    },
+    {
+     "q": "r3",
+     "n": 1,
+     "ok": true,
+     "hints": 0,
+     "minute": 103
+    },
+    {
+     "q": "r4",
+     "n": 1,
+     "ok": true,
+     "hints": 0,
+     "minute": 104
+    },
+    {
+     "q": "r5",
+     "n": 1,
+     "ok": true,
+     "hints": 0,
+     "minute": 105
+    }
+   ],
+   "results": {
+    "q0": {
+     "score": 0.4,
+     "closed": true,
+     "hints": 2
+    },
+    "q1": {
+     "score": 0.4,
+     "closed": true,
+     "hints": 2
+    },
+    "q2": {
+     "score": 0.4,
+     "closed": true,
+     "hints": 2
+    },
+    "q3": {
+     "score": 0.4,
+     "closed": true,
+     "hints": 2
+    },
+    "q4": {
+     "score": 0.4,
+     "closed": true,
+     "hints": 2
+    },
+    "q5": {
+     "score": 0.4,
+     "closed": true,
+     "hints": 2
+    },
+    "r0": {
+     "score": 1.0,
+     "closed": true,
+     "hints": 0
+    },
+    "r1": {
+     "score": 1.0,
+     "closed": true,
+     "hints": 0
+    },
+    "r2": {
+     "score": 1.0,
+     "closed": true,
+     "hints": 0
+    },
+    "r3": {
+     "score": 1.0,
+     "closed": true,
+     "hints": 0
+    },
+    "r4": {
+     "score": 1.0,
+     "closed": true,
+     "hints": 0
+    },
+    "r5": {
+     "score": 1.0,
+     "closed": true,
+     "hints": 0
+    }
+   },
+   "progress": 0.7918,
+   "evidence_count": 12,
+   "streak_message": "Resolviste 6 ejercicios seguidos sin ayuda en Cantidad.",
+   "improve_message": "Tu precisión mejoró en Cantidad: de 52 % a 100 %."
+  },
+  {
+   "name": "few_results",
+   "attempts": [
+    {
+     "q": "q0",
+     "n": 1,
+     "ok": true,
+     "hints": 0,
+     "minute": 0
+    },
+    {
+     "q": "q1",
+     "n": 1,
+     "ok": true,
+     "hints": 0,
+     "minute": 1
+    },
+    {
+     "q": "q2",
+     "n": 1,
+     "ok": true,
+     "hints": 0,
+     "minute": 2
+    },
+    {
+     "q": "q3",
+     "n": 1,
+     "ok": true,
+     "hints": 0,
+     "minute": 3
+    }
+   ],
+   "results": {
+    "q0": {
+     "score": 1.0,
+     "closed": true,
+     "hints": 0
+    },
+    "q1": {
+     "score": 1.0,
+     "closed": true,
+     "hints": 0
+    },
+    "q2": {
+     "score": 1.0,
+     "closed": true,
+     "hints": 0
+    },
+    "q3": {
+     "score": 1.0,
+     "closed": true,
+     "hints": 0
+    }
+   },
+   "progress": null,
+   "evidence_count": 4,
+   "streak_message": "Resolviste 4 ejercicios seguidos sin ayuda en Cantidad.",
+   "improve_message": null
+  }
+ ]
+}

@@ -1,0 +1,166 @@
+{
+  "seeds": [
+    7,
+    11,
+    23
+  ],
+  "students": 1500,
+  "runs": [
+    {
+      "seed": 7,
+      "chosen": "logreg_C0.1",
+      "model": {
+        "roc_auc": 0.9195,
+        "pr_auc": 0.7573,
+        "brier": 0.087,
+        "ece": 0.0129,
+        "precision": 0.6802,
+        "recall": 0.7286,
+        "f1": 0.7035,
+        "confusion": {
+          "tn": 3499,
+          "fp": 332,
+          "fn": 263,
+          "tp": 706
+        }
+      },
+      "rule": {
+        "precision": 0.7604,
+        "recall": 0.452,
+        "f1": 0.567,
+        "confusion": {
+          "tn": 3693,
+          "fp": 138,
+          "fn": 531,
+          "tp": 438
+        }
+      },
+      "heuristic": {
+        "precision": 0.6885,
+        "recall": 0.6956,
+        "f1": 0.692,
+        "confusion": {
+          "tn": 3526,
+          "fp": 305,
+          "fn": 295,
+          "tp": 674
+        }
+      }
+    },
+    {
+      "seed": 11,
+      "chosen": "hgb_d3_lr0.05",
+      "model": {
+        "roc_auc": 0.8904,
+        "pr_auc": 0.6813,
+        "brier": 0.0931,
+        "ece": 0.0265,
+        "precision": 0.5523,
+        "recall": 0.7099,
+        "f1": 0.6213,
+        "confusion": {
+          "tn": 3453,
+          "fp": 492,
+          "fn": 248,
+          "tp": 607
+        }
+      },
+      "rule": {
+        "precision": 0.7143,
+        "recall": 0.4035,
+        "f1": 0.5157,
+        "confusion": {
+          "tn": 3807,
+          "fp": 138,
+          "fn": 510,
+          "tp": 345
+        }
+      },
+      "heuristic": {
+        "precision": 0.5788,
+        "recall": 0.6058,
+        "f1": 0.592,
+        "confusion": {
+          "tn": 3568,
+          "fp": 377,
+          "fn": 337,
+          "tp": 518
+        }
+      }
+    },
+    {
+      "seed": 23,
+      "chosen": "logreg_C0.1",
+      "model": {
+        "roc_auc": 0.8896,
+        "pr_auc": 0.7209,
+        "brier": 0.1116,
+        "ece": 0.0147,
+        "precision": 0.6077,
+        "recall": 0.7759,
+        "f1": 0.6816,
+        "confusion": {
+          "tn": 3032,
+          "fp": 590,
+          "fn": 264,
+          "tp": 914
+        }
+      },
+      "rule": {
+        "precision": 0.7268,
+        "recall": 0.4652,
+        "f1": 0.5673,
+        "confusion": {
+          "tn": 3416,
+          "fp": 206,
+          "fn": 630,
+          "tp": 548
+        }
+      },
+      "heuristic": {
+        "precision": 0.63,
+        "recall": 0.691,
+        "f1": 0.6591,
+        "confusion": {
+          "tn": 3144,
+          "fp": 478,
+          "fn": 364,
+          "tp": 814
+        }
+      }
+    }
+  ],
+  "summary": {
+    "model_f1": {
+      "mean": 0.6688,
+      "std": 0.0348,
+      "min": 0.6213,
+      "max": 0.7035
+    },
+    "model_roc_auc": {
+      "mean": 0.8998,
+      "std": 0.0139,
+      "min": 0.8896,
+      "max": 0.9195
+    },
+    "model_pr_auc": {
+      "mean": 0.7198,
+      "std": 0.031,
+      "min": 0.6813,
+      "max": 0.7573
+    },
+    "heuristic_f1": {
+      "mean": 0.6477,
+      "std": 0.0416,
+      "min": 0.592,
+      "max": 0.692
+    },
+    "rule_f1": {
+      "mean": 0.55,
+      "std": 0.0243,
+      "min": 0.5157,
+      "max": 0.5673
+    },
+    "f1_gain_over_heuristic": 0.0211
+  }
+}

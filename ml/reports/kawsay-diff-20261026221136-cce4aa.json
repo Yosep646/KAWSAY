@@ -1,0 +1,154 @@
+{
+  "model_id": "kawsay-diff-20261026221136-cce4aa",
+  "data_kind": "SYNTHETIC",
+  "dataset_version": "ds-cce4aa467678",
+  "params": {
+    "history": 10,
+    "horizon": 5,
+    "target_min_difficult": 3,
+    "kind": "SYNTHETIC",
+    "seed": 7,
+    "students": 1000,
+    "protocol": "grouped-calibration-v2"
+  },
+  "runtime": {
+    "python": "3.12.10",
+    "numpy": "2.5.4",
+    "scikit_learn": "1.9.1",
+    "joblib": "1.6.0"
+  },
+  "samples": {
+    "dev": 12800,
+    "test": 3200
+  },
+  "prevalence_test": 0.1941,
+  "cv": {
+    "folds": 3,
+    "grouped_by": "student",
+    "results": {
+      "logreg_C1.0": {
+        "roc_auc": 0.9079,
+        "pr_auc": 0.7422,
+        "brier": 0.1245,
+        "ece": 0.1358,
+        "f1_at_best_threshold": 0.6864
+      },
+      "hgb_d3_lr0.1": {
+        "roc_auc": 0.9027,
+        "pr_auc": 0.7266,
+        "brier": 0.1258,
+        "ece": 0.1261,
+        "f1_at_best_threshold": 0.6725
+      }
+    }
+  },
+  "chosen": "logreg_C1.0",
+  "calibration": "sigmoid (Platt), CV agrupada externa e interna",
+  "threshold": 0.32,
+  "test": {
+    "roc_auc": 0.9103,
+    "pr_auc": 0.7044,
+    "brier": 0.0916,
+    "ece": 0.0134,
+    "accuracy": 0.8509,
+    "precision": 0.5921,
+    "recall": 0.7456,
+    "f1": 0.66,
+    "confusion": {
+      "tn": 2260,
+      "fp": 319,
+      "fn": 158,
+      "tp": 463
+    }
+  },
+  "test_ci95": {
+    "roc_auc": [
+      0.8792,
+      0.9323
+    ],
+    "pr_auc": [
+      0.6308,
+      0.7743
+    ],
+    "f1": [
+      0.6132,
+      0.7108
+    ]
+  },
+  "baselines_test": {
+    "regla_R-SUP-001_ultimos5": {
+      "accuracy": 0.855,
+      "precision": 0.7116,
+      "recall": 0.4251,
+      "f1": 0.5323,
+      "confusion": {
+        "tn": 2472,
+        "fp": 107,
+        "fn": 357,
+        "tp": 264
+      }
+    },
+    "heuristica_media5<0.5": {
+      "accuracy": 0.8538,
+      "precision": 0.6179,
+      "recall": 0.6457,
+      "f1": 0.6315,
+      "confusion": {
+        "tn": 2331,
+        "fp": 248,
+        "fn": 220,
+        "tp": 401
+      }
+    },
+    "siempre_positivo": {
+      "accuracy": 0.1941,
+      "precision": 0.1941,
+      "recall": 1.0,
+      "f1": 0.325,
+      "confusion": {
+        "tn": 0,
+        "fp": 2579,
+        "fn": 0,
+        "tp": 621
+      }
+    }
+  },
+  "error_by_grade_band": {
+    "grados_1-2": {
+      "n": 928,
+      "positivos": 186,
+      "tasa_fn": 0.172,
+      "tasa_fp": 0.1456
+    },
+    "grados_3-4": {
+      "n": 1040,
+      "positivos": 169,
+      "tasa_fn": 0.2722,
+      "tasa_fp": 0.0804
+    },
+    "grados_5-6": {
+      "n": 1232,
+      "positivos": 266,
+      "tasa_fn": 0.3008,
+      "tasa_fp": 0.146
+    }
+  },
+  "features": [
+    "mean_score_10",
+    "mean_score_5",
+    "min_score_10",
+    "std_score_10",
+    "frac_difficult_10",
+    "frac_difficult_5",
+    "hints_per_ex_10",
+    "wrong_per_ex_10",
+    "trend_10",
+    "last3_mean",
+    "grade"
+  ],
+  "limitations": [
+    "Entrenado con datos SINTÉTICOS: mide cuánto recupera la estructura del simulador, NO el desempeño en aulas reales.",
+    "Predice dificultad en los próximos ejercicios; no es un diagnóstico del estudiante.",
+    "Requiere revisión humana (docentes/pedagogos) antes de cualquier uso; no sustituye al docente."
+  ]
+}

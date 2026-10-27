@@ -1,0 +1,85 @@
+[
+  {
+    "model_id": "kawsay-diff-20261021201327-fe6b38",
+    "data_kind": "SYNTHETIC",
+    "dataset_version": "ds-fe6b38793caf",
+    "algorithm": "hgb_d3_lr0.05",
+    "metrics_test": {
+      "roc_auc": 0.9088,
+      "pr_auc": 0.7491,
+      "brier": 0.0936,
+      "ece": 0.0183,
+      "precision": 0.6299,
+      "recall": 0.7518,
+      "f1": 0.6855,
+      "confusion": {
+        "tn": 5555,
+        "fp": 749,
+        "fn": 421,
+        "tp": 1275
+      }
+    },
+    "artifact": "models/kawsay-diff-20261021201327-fe6b38.joblib",
+    "report": "reports/kawsay-diff-20261021201327-fe6b38.json",
+    "status": "CANDIDATE",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "created_at": "2026-10-21T20:13:27.363351+00:00"
+  },
+  {
+    "model_id": "kawsay-diff-20261026203213-cce4aa",
+    "data_kind": "SYNTHETIC",
+    "dataset_version": "ds-cce4aa467678",
+    "algorithm": "logreg_C1.0",
+    "metrics_test": {
+      "roc_auc": 0.9103,
+      "pr_auc": 0.7044,
+      "brier": 0.0916,
+      "ece": 0.0134,
+      "accuracy": 0.8509,
+      "precision": 0.5921,
+      "recall": 0.7456,
+      "f1": 0.66,
+      "confusion": {
+        "tn": 2260,
+        "fp": 319,
+        "fn": 158,
+        "tp": 463
+      }
+    },
+    "artifact": "models/kawsay-diff-20261026203213-cce4aa.joblib",
+    "report": "reports/kawsay-diff-20261026203213-cce4aa.json",
+    "status": "CANDIDATE",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "created_at": "2026-10-26T20:32:13.840533+00:00"
+  },
+  {
+    "model_id": "kawsay-diff-20261026221136-cce4aa",
+    "data_kind": "SYNTHETIC",
+    "dataset_version": "ds-cce4aa467678",
+    "algorithm": "logreg_C1.0",
+    "metrics_test": {
+      "roc_auc": 0.9103,
+      "pr_auc": 0.7044,
+      "brier": 0.0916,
+      "ece": 0.0134,
+      "accuracy": 0.8509,
+      "precision": 0.5921,
+      "recall": 0.7456,
+      "f1": 0.66,
+      "confusion": {
+        "tn": 2260,
+        "fp": 319,
+        "fn": 158,
+        "tp": 463
+      }
+    },
+    "artifact": "models/kawsay-diff-20261026221136-cce4aa.joblib",
+    "report": "reports/kawsay-diff-20261026221136-cce4aa.json",
+    "status": "CANDIDATE",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "created_at": "2026-10-26T22:11:36.199362+00:00"
+  }
+]
