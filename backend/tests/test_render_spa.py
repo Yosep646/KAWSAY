@@ -18,6 +18,9 @@ def test_render_spa_routes_and_api_isolation(monkeypatch, tmp_path):
             assert response.status_code == 200
             assert "KAWSAY AI" in response.text
             assert response.headers["cache-control"] == "no-store"
+            # CSP HTML permite cargar JS/CSS de React; el middleware no debe borrarla.
+            assert "script-src 'self'" in response.headers["content-security-policy"]
+            assert "style-src 'self' 'unsafe-inline'" in response.headers["content-security-policy"]
         assert client.get("/sw.js").status_code == 200
         assert client.get("/assets/index.js").status_code == 200
         assert client.get("/health").json()["status"] == "ok"
