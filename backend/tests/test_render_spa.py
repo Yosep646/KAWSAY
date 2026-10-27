@@ -13,6 +13,8 @@ def test_render_spa_routes_and_api_isolation(monkeypatch, tmp_path):
     (tmp_path / "kawsay-diversidad-fondo.jpg").write_bytes(hero_bytes)
     (tmp_path / "kawsay-login-encuadre-desktop.jpg").write_bytes(hero_bytes)
     (tmp_path / "kawsay-login-encuadre-mobile.jpg").write_bytes(hero_bytes)
+    (tmp_path / "kawsay-reference-hero.jpg").write_bytes(hero_bytes)
+    (tmp_path / "kawsay-reference-mobile.jpg").write_bytes(hero_bytes)
     assets = tmp_path / "assets"
     assets.mkdir()
     (assets / "index.js").write_text("console.log('KAWSAY')", encoding="utf-8")
@@ -37,7 +39,8 @@ def test_render_spa_routes_and_api_isolation(monkeypatch, tmp_path):
         assert multicultural.status_code == 200
         assert multicultural.headers["content-type"].startswith("image/jpeg")
         assert multicultural.content == hero_bytes
-        for name in ("kawsay-login-encuadre-desktop.jpg", "kawsay-login-encuadre-mobile.jpg"):
+        for name in ("kawsay-login-encuadre-desktop.jpg", "kawsay-login-encuadre-mobile.jpg",
+                     "kawsay-reference-hero.jpg", "kawsay-reference-mobile.jpg"):
             picture = client.get(f"/{name}")
             assert picture.status_code == 200
             assert picture.headers["content-type"].startswith("image/jpeg")
