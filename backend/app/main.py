@@ -107,7 +107,12 @@ def create_app() -> FastAPI:
                 "X-Content-Type-Options": "nosniff",
                 "X-Frame-Options": "DENY",
                 "Referrer-Policy": "no-referrer",
-                "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
+                "Content-Security-Policy": (
+                 "default-src 'self'; script-src 'self'; "
+                 "style-src 'self' 'unsafe-inline'; img-src 'self' data:; "
+                 "font-src 'self' data:; connect-src 'self'; object-src 'none'; "
+                 "base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+                ),
             })
     return app
 
