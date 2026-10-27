@@ -1,6 +1,6 @@
 /* KAWSAY AI — diseño de referencia oscuro, sin recursos externos */
 .role-admin { --bg:#041124; --fg:#e8f3ff; --muted:#9eb6cd; --card:#071a31; --sidebar:#041329; --line:#1a3a56; --accent:#14ddbb; --accent-hover:#20f1d0; --soft:#0e3444; color-scheme:dark; color:#eaf5ff; background:#041124; }
-.role-admin .workspace { min-width:0; background:radial-gradient(ellipse at 60% -15%,#103355 0%,transparent 42%),#041124; }
+.role-admin .workspace { min-width:0; background:radial-gradient(ellipse at 87% 3%,rgba(115,173,154,.11),transparent 37%),radial-gradient(ellipse at 62% -12%,#123451 0%,transparent 43%),linear-gradient(180deg,#05182a 0%,#041124 45%,#061a2b 100%); }
 .role-admin .sidebar { width:273px; padding:26px 18px; background:linear-gradient(175deg,#04112a,#051c35 79%,#052438); border-right:1px solid #123251; box-shadow:none; }
 .role-admin .brand { color:#f4fbff; font-size:25px; font-weight:850; letter-spacing:-1.2px; margin-bottom:34px; }
 .role-admin .brand small { color:#bfd5e8 !important; font-size:11px; }
@@ -42,10 +42,13 @@
 .role-admin .main-content { max-width:unset; width:100%; margin:0; padding:0 24px 34px; background:transparent; }
 .role-admin .workspace-footer { background:#06162a; color:#6f9baa; border-color:#173b53; }
 .role-admin .kd-overview { display:flex; flex-direction:column; gap:16px; color:#e9f3ff; }
-.role-admin .kd-hero { position:relative; isolation:isolate; overflow:hidden; min-height:215px; margin:0 -24px; padding:35px 34px 25px; background:#103052; display:flex; align-items:center; justify-content:space-between; gap:20px; }
-.role-admin .kd-hero::before { content:''; position:absolute; inset:0 0 0 34%; background:url('/kawsay-hero-rural.jpg?v=20261027-hero-fix') center 34%/cover no-repeat; z-index:-2; }
-.role-admin .kd-hero::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,#092444 0%,#0a2b4bed 27%,#0a315b8a 50%,#061a3426 85%,#0619364c 100%); z-index:-1; }
-.role-admin .kd-hero-copy { flex:1; max-width:630px; }
+.role-admin .kd-hero { position:relative; isolation:isolate; overflow:hidden; min-height:306px; margin:0 -24px; padding:39px 35px 71px; background:#071d31; display:flex; align-items:center; justify-content:space-between; gap:20px; border-bottom:1px solid #215571; }
+.role-admin .kd-hero::before { content:''; position:absolute; inset:0 0 0 24%; background-image:url('/kawsay-hero-rural.jpg?v=20261027-blend2'); background-position:60% 37%; background-size:cover; background-repeat:no-repeat; filter:saturate(.91) contrast(1.03) brightness(.98); z-index:0; pointer-events:none; }
+.role-admin .kd-hero::after { content:''; position:absolute; inset:0; z-index:1; pointer-events:none; background:
+  linear-gradient(180deg, rgba(5,19,35,.04) 0%, rgba(5,20,34,.05) 47%, rgba(4,17,32,.45) 83%, #06172a 100%),
+  linear-gradient(90deg, #061d33 0%, rgba(6,30,49,.97) 20%, rgba(7,35,53,.83) 41%, rgba(5,29,45,.38) 60%, rgba(5,22,38,.05) 78%, rgba(5,22,38,.24) 100%),
+  radial-gradient(ellipse at 62% 10%,rgba(248,186,121,.13),transparent 48%); }
+.role-admin .kd-hero-copy { flex:1; max-width:635px; position:relative; z-index:2; }
 .role-admin .kd-hero-kicker { font-size:9px; letter-spacing:2.2px; font-weight:850; color:#8bf2d4; margin-bottom:12px; }
 .role-admin .kd-hero h1 { font-size:clamp(24px,2.7vw,40px); letter-spacing:-1.1px; line-height:1.18; margin-bottom:7px; font-weight:820; color:#fff; }
 .role-admin .kd-hero h1 em { color:#17ddbd; font-style:normal; }
@@ -54,15 +57,15 @@
 .role-admin .kd-motto { display:flex; gap:20px; align-items:center; flex-wrap:wrap; }
 .role-admin .kd-motto span { display:inline-flex; align-items:center; gap:8px; padding-right:16px; color:#eefcff; font-weight:720; letter-spacing:1px; font-size:9px; border-right:1px solid #67afac44; }
 .role-admin .kd-motto .icon { color:#28e2af; width:22px; height:22px; }
-.role-admin .kd-hero-quote { flex:0 0 160px; color:#fff; font-size:19px; text-align:right; line-height:1.27; font-weight:520; font-family:Georgia,serif; font-style:italic; text-shadow:0 2px 10px #0009; }
-.role-admin .kd-kpis { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:13px; }
+.role-admin .kd-hero-quote { position:relative; z-index:2; flex:0 0 150px; color:#fff8e9; font-size:18px; text-align:right; line-height:1.36; font-weight:520; font-family:Georgia,serif; font-style:italic; text-shadow:0 2px 12px #061622; margin-right:4px; }
+.role-admin .kd-kpis { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:13px; position:relative; z-index:3; margin-top:-43px; padding:0 4px; }
 .role-admin .kd-kpi { position:relative; isolation:isolate; overflow:hidden; display:flex; align-items:start; gap:13px; border-radius:14px; padding:18px 15px; min-height:120px; text-decoration:none; border:1px solid var(--kd-border); color:#fff; transition:transform .2s,border-color .2s,box-shadow .2s; }
 .role-admin .kd-kpi:hover { transform:translateY(-3px); border-color:#7dc8d0; box-shadow:0 12px 30px #0005; }
 .role-admin .tone-blue { --kd-border:#0e5693; --kd-start:#084376; --kd-end:#092c54; --kd-highlight:#168ce4; }
 .role-admin .tone-green { --kd-border:#0a7d76; --kd-start:#075c56; --kd-end:#073e44; --kd-highlight:#02c9a1; }
 .role-admin .tone-gold { --kd-border:#aa7c2f; --kd-start:#826328; --kd-end:#493d25; --kd-highlight:#ffcf56; }
 .role-admin .tone-purple { --kd-border:#7140b7; --kd-start:#57299c; --kd-end:#2b165d; --kd-highlight:#a475f8; }
-.role-admin .kd-kpi { background:linear-gradient(127deg,var(--kd-start),var(--kd-end)); }
+.role-admin .kd-kpi { background:linear-gradient(127deg,rgba(255,255,255,.07),transparent 58%),linear-gradient(127deg,var(--kd-start),var(--kd-end)); backdrop-filter:blur(8px); box-shadow:0 12px 26px #020f22a6,inset 0 1px 0 #ffffff20; }
 .role-admin .kd-kpi-icon { display:grid; place-items:center; width:46px; height:46px; flex:0 0 auto; border-radius:12px; background:#ffffff1a; color:#fff; border:1px solid #ffffff18; }
 .role-admin .kd-kpi-icon .icon { width:25px; height:25px; }
 .role-admin .kd-kpi-copy { display:flex; flex-direction:column; align-items:start; gap:4px; position:relative; z-index:2; }
@@ -74,7 +77,7 @@
 .role-admin .kd-row { display:grid; gap:14px; min-width:0; }
 .role-admin .kd-row-top { grid-template-columns:minmax(0,1.75fr) minmax(315px,.9fr); }
 .role-admin .kd-row-bottom { grid-template-columns:minmax(0,1.2fr) minmax(0,.95fr) minmax(0,.85fr); }
-.role-admin .kd-panel { min-width:0; border-radius:16px; padding:16px; background:linear-gradient(140deg,#061b32,#041426); border:1px solid #174365; box-shadow:0 8px 24px #0002; color:#fff; }
+.role-admin .kd-panel { min-width:0; border-radius:16px; padding:16px; background:linear-gradient(145deg,rgba(10,38,60,.95),rgba(5,23,42,.98)); border:1px solid rgba(62,130,147,.42); box-shadow:0 14px 30px rgba(0,8,22,.21), inset 0 1px 0 rgba(179,234,233,.035); color:#fff; }
 .role-admin .kd-panel-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 0 14px; }
 .role-admin .kd-panel-heading h3 { color:#eff8ff; font-size:16px; line-height:1.35; font-weight:770; letter-spacing:-.35px; margin:0; }
 .role-admin .kd-outline,.role-admin .kd-refresh,.role-admin .kd-year { display:inline-flex; align-items:center; justify-content:center; gap:6px; color:#e2edff; background:#0d2741; border:1px solid #27516e; border-radius:9px; padding:7px 12px; min-height:31px; font-size:10px; text-decoration:none; font-weight:600; white-space:nowrap; }
@@ -161,8 +164,8 @@
 /* Pantallas medianas y móviles */
 @media (max-width:1330px){.role-admin .kd-shortcut-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.role-admin .kd-shortcut{min-height:135px}.role-admin .kd-row-top{grid-template-columns:minmax(0,1.25fr) minmax(290px,.85fr)}.role-admin .kd-row-bottom{grid-template-columns:repeat(2,minmax(0,1fr))}.role-admin .kd-audit{grid-column:1/-1}.role-admin .kd-audit-list{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px}}
 @media (max-width:1050px){.role-admin .kd-row-top{grid-template-columns:1fr}.role-admin .kd-shortcut-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.role-admin .kd-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.role-admin .kd-hero-quote{display:none}}
-@media (max-width:800px){.role-admin .sidebar{position:static;width:100%;height:auto;padding:12px 16px}.role-admin .sidebar .brand{margin-bottom:12px}.role-admin .primary-nav{flex-direction:row;overflow-x:auto;gap:5px}.role-admin .primary-nav a{flex:0 0 auto;padding:9px 12px;font-size:11px;min-height:41px}.role-admin .sidebar-note,.role-admin .sidebar-footer,.role-admin .nav-caption{display:none}.role-admin .topbar{padding:9px 16px}.role-admin .main-content{padding:0 14px 23px}.role-admin .kd-hero{margin:0 -14px;padding:27px 18px;min-height:208px}.role-admin .kd-hero::before{inset:0 0 0 42%}.role-admin .kd-hero::after{background:linear-gradient(90deg,#082340 0%,#082840ef 42%,#082a4490 100%)}.role-admin .admin-header .account-name{display:none}.role-admin .admin-header{gap:8px}.role-admin .admin-header-search{max-width:none}.role-admin .admin-header-actions{gap:5px}.role-admin .kd-shortcut-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:590px){.role-admin .kd-kpis{gap:9px}.role-admin .kd-kpi{padding:11px;min-height:111px;gap:8px}.role-admin .kd-kpi-icon{width:36px;height:36px}.role-admin .kd-kpi-icon svg{width:18px;height:18px}.role-admin .kd-kpi-copy>span{font-size:10px}.role-admin .kd-kpi-copy>strong{font-size:25px}.role-admin .kd-row-bottom{grid-template-columns:1fr}.role-admin .kd-audit{grid-column:auto}.role-admin .kd-audit-list{grid-template-columns:1fr}.role-admin .kd-shortcuts{padding:12px}.role-admin .kd-shortcut{padding:13px;min-height:126px}.role-admin .kd-shortcut strong{font-size:11px}.role-admin .kd-shortcut p{font-size:9px}.role-admin .kd-panel-heading h3{font-size:14px}.role-admin .kd-donut-layout{flex-direction:column}.role-admin .kd-school-list{grid-template-columns:1fr}.role-admin .kd-hero h1{font-size:28px}.role-admin .kd-hero h2{font-size:12px}.role-admin .kd-motto{gap:9px}.role-admin .kd-motto span{font-size:8px;padding-right:6px}.role-admin .kd-hero::before{inset:0 0 0 26%}.role-admin .kd-hero::after{background:linear-gradient(90deg,#082340 0%,#092943ec 58%,#082a4499 100%)}.role-admin .admin-header .logout{padding:5px}.role-admin .admin-header-icon{width:30px;height:32px}.role-admin .admin-header-search{padding:0 8px}.role-admin .admin-header-search input{font-size:10px}}
+@media (max-width:800px){.role-admin .sidebar{position:static;width:100%;height:auto;padding:12px 16px}.role-admin .sidebar .brand{margin-bottom:12px}.role-admin .primary-nav{flex-direction:row;overflow-x:auto;gap:5px}.role-admin .primary-nav a{flex:0 0 auto;padding:9px 12px;font-size:11px;min-height:41px}.role-admin .sidebar-note,.role-admin .sidebar-footer,.role-admin .nav-caption{display:none}.role-admin .topbar{padding:9px 16px}.role-admin .main-content{padding:0 14px 23px}.role-admin .kd-hero{margin:0 -14px;padding:29px 19px 64px;min-height:257px}.role-admin .kd-hero::before{inset:0 0 0 14%;background-position:64% 40%}.role-admin .kd-hero::after{background:linear-gradient(180deg,transparent 0%,#06182b 100%),linear-gradient(90deg,#061e35 0%,#06233cd9 43%,#072d4770 73%,#06243c22 100%)}.role-admin .kd-kpis{margin-top:-35px;padding:0 2px}.role-admin .admin-header .account-name{display:none}.role-admin .admin-header{gap:8px}.role-admin .admin-header-search{max-width:none}.role-admin .admin-header-actions{gap:5px}.role-admin .kd-shortcut-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:590px){.role-admin .kd-kpis{gap:9px}.role-admin .kd-kpi{padding:11px;min-height:111px;gap:8px}.role-admin .kd-kpi-icon{width:36px;height:36px}.role-admin .kd-kpi-icon svg{width:18px;height:18px}.role-admin .kd-kpi-copy>span{font-size:10px}.role-admin .kd-kpi-copy>strong{font-size:25px}.role-admin .kd-row-bottom{grid-template-columns:1fr}.role-admin .kd-audit{grid-column:auto}.role-admin .kd-audit-list{grid-template-columns:1fr}.role-admin .kd-shortcuts{padding:12px}.role-admin .kd-shortcut{padding:13px;min-height:126px}.role-admin .kd-shortcut strong{font-size:11px}.role-admin .kd-shortcut p{font-size:9px}.role-admin .kd-panel-heading h3{font-size:14px}.role-admin .kd-donut-layout{flex-direction:column}.role-admin .kd-school-list{grid-template-columns:1fr}.role-admin .kd-hero h1{font-size:28px}.role-admin .kd-hero h2{font-size:12px}.role-admin .kd-motto{gap:9px}.role-admin .kd-motto span{font-size:8px;padding-right:6px}.role-admin .kd-hero::before{inset:0;background-position:67% 40%}.role-admin .kd-hero::after{background:linear-gradient(180deg,#071e3606 0%,#061b2fd9 91%,#041426 100%),linear-gradient(90deg,#071c34 0%,#07233af0 44%,#08273ea1 75%,#071e3640 100%)}.role-admin .admin-header .logout{padding:5px}.role-admin .admin-header-icon{width:30px;height:32px}.role-admin .admin-header-search{padding:0 8px}.role-admin .admin-header-search input{font-size:10px}}
 @media (prefers-reduced-motion:reduce){.role-admin .kd-kpi,.role-admin .kd-shortcut{transition:none}.role-admin .kd-kpi:hover,.role-admin .kd-shortcut:hover{transform:none}}
 /* Menú y vistas auxiliares del administrador */
 .role-admin .admin-nav-group { min-width:0; width:100%; }
@@ -227,3 +230,25 @@
 .role-admin.admin-sun-mode .kd-donut small { color:#536e7f; }
 .role-admin.admin-sun-mode .kd-donut-legend div,.role-admin.admin-sun-mode .kd-donut-legend b { color:#244458; }
 @media(max-width:800px) { .role-admin.sidebar-compact .sidebar { width:100%; } .role-admin.sidebar-compact .sidebar .brand > span:last-child, .role-admin.sidebar-compact .sidebar .primary-nav a span { display:initial; } .role-admin .admin-nav-group { width:auto; flex:0 0 auto; } .role-admin .admin-nav-group .nav-caption { display:none; } .role-admin .primary-nav a { width:max-content; } }
+
+
+/* Refinamiento: fotografía andina integrada con el fondo oscuro y tarjetas. */
+@media (min-width:1400px) {
+  .role-admin .kd-hero { min-height:326px; padding-top:45px; padding-bottom:84px; }
+  .role-admin .kd-hero::before { background-position:60% 39%; }
+  .role-admin .kd-kpis { margin-top:-48px; }
+}
+@media (min-width:591px) and (max-width:1440px) {
+  .role-admin .kd-hero-quote { display:none; } /* Nunca tapar el rostro en pantallas medianas. */
+}
+@media (max-width:590px) {
+  .role-admin .kd-hero { min-height:247px; padding-top:28px; padding-bottom:53px; }
+  .role-admin .kd-hero-kicker { font-size:8px; }
+  .role-admin .kd-hero-copy { max-width:100%; }
+  .role-admin .kd-hero p { font-size:11px; }
+  .role-admin .kd-hero-quote { display:none; }
+  .role-admin .kd-kpis { margin-top:-25px; }
+}
+@media (prefers-reduced-transparency:reduce) {
+  .role-admin .kd-kpi { backdrop-filter:none; }
+}
