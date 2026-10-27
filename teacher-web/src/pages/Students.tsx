@@ -14,6 +14,7 @@ export function Students() {
   const rooms = useAsync(() => api.get<Classroom[]>("/classrooms"), []);
   const languages = useAsync(() => api.get<Language[]>("/languages"), []);
   const [classroomId, setClassroomId] = useState("");
+  useEffect(() => { if (!classroomId && rooms.data?.length === 1) setClassroomId(rooms.data[0].id); }, [rooms.data, classroomId]);
 
   return (
     <div className="student-management">
@@ -30,7 +31,7 @@ export function Students() {
           </label>
         ) : <p>No hay aulas creadas. Crea una en “Mis aulas” antes de registrar estudiantes.</p>}
       </Card>
-      {classroomId && languages.data && <ClassroomStudents key={classroomId} classroomId={classroomId} languages={languages.data} />}
+      {classroomId && <ClassroomStudents key={classroomId} classroomId={classroomId} languages={languages.data ?? []} />}
     </div>
   );
 }
