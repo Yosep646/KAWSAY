@@ -7,7 +7,7 @@ from app.core.database import get_db
 from app.core.permissions import get_current_user, require_roles
 from app.core.rate_limit import login_rate_limit
 from app.modules.auth import service
-from app.modules.auth.schemas import ChangePasswordIn, PasswordLogin, RefreshIn, StudentLogin, StudentEmailLoginIn, TokenOut, UserBrief
+from app.modules.auth.schemas import ChangePasswordIn, PasswordLogin, RefreshIn, StudentEmailLoginIn, StudentLogin, TokenOut, UserBrief
 from app.modules.users.models import Role, User
 
 router = APIRouter(prefix="/auth", tags=["auth"])
