@@ -7,13 +7,13 @@ from sqlalchemy.orm import Session
 from app.core.exceptions import ConflictError, NotFoundError
 from app.core.password_policy import check_password_policy
 from app.core.security import generate_login_code, generate_pin, hash_password
-from app.modules.assignments.service import assign_published_to_new_student
 from app.modules.auth.service import revoke_all_for_user
+from app.modules.assignments.service import assign_published_to_new_student
 from app.modules.classrooms import service as classrooms
 from app.modules.classrooms.models import ClassroomStudent
 from app.modules.curriculum.models import Grade
-from app.modules.students.models import StudentProfile
 from app.modules.students.email_models import StudentEmailLogin
+from app.modules.students.models import StudentProfile
 from app.modules.users.models import Role, User
 
 
