@@ -92,6 +92,7 @@ def create_app() -> FastAPI:
             public_static_files = {
                 "sw.js", "startup-check.js", "favicon.ico",
                 "manifest.webmanifest", "robots.txt", "kawsay-hero-rural.jpg",
+                "kawsay-diversidad-fondo.jpg",
             }
             if requested_path in public_static_files:
                 requested_file = dist / requested_path
@@ -99,7 +100,9 @@ def create_app() -> FastAPI:
                     raise HTTPException(status_code=404, detail="Archivo estático no encontrado")
                 return FileResponse(
                     requested_file,
-                    media_type="image/jpeg" if requested_path == "kawsay-hero-rural.jpg" else None,
+                    media_type="image/jpeg" if requested_path in {
+                        "kawsay-hero-rural.jpg", "kawsay-diversidad-fondo.jpg"
+                    } else None,
                     headers={"Cache-Control": "no-store"},
                 )
             return FileResponse(index, media_type="text/html", headers={
