@@ -16,6 +16,7 @@ from app.core.security import (
     verify_password,
 )
 from app.modules.auth.models import RefreshToken
+from app.modules.students.email_models import StudentEmailLogin
 from app.modules.users.models import Role, User
 
 log = logging.getLogger("kawsay.security")
@@ -79,6 +80,22 @@ def login_with_password(db: Session, email: str, password: str, device_id: uuid.
     user = db.scalar(select(User).where(User.email == email.lower(), User.deleted_at.is_(None),
                                         User.role != Role.STUDENT))
     user = _check_secret(db, user, password, email)
+    tokens = _issue_tokens(db, user, device_id)
+    db.commit()
+    return _public(tokens)
+
+
+
+def login_student_email(db: Session, email: str, password: str, device_id: uuid.UUID) -> dict:
+    """Acceso por correo de estudiantes, aislado del formulario de personal."""
+    normalized = email.strip().lower()
+    user = db.scalar(
+        select(User)
+        .join(StudentEmailLogin, StudentEmailLogin.user_id == User.id)
+        .where(StudentEmailLogin.email == normalized,
+               User.deleted_at.is_(None), User.role == Role.STUDENT)
+    )
+    user = _check_secret(db, user, password, normalized)
     tokens = _issue_tokens(db, user, device_id)
     db.commit()
     return _public(tokens)
