@@ -14,12 +14,24 @@ export function Dashboard() {
   useEffect(() => { if (!roomId && rooms.data?.[0]) setRoomId(rooms.data[0].id); }, [rooms.data, roomId]);
 
   return (
-    <div>
-      <div className="page-heading"><div><p className="eyebrow">UNA MIRADA A TU AULA</p><h2>Dashboard</h2><p className="muted">Reconoce los avances. Encuentra dónde acompañar.</p></div><div className="teacher-dashboard-actions"><Link className="button teacher-register-action" to="/estudiantes"><Icon name="students" /> Registrar estudiante</Link><Link className="button" to="/actividades/nueva"><Icon name="tasks" /> Crear actividad</Link></div></div>
-      <div className="welcome-banner"><span className="welcome-icon"><Icon name="leaf" /></span><div><h3>Pequeños avances, grandes oportunidades.</h3><p>Tu mirada hace la diferencia. Aquí encontrarás evidencia para acompañar a cada estudiante.</p></div><span className="banner-tag">El docente decide</span></div>
+    <div className="teacher-dashboard">
+      <header className="teacher-dashboard-hero">
+        <div className="teacher-dashboard-intro"><p className="eyebrow"><Icon name="leaf" /> ESPACIO DOCENTE · KAWSAY AI</p>
+          <h2>Enseñar es acompañar<br/><span>cada aprendizaje.</span></h2>
+          <p>Gestiona tus aulas, registra estudiantes y acompaña su progreso con información real.</p>
+          <div className="teacher-dashboard-actions"><Link className="button teacher-register-action" to="/estudiantes"><Icon name="students" /> Registrar estudiante</Link><Link className="button teacher-outline-action" to="/actividades/nueva"><Icon name="tasks" /> Crear actividad</Link></div>
+        </div>
+        <span className="teacher-hero-motto"><Icon name="book" /> Aprender · Crecer · Acompañar</span>
+      </header>
+      <div className="teacher-quick-grid" aria-label="Accesos rápidos del docente">
+        <Link to="/aulas"><span className="teacher-quick-icon t-blue"><Icon name="classroom" /></span><strong>Mis aulas</strong><small>Crea y organiza tus secciones</small><Icon name="arrow" /></Link>
+        <Link to="/estudiantes"><span className="teacher-quick-icon t-emerald"><Icon name="students" /></span><strong>Estudiantes</strong><small>Registra correos y contraseñas</small><Icon name="arrow" /></Link>
+        <Link to="/planificacion"><span className="teacher-quick-icon t-gold"><Icon name="book" /></span><strong>Planificación</strong><small>Contenidos según tu currículo</small><Icon name="arrow" /></Link>
+        <Link to="/alertas"><span className="teacher-quick-icon t-violet"><Icon name="chart" /></span><strong>Seguimiento</strong><small>Revisa alertas y avances</small><Icon name="arrow" /></Link>
+      </div>
       <ErrorBox message={rooms.error} />
       <div className="room-selector">
-      {rooms.loading ? <Loading /> : rooms.data?.length === 0 ? <p>Aún no tienes aulas. Crea una en «Mis aulas».</p> : (
+      {rooms.loading ? <Loading /> : rooms.data?.length === 0 ? <div className="teacher-empty-classroom"><span className="teacher-empty-icon"><Icon name="classroom" /></span><div><strong>Tu primera aula comienza aquí.</strong><p>Para agregar estudiantes y asignar tareas, primero registra el aula o sección que acompañas.</p></div><Link className="button" to="/aulas"><Icon name="arrow" /> Crear mi primera aula</Link></div> : (
         <label>Aula<select value={roomId} onChange={(e) => setRoomId(e.target.value)}>
           {rooms.data?.map((r) => <option key={r.id} value={r.id}>{r.name} ({r.academic_year})</option>)}
         </select></label>
