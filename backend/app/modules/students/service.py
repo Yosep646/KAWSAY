@@ -39,7 +39,7 @@ def create_student(
             raise ConflictError("El correo ya está registrado")
     pin = None if normalized_email else generate_pin()
     for _ in range(5):  # colisión del código interno: reintentar
-        user = User(login_code=generate_login_code(), password_hash=hash_password(password if normalized_email else (pin or "")),
+        user = User(login_code=generate_login_code(), password_hash=hash_password((password or "") if normalized_email else (pin or "")),
                     role=Role.STUDENT, display_name=display_name.strip())
         db.add(user)
         try:
