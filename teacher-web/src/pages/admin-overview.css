@@ -1,0 +1,361 @@
+/* KAWSAY AI / Panel general
+   Diseño independiente; no modifica las interfaces del docente o estudiante. */
+.role-admin .ka-overview {
+  --ka-ink: #1d344b;
+  --ka-muted: #677e90;
+  --ka-teal: #147c80;
+  --ka-border: #dce8ef;
+  --ka-shadow: 0 14px 38px rgba(23, 62, 88, .055);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  color: var(--ka-ink);
+}
+.role-admin .ka-home-hero {
+  isolation: isolate;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(115deg, #122e4b 0%, #174d69 53%, #118d8c 100%);
+  color: white;
+  border-radius: 24px;
+  min-height: 280px;
+  padding: clamp(30px, 4vw, 52px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  box-shadow: 0 18px 42px rgba(21, 69, 90, .15);
+  border: 1px solid rgba(255,255,255,.12);
+}
+.role-admin .ka-home-hero::before {
+  content: "";
+  position: absolute;
+  inset: auto -15% -95% 34%;
+  height: 150%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(124,240,206,.17), transparent 68%);
+  pointer-events: none;
+  z-index: -1;
+}
+.role-admin .ka-home-hero-content { position: relative; z-index: 2; max-width: 690px; }
+.role-admin .ka-home-kicker {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 23px;
+  color: #b9eddf;
+  font-weight: 750;
+  letter-spacing: 1.6px;
+  font-size: 10px;
+}
+.role-admin .ka-home-kicker > span:not(.ka-home-kicker-dot) { color: #f7d591; }
+.role-admin .ka-home-kicker-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f7d591;
+  box-shadow: 0 0 0 4px rgba(247,213,145,.15);
+  margin-right: 4px;
+}
+.role-admin .ka-home-hero h1 {
+  margin: 0 0 16px;
+  color: #fff;
+  font-size: clamp(32px, 3.2vw, 49px);
+  font-weight: 790;
+  letter-spacing: -1.7px;
+  line-height: 1.12;
+  max-width: 640px;
+}
+.role-admin .ka-home-hero h1 em { font-style: normal; color: #a6e9d3; }
+.role-admin .ka-home-intro {
+  color: #d8eaf1;
+  font-size: 13px;
+  line-height: 1.75;
+  max-width: 515px;
+  margin: 0 0 25px;
+}
+.role-admin .ka-home-hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.role-admin .ka-home-hero-cta a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  min-height: 44px;
+  padding: 11px 17px;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 760;
+  border-radius: 11px;
+  transition: background .2s ease, transform .2s ease, border-color .2s ease;
+}
+.role-admin .ka-home-hero-cta a:hover { transform: translateY(-2px); }
+.role-admin .ka-home-hero-cta svg { width: 17px; height: 17px; }
+.role-admin .ka-home-hero-cta .ka-home-primary { background: #a7e9d3; color: #103e4b; border: 1px solid #a7e9d3; }
+.role-admin .ka-home-hero-cta .ka-home-primary:hover { background: #cbf9e9; color: #103e4b; }
+.role-admin .ka-home-hero-cta .ka-home-secondary { color: #fff; border: 1px solid rgba(255,255,255,.4); background: rgba(255,255,255,.07); }
+.role-admin .ka-home-hero-cta .ka-home-secondary:hover { background: rgba(255,255,255,.17); }
+.role-admin .ka-home-hero-visual {
+  position: relative;
+  flex: 0 0 clamp(190px, 24vw, 300px);
+  min-height: 236px;
+  display: grid;
+  place-items: center;
+}
+.role-admin .ka-home-orbit {
+  position: absolute;
+  width: 285px;
+  height: 285px;
+  border-radius: 50%;
+  border: 1px solid rgba(209,248,242,.17);
+  background: rgba(255,255,255,.025);
+}
+.role-admin .ka-home-orbit-one { transform: translate(0,-3%) rotate(12deg); }
+.role-admin .ka-home-orbit-two { width: 210px; height: 210px; background: rgba(255,255,255,.045); border-color: rgba(209,248,242,.2); }
+.role-admin .ka-home-brand-seal {
+  width: 115px;
+  height: 115px;
+  display: grid;
+  place-items: center;
+  border-radius: 33px;
+  background: linear-gradient(145deg, rgba(232,255,245,.21), rgba(120,226,211,.075));
+  border: 1px solid rgba(224,255,251,.42);
+  box-shadow: 0 10px 45px rgba(0,25,34,.12);
+  transform: rotate(-9deg);
+}
+.role-admin .ka-home-brand-seal .icon { width: 60px; height: 60px; transform: rotate(9deg); color: #b0f5d5; }
+.role-admin .ka-home-visual-tag {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  bottom: -10px;
+  right: 0;
+  padding: 10px 14px;
+  background: rgba(12,55,68,.48);
+  border: 1px solid rgba(205,252,240,.14);
+  border-radius: 10px;
+  backdrop-filter: blur(7px);
+  color: #e8fff4;
+}
+.role-admin .ka-home-visual-tag span { font-size: 10px; font-weight: 820; letter-spacing: 1.7px; }
+.role-admin .ka-home-visual-tag strong { font-size: 10px; color: #c2e6e5; font-weight: 500; }
+.role-admin .ka-home-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 1px;
+}
+.role-admin .ka-home-section-overline {
+  color: #167e82;
+  font-size: 10px;
+  font-weight: 820;
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
+}
+.role-admin .ka-home-heading h2,
+.role-admin .ka-home-panel-heading h2,
+.role-admin .ka-home-schools-heading h2 {
+  color: #233f55;
+  font-size: clamp(19px,1.6vw,24px);
+  font-weight: 790;
+  letter-spacing: -.6px;
+  margin: 0 0 4px;
+}
+.role-admin .ka-home-heading p:last-child,
+.role-admin .ka-home-schools-heading p:last-child {
+  font-size: 12px;
+  color: #6d8291;
+  margin-bottom: 0;
+}
+.role-admin button.ka-home-refresh {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 15px;
+  border: 1px solid #cfe0e8;
+  border-radius: 11px;
+  min-height: 41px;
+  background: #fff;
+  color: #285269;
+  font-size: 12px;
+  font-weight: 750;
+}
+.role-admin button.ka-home-refresh:hover { background: #eff9f6; border-color: #83c3bf; }
+.role-admin .ka-home-refresh svg { width: 15px; height: 15px; color: #177e80; }
+.role-admin .ka-home-error { padding: 13px 16px; color: #8e303d; background: #fff1f2; border: 1px solid #f0d0d4; border-radius: 10px; font-size: 12px; }
+.role-admin .ka-home-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 15px; }
+.role-admin .ka-home-metric {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding: 21px;
+  border: 1px solid #dce7ed;
+  border-radius: 18px;
+  background: #fff;
+  text-decoration: none;
+  color: #233c52;
+  box-shadow: var(--ka-shadow);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.role-admin .ka-home-metric:hover {
+  transform: translateY(-4px);
+  border-color: #88c5c3;
+  box-shadow: 0 18px 34px rgba(23, 62, 88, .09);
+}
+.role-admin .ka-home-metric-head { display: flex; align-items: center; justify-content: space-between; }
+.role-admin .ka-home-metric-head > svg { width: 15px; height: 15px; color: #9caeb9; transform: rotate(-45deg); }
+.role-admin .ka-home-metric-icon,
+.role-admin .ka-home-shortcut-icon {
+  width: 43px;
+  height: 43px;
+  border-radius: 13px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+}
+.role-admin .ka-home-metric-icon .icon,
+.role-admin .ka-home-shortcut-icon .icon { width: 21px; height: 21px; }
+.role-admin .ka-tone-teal { background: #e4f6f0; color: #11806c; }
+.role-admin .ka-tone-blue { background: #e8f1fb; color: #2d67a0; }
+.role-admin .ka-tone-gold { background: #fdf3db; color: #aa7625; }
+.role-admin .ka-tone-violet { background: #f1ecfa; color: #7561a8; }
+.role-admin .ka-home-metric > strong { font-size: 34px; font-weight: 810; line-height: 1.05; letter-spacing: -1.3px; color: #1a3c51; }
+.role-admin .ka-home-metric > div:last-child span { display: block; font-weight: 780; font-size: 13px; color: #29485e; }
+.role-admin .ka-home-metric > div:last-child small { display: block; color: #748897; font-size: 11px; margin-top: 3px; }
+.role-admin .ka-home-main-grid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(290px, 1fr); gap: 18px; align-items: stretch; }
+.role-admin .ka-home-panel {
+  min-width: 0;
+  border-radius: 20px;
+  background: #fff;
+  border: 1px solid #dce8ef;
+  box-shadow: var(--ka-shadow);
+  padding: clamp(20px, 2.2vw, 28px);
+}
+.role-admin .ka-home-panel-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.role-admin .ka-home-heading-mark,
+.role-admin .ka-home-activity-icon {
+  display: grid;
+  place-items: center;
+  width: 38px; height: 38px;
+  color: #167f7b;
+  background: #e7f6f2;
+  border-radius: 12px;
+}
+.role-admin .ka-home-shortcut-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.role-admin .ka-home-shortcut {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 19px;
+  min-height: 158px;
+  border: 1px solid #e1ebf0;
+  border-radius: 15px;
+  color: #244458;
+  background: #fbfcfe;
+  text-decoration: none;
+  transition: transform .18s ease, background .18s ease, border-color .18s ease;
+}
+.role-admin .ka-home-shortcut:hover { background: #f2faf8; border-color: #95ceca; transform: translateY(-2px); }
+.role-admin .ka-home-shortcut-icon { width: 37px; height: 37px; border-radius: 11px; margin-bottom: 11px; }
+.role-admin .ka-home-shortcut-icon .icon { width: 19px; height: 19px; }
+.role-admin .ka-home-shortcut > strong { font-size: 13px; font-weight: 800; padding-right: 15px; }
+.role-admin .ka-home-shortcut > p { color: #728796; font-size: 11px; line-height: 1.6; padding-right: 12px; margin: 5px 0 0; }
+.role-admin .ka-home-shortcut-arrow { position: absolute; right: 14px; top: 20px; color: #789da4; }
+.role-admin .ka-home-shortcut-arrow .icon { width: 15px; height: 15px; transform: rotate(-45deg); }
+.role-admin .ka-home-panel-description { color: #748997; font-size: 11px; margin-top: -12px; margin-bottom: 21px; }
+.role-admin .ka-home-timeline { position: relative; min-height: 226px; }
+.role-admin .ka-home-timeline-event { display: flex; gap: 12px; padding: 0 0 23px; }
+.role-admin .ka-home-timeline-event:not(:last-child) { border-left: 1px solid #dceae8; margin-left: 6px; padding-left: 18px; }
+.role-admin .ka-home-timeline-event:last-child { margin-left: 6px; padding-left: 18px; }
+.role-admin .ka-home-timeline-dot {
+  position: absolute; transform: translate(-25px,6px);
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: #57baa5;
+  border: 3px solid #e3f6ef;
+}
+.role-admin .ka-home-timeline-event > div { min-width: 0; }
+.role-admin .ka-home-timeline-event strong { display: block; font-size: 12px; line-height: 1.5; color: #294759; overflow-wrap: anywhere; }
+.role-admin .ka-home-timeline-event p { color: #668295; font-size: 10px; line-height: 1.65; margin: 5px 0 0; overflow-wrap: anywhere; }
+.role-admin .ka-home-timeline-event p span { color: #8da0ad; }
+.role-admin .ka-home-empty { padding: 30px 18px; color: #6e8796; text-align: center; display: grid; justify-items: center; gap: 10px; }
+.role-admin .ka-home-empty svg { width: 35px; height: 35px; border-radius: 50%; color: #53a58f; background: #e3f5ee; padding: 9px; }
+.role-admin .ka-home-empty p { max-width: 220px; font-size: 12px; line-height: 1.8; margin: 0; }
+.role-admin .ka-home-panel-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 12px;
+  font-size: 12px;
+  font-weight: 760;
+  text-decoration: none;
+  color: #177783;
+}
+.role-admin .ka-home-panel-link:hover { color: #0d565e; text-decoration: underline; }
+.role-admin .ka-home-panel-link .icon { width: 15px; height: 15px; }
+.role-admin .ka-home-schools-heading { display: flex; align-items: end; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-bottom: 19px; margin-bottom: 19px; border-bottom: 1px solid #e6edf2; }
+.role-admin .ka-home-schools-heading .ka-home-panel-link { margin: 0 0 4px; }
+.role-admin .ka-home-schools-toolbar { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 18px; }
+.role-admin .ka-home-schools-toolbar label { flex: 1; max-width: 480px; gap: 8px; font-weight: 700; color: #3a576a; font-size: 11px; }
+.role-admin .ka-home-schools-toolbar input { width: 100%; min-height: 42px; border-radius: 10px; font-size: 12px; padding: 10px 13px; }
+.role-admin .ka-home-schools-toolbar > span { white-space: nowrap; font-size: 11px; color: #6d8493; padding-bottom: 10px; }
+.role-admin .ka-home-school-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.role-admin .ka-home-school-row { display: flex; align-items: center; min-width: 0; gap: 12px; padding: 15px; border: 1px solid #e0ebf0; background: #fbfcfd; border-radius: 13px; }
+.role-admin .ka-home-school-icon { width: 39px; height: 39px; border-radius: 11px; display: grid; flex: 0 0 auto; place-items: center; background: #e8f3f1; color: #237f79; }
+.role-admin .ka-home-school-icon svg { width: 19px; height: 19px; }
+.role-admin .ka-home-school-row > div { flex: 1; min-width: 0; }
+.role-admin .ka-home-school-row strong { display: block; color: #25465c; font-size: 12px; font-weight: 760; line-height: 1.5; overflow-wrap: anywhere; }
+.role-admin .ka-home-school-row small { display: block; color: #8092a0; font-size: 10px; margin-top: 3px; }
+.role-admin .ka-home-school-row a { color: #287d85; padding: 6px; border-radius: 7px; }
+.role-admin .ka-home-school-row a:hover { background: #e8f6f1; color: #135b63; }
+.role-admin .ka-home-school-row a svg { width: 16px; height: 16px; }
+.role-admin .ka-home-school-empty { padding: 12px; margin: 0; color: #6f8492; font-size: 12px; }
+.role-admin .ka-home-more { display: inline-flex; align-items: center; gap: 6px; color: #147a80; font-size: 12px; text-decoration: none; margin-top: 15px; font-weight: 750; }
+.role-admin .ka-home-more:hover { text-decoration: underline; }
+@media (max-width: 1350px) {
+  .role-admin .ka-home-main-grid { grid-template-columns: minmax(0,1fr) minmax(280px,.9fr); }
+  .role-admin .ka-home-hero-visual { flex-basis: 210px; }
+  .role-admin .ka-home-metric { padding: 17px; }
+}
+@media (max-width: 1120px) {
+  .role-admin .ka-home-hero-visual { display: none; }
+  .role-admin .ka-home-main-grid { grid-template-columns: minmax(0,1fr); }
+  .role-admin .ka-home-timeline { min-height: 0; }
+}
+@media (max-width: 800px) {
+  .role-admin .ka-home-metrics { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .role-admin .ka-home-school-list { grid-template-columns: minmax(0,1fr); }
+  .role-admin .ka-home-hero { min-height: 230px; border-radius: 19px; padding: 29px 24px; }
+  .role-admin .ka-home-hero h1 { letter-spacing: -1.1px; }
+}
+@media (max-width: 520px) {
+  .role-admin .ka-overview { gap: 18px; }
+  .role-admin .ka-home-metrics { gap: 10px; }
+  .role-admin .ka-home-metric { gap: 10px; padding: 15px; border-radius: 14px; }
+  .role-admin .ka-home-metric > strong { font-size: 28px; }
+  .role-admin .ka-home-metric-icon { width: 37px; height: 37px; }
+  .role-admin .ka-home-metric-icon svg { width: 18px; height: 18px; }
+  .role-admin .ka-home-shortcut-grid { grid-template-columns: minmax(0,1fr); }
+  .role-admin .ka-home-shortcut { min-height: 115px; padding: 15px; }
+  .role-admin .ka-home-panel { padding: 20px 16px; }
+  .role-admin .ka-home-hero-cta a { width: 100%; }
+  .role-admin .ka-home-schools-toolbar { flex-direction: column; align-items: stretch; gap: 4px; }
+  .role-admin .ka-home-schools-toolbar label { max-width: none; }
+  .role-admin .ka-home-schools-toolbar > span { padding: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .role-admin .ka-home-metric, .role-admin .ka-home-shortcut, .role-admin .ka-home-hero-cta a { transition: none; }
+  .role-admin .ka-home-metric:hover, .role-admin .ka-home-shortcut:hover, .role-admin .ka-home-hero-cta a:hover { transform: none; }
+}
