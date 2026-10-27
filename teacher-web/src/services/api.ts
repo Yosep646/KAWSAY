@@ -3,6 +3,11 @@ import type { TokenOut } from "../types/api";
 const BASE: string = (import.meta.env.VITE_API_URL as string | undefined) ?? "";
 const API = `${BASE}/api/v1`;
 const RT_KEY = "kawsay_rt";
+const sessionStore = {
+  getItem(key: string): string | null { try { return window.sessionStorage.getItem(key); } catch { return null; } },
+  setItem(key: string, value: string): void { try { window.sessionStorage.setItem(key, value); } catch { /* Storage disabled: continue without persisted session. */ } },
+  removeItem(key: string): void { try { window.sessionStorage.removeItem(key); } catch { /* Ignore blocked storage. */ } },
+};
 
 export class ApiError extends Error {
   constructor(public status: number, public code: string, message: string, public requestId?: string) {
@@ -21,11 +26,11 @@ export function setSessionLostHandler(fn: (() => void) | null): void {
 }
 export function setTokens(t: Pick<TokenOut, "access_token" | "refresh_token"> | null): void {
   accessToken = t?.access_token ?? null;
-  if (t) sessionStorage.setItem(RT_KEY, t.refresh_token);
-  else sessionStorage.removeItem(RT_KEY);
+  if (t) sessionStore.setItem(RT_KEY, t.refresh_token);
+  else sessionStore.removeItem(RT_KEY);
 }
 export function hasStoredSession(): boolean {
-  return sessionStorage.getItem(RT_KEY) !== null;
+  return sessionStore.getItem(RT_KEY) !== null;
 }
 
 async function parse<T>(res: Response): Promise<T> {
@@ -67,7 +72,7 @@ async function fetchWithTimeout(url: string, init: RequestInit, options: Request
 }
 
 async function refreshTokens(): Promise<boolean> {
-  const rt = sessionStorage.getItem(RT_KEY);
+  const rt = sessionStore.getItem(RT_KEY);
   if (!rt) return false;
   refreshing ??= (async () => {
     try {
@@ -117,7 +122,7 @@ export async function restoreSession(): Promise<TokenOut["user"] | null> {
   return request<TokenOut["user"]>("GET", "/auth/me");
 }
 export async function logout(): Promise<void> {
-  const rt = sessionStorage.getItem(RT_KEY);
+  const rt = sessionStore.getItem(RT_KEY);
   setTokens(null);
   if (rt) await fetchWithTimeout(`${API}/auth/logout`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ refresh_token: rt }) }).catch(() => undefined);
 }
