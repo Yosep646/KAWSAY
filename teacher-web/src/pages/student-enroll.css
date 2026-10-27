@@ -1,0 +1,51 @@
+/* KAWSAY: registro de estudiantes, consistente con la identidad del docente. */
+.student-management { display:flex; flex-direction:column; gap:20px; }
+.student-management-hero { position:relative; overflow:hidden; padding:30px clamp(22px,4vw,40px); border-radius:20px; border:1px solid #2c847d; background:linear-gradient(118deg,#074b48 0%,#067b68 64%,#15967d 100%); color:#fff; box-shadow:0 16px 34px #062c2820; }
+.student-management-hero::after { content:""; position:absolute; width:240px;height:240px;border-radius:50%; border:1px solid #bdf0e933; box-shadow:0 0 0 40px #bdf0e912,0 0 0 90px #bdf0e909;right:-50px;top:-110px;pointer-events:none; }
+.student-management-hero>span { display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:1.9px;font-weight:800;color:#a9efcd; }
+.student-management-hero>span svg{width:19px;height:19px;}
+.student-management-hero h2 { color:#fff; font-size:clamp(25px,3vw,38px);line-height:1.18;letter-spacing:-.8px;margin:12px 0 7px; }
+.student-management-hero p { color:#e0f3eb;max-width:620px;font-size:13px;line-height:1.8;margin:0; }
+.student-management .card { border-radius:17px; }
+.student-management .card h3 { letter-spacing:-.2px; }
+.student-enroll { padding:clamp(18px,3vw,28px);border-radius:17px;background:linear-gradient(140deg,#f6fbf8,#eff8f5);border:1px solid #cce7da;margin-top:20px;color:#153e36; }
+.student-enroll-heading { display:flex;align-items:center;gap:14px;margin-bottom:20px; }
+.student-enroll-badge { display:grid;place-items:center;flex:0 0 auto;width:49px;height:49px;background:#d8f1e5;color:#11775d;border-radius:14px; }
+.student-enroll-badge svg{width:25px;height:25px;}
+.student-enroll-kicker{font-size:10px!important;letter-spacing:1.6px;color:#24816e!important;font-weight:800;margin:0 0 4px!important;}
+.student-enroll-heading h3 { margin:0 0 3px;font-size:21px;font-weight:800;color:#164b40; }
+.student-enroll-heading p:last-child { color:#637d74;font-size:12px;line-height:1.6;margin:0; }
+.student-enroll-method,.student-login-method { display:flex;flex-wrap:wrap;gap:7px;padding:5px;border-radius:12px;background:#e1f0e9;border:1px solid #c9e2d6;margin:0 0 22px; }
+.student-enroll-method button,.student-login-method button { border:0;border-radius:9px;padding:11px 14px;min-width:150px;flex:1;font-size:12px;background:transparent;color:#376558;font-weight:700; }
+.student-enroll-method button.active,.student-login-method button.active{background:#fff;box-shadow:0 3px 12px #194e3c15;color:#12654f;border:1px solid #b7d9c5;}
+.student-enroll-form { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px; }
+.student-enroll-form > label,.student-enroll-password > label { display:flex;flex-direction:column;gap:8px;color:#284d42;font-size:12px;font-weight:750;min-width:0; }
+.student-enroll-form input,.student-enroll-form select,.student-enroll-reset input { width:100%;min-height:47px;background:#fff;color:#173c33;-webkit-text-fill-color:#173c33;caret-color:#178367;box-shadow:none;border:1px solid #bedace;border-radius:11px;padding:10px 12px;font-size:13px;outline:none; }
+.student-enroll-form input::placeholder,.student-enroll-reset input::placeholder{color:#82998e;opacity:1;}
+.student-enroll-form :is(input,select):focus,.student-enroll-reset input:focus{border-color:#0c9677;box-shadow:0 0 0 3px #19987729;}
+.student-enroll-form select option{background:#fff;color:#173c33;}
+.student-enroll-password { min-width:0; }
+.student-enroll-password-control{display:flex;align-items:stretch;gap:8px;}
+.student-enroll-password-control>input{min-width:0;flex:1;}
+.student-enroll-password-control>button{min-width:90px;display:flex;justify-content:center;align-items:center;gap:5px;padding:8px 11px;border-radius:10px;background:#d8ede3;color:#11694f;border:1px solid #b1dac8;font-size:11px;font-weight:750;}
+.student-enroll-password-control>button:hover{background:#c3e6d4;}
+.student-enroll-password-control>button .icon{width:16px;height:16px;}
+.student-enroll-hint { margin:7px 0 0!important;font-size:11px;color:#637c70; }
+.student-enroll-footer { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:15px;grid-column:1/-1;margin-top:4px;padding-top:20px;border-top:1px solid #cce1d7; }
+.student-enroll-footer p{margin:0;display:flex;align-items:center;gap:7px;max-width:340px;font-size:11px;color:#608073;line-height:1.6;}
+.student-enroll-footer p .icon{width:18px;height:18px;color:#118367;flex:0 0 auto;}
+.student-enroll-footer>button { min-width:185px;min-height:46px;display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#087b61;color:#fff;border:1px solid #087b61;border-radius:11px;font-size:12px;font-weight:800;}
+.student-enroll-footer>button:hover{background:#056d54;}
+.student-enroll-footer>button:disabled{opacity:.65;}
+.student-access-created,.student-enroll-reset {margin-top:18px;padding:19px;border-radius:13px;border:1px solid #97dac1;background:#e5f9ed;color:#1e5948;line-height:1.75;font-size:12px;}
+.student-access-created strong {display:flex;align-items:center;gap:8px;font-size:13px;}
+.student-access-created strong .icon{width:18px;height:18px;color:#0c8b66;}
+.student-access-created code{background:#fff;color:#1e5948;border:1px solid #b8ddce;padding:4px 7px;border-radius:6px;}
+.student-enroll-reset h3{margin:0;color:#184c3d;}
+.student-enroll-reset p{margin:5px 0 15px;color:#51766a;}
+.student-enroll-reset>label{display:block;font-size:12px;font-weight:750;margin-bottom:9px;}
+.student-enroll-reset .row{margin-top:13px;}
+.student-login-method { margin:13px 0 17px; }
+.student-login-method button {min-width:0;color:#396a58;}
+@media (max-width:700px) {.student-enroll-form{grid-template-columns:1fr;}.student-enroll-footer{flex-direction:column;align-items:stretch;}.student-enroll-footer>button{width:100%;}.student-enroll-heading{align-items:flex-start;}}
+@media (prefers-reduced-motion:reduce){.student-enroll-footer>button,.student-enroll-method button{transition:none;}}
