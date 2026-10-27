@@ -6,7 +6,7 @@ import { errMsg } from "../utils/format";
 import { Brand, Icon } from "../components/Icon";
 
 export function Login() {
-  const { login, loginStudent } = useAuth();
+  const { login, loginStudent, loginStudentEmail } = useAuth();
   const nav = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,12 +14,13 @@ export function Login() {
   const [busy, setBusy] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [student, setStudent] = useState(false);
+  const [studentMethod, setStudentMethod] = useState<"email" | "code">("email");
   const [code, setCode] = useState("");
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     setBusy(true); setErr(null);
-    try { if (student) { await loginStudent(code, password); nav("/estudiante"); } else { await login(email, password); nav("/"); } } catch (x) { setErr(errMsg(x)); } finally { setBusy(false); }
+    try { if (student) { if (studentMethod === "email") await loginStudentEmail(email, password); else await loginStudent(code, password); nav("/estudiante"); } else { await login(email, password); nav("/"); } } catch (x) { setErr(errMsg(x)); } finally { setBusy(false); }
   };
   return (
     <main className="login-layout">
@@ -34,11 +35,15 @@ export function Login() {
       <span className="login-symbol"><Icon name="leaf" /></span>
       <p className="eyebrow">{student ? "Espacio estudiante" : "Docencia y administración"}</p>
       <h2>Bienvenido a tu aula</h2>
-      <p className="muted login-description">Ingresa para planificar, descubrir avances y acompañar a tus estudiantes.</p>
+      <p className="muted login-description">{student ? "Ingresa con las credenciales que te entregó tu docente para aprender y realizar actividades." : "Ingresa para planificar, descubrir avances y acompañar a tus estudiantes."}</p>
       <button type="button" className="ghost" onClick={() => { setStudent(!student); setErr(null); setPassword(""); }}>{student ? "Acceso docente o administrador" : "Soy estudiante"}</button>
+      {student && <div className="student-login-method" role="group" aria-label="Tipo de acceso del estudiante">
+        <button type="button" className={studentMethod === "email" ? "active" : ""} aria-pressed={studentMethod === "email"} onClick={() => { setStudentMethod("email"); setErr(null); setPassword(""); }}>Correo y contraseña</button>
+        <button type="button" className={studentMethod === "code" ? "active" : ""} aria-pressed={studentMethod === "code"} onClick={() => { setStudentMethod("code"); setErr(null); setPassword(""); }}>Código y PIN</button>
+      </div>}
       <form onSubmit={(e) => void submit(e)} className="stack">
-        {student ? <label>Código de estudiante<input value={code} onChange={(e) => setCode(e.target.value)} autoComplete="username" required /></label> : <label>Correo<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="username" required /></label>}
-        <label htmlFor="password">{student ? "PIN" : "Contraseña"}</label>
+        {student && studentMethod === "code" ? <label>Código de estudiante<input value={code} onChange={(e) => setCode(e.target.value)} autoComplete="username" placeholder="Ej. ABCD2345" required /></label> : <label>Correo electrónico<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="username" placeholder={student ? "alumno@colegio.edu.pe" : "Correo institucional"} required /></label>}
+        <label htmlFor="password">{student && studentMethod === "code" ? "PIN" : "Contraseña"}</label>
         <div className="password-field"><input id="password" type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" required /><button type="button" className="password-toggle" aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"} aria-pressed={showPassword} onClick={() => setShowPassword(!showPassword)}><Icon name="eye" /></button></div>
         <ErrorBox message={err} />
         <button type="submit" className="login-submit" disabled={busy}>{busy ? "Ingresando…" : "Ingresar"}<Icon name="arrow" /></button>
