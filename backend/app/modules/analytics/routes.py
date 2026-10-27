@@ -1,4 +1,5 @@
 import uuid
+from datetime import UTC, datetime
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
@@ -9,13 +10,14 @@ from app.core.database import get_db
 from app.core.exceptions import NotFoundError
 from app.core.permissions import require_roles
 from app.domain import adaptive
-from app.modules.assignments.models import Assignment
+from app.modules.assignments.models import Assignment, StudentAssignment
 from app.modules.audit.service import log_access
 from app.modules.classrooms.models import ClassroomStudent
 from app.modules.classrooms.service import classroom_students, get_teacher_classroom, teacher_can_access_student
 from app.modules.curriculum.models import Competency, Grade
 from app.modules.learning.models import LearningAttempt, StudentCompetencyProgress
 from app.modules.students.models import StudentProfile
+from app.modules.schools.models import School
 from app.modules.support_flags.models import SupportFlag
 from app.modules.users.models import Role, User
 
@@ -105,3 +107,77 @@ def forecast(classroom_id: uuid.UUID, db: DB, teacher: Teacher) -> dict:
     log_access(db, teacher, "analytics.forecast", "classroom", room.id)
     students = {s["id"]: s for s in classroom_students(db, room.id)}
     return forecast_for_students(db, students) if students else {"available": False, "reason": "El aula no tiene estudiantes.", "items": []}
+
+
+@router.get("/admin/overview")
+def admin_overview(
+    db: DB,
+    admin: Annotated[User, Depends(require_roles(Role.ADMIN))],
+) -> dict:
+    """Agregados reales para el administrador, sin identidad ni datos sensibles de menores.
+
+    Los totales se calculan en SQLite con filtros de estado. Un periodo sin
+    registros se devuelve con 0, nunca se rellena con datos simulados.
+    """
+    _ = admin
+    year = datetime.now(UTC).year
+
+    def total(entity, *filters) -> int:
+        return int(db.scalar(select(func.count()).select_from(entity).where(*filters)) or 0)
+
+    schools = total(School, School.deleted_at.is_(None))
+    teachers = total(User, User.role == Role.TEACHER, User.is_active.is_(True), User.deleted_at.is_(None))
+    students = total(User, User.role == Role.STUDENT, User.is_active.is_(True), User.deleted_at.is_(None))
+    published_tasks = total(Assignment, Assignment.status == "PUBLISHED")
+    assigned_tasks = total(StudentAssignment)
+
+    by_grade = [
+        {"level": level, "grade": number, "count": int(count)}
+        for level, number, count in db.execute(
+            select(Grade.level, Grade.number, func.count(StudentProfile.user_id))
+            .select_from(StudentProfile)
+            .join(Grade, Grade.id == StudentProfile.grade_id)
+            .join(User, User.id == StudentProfile.user_id)
+            .where(User.is_active.is_(True), User.deleted_at.is_(None))
+            .group_by(Grade.level, Grade.number)
+            .order_by(Grade.level, Grade.number)
+        )
+    ]
+
+    def monthly(column, entity, *filters) -> dict[str, int]:
+        rows = db.execute(
+            select(func.strftime("%Y-%m", column), func.count())
+            .select_from(entity)
+            .where(*filters, column.is_not(None))
+            .group_by(func.strftime("%Y-%m", column))
+        )
+        return {str(month): int(count) for month, count in rows if month}
+
+    schools_by_month = monthly(School.created_at, School, School.deleted_at.is_(None))
+    students_by_month = monthly(
+        User.created_at, User, User.role == Role.STUDENT, User.is_active.is_(True), User.deleted_at.is_(None))
+    teachers_by_month = monthly(
+        User.created_at, User, User.role == Role.TEACHER, User.is_active.is_(True), User.deleted_at.is_(None))
+
+    months = []
+    for number in range(1, 13):
+        key = f"{year}-{number:02d}"
+        months.append({
+            "month": number,
+            "schools_new": schools_by_month.get(key, 0),
+            "teachers_new": teachers_by_month.get(key, 0),
+            "students_new": students_by_month.get(key, 0),
+        })
+
+    return {
+        "year": year,
+        "institutions": schools,
+        "teachers": teachers,
+        "students": students,
+        "published_assignments": published_tasks,
+        "student_assignments": assigned_tasks,
+        "grades": by_grade,
+        "monthly_new": months,
+        "map_available": False,
+        "map_message": "Registra coordenadas geográficas verificadas para habilitar el mapa por institución.",
+    }
