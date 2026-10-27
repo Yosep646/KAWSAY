@@ -16,8 +16,8 @@ from app.modules.classrooms.models import ClassroomStudent
 from app.modules.classrooms.service import classroom_students, get_teacher_classroom, teacher_can_access_student
 from app.modules.curriculum.models import Competency, Grade
 from app.modules.learning.models import LearningAttempt, StudentCompetencyProgress
-from app.modules.students.models import StudentProfile
 from app.modules.schools.models import School
+from app.modules.students.models import StudentProfile
 from app.modules.support_flags.models import SupportFlag
 from app.modules.users.models import Role, User
 
