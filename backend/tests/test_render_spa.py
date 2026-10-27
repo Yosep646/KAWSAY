@@ -10,6 +10,7 @@ def test_render_spa_routes_and_api_isolation(monkeypatch, tmp_path):
     # JPEG real usado en el banner del administrador (no HTML de React).
     hero_bytes = bytes([0xFF, 0xD8, 0xFF, 0xE0]) + b"KAWSAY" + bytes([0xFF, 0xD9])
     (tmp_path / "kawsay-hero-rural.jpg").write_bytes(hero_bytes)
+    (tmp_path / "kawsay-diversidad-fondo.jpg").write_bytes(hero_bytes)
     assets = tmp_path / "assets"
     assets.mkdir()
     (assets / "index.js").write_text("console.log('KAWSAY')", encoding="utf-8")
@@ -30,6 +31,10 @@ def test_render_spa_routes_and_api_isolation(monkeypatch, tmp_path):
         assert hero.headers["content-type"].startswith("image/jpeg")
         assert hero.content == hero_bytes
         assert hero.headers["cache-control"] == "no-store"
+        multicultural = client.get("/kawsay-diversidad-fondo.jpg")
+        assert multicultural.status_code == 200
+        assert multicultural.headers["content-type"].startswith("image/jpeg")
+        assert multicultural.content == hero_bytes
         assert client.get("/assets/index.js").status_code == 200
         assert client.get("/health").json()["status"] == "ok"
         assert client.get("/api/v1/una-ruta-inexistente").status_code == 404
