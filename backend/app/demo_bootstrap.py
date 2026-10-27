@@ -46,5 +46,24 @@ def bootstrap_teacher() -> None:
         print("KAWSAY DEMO: docente habilitado con datos ficticios", flush=True)
 
 
+def bootstrap_administrator() -> None:
+    if os.getenv("KAWSAY_DEMO_ADMIN_ENABLED") != "1":
+        return
+    username = os.environ["KAWSAY_DEMO_ADMIN_EMAIL"].strip().lower()
+    passphrase = os.environ["KAWSAY_DEMO_ADMIN_PASSWORD"]
+    with Session(get_engine(), expire_on_commit=False) as db:
+        existing = db.scalar(select(User).where(User.email == username, User.deleted_at.is_(None)))
+        if existing is not None:
+            if existing.role != Role.ADMIN:
+                raise ValueError("El correo ya pertenece a otro rol")
+            print("KAWSAY DEMO: administrador existente", flush=True)
+            return
+        create_staff_user(db, UserCreate(
+            role="ADMIN", email=username, password=passphrase, display_name="Administrador KAWSAY"
+        ))
+        print("KAWSAY DEMO: administrador creado", flush=True)
+
+
 if __name__ == "__main__":
     bootstrap_teacher()
+    bootstrap_administrator()
