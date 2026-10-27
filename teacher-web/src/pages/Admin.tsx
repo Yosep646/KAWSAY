@@ -1,5 +1,4 @@
 import { useState, type FormEvent } from "react";
-import { Link } from "react-router-dom";
 import { Card, ErrorBox } from "../components/ui";
 import { Icon } from "../components/Icon";
 import { AdminOverview } from "./AdminOverview";
@@ -69,7 +68,7 @@ export function Admin({ section = "overview" }: { section?: "overview" | "school
       <header className="role-hero admin-hero">
         <div className="admin-hero-copy">
           <p className="eyebrow">KAWSAY AI <span className="admin-hero-separator">/</span> CENTRO DE ADMINISTRACIÓN</p>
-          <h2>{section === "overview" ? "Todo tu espacio educativo." : section === "schools" ? "Instituciones educativas" : section === "teachers" ? "Tu equipo docente." : section === "curriculum" ? "Currículo educativo" : "Sistema y auditoría"}</h2>
+          <h2>{section === "schools" ? "Instituciones educativas" : section === "teachers" ? "Tu equipo docente." : section === "curriculum" ? "Currículo educativo" : "Sistema y auditoría"}</h2>
           <p>{section === "teachers" ? "Organiza los accesos del personal docente de manera segura y sencilla." : "Una visión clara para acompañar a las instituciones y sus comunidades."}</p>
         </div>
         <div className="admin-hero-emblem" aria-hidden="true"><Icon name="leaf" /></div>
