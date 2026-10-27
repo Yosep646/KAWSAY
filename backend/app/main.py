@@ -88,7 +88,7 @@ def create_app() -> FastAPI:
         def serve_web(requested_path: str):
             if requested_path.startswith(("api/", "docs", "openapi", "ready", "health")):
                 raise HTTPException(status_code=404)
-            if requested_path in {"sw.js", "favicon.ico", "manifest.webmanifest", "robots.txt"}:
+            if requested_path in {"sw.js", "startup-check.js", "favicon.ico", "manifest.webmanifest", "robots.txt"}:
                 requested_file = dist / requested_path
                 if requested_file.is_file():
                     return FileResponse(requested_file, headers={"Cache-Control": "no-store"})
