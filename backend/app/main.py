@@ -95,6 +95,8 @@ def create_app() -> FastAPI:
                 "kawsay-diversidad-fondo.jpg",
                 "kawsay-login-encuadre-desktop.jpg",
                 "kawsay-login-encuadre-mobile.jpg",
+                "kawsay-reference-hero.jpg",
+                "kawsay-reference-mobile.jpg",
             }
             if requested_path in public_static_files:
                 requested_file = dist / requested_path
@@ -105,7 +107,8 @@ def create_app() -> FastAPI:
                     media_type="image/jpeg" if requested_path in {
                         "kawsay-hero-rural.jpg", "kawsay-diversidad-fondo.jpg",
                         "kawsay-login-encuadre-desktop.jpg",
-                        "kawsay-login-encuadre-mobile.jpg"
+                        "kawsay-login-encuadre-mobile.jpg",
+                        "kawsay-reference-hero.jpg", "kawsay-reference-mobile.jpg"
                     } else None,
                     headers={"Cache-Control": "no-store"},
                 )
