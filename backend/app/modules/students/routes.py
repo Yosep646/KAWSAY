@@ -64,7 +64,7 @@ def create(body: StudentCreate, db: DB, teacher: Teacher) -> dict:
                                        str(body.email) if body.email else None, body.password)
     return {"id": user.id, "display_name": user.display_name, "grade_id": body.grade_id,
             "login_code": user.login_code if pin else None, "pin": pin,
-            "email": body.email}
+            "email": str(body.email).lower() if body.email else None}
 
 
 @router.get("/{student_id}", response_model=StudentOut)
