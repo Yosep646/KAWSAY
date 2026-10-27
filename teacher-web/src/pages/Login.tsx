@@ -65,7 +65,7 @@ export function Login() {
       <Brand />
       <div className="login-story-copy">
         <span className="eyebrow">APRENDER · CRECER · ACOMPAÑAR</span>
-        <h1>Más educación<br/>para más<br/><span className="login-highlight">comunidades.</span></h1>
+        <h1><span className="login-heading-line">Más educación</span><span className="login-heading-line">para más</span><span className="login-heading-line login-highlight">comunidades.</span></h1>
         <p>Herramientas digitales para docentes, estudiantes e instituciones educativas del Perú.</p>
         <div className="login-values" aria-label="Nuestros valores">
           <span><Icon name="book"/> Aprender</span>
