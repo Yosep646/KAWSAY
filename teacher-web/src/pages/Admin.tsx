@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { Card, ErrorBox } from "../components/ui";
 import { Icon } from "../components/Icon";
+import { AdminOverview } from "./AdminOverview";
 import { useAsync } from "../hooks/useAsync";
 import { api } from "../services/api";
 import { errMsg } from "../utils/format";
@@ -54,6 +55,17 @@ export function Admin({ section = "overview" }: { section?: "overview" | "school
 
   return (
     <div>
+      {section === "overview" ? (
+        <AdminOverview
+          schools={schools.data}
+          staff={staff.data}
+          audits={audit.data}
+          events={events.data}
+          loading={schools.loading || staff.loading || audit.loading || events.loading}
+          errors={[schools.error, staff.error, audit.error, events.error].filter((value): value is string => Boolean(value))}
+          onRefresh={async () => { await Promise.all([schools.reload(), staff.reload(), audit.reload(), events.reload()]); }}
+        />
+      ) : (
       <header className="role-hero admin-hero">
         <div className="admin-hero-copy">
           <p className="eyebrow">KAWSAY AI <span className="admin-hero-separator">/</span> CENTRO DE ADMINISTRACIÓN</p>
@@ -62,14 +74,8 @@ export function Admin({ section = "overview" }: { section?: "overview" | "school
         </div>
         <div className="admin-hero-emblem" aria-hidden="true"><Icon name="leaf" /></div>
       </header>
-      {section === "overview" && <div className="quick-cards"><div className="quick-card"><strong>{schools.data?.length ?? "—"}</strong><span>Instituciones registradas</span></div><div className="quick-card"><strong>{events.data?.length ?? "—"}</strong><span>Eventos recientes consultados</span></div><div className="quick-card"><strong>{audit.data?.length ?? "—"}</strong><span>Auditorías recientes consultadas</span></div></div>}
-      {section === "overview" && <div className="admin-actions" aria-label="Accesos rápidos de administración">
-        <Link to="/admin/instituciones">🏫 Gestionar instituciones <span>→</span></Link>
-        <Link to="/admin/docentes">👩‍🏫 Registrar docentes <span>→</span></Link>
-        <Link to="/admin/curriculo">📚 Revisar currículo <span>→</span></Link>
-        <Link to="/admin/sistema">🛡️ Auditoría y sistema <span>→</span></Link>
-      </div>}
-      <ErrorBox message={schools.error ?? (section === "system" ? audit.error ?? events.error : null)} />
+      )}
+      <ErrorBox message={section === "overview" ? null : schools.error ?? (section === "system" ? audit.error ?? events.error : null)} />
       <ErrorBox message={err} />
       {msg && <p role="status" className="notice">{msg}</p>}
       {section === "schools" && <Card title="Escuelas"><ul>{schools.data?.length === 0 && <li>Aún no hay instituciones registradas.</li>}{schools.data?.map((s) => <li key={s.id}>{s.name}</li>)}</ul>
