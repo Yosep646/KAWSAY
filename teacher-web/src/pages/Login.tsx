@@ -106,29 +106,33 @@ export function Login() {
         </div>}
 
         <form onSubmit={(e) => void submit(e)} className="stack login-access-form">
-          <label htmlFor="login-identity" className="login-field-label">{codeMode ? "Código de estudiante" : student ? "Correo electrónico" : "Correo"}</label>
-          <div className="login-input-wrap">
-            <Icon name={codeMode ? "shield" : "mail"}/>
-            <input id="login-identity"
-              type={codeMode ? "text" : "email"}
-              value={codeMode ? code : email}
-              onChange={(e) => codeMode ? setCode(e.target.value) : setEmail(e.target.value)}
-              autoComplete="username"
-              placeholder={codeMode ? "Código entregado por tu docente" : "Correo electrónico"}
-              required/>
+          <div className="kawsay-login-field">
+            <label htmlFor="login-identity" className="login-field-label">{codeMode ? "Código de estudiante" : student ? "Correo electrónico" : "Correo"}</label>
+            <div className="login-input-wrap">
+              <Icon name={codeMode ? "shield" : "mail"}/>
+              <input id="login-identity"
+                type={codeMode ? "text" : "email"}
+                value={codeMode ? code : email}
+                onChange={(e) => codeMode ? setCode(e.target.value) : setEmail(e.target.value)}
+                autoComplete="username"
+                placeholder={codeMode ? "Código entregado por tu docente" : "Correo electrónico"}
+                required/>
+            </div>
           </div>
 
-          <label htmlFor="password" className="login-field-label">{codeMode ? "PIN" : "Contraseña"}</label>
-          <div className="login-input-wrap password-field">
-            <Icon name="lock"/>
-            <input id="password" type={showPassword ? "text" : "password"}
-              value={password} onChange={(e) => setPassword(e.target.value)}
-              autoComplete="current-password" placeholder={codeMode ? "Tu PIN de acceso" : "Tu contraseña"} required/>
-            <button type="button" className="password-toggle"
-              aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
-              aria-pressed={showPassword} onClick={() => setShowPassword(!showPassword)}>
-              <Icon name={showPassword ? "eye-off" : "eye"}/>
-            </button>
+          <div className="kawsay-login-field">
+            <label htmlFor="password" className="login-field-label">{codeMode ? "PIN" : "Contraseña"}</label>
+            <div className="login-input-wrap password-field">
+              <Icon name="lock"/>
+              <input id="password" type={showPassword ? "text" : "password"}
+                value={password} onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password" placeholder={codeMode ? "Tu PIN de acceso" : "Tu contraseña"} required/>
+              <button type="button" className="password-toggle"
+                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                aria-pressed={showPassword} onClick={() => setShowPassword(!showPassword)}>
+                <Icon name={showPassword ? "eye-off" : "eye"}/>
+              </button>
+            </div>
           </div>
 
           <div className="login-preferences">
