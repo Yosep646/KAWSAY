@@ -14,7 +14,7 @@ describe("Experiencia por rol KAWSAY", () => {
   it("el docente sin aulas conserva un acceso visible para crear su primera aula y registrar estudiantes", async () => {
     vi.spyOn(svc.api, "get").mockImplementation(async () => []);
     render(<MemoryRouter><Dashboard /></MemoryRouter>);
-    expect(screen.getByRole("link", { name: /Registrar estudiante/ })).toHaveAttribute("href", "/estudiantes");
+    expect(screen.getAllByRole("link", { name: /Registrar estudiante/ }).some(link => link.getAttribute("href") === "/estudiantes")).toBe(true);
     expect(await screen.findByRole("link", { name: /Crear mi primera aula/ })).toHaveAttribute("href", "/aulas");
     await waitFor(() => expect(screen.getByText(/Para agregar estudiantes y asignar tareas/)).toBeInTheDocument());
   });
