@@ -74,6 +74,7 @@ export function StudentHome({ focus = "home" }: { focus?: "home" | "activities" 
         <Link to="/estudiante/actividades"><span className="student-overview-icon t-pink"><Icon name="tasks"/></span><div><strong>{visibleTasks.length}</strong><small>Actividades asignadas</small></div><Icon name="arrow"/></Link>
         <Link to="/estudiante/actividades"><span className="student-overview-icon t-blue"><Icon name="database"/></span><div><strong>{saved.length}</strong><small>Disponibles en este dispositivo</small></div><Icon name="arrow"/></Link>
         <Link to="/estudiante/progreso"><span className="student-overview-icon t-emerald"><Icon name="activity"/></span><div><strong>{averageProgress === null ? "—" : `${averageProgress} %`}</strong><small>Progreso medio con evidencia</small></div><Icon name="arrow"/></Link>
+        <Link to="/estudiante/actividades"><span className="student-overview-icon t-violet"><Icon name="book"/></span><div><strong>Explorar</strong><small>Recursos y actividades</small></div><Icon name="arrow"/></Link>
       </div>
       <div className="student-quick-links"><Link to="/estudiante/actividades"><Icon name="book" /> Ver mis actividades <Icon name="arrow"/></Link><Link to="/estudiante/progreso"><Icon name="chart" /> Consultar mi progreso <Icon name="arrow"/></Link></div>
     </>}
