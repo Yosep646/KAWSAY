@@ -3,12 +3,12 @@ from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, Query
 from pydantic import BaseModel, ConfigDict, Field
-from sqlalchemy.orm import Session
 from sqlalchemy import select
+from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.core.permissions import require_roles
 from app.core.exceptions import NotFoundError
+from app.core.permissions import require_roles
 from app.domain import adaptive
 from app.modules.assignments.models import StudentAssignment
 from app.modules.learning.models import LearningAttempt
