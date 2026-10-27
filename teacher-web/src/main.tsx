@@ -6,6 +6,7 @@ import "./styles.css";
 import "./pages/role-experience.css";
 import "./pages/login-reference.css";
 import "./pages/kawsay-welcome-responsive.css";
+import "./pages/kawsay-encuadre-fix.css";
 
 class StartupBoundary extends React.Component<{ children: React.ReactNode }, { failed: boolean }> {
   state = { failed: false };
