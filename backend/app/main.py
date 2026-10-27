@@ -88,10 +88,22 @@ def create_app() -> FastAPI:
         def serve_web(requested_path: str):
             if requested_path.startswith(("api/", "docs", "openapi", "ready", "health")):
                 raise HTTPException(status_code=404)
-            if requested_path in {"sw.js", "startup-check.js", "favicon.ico", "manifest.webmanifest", "robots.txt"}:
+            # Vite copia los archivos de public/ a la raíz de dist/.
+            # El banner utiliza esta foto local: debe servirse como JPEG,
+            # nunca como fallback HTML del SPA (evita un fondo invisible).
+            public_static_files = {
+                "sw.js", "startup-check.js", "favicon.ico",
+                "manifest.webmanifest", "robots.txt", "kawsay-hero-rural.jpg",
+            }
+            if requested_path in public_static_files:
                 requested_file = dist / requested_path
-                if requested_file.is_file():
-                    return FileResponse(requested_file, headers={"Cache-Control": "no-store"})
+                if not requested_file.is_file():
+                    raise HTTPException(status_code=404, detail="Archivo estático no encontrado")
+                return FileResponse(
+                    requested_file,
+                    media_type="image/jpeg" if requested_path == "kawsay-hero-rural.jpg" else None,
+                    headers={"Cache-Control": "no-store"},
+                )
             return FileResponse(index, media_type="text/html", headers={
                 "Cache-Control": "no-store",
                 "X-Content-Type-Options": "nosniff",
