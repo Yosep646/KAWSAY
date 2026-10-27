@@ -13,10 +13,10 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.12", cache: pip }
       - run: pip install -r requirements-dev.txt -r ../ml/requirements.txt bandit pip-audit
-      - run: ruff check .
-      - run: mypy app
       - run: alembic upgrade head && alembic downgrade base && alembic upgrade head   # migraciones reversibles
       - run: pytest -q
+      - run: ruff check .
+      - run: mypy app
       - run: bandit -q -r app -ll
       - run: pip-audit -r requirements.txt
       - run: cd .. && python -m pytest ml/tests -q
