@@ -92,7 +92,7 @@ describe("Login y control de acceso", () => {
     });
     localStorage.removeItem("kawsay_web_device_id");
     render(<MemoryRouter initialEntries={["/login"]}><App /></MemoryRouter>);
-    await userEvent.click(screen.getByRole("button", {name: "Estudiante", exact: true}));
+    await userEvent.click(screen.getByRole("button", {name: "Estudiante"}));
     await userEvent.click(screen.getByRole("button", {name: "Código y PIN"}));
     await userEvent.type(screen.getByLabelText("Código de estudiante"), "ABCD");
     await userEvent.type(screen.getByLabelText("PIN"), "1234");
@@ -113,7 +113,7 @@ describe("Login y control de acceso", () => {
       return new Response(JSON.stringify([]));
     });
     render(<MemoryRouter initialEntries={["/login"]}><App /></MemoryRouter>);
-    await userEvent.click(screen.getByRole("button", {name: "Estudiante", exact: true}));
+    await userEvent.click(screen.getByRole("button", {name: "Estudiante"}));
     await userEvent.click(screen.getByRole("button", {name: "Código y PIN"}));
     await userEvent.type(screen.getByLabelText("Código de estudiante"), "ABCD");
     await userEvent.type(screen.getByLabelText("PIN"), "1234");
