@@ -4,6 +4,7 @@ Sólo se ejecuta con KAWSAY_DEMO_BOOTSTRAP=1 y credenciales en variables privada
 de entorno. No hay contraseñas por defecto ni puntos de acceso públicos para crear usuarios.
 """
 import os
+
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
