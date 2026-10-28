@@ -15,6 +15,10 @@ def test_render_spa_routes_and_api_isolation(monkeypatch, tmp_path):
     (tmp_path / "kawsay-login-encuadre-mobile.jpg").write_bytes(hero_bytes)
     (tmp_path / "kawsay-reference-hero.jpg").write_bytes(hero_bytes)
     (tmp_path / "kawsay-reference-mobile.jpg").write_bytes(hero_bytes)
+    # Los fondos nuevos de KAWSAY deben servirse como imagen, no index.html.
+    webp_bytes = b"RIFF" + bytes(4) + b"WEBPVP8 " + b"KAWSAY"
+    (tmp_path / "kawsay-fondo-responsive-20261028.webp").write_bytes(webp_bytes)
+    (tmp_path / "kawsay-fondo-final.jpg").write_bytes(hero_bytes)
     assets = tmp_path / "assets"
     assets.mkdir()
     (assets / "index.js").write_text("console.log('KAWSAY')", encoding="utf-8")
@@ -45,6 +49,18 @@ def test_render_spa_routes_and_api_isolation(monkeypatch, tmp_path):
             assert picture.status_code == 200
             assert picture.headers["content-type"].startswith("image/jpeg")
             assert picture.content == hero_bytes
+        for name, mime, data in (
+            ("kawsay-fondo-responsive-20261028.webp", "image/webp", webp_bytes),
+            ("kawsay-fondo-final.jpg", "image/jpeg", hero_bytes),
+        ):
+            picture = client.get(f"/{name}")
+            assert picture.status_code == 200
+            assert picture.headers["content-type"].startswith(mime)
+            assert picture.content == data
+            assert picture.headers["x-content-type-options"] == "nosniff"
+            assert picture.headers["cache-control"] == "no-store"
+        # Si falta una fotografía, nunca devolver HTML con código 200.
+        assert client.get("/kawsay-imagen-inexistente.webp").status_code == 404
         assert client.get("/assets/index.js").status_code == 200
         assert client.get("/health").json()["status"] == "ok"
         assert client.get("/api/v1/una-ruta-inexistente").status_code == 404
