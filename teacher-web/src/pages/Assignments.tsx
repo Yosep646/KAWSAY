@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Badge, Card, ErrorBox, Loading } from "../components/ui";
 import { QuestionsEditor } from "../components/QuestionsEditor";
+import { ExercisePreview } from "../components/ExercisePreview";
 import { TeacherPageIntro } from "../components/TeacherPageIntro";
 import { Icon } from "../components/Icon";
 import { useAsync } from "../hooks/useAsync";
@@ -11,10 +12,17 @@ import { STATUS_LABEL, errMsg, gradeLabel } from "../utils/format";
 
 export function AssignmentList() {
   const list = useAsync(() => api.get<AssignmentBrief[]>("/assignments"), []);
+  const [localDraft] = useState(restoreExerciseDraft);
+  const draftAvailable = Boolean(localDraft?.title.trim() || localDraft?.instructions.trim());
   return (
     <div>
       <h2>Actividades</h2>
       <p><Link to="/actividades/nueva">+ Crear actividad</Link></p>
+      {draftAvailable && localDraft && <div className="teacher-local-draft">
+        <div><strong>Ejercicio pendiente en este navegador</strong><span>Borrador temporal · no publicado</span></div>
+        <p>{localDraft.title.trim() || "Sin título"} — {localDraft.instructions.slice(0,160)}</p>
+        <Link to="/actividades/nueva">Continuar escribiendo</Link>
+      </div>}
       <ErrorBox message={list.error} />
       {list.loading ? <Loading /> : (list.data?.length ?? 0) === 0 ? <p className="muted">Aún no hay actividades.</p> : (
         <ul className="list">{list.data?.map((a) => <li key={a.id}><Link to={`/actividades/${a.id}`}>{a.title}</Link> <Badge tone={a.status === "PUBLISHED" ? "ok" : "info"}>{a.status}</Badge> <span className="muted">{a.mode}</span></li>)}</ul>)}
@@ -150,6 +158,7 @@ export function CreateAssignment() {
             <label className="wide">Actividad base
               <textarea rows={4} maxLength={5000} value={instructions} onChange={e=>setInstructions(e.target.value)} minLength={5} required placeholder="Describe el aprendizaje que deseas trabajar, las consignas y los materiales de apoyo."/>
             </label>
+            <div className="wide"><ExercisePreview title={title} instructions={instructions} draft/></div>
             <fieldset className="teacher-flow-assignment-mode wide"><legend>Cómo preparar las variantes</legend>
               <label><input type="radio" name="activity-mode" checked={mode==="AI_ASSISTED"} onChange={()=>setMode("AI_ASSISTED")}/>
                 <span><strong>Asistido por KAWSAY AI</strong><small>Generación opcional; el docente revisa y aprueba cada grado. Requiere proveedor de IA habilitado.</small></span>
@@ -234,6 +243,7 @@ function VariantEditor({ assignmentId, v, grade, locked, onChanged }: { assignme
       <label>Título<input value={title} onChange={(e) => setTitle(e.target.value)} disabled={locked} /></label>
       <label>Instrucciones<textarea value={instructions} onChange={(e) => setInstructions(e.target.value)} disabled={locked} /></label>
       <QuestionsEditor questions={questions} onChange={setQuestions} disabled={locked} />
+      <ExercisePreview title={title} instructions={instructions} questions={questions}/>
       {!locked && (
         <div className="row">
           <button onClick={() => void save()}>Guardar cambios</button>
