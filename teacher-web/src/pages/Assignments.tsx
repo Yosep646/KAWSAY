@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Badge, Card, ErrorBox, Loading } from "../components/ui";
 import { QuestionsEditor } from "../components/QuestionsEditor";
 import { ExercisePreview } from "../components/ExercisePreview";
@@ -55,6 +55,10 @@ export function CreateAssignment() {
   const rid = roomId || rooms.data?.[0]?.id || "";
   const active = useAsync(() => rid ? api.get<PlanVersionTree[]>(`/planning/active?classroom_id=${rid}`) : Promise.resolve([]), [rid]);
   const [picked,setPicked] = useState<Record<number,string>>({});
+  const [mathAuto,setMathAuto] = useState(false);
+  const [mathExample,setMathExample] = useState("");
+  const [baseGradeId,setBaseGradeId] = useState(0);
+  const [skippedGrades,setSkippedGrades] = useState<number[]>([]);
   const [savedDraft] = useState(restoreExerciseDraft);
   const [title,setTitle] = useState(savedDraft?.title ?? "");
   const [instructions,setInstructions] = useState(savedDraft?.instructions ?? "");
@@ -69,8 +73,35 @@ export function CreateAssignment() {
   const units = active.data?.flatMap(v => v.periods.flatMap(p=>p.units)) ?? [];
   const selectableUnits = units.filter(u => u.topics.length > 0);
   const gradeIds = [...new Set(selectableUnits.map(u=>u.grade_id))].sort((a,b)=>a-b);
+  const primaryGrades = (grades.data??[]).filter(g=>g.level==="PRIMARIA"&&g.number<=6).sort((a,b)=>a.number-b.number);
+  const defaultBase = primaryGrades.find(g=>g.number===4 && gradeIds.includes(g.id))?.id ?? primaryGrades.find(g=>gradeIds.includes(g.id))?.id ?? 0;
+  const sourceGrade = baseGradeId || defaultBase;
+  const mathExampleValid = /^\s*\d{1,6}\s*[+\-×xX*÷/]\s*\d{1,6}\s*(?:=\s*\??|\?)?\s*$/.test(mathExample);
   const selectedCount = Object.values(picked).filter(Boolean).length;
-  const ready = Boolean(rid && !active.loading && !active.error && selectableUnits.length && selectedCount && title.trim().length>=2 && instructions.trim().length>=5);
+  const completeMatchingGrades = () => {
+    const sourceUnit = units.find(u=>u.grade_id===sourceGrade && u.topics.some(t=>t.id===picked[sourceGrade]))
+      ?? units.find(u=>u.grade_id===sourceGrade && u.topics.length>0);
+    const sourceTopic = sourceUnit?.topics.find(t=>t.id===picked[sourceGrade]) ?? sourceUnit?.topics[0];
+    if (!sourceUnit || !sourceTopic) {
+      setErr("Primero selecciona un tema del grado de origen dentro de una planificación activa.");
+      return;
+    }
+    const next:Record<number,string> = {};
+    const missing:number[] = [];
+    for (const g of primaryGrades) {
+      const match = units.filter(u=>u.grade_id===g.id && u.subject_id===sourceUnit.subject_id)
+        .flatMap(u=>u.topics).find(t=>t.competency_id===sourceTopic.competency_id);
+      if (match) next[g.id] = match.id;
+      else missing.push(g.number);
+    }
+    setPicked(next);
+    setSkippedGrades(missing);
+    setMathAuto(true);
+    setErr(null);
+  };
+  const ready = Boolean(rid && !active.loading && !active.error && selectableUnits.length && selectedCount &&
+    title.trim().length>=2 && instructions.trim().length>=5 &&
+    (!mathAuto || (mathExampleValid && Boolean(picked[sourceGrade]))));
   const planVersions = plans.data?.flatMap(p=>p.versions) ?? [];
   const hasSubmittedPlan = planVersions.some(v=>v.status==="UNDER_REVIEW");
   const hasApprovedPlan = planVersions.some(v=>v.status==="APPROVED");
@@ -87,6 +118,8 @@ export function CreateAssignment() {
             ? "Selecciona al menos un grado y un tema."
             : title.trim().length<2 || instructions.trim().length<5
               ? "Completa el título y la actividad base."
+              : mathAuto && !mathExampleValid ? "Escribe una operación matemática válida. Ejemplo: 245 + 178."
+              : mathAuto && !picked[sourceGrade] ? "Incluye el tema del grado de origen en la selección."
               : "";
 
   const submit = async (event:FormEvent) => {
@@ -100,7 +133,20 @@ export function CreateAssignment() {
         classroom_id:rid,title:title.trim(),instructions:instructions.trim(),mode,grade_topics,
       });
       try { window.sessionStorage.removeItem(TEACHER_EXERCISE_DRAFT); } catch { /* Optional draft storage. */ }
-      nav(`/actividades/${record.id}`);
+      if (mathAuto) {
+        try {
+          await api.post(`/assignments/${record.id}/adapt-math`, {
+            source_grade_id:sourceGrade, example:mathExample.trim(),
+          });
+          nav(`/actividades/${record.id}`, {state:{mathMessage:
+            "Ejercicios adaptados por reglas para cada grado elegido. Revisa las preguntas, confirma las advertencias y aprueba las variantes antes de publicar."}});
+        } catch (error) {
+          nav(`/actividades/${record.id}`, {state:{mathMessage:
+            `La actividad se guardó, pero no se pudo generar la adaptación: ${errMsg(error)}. Puedes crear las preguntas manualmente.`}});
+        }
+      } else {
+        nav(`/actividades/${record.id}`);
+      }
     } catch(x) {setErr(errMsg(x));} finally {setBusy(false);}
   };
 
@@ -159,6 +205,33 @@ export function CreateAssignment() {
               <textarea rows={4} maxLength={5000} value={instructions} onChange={e=>setInstructions(e.target.value)} minLength={5} required placeholder="Describe el aprendizaje que deseas trabajar, las consignas y los materiales de apoyo."/>
             </label>
             <div className="wide"><ExercisePreview title={title} instructions={instructions} draft/></div>
+            <section className="teacher-math-auto wide" aria-label="Adaptación automática de Matemática">
+              <label className="teacher-math-toggle">
+                <input type="checkbox" checked={mathAuto} onChange={e=>setMathAuto(e.target.checked)}/>
+                <span><strong>Adaptar Matemática según el grado (1.º–6.º)</strong>
+                  <small>Motor de reglas: funciona sin servicio de IA. No cambia el grado oficial del alumno.</small></span>
+              </label>
+              {mathAuto && <div className="teacher-math-auto-controls">
+                <label>Grado del ejercicio original
+                  <select value={sourceGrade} onChange={e=>{setBaseGradeId(Number(e.target.value));setSkippedGrades([]);}}>
+                    {primaryGrades.filter(g=>gradeIds.includes(g.id)).map(g=><option key={g.id} value={g.id}>{g.number}.º primaria</option>)}
+                  </select>
+                </label>
+                <label>Ejercicio original del docente
+                  <input value={mathExample} onChange={e=>setMathExample(e.target.value)}
+                    placeholder="245 + 178" maxLength={36} required
+                    aria-describedby="teacher-math-help"/>
+                </label>
+                <p id="teacher-math-help">Introduce una operación completa (+, −, × o ÷). En el grado de origen se conserva exactamente el ejemplo. El docente revisa cada variante antes de enviarla.</p>
+                <button type="button" className="teacher-math-match" onClick={completeMatchingGrades} disabled={!sourceGrade || active.loading}>
+                  <Icon name="check"/> Seleccionar grados con la misma competencia
+                </button>
+                {skippedGrades.length>0 && <p className="teacher-math-warning" role="status">
+                  Grados sin un tema de la misma competencia en la planificación activa: {skippedGrades.map(g=>g+".º").join(", ")}.
+                  No se crearán ejercicios para esos grados hasta completar y aprobar sus temas.
+                </p>}
+              </div>}
+            </section>
             <fieldset className="teacher-flow-assignment-mode wide"><legend>Cómo preparar las variantes</legend>
               <label><input type="radio" name="activity-mode" checked={mode==="AI_ASSISTED"} onChange={()=>setMode("AI_ASSISTED")}/>
                 <span><strong>Asistido por KAWSAY AI</strong><small>Generación opcional; el docente revisa y aprueba cada grado. Requiere proveedor de IA habilitado.</small></span>
@@ -188,10 +261,12 @@ export function CreateAssignment() {
 
 export function AssignmentReview() {
   const { id = "" } = useParams();
+  const location = useLocation();
+  const mathMessage = (location.state as {mathMessage?:string}|null)?.mathMessage;
   const a = useAsync(() => api.get<AssignmentDetail>(`/assignments/${id}`), [id]);
   const grades = useAsync(() => api.get<Grade[]>("/curriculum/grades"), []);
   const [err, setErr] = useState<string | null>(null);
-  const [info, setInfo] = useState<string | null>(null);
+  const [info, setInfo] = useState<string | null>(mathMessage??null);
   const [constraints, setConstraints] = useState("");
   const run = async (fn: () => Promise<unknown>) => { try { setErr(null); await fn(); await a.reload(); } catch (x) { setErr(errMsg(x)); } };
 
@@ -237,6 +312,7 @@ function VariantEditor({ assignmentId, v, grade, locked, onChanged }: { assignme
   return (
     <Card title={`${grade ? gradeLabel(grade) : `Grado ${v.grade_id}`} — ${STATUS_LABEL[v.status]}`}>
       <p className="muted">Objetivo (según la planificación): {v.learning_objective}</p>
+      {v.generated_by?.startsWith("RULES/") && <p className="teacher-math-rule-origin">Adaptación por reglas curriculares · {v.generated_by}. Revisión docente obligatoria.</p>}
       {v.source !== "TEACHER" && <p>Origen: <Badge tone="warn">{v.source === "AI" ? "Generado por IA" : "IA editado por docente"}</Badge> <span className="muted">{v.generated_by}</span></p>}
       {v.validation_status === "NEEDS_REVIEW" && <div className="notice warn" role="alert"><strong>El validador curricular detectó posibles desvíos:</strong><ul>{(v.validation_notes ?? []).map((n) => <li key={n}>{n}</li>)}</ul></div>}
       <ErrorBox message={err} />
