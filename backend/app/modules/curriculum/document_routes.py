@@ -6,7 +6,7 @@ never infers competencies or replaces an approved structured plan.
 import io
 import uuid
 import zipfile
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Annotated
 from urllib.parse import quote
 
@@ -169,6 +169,6 @@ def review_document(document_id: uuid.UUID, db: DB, admin: Admin,
         raise NotFoundError("Documento no encontrado")
     document.status = "APPROVED" if approved else "REJECTED"
     document.reviewed_by = admin.id
-    document.reviewed_at = datetime.now(timezone.utc)
+    document.reviewed_at = datetime.now(UTC)
     db.commit()
     return doc_info(document)
