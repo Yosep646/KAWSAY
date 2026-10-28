@@ -252,3 +252,352 @@
 @media (prefers-reduced-transparency:reduce) {
   .role-admin .kd-kpi { backdrop-filter:none; }
 }
+
+
+/* ============================================================================
+   KAWSAY AI — ADMIN DASHBOARD VISUAL MATCH — 2026-10-28
+   Scope: admin shell/overview only; never show mock numbers as real metrics.
+   Landscape reused from login (real image file), charts are the actual API data.
+   ============================================================================ */
+.role-admin {
+  --kd-ink:#041729;
+  --kd-teal:#04ebc8;
+  --kd-line:#0c536b;
+  color:#eefaff;
+  background:#04182a;
+}
+.role-admin .workspace {
+  min-width:0;
+  background:radial-gradient(circle at 75% -5%,#0b3650,transparent 37%),linear-gradient(165deg,#03182b,#041526 78%);
+}
+.role-admin .sidebar {
+  width:226px;
+  flex:0 0 226px;
+  padding:20px 12px;
+  background:linear-gradient(180deg,#031728,#021424 80%,#04243a);
+  border-right:1px solid #116070;
+}
+.role-admin .sidebar .brand {font-size:21px;letter-spacing:-.6px;margin-bottom:21px}
+.role-admin .sidebar .brand-mark {width:42px;height:43px}
+.role-admin .sidebar .brand small{font-size:10px}
+.role-admin .primary-nav a {
+  min-height:42px;
+  border-radius:10px;
+  padding:10px 12px;
+  font-size:12px;
+  font-weight:580;
+  gap:11px;
+}
+.role-admin .primary-nav a.active {
+  color:#001e26;
+  background:linear-gradient(110deg,#00d9bd,#0eeccb);
+  border-color:#14e9d0;
+  box-shadow:0 5px 20px #00dfb72b;
+}
+.role-admin .primary-nav a.active .icon {color:#012d35}
+.role-admin .sidebar-note {
+  margin-top:auto;
+  border:1px solid #0b536b;
+  background:#032339;
+  border-radius:12px;
+  text-align:left;
+}
+.role-admin .topbar {
+  min-height:62px;
+  padding:10px 19px;
+  background:linear-gradient(90deg,#06253d,#05192c 70%);
+  border-color:#135773;
+}
+.role-admin .admin-header-search {max-width:520px;background:#0d3350c7;border-color:#236783}
+.role-admin .admin-header .avatar {background:linear-gradient(135deg,#9de4f5,#429ec6);color:#0e3f5e}
+.role-admin .main-content {
+  padding:0 14px 34px;
+  min-width:0;
+  overflow:visible;
+}
+.role-admin .kd-design-2026 {
+  display:flex;
+  flex-direction:column;
+  gap:11px;
+  padding-bottom:15px;
+  color:#e9faff;
+}
+.role-admin .kd-design-2026 .kd-mobile-brandbar,
+.role-admin .kd-design-2026 .kd-mobile-bottom-nav {display:none}
+.role-admin .kd-design-2026 .kd-hero {
+  display:flex;
+  position:relative;
+  isolation:isolate;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  min-height:318px;
+  margin:0 -14px;
+  padding:29px 27px 66px;
+  overflow:hidden;
+  border:0;
+  border-radius:0;
+  background:#06314b;
+}
+.role-admin .kd-design-2026 .kd-hero::before {
+  content:"";
+  display:block;
+  position:absolute;
+  z-index:-2;
+  inset:0;
+  background:url('/kawsay-fondo-responsive-20261028.webp?v=admin-hero-20261028') 68% 48%/cover no-repeat;
+  filter:none;
+  opacity:1;
+}
+.role-admin .kd-design-2026 .kd-hero::after {
+  content:"";
+  display:block;
+  position:absolute;
+  z-index:-1;
+  inset:0;
+  background:linear-gradient(90deg,rgba(1,22,36,.80) 0%,rgba(1,23,36,.58) 33%,rgba(1,26,38,.04) 69%,rgba(1,21,34,.05) 100%),
+  linear-gradient(0deg,rgba(3,22,37,.45),transparent 34%);
+}
+.role-admin .kd-design-2026 .kd-hero-copy {
+  position:relative;
+  z-index:1;
+  max-width:435px;
+  flex:0 1 435px;
+  text-shadow:0 3px 16px #00213b;
+}
+.role-admin .kd-design-2026 .kd-hero-kicker {
+  font-size:10px;
+  letter-spacing:.19em;
+  color:#65ffe2;
+  font-weight:800;
+  margin:0 0 17px;
+}
+.role-admin .kd-design-2026 .kd-hero h1 {
+  font-size:clamp(29px,3.1vw,49px);
+  line-height:1.03;
+  letter-spacing:-.04em;
+  margin:0 0 12px;
+  color:#fff;
+}
+.role-admin .kd-design-2026 .kd-hero h1 em {color:#04edc9;font-style:normal}
+.role-admin .kd-design-2026 .kd-hero h2 {max-width:365px;font-size:13px;font-weight:520;line-height:1.56;margin:0 0 23px;color:#f2faff}
+.role-admin .kd-design-2026 .kd-hero-quote {
+  color:#fff;
+  font-size:15px;
+  font-weight:600;
+  flex:0 0 145px;
+  text-shadow:0 3px 14px #011725;
+}
+.role-admin .kd-design-2026 .kd-motto {display:flex;gap:13px;flex-wrap:wrap}
+.role-admin .kd-design-2026 .kd-motto span {font-size:9px;gap:5px;letter-spacing:.02em;padding:0 11px 0 0}
+.role-admin .kd-design-2026 .kd-motto .icon {width:19px;height:19px}
+.role-admin .kd-design-2026 .kd-kpis {
+  position:relative;
+  z-index:4;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+  margin-top:-46px;
+  padding:0;
+}
+.role-admin .kd-design-2026 .kd-kpi {
+  display:flex;
+  position:relative;
+  isolation:isolate;
+  min-height:106px;
+  border-radius:13px;
+  padding:14px 13px;
+  gap:11px;
+  overflow:hidden;
+  align-items:center;
+  box-shadow:0 9px 25px #0006;
+  background:linear-gradient(125deg,var(--kd-start),var(--kd-end));
+  border:1px solid var(--kd-border);
+  text-decoration:none;
+}
+.role-admin .kd-design-2026 .kd-kpi .kd-kpi-icon {display:grid;place-items:center;width:53px;height:55px;flex:0 0 53px;background:var(--kd-highlight);border:0;border-radius:11px}
+.role-admin .kd-design-2026 .kd-kpi .kd-kpi-icon svg {width:29px;height:29px;color:#fff}
+.role-admin .kd-design-2026 .kd-kpi-copy {display:flex;flex-direction:column;gap:4px;min-width:0;z-index:1}
+.role-admin .kd-design-2026 .kd-kpi-copy>span {font-size:11px;font-weight:700}
+.role-admin .kd-design-2026 .kd-kpi-copy>strong {font-size:28px;line-height:1;font-weight:850}
+.role-admin .kd-design-2026 .kd-kpi-copy>small {font-size:10px;color:#6fffdc}
+.role-admin .kd-design-2026 .kd-kpi-arrow {margin-left:auto;align-self:flex-end;color:#fff9;border:1px solid #fff6;border-radius:50%;display:grid;place-items:center;width:25px;height:25px;flex:0 0 25px}
+.role-admin .kd-design-2026 .kd-kpi-arrow svg {width:14px;height:14px}
+.role-admin .kd-design-2026 .kd-dash-grid {display:grid;gap:10px;min-width:0}
+.role-admin .kd-design-2026 .kd-analytics {grid-template-columns:minmax(0,1.23fr) minmax(0,1fr) minmax(0,.94fr)}
+.role-admin .kd-design-2026 .kd-management {grid-template-columns:minmax(0,1.15fr) minmax(0,.97fr) minmax(0,.92fr)}
+.role-admin .kd-design-2026 .kd-actions {grid-template-columns:minmax(0,2.3fr) minmax(0,.9fr)}
+.role-admin .kd-design-2026 .kd-panel {
+  padding:13px;
+  min-width:0;
+  border-radius:13px;
+  border:1px solid #0a526b;
+  background:linear-gradient(140deg,#05223b,#031b30 90%);
+  color:#edfaff;
+  box-shadow:inset 0 1px 0 #19a7ad17;
+}
+.role-admin .kd-design-2026 .kd-panel-heading{gap:6px;margin-bottom:9px}
+.role-admin .kd-design-2026 .kd-panel-heading h3 {font-size:14px;color:#fff}
+.role-admin .kd-design-2026 .kd-panel-heading .kd-textlink {
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  color:#24ebd0;
+  text-decoration:none;
+  white-space:nowrap;
+  font-size:10px;
+  font-weight:700;
+}
+.role-admin .kd-design-2026 .kd-textlink .icon {width:12px;height:12px}
+.role-admin .kd-design-2026 .kd-growth .kd-panel-heading{margin-bottom:0}
+.role-admin .kd-design-2026 .kd-line-chart{min-height:140px;max-height:218px}
+.role-admin .kd-design-2026 .kd-subtext{font-size:9px;margin:0 0 3px;color:#91b5c8}
+.role-admin .kd-design-2026 .kd-legend{font-size:9px;gap:8px}
+.role-admin .kd-design-2026 .kd-donut-layout{gap:9px;padding:12px 0 4px}
+.role-admin .kd-design-2026 .kd-donut {height:clamp(108px,11vw,164px)}
+.role-admin .kd-design-2026 .kd-donut strong {font-size:22px}
+.role-admin .kd-design-2026 .kd-donut-legend div{font-size:9px;margin-bottom:7px}
+.role-admin .kd-design-2026 .kd-audit-row {padding:6px 0;gap:7px}
+.role-admin .kd-design-2026 .kd-audit-symbol{width:27px;height:27px;flex-basis:27px;border-radius:7px}
+.role-admin .kd-design-2026 .kd-audit-symbol .icon{height:16px;width:16px}
+.role-admin .kd-design-2026 .kd-audit-row strong{font-size:10px}
+.role-admin .kd-design-2026 .kd-audit-row small{font-size:9px}
+.role-admin .kd-design-2026 .kd-map{min-height:190px}
+.role-admin .kd-design-2026 .kd-map svg{height:182px}
+.role-admin .kd-design-2026 .kd-reminder-list{display:grid;gap:0}
+.role-admin .kd-design-2026 .kd-reminder-list a{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  border-bottom:1px solid #15415d;
+  color:#ddf3ff;
+  text-decoration:none;
+  min-height:39px;
+  padding:6px 0;
+  font-size:10px;
+}
+.role-admin .kd-design-2026 .kd-reminder-list a:hover {color:#32f4d4}
+.role-admin .kd-design-2026 .kd-reminder-list a>.icon{width:12px;height:12px;flex-shrink:0;margin-left:auto;color:#6ddcd1}
+.role-admin .kd-design-2026 .kd-taskmark{width:25px;height:25px;flex:0 0 25px;display:grid;place-items:center;border-radius:6px;background:#096999;color:#fff}
+.role-admin .kd-design-2026 .kd-taskmark svg{width:16px;height:16px}
+.role-admin .kd-design-2026 .kd-reminders .kd-subtext{margin:10px 0 0}
+.role-admin .kd-design-2026 .kd-user-list{display:flex;flex-direction:column;gap:0}
+.role-admin .kd-design-2026 .kd-user-list>div{display:flex;align-items:center;gap:8px;border-bottom:1px solid #16415a;padding:8px 0;min-width:0}
+.role-admin .kd-design-2026 .kd-user-avatar{width:29px;height:29px;border-radius:50%;background:linear-gradient(135deg,#8c70eb,#16aaa6);display:grid;place-items:center;flex:0 0 29px}
+.role-admin .kd-design-2026 .kd-user-avatar svg{width:15px;height:15px}
+.role-admin .kd-design-2026 .kd-user-info{flex:1;min-width:0}
+.role-admin .kd-design-2026 .kd-user-info strong{display:block;color:#fff;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.role-admin .kd-design-2026 .kd-user-info small{display:block;color:#9cbccc;font-size:9px}
+.role-admin .kd-design-2026 .kd-user-status{padding:4px 8px;border-radius:20px;background:#0b906b;color:#e8fff5;font-size:9px}
+.role-admin .kd-design-2026 .kd-user-status.is-inactive{background:#55435c;color:#f9cde5}
+.role-admin .kd-design-2026 .kd-shortcut-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.role-admin .kd-design-2026 .kd-shortcut{align-items:center;justify-content:center;min-height:104px;text-align:center;padding:10px 6px;gap:6px}
+.role-admin .kd-design-2026 .kd-shortcut-icon{height:43px;width:43px}
+.role-admin .kd-design-2026 .kd-shortcut-icon svg{width:22px;height:22px}
+.role-admin .kd-design-2026 .kd-shortcut strong{font-size:10px}
+.role-admin .kd-design-2026 .kd-shortcut-arrow{display:none}
+.role-admin .kd-design-2026 .kd-help{display:flex;flex-direction:column;gap:5px;justify-content:center;background:linear-gradient(130deg,#08415a,#03233c)}
+.role-admin .kd-design-2026 .kd-help>.icon{width:33px;height:33px;color:#03e4c4}
+.role-admin .kd-design-2026 .kd-help h3{margin:0;color:#fff;font-size:17px}
+.role-admin .kd-design-2026 .kd-help p{font-size:10px;color:#c9ddeb;line-height:1.4;margin:0}
+.role-admin .kd-design-2026 .kd-help a{margin-top:7px;display:inline-flex;align-items:center;gap:4px;color:#11f0ce;font-size:10px;text-decoration:none}
+.role-admin .kd-design-2026 .kd-help a svg{width:13px;height:13px}
+.role-admin .kd-design-2026 .kd-institutions{padding:14px}
+.role-admin .kd-design-2026 .kd-institutions .kd-panel-heading{margin-bottom:10px}
+.role-admin .kd-design-2026 .kd-institutions .kd-panel-heading p{font-size:10px;margin:4px 0 0}
+.role-admin .kd-design-2026 .kd-school-list{grid-template-columns:repeat(3,minmax(0,1fr))}
+.role-admin .kd-design-2026 .kd-bottom-slogan{
+  min-width:0;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 15px;
+  background:linear-gradient(90deg,#073454c7,#04253b7d),url('/kawsay-fondo-responsive-20261028.webp') center 42%/cover;
+  border:1px solid #0d6179;
+  border-radius:12px;
+  color:#fff;
+}
+.role-admin .kd-design-2026 .kd-bottom-slogan>.icon {width:35px;height:35px;color:#36e9d3}
+.role-admin .kd-design-2026 .kd-bottom-slogan>span{display:flex;flex:1;min-width:0;flex-direction:column;gap:3px}
+.role-admin .kd-design-2026 .kd-bottom-slogan strong{font-size:12px}
+.role-admin .kd-design-2026 .kd-bottom-slogan small{font-size:10px;color:#ccedee}
+.role-admin .kd-design-2026 .kd-bottom-slogan em{font-size:12px;color:#d8fff3}
+.role-admin .kd-design-2026 a:focus-visible,.role-admin .kd-design-2026 button:focus-visible{outline:2px solid #0bffcc;outline-offset:3px}
+@media (max-width:1300px) and (min-width:801px) {
+  .role-admin .sidebar {width:208px;flex-basis:208px}
+  .role-admin .main-content {padding-left:12px;padding-right:12px}
+  .role-admin .kd-design-2026 .kd-hero {margin-inline:-12px}
+  .role-admin .kd-design-2026 .kd-analytics {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .role-admin .kd-design-2026 .kd-audit {grid-column:1/-1}
+  .role-admin .kd-design-2026 .kd-audit-list {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 17px}
+  .role-admin .kd-design-2026 .kd-management {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .role-admin .kd-design-2026 .kd-users{grid-column:1/-1}
+}
+@media (max-width:1000px) and (min-width:801px) {
+  .role-admin .kd-design-2026 .kd-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .role-admin .kd-design-2026 .kd-actions{grid-template-columns:1fr}
+}
+@media (max-width:800px) {
+  .role-admin .sidebar {display:flex;position:relative;width:100%;height:auto;min-height:61px;flex:0 0 auto;padding:9px 12px;align-items:center;justify-content:space-between;z-index:100;border-bottom:1px solid #165970}
+  .role-admin .sidebar .brand{margin:0;order:2;font-size:19px;flex:1}
+  .role-admin .sidebar .brand small{font-size:9px}
+  .role-admin .sidebar .brand-mark{width:32px;height:34px}
+  .role-admin .sidebar .brand-mark svg{width:28px;height:28px}
+  .role-admin .mobile-nav-toggle{display:flex;order:1;align-items:center;justify-content:center;width:35px;min-height:35px;border:0;background:transparent;padding:5px;color:#fff}
+  .role-admin .mobile-nav-toggle span{display:none}
+  .role-admin .sidebar .primary-nav{display:none;position:absolute;top:100%;left:0;right:0;z-index:120;width:100%;max-height:68vh;overflow:auto;flex-direction:column;background:#041a2d;padding:9px 12px 15px;box-shadow:0 15px 40px #00111be0}
+  .role-admin.mobile-nav-open .sidebar .primary-nav{display:flex}
+  .role-admin .admin-nav-group{width:100%;flex:0 0 auto}
+  .role-admin .admin-nav-group a{width:100%;min-height:43px}
+  .role-admin .workspace{position:relative;width:100%}
+  .role-admin .topbar{position:absolute;z-index:101;right:8px;top:-58px;width:auto;height:54px;min-height:54px;padding:8px 0;background:transparent;border:0}
+  .role-admin .admin-header-start{display:none}
+  .role-admin .admin-header-actions{gap:4px}
+  .role-admin .admin-header .account-name{display:none}
+  .role-admin .admin-header-icon{width:30px;height:32px}
+  .role-admin .admin-header .account{padding-left:4px;margin:0;border:0;gap:3px}
+  .role-admin .admin-header .avatar{height:29px;width:29px;min-width:29px;font-size:11px}
+  .role-admin .admin-header .logout{font-size:0;min-width:29px;width:29px;height:29px;padding:4px;display:flex;align-items:center;justify-content:center}
+  .role-admin .admin-header .logout svg{width:16px;height:16px}
+  .role-admin .main-content{padding:0 10px 100px}
+  .role-admin .kd-design-2026 .kd-mobile-brandbar{display:none}
+  .role-admin .kd-design-2026 .kd-hero{margin:0 -10px;padding:23px 18px 34px;min-height:235px;align-items:flex-start}
+  .role-admin .kd-design-2026 .kd-hero::before{background-position:70% center}
+  .role-admin .kd-design-2026 .kd-hero::after{background:linear-gradient(90deg,#031d34e8 0%,#031e33af 47%,#031f3330 100%),linear-gradient(0deg,#031d2de0,transparent 46%)}
+  .role-admin .kd-design-2026 .kd-hero-copy{flex:0 1 245px;max-width:60%;margin:auto 0 0}
+  .role-admin .kd-design-2026 .kd-hero-kicker{display:none}
+  .role-admin .kd-design-2026 .kd-hero h1{font-size:clamp(23px,5.1vw,33px);margin-bottom:6px}
+  .role-admin .kd-design-2026 .kd-hero h2{font-size:11px;line-height:1.4;margin:0}
+  .role-admin .kd-design-2026 .kd-hero-quote,.role-admin .kd-design-2026 .kd-motto{display:none}
+  .role-admin .kd-design-2026 .kd-kpis{margin-top:-11px;gap:7px;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .role-admin .kd-design-2026 .kd-kpi{min-height:78px;padding:9px;gap:8px}
+  .role-admin .kd-design-2026 .kd-kpi .kd-kpi-icon{height:37px;width:37px;flex-basis:37px;border-radius:8px}
+  .role-admin .kd-design-2026 .kd-kpi .kd-kpi-icon svg{height:20px;width:20px}
+  .role-admin .kd-design-2026 .kd-kpi-copy>span{font-size:10px}
+  .role-admin .kd-design-2026 .kd-kpi-copy>strong{font-size:23px}
+  .role-admin .kd-design-2026 .kd-kpi-copy>small{font-size:9px}
+  .role-admin .kd-design-2026 .kd-kpi-arrow{display:none}
+  .role-admin .kd-design-2026 .kd-dash-grid{grid-template-columns:1fr;gap:9px}
+  .role-admin .kd-design-2026 .kd-panel{padding:11px;border-radius:12px}
+  .role-admin .kd-design-2026 .kd-analytics .kd-audit{grid-column:auto}
+  .role-admin .kd-design-2026 .kd-donut-layout{flex-direction:row}
+  .role-admin .kd-design-2026 .kd-donut{height:clamp(105px,31vw,142px)}
+  .role-admin .kd-design-2026 .kd-audit-list{display:block}
+  .role-admin .kd-design-2026 .kd-shortcut-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .role-admin .kd-design-2026 .kd-shortcut{min-height:94px}
+  .role-admin .kd-design-2026 .kd-school-list{grid-template-columns:1fr}
+  .role-admin .kd-design-2026 .kd-bottom-slogan em{display:none}
+  .role-admin .kd-design-2026 .kd-mobile-bottom-nav{display:flex;position:fixed;z-index:150;left:0;right:0;bottom:0;padding:6px 7px calc(6px + env(safe-area-inset-bottom));background:#03192af5;border-top:1px solid #105b70;justify-content:space-around;gap:2px;box-shadow:0 -6px 22px #021324a0}
+  .role-admin .kd-design-2026 .kd-mobile-bottom-nav a{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:0;padding:5px 0 2px;color:#bfd6e8;font-size:9px;text-decoration:none}
+  .role-admin .kd-design-2026 .kd-mobile-bottom-nav a svg{width:21px;height:21px}
+  .role-admin .kd-design-2026 .kd-mobile-bottom-nav a[aria-current]{color:#03efcb}
+}
+@media (max-width:390px) {
+  .role-admin .sidebar .brand{font-size:16px}
+  .role-admin .kd-design-2026 .kd-hero{min-height:218px;padding:18px 14px 31px}
+  .role-admin .kd-design-2026 .kd-hero-copy{max-width:58%}
+  .role-admin .kd-design-2026 .kd-hero h1{font-size:23px}
+  .role-admin .kd-design-2026 .kd-hero h2{font-size:10px}
+  .role-admin .kd-design-2026 .kd-kpi-copy>strong{font-size:21px}
+}
+@media (prefers-reduced-motion:reduce){.role-admin .kd-design-2026 .kd-kpi:hover,.role-admin .kd-design-2026 .kd-shortcut:hover{transform:none}}
