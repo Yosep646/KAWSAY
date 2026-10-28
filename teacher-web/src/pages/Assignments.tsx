@@ -2,6 +2,8 @@ import { useState, type FormEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Badge, Card, ErrorBox, Loading } from "../components/ui";
 import { QuestionsEditor } from "../components/QuestionsEditor";
+import { TeacherPageIntro } from "../components/TeacherPageIntro";
+import { Icon } from "../components/Icon";
 import { useAsync } from "../hooks/useAsync";
 import { api } from "../services/api";
 import type { AdaptResult, AssignmentBrief, AssignmentDetail, Classroom, Grade, PlanVersionTree, Question, Variant } from "../types/api";
@@ -24,55 +26,105 @@ export function CreateAssignment() {
   const nav = useNavigate();
   const rooms = useAsync(() => api.get<Classroom[]>("/classrooms"), []);
   const grades = useAsync(() => api.get<Grade[]>("/curriculum/grades"), []);
-  const [roomId, setRoomId] = useState("");
+  const [roomId,setRoomId] = useState("");
   const rid = roomId || rooms.data?.[0]?.id || "";
-  const active = useAsync(() => (rid ? api.get<PlanVersionTree[]>(`/planning/active?classroom_id=${rid}`) : Promise.resolve([])), [rid]);
-  const [picked, setPicked] = useState<Record<number, string>>({});
-  const [title, setTitle] = useState("");
-  const [instructions, setInstructions] = useState("");
-  const [mode, setMode] = useState<"MANUAL" | "AI_ASSISTED">("AI_ASSISTED");
-  const [err, setErr] = useState<string | null>(null);
+  const active = useAsync(() => rid ? api.get<PlanVersionTree[]>(`/planning/active?classroom_id=${rid}`) : Promise.resolve([]), [rid]);
+  const [picked,setPicked] = useState<Record<number,string>>({});
+  const [title,setTitle] = useState("");
+  const [instructions,setInstructions] = useState("");
+  const [mode,setMode] = useState<"MANUAL"|"AI_ASSISTED">("AI_ASSISTED");
+  const [err,setErr] = useState<string|null>(null);
+  const [busy,setBusy] = useState(false);
+  const units = active.data?.flatMap(v => v.periods.flatMap(p=>p.units)) ?? [];
+  const gradeIds = [...new Set(units.map(u=>u.grade_id))].sort((a,b)=>a-b);
+  const selectedCount = Object.values(picked).filter(Boolean).length;
+  const ready = Boolean(rid && units.length && selectedCount && title.trim().length>=2 && instructions.trim().length>=5);
 
-  const units = active.data?.flatMap((v) => v.periods.flatMap((p) => p.units)) ?? [];
-  const gradeIds = [...new Set(units.map((u) => u.grade_id))].sort((a, b) => a - b);
-
-  const submit = async (e: FormEvent) => {
-    e.preventDefault();
-    const grade_topics = Object.entries(picked).filter(([, t]) => t).map(([g, t]) => ({ grade_id: Number(g), topic_id: t }));
+  const submit = async (event:FormEvent) => {
+    event.preventDefault();
+    if(busy)return;
+    const grade_topics = Object.entries(picked).filter(([,topic])=>topic).map(([g,topic])=>({grade_id:Number(g),topic_id:topic}));
+    if(!rid || !grade_topics.length) {setErr("Selecciona un aula, los grados y los temas de una planificación activa.");return;}
     try {
-      setErr(null);
-      const a = await api.post<AssignmentDetail>("/assignments", { classroom_id: rid, title, instructions, mode, grade_topics });
-      nav(`/actividades/${a.id}`);
-    } catch (x) { setErr(errMsg(x)); }
+      setBusy(true);setErr(null);
+      const record = await api.post<AssignmentDetail>("/assignments", {
+        classroom_id:rid,title:title.trim(),instructions:instructions.trim(),mode,grade_topics,
+      });
+      nav(`/actividades/${record.id}`);
+    } catch(x) {setErr(errMsg(x));} finally {setBusy(false);}
   };
-  return (
-    <div>
-      <h2>Crear actividad</h2>
-      <ErrorBox message={rooms.error} />
-      <form className="stack" onSubmit={(e) => void submit(e)}>
-        <label>Aula<select value={rid} onChange={(e) => { setRoomId(e.target.value); setPicked({}); }}>{rooms.data?.map((r) => <option key={r.id} value={r.id}>{r.name} ({r.academic_year})</option>)}</select></label>
-        {active.loading ? <Loading /> : units.length === 0
-          ? <p className="notice">Esta aula no tiene una planificación vigente (versión ACTIVA) con unidades. Pide a la administración que active la planificación.</p>
-          : <fieldset><legend>Grados y tema de la planificación vigente</legend>
-            {gradeIds.map((gid) => {
-              const g = grades.data?.find((x) => x.id === gid);
-              const topics = units.filter((u) => u.grade_id === gid).flatMap((u) => u.topics.map((t) => ({ ...t, unit: u.title })));
-              return (
-                <label key={gid} className="row"><input type="checkbox" checked={gid in picked} onChange={(e) => setPicked((p) => { const n = { ...p }; if (e.target.checked) n[gid] = topics[0]?.id ?? ""; else delete n[gid]; return n; })} />
-                  <span>{g ? gradeLabel(g) : gid}</span>
-                  <select disabled={!(gid in picked)} value={picked[gid] ?? ""} onChange={(e) => setPicked((p) => ({ ...p, [gid]: e.target.value }))}>
-                    {topics.map((t) => <option key={t.id} value={t.id}>{t.unit} — {t.title}</option>)}</select></label>);
-            })}</fieldset>}
-        <label>Título<input value={title} onChange={(e) => setTitle(e.target.value)} required minLength={2} /></label>
-        <label>Actividad base<textarea value={instructions} onChange={(e) => setInstructions(e.target.value)} required minLength={5} /></label>
-        <fieldset><legend>Modo</legend>
-          <label><input type="radio" checked={mode === "AI_ASSISTED"} onChange={() => setMode("AI_ASSISTED")} /> Asistido por KAWSAY AI (tú revisas y apruebas)</label>
-          <label><input type="radio" checked={mode === "MANUAL"} onChange={() => setMode("MANUAL")} /> Manual</label></fieldset>
-        <ErrorBox message={err} />
-        <button type="submit" disabled={Object.keys(picked).length === 0}>Crear variantes por grado</button>
-      </form>
+
+  return <div className="teacher-workflow teacher-activities-page">
+    <TeacherPageIntro kicker="DISEÑO PEDAGÓGICO · KAWSAY AI" title="Crear actividad" icon="tasks"
+      description="Prepara una actividad alineada al currículo de tu institución, con versiones diferenciadas para cada grado.">
+      <Link to="/planificacion"><Icon name="book"/> Ver planificación</Link>
+      <Link className="secondary" to="/aulas"><Icon name="classroom"/> Mis aulas</Link>
+    </TeacherPageIntro>
+    <div className="teacher-flow-kpis">
+      <div className="teacher-flow-stat"><span><Icon name="classroom"/></span><div><strong>{rooms.loading?"…":rooms.data?.length??0}</strong><small>Aulas disponibles</small></div></div>
+      <div className="teacher-flow-stat"><span><Icon name="book"/></span><div><strong>{active.loading?"…":gradeIds.length}</strong><small>Grados con temas activos</small></div></div>
+      <div className="teacher-flow-stat"><span><Icon name="check"/></span><div><strong>{selectedCount}</strong><small>Grados seleccionados</small></div></div>
     </div>
-  );
+    <ErrorBox message={rooms.error ?? active.error ?? grades.error ?? err}/>
+    <div className="teacher-flow-grid">
+      <section className="teacher-flow-card">
+        <div className="teacher-flow-card-heading"><span><Icon name="tasks"/></span><div><h3>Preparar actividad por grados</h3><p>Completa los datos, elige el contenido y guarda un borrador para revisión.</p></div></div>
+        {rooms.loading ? <Loading/> : !rooms.data?.length ?
+          <div className="teacher-flow-empty"><Icon name="classroom"/><h3>Primero registra tu aula</h3><p>No se puede asignar una actividad sin indicar a qué aula pertenece.</p><Link to="/aulas"><Icon name="arrow"/> Crear aula</Link></div> :
+          <form className="teacher-flow-form" onSubmit={e=>void submit(e)}>
+            <label className="wide">Aula o sección
+              <select value={rid} onChange={e=>{setRoomId(e.target.value);setPicked({});}} required>
+                {rooms.data.map(r=><option key={r.id} value={r.id}>{r.name} · {r.academic_year}</option>)}
+              </select>
+            </label>
+            {active.loading ? <div className="wide"><Loading/></div> : gradeIds.length===0 ?
+              <div className="teacher-flow-empty wide"><Icon name="book"/><h3>No hay planificación estructurada activa</h3>
+                <p>Subir Word o PDF sirve para consultar la malla, pero las tareas necesitan temas y unidades de una versión aprobada y activada por administración.</p>
+                <Link to="/planificacion"><Icon name="arrow"/> Preparar planificación</Link>
+              </div> :
+              <fieldset className="teacher-flow-grade-list wide"><legend>Grados y temas disponibles</legend>
+                {gradeIds.map(gid=>{
+                  const g=grades.data?.find(x=>x.id===gid);
+                  const options=units.filter(u=>u.grade_id===gid).flatMap(u=>u.topics.map(t=>({...t,unit:u.title})));
+                  if(!options.length)return null;
+                  return <label className="teacher-flow-grade" key={gid}>
+                    <input type="checkbox" checked={gid in picked} onChange={e=>setPicked(p=>{const n={...p};if(e.target.checked)n[gid]=options[0]?.id??"";else delete n[gid];return n;})}/>
+                    <span>{g?gradeLabel(g):`Grado ${gid}`}</span>
+                    <select disabled={!(gid in picked)} aria-label={`Tema para ${g?gradeLabel(g):gid}`} value={picked[gid]??""} onChange={e=>setPicked(p=>({...p,[gid]:e.target.value}))}>
+                      {options.map(t=><option value={t.id} key={t.id}>{t.unit} · {t.title}</option>)}
+                    </select>
+                  </label>;
+                })}
+              </fieldset>}
+            <label className="wide">Título de la actividad
+              <input value={title} onChange={e=>setTitle(e.target.value)} maxLength={300} minLength={2} required placeholder="Ej. Sumas y restas con situaciones de mi comunidad"/>
+            </label>
+            <label className="wide">Actividad base
+              <textarea rows={4} maxLength={5000} value={instructions} onChange={e=>setInstructions(e.target.value)} minLength={5} required placeholder="Describe el aprendizaje que deseas trabajar, las consignas y los materiales de apoyo."/>
+            </label>
+            <fieldset className="teacher-flow-assignment-mode wide"><legend>Cómo preparar las variantes</legend>
+              <label><input type="radio" name="activity-mode" checked={mode==="AI_ASSISTED"} onChange={()=>setMode("AI_ASSISTED")}/>
+                <span><strong>Asistido por KAWSAY AI</strong><small>Generación opcional; el docente revisa y aprueba cada grado. Requiere proveedor de IA habilitado.</small></span>
+              </label>
+              <label><input type="radio" name="activity-mode" checked={mode==="MANUAL"} onChange={()=>setMode("MANUAL")}/>
+                <span><strong>Creación manual</strong><small>Redacta las preguntas y adapta el contenido de cada grado directamente.</small></span>
+              </label>
+            </fieldset>
+            <button type="submit" disabled={!ready||busy}>{busy?"Guardando…":"Crear variantes para revisión"} <Icon name="arrow"/></button>
+          </form>}
+      </section>
+      <aside className="teacher-flow-next">
+        <div className="teacher-flow-card-heading"><span><Icon name="leaf"/></span><div><h3>Cómo funciona KAWSAY</h3><p>Secuencia pedagógica segura por grado.</p></div></div>
+        <ol className="teacher-flow-steps">
+          <li><span>1</span><div><strong>Currículo activo</strong><p>Cada tema corresponde a una unidad revisada por tu institución.</p></div></li>
+          <li><span>2</span><div><strong>Versiones por grado</strong><p>Una misma actividad puede adaptarse a 1.º, 2.º, 3.º y otros grados.</p></div></li>
+          <li><span>3</span><div><strong>Revisión humana</strong><p>Revisa, corrige y aprueba antes de publicar ejercicios.</p></div></li>
+          <li><span>4</span><div><strong>Seguimiento</strong><p>Las respuestas generan indicadores y recomendaciones de refuerzo; todavía no cambian automáticamente de grado.</p></div></li>
+        </ol>
+        <div className="teacher-flow-guidance">El grado oficial no cambia aunque se recomienden ejercicios de refuerzo. La reducción automática entre grados sigue pendiente de implementar y validar.</div>
+      </aside>
+    </div>
+  </div>;
 }
 
 export function AssignmentReview() {
