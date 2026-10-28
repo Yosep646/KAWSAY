@@ -145,6 +145,12 @@ for (const viewport of [{ name: "escritorio", width: 1440, height: 1000 }, { nam
     await login(page);
     await expect(page.getByText("Intentos registrados", { exact: true })).toBeVisible();
     const nav = page.getByRole("navigation", { name: "Principal" });
+    const openMobileMenu = async () => {
+      if (viewport.name === "móvil") {
+        await page.getByRole("button", { name: "Abrir menú principal" }).click();
+      }
+    };
+    await openMobileMenu();
     await expect(nav.getByRole("link", { name: "Dashboard", exact: true })).toHaveAttribute("aria-current", "page");
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     await page.screenshot({ path: testInfo.outputPath("dashboard.png"), fullPage: true });
@@ -154,8 +160,10 @@ for (const viewport of [{ name: "escritorio", width: 1440, height: 1000 }, { nam
     await expect(flag.getByRole("row")).toHaveCount(6);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     await page.screenshot({ path: testInfo.outputPath("alertas.png"), fullPage: true });
+    await openMobileMenu();
     await nav.getByRole("link", { name: "Mis aulas", exact: true }).click();
     await expect(page).toHaveURL(/\/aulas$/);
+    await openMobileMenu();
     await expect(nav.getByRole("link", { name: "Mis aulas", exact: true })).toHaveAttribute("aria-current", "page");
     await expect(nav.getByRole("link", { name: "Dashboard", exact: true })).not.toHaveAttribute("aria-current", "page");
     if (viewport.name === "móvil") {
