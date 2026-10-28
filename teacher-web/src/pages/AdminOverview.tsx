@@ -39,16 +39,19 @@ function Chart({data,year}:{data:AdminStatistics['monthly_new'];year:number}){
     const keys = ['students_new','teachers_new','schools_new'] as const;
     return months.map((_,i)=>{const key=keys[s]??'students_new';sum+=data.find(v=>v.month===i+1)?.[key]??0;return sum;});
   });
-  const max=Math.max(1,...cumul.flat());
+  const observedMax=Math.max(0,...cumul.flat());
+  const tickStep=observedMax<=4?1:Math.ceil(observedMax/4);
+  const axisMax=Math.max(1,Math.ceil(observedMax/tickStep)*tickStep);
+  const tickValues=Array.from({length:Math.floor(axisMax/tickStep)+1},(_,i)=>i*tickStep);
   const colors=['#03e3b4','#2a9fff','#ffc654'];
   const names=['Estudiantes','Docentes','Instituciones'];
   const px=(i:number)=>36+i*418/11;
-  const py=(v:number)=>177-150*v/max;
+  const py=(v:number)=>177-150*v/axisMax;
   return <>
     <header className="kd-panel-heading"><h3>Crecimiento mensual</h3><span className="kd-year">{year}</span></header>
     <p className="kd-subtext">Altas acumuladas durante {year} (no totales históricos).</p>
     <svg className="kd-line-chart" viewBox="0 0 485 210" role="img" aria-label={'Evolución mensual de registros durante '+year} onMouseLeave={()=>setFocus(null)}>
-      {[0,.25,.5,.75,1].map(t=><g key={t}><line x1="36" y1={py(max*t)} x2="458" y2={py(max*t)} stroke="#25435e" strokeDasharray="3 4"/><text x="29" y={py(max*t)+3} fill="#90a7ba" textAnchor="end" fontSize="9">{Math.round(max*t)}</text></g>)}
+      {tickValues.map(v=><g key={v}><line x1="36" y1={py(v)} x2="458" y2={py(v)} stroke="#214961" strokeDasharray="3 4"/><text x="28" y={py(v)+3} fill="#a2c9d3" textAnchor="end" fontSize="10">{v}</text></g>)}
       {months.map((m,i)=><text key={m} x={px(i)} y="196" fill="#9cb2c5" textAnchor="middle" fontSize="10">{m}</text>)}
       {cumul.map((list,s)=><g key={s}><polyline points={list.map((v,i)=>`${px(i)},${py(v)}`).join(' ')} fill="none" stroke={colors[s]} strokeWidth="2.7" strokeLinejoin="round" strokeLinecap="round"/>{list.map((v,i)=><circle key={i} cx={px(i)} cy={py(v)} r={focus===i?4:2.6} fill={colors[s]} stroke="#06182e" strokeWidth="1.2"/>)}</g>)}
       {months.map((m,i)=><rect key={m} x={px(i)-16} y="24" width="32" height="159" fill="transparent" onMouseEnter={()=>setFocus(i)}/>)}
@@ -134,7 +137,7 @@ export function AdminOverview({schools,staff,audits,stats,loading,errors,onRefre
             <span className={'kd-audit-symbol tone-'+tones[i%4]}><Icon name={i%2?'tasks':'check'}/></span>
             <div><strong>{a.action.replace(/[._]/g,' ')}</strong><small>{a.target_type} · {new Date(a.created_at).toLocaleString('es-PE',{dateStyle:'short',timeStyle:'short'})}</small></div>
           </div>)}
-          {audits?.length===0&&<p className="kd-empty">No hay actividades registradas todavía.</p>}
+          {audits?.length===0&&<div className="kd-empty-activity"><span><Icon name="activity"/></span><strong>Sin movimientos recientes</strong><p>Las acciones del sistema aparecerán aquí cuando se registren.</p><Link to="/admin/sistema">Consultar auditoría <Icon name="arrow"/></Link></div>}
           {!audits&&<p className="kd-empty">{loading?'Consultando actividad…':'Actividad no disponible.'}</p>}
         </div>
       </section>
