@@ -1,0 +1,104 @@
+/* KAWSAY AI — archivo curricular compartido · administrador y docente */
+.curriculum-library {
+  --cl-bg:#06263a;--cl-panel:#092e42;--cl-line:#23647b;
+  --cl-ink:#f1fdff;--cl-muted:#b0d1db;--cl-accent:#13e1c6;
+  display:flex;flex-direction:column;gap:19px;
+  min-width:0;padding:clamp(18px,2vw,28px);
+  border:1px solid var(--cl-line);border-radius:16px;
+  color:var(--cl-ink);
+  background:linear-gradient(145deg,#092e44,#061e33);
+  box-shadow:0 12px 30px #00132142;
+  margin:8px 0 22px;
+}
+.curriculum-library *, .curriculum-library *::before, .curriculum-library *::after {box-sizing:border-box}
+.curriculum-library-head{display:flex;gap:15px;align-items:center;padding-bottom:17px;border-bottom:1px solid #1a4f67}
+.curriculum-library-icon{display:grid;place-items:center;flex:0 0 53px;width:53px;height:53px;background:#095c60;color:#80f9e4;border-radius:14px}
+.curriculum-library-icon svg{width:28px;height:28px}
+.curriculum-library-head h3{margin:2px 0 5px;color:#fff;font-size:clamp(19px,1.5vw,24px);letter-spacing:-.02em}
+.curriculum-library-head p:not(.curriculum-library-kicker){margin:0;font-size:12px;color:var(--cl-muted);line-height:1.6}
+.curriculum-library-kicker{margin:0;color:#4eefd7;font-size:10px;letter-spacing:.13em;font-weight:800}
+.curriculum-library-controls{display:grid;grid-template-columns:minmax(0,2fr) minmax(110px,.8fr) minmax(140px,1fr);gap:11px}
+.curriculum-library label{display:flex;flex-direction:column;gap:7px;color:#cceef4;font-size:12px;font-weight:750}
+.curriculum-library select,
+.curriculum-library input[type=file]{min-width:0;max-width:100%}
+.curriculum-library select{
+  min-height:46px;padding:9px 12px;border-radius:10px;
+  border:1px solid #32677e;background:#092b40;color:#effeff;
+  font-size:13px;
+}
+.curriculum-library select option{background:#062b40;color:#fff}
+.curriculum-library :is(select,button,input):focus-visible{outline:2px solid #18ebcc;outline-offset:2px}
+.curriculum-grade-tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px}
+.curriculum-grade-tabs button{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:1px;min-height:60px;border:1px solid #216178;border-radius:11px;
+  background:#0b3448;color:#d8eef3;cursor:pointer;
+}
+.curriculum-grade-tabs button:hover{background:#13506a}
+.curriculum-grade-tabs button.active{background:#07dfbd;color:#00313a;border-color:#62f2dc;box-shadow:0 4px 16px #0bd4b92c}
+.curriculum-grade-tabs button span{font-size:19px;font-weight:850}
+.curriculum-grade-tabs button small{font-size:10px;font-weight:650}
+.curriculum-library-columns{display:grid;grid-template-columns:minmax(250px,.86fr) minmax(0,1.14fr);gap:13px;align-items:start}
+.curriculum-upload,.curriculum-records{min-width:0;padding:19px;border-radius:13px;border:1px solid #1e5970;background:#072b3f}
+.curriculum-upload{display:flex;flex-direction:column;gap:13px}
+.curriculum-upload h4{display:flex;align-items:center;gap:9px;color:#fff;font-size:16px;margin:0}
+.curriculum-upload h4 svg{color:#31e7cf}
+.curriculum-upload>p{margin:0;color:#aacbd6;font-size:11px;line-height:1.5}
+.curriculum-file-zone{
+  position:relative;
+  min-height:132px;display:flex!important;align-items:center;justify-content:center;
+  text-align:center;flex-direction:column;gap:5px;
+  border:2px dashed #2b8891;border-radius:12px;
+  background:#0d3c4c;color:#dffff4!important;cursor:pointer;
+  padding:16px;overflow-wrap:anywhere;
+}
+.curriculum-file-zone:hover{border-color:#46f0d5;background:#10505a}
+.curriculum-file-zone>svg{width:27px;height:27px;color:#56ffe1}
+.curriculum-file-zone strong{font-size:12px;max-width:100%;overflow-wrap:anywhere}
+.curriculum-file-zone>span{font-size:10px;color:#b2dce4}
+.curriculum-file-zone input[type=file]{width:100%;font-size:10px;color:#bfe8e9;margin-top:6px}
+.curriculum-library .curriculum-upload-submit{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  border:1px solid #6cffe1;border-radius:10px;
+  min-height:46px;padding:9px 14px;
+  background:#0ae0be;color:#033039;font-weight:840;font-size:12px;
+}
+.curriculum-library .curriculum-upload-submit:disabled{opacity:.5;cursor:not-allowed}
+.curriculum-upload-hint{font-size:10px;color:#a4c8d3;line-height:1.5}
+.curriculum-records-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px}
+.curriculum-records-head h4{margin:0;color:#fff;font-size:16px}
+.curriculum-records-head span{font-size:10px;white-space:nowrap;color:#80ffe7;padding:6px 9px;border-radius:50px;background:#0b524f}
+.curriculum-no-files{display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;gap:9px;padding:28px 17px;background:#0b3448;border:1px dashed #286981;border-radius:12px;min-height:196px;color:#e7f8fa}
+.curriculum-no-files svg{width:32px;height:32px;color:#23e2c7}
+.curriculum-no-files strong{font-size:13px}
+.curriculum-no-files p{font-size:11px;line-height:1.55;max-width:290px;color:#b2cfda;margin:0}
+.curriculum-area-group{display:flex;flex-direction:column;gap:8px;margin:10px 0 17px}
+.curriculum-area-group h5{margin:0 0 2px;color:#70fbe3;font-size:12px;letter-spacing:.03em}
+.curriculum-document{display:flex;flex-wrap:wrap;align-items:center;gap:9px;padding:11px;background:#0b384d;border:1px solid #24647b;border-radius:10px}
+.curriculum-document-type{background:#145a6a;color:#dbfff5;display:grid;place-items:center;padding:8px 6px;min-width:45px;border-radius:8px;font-size:10px;font-weight:850}
+.curriculum-document-info{display:flex;flex:1;flex-direction:column;gap:4px;min-width:130px}
+.curriculum-document-info strong{overflow-wrap:anywhere;color:#ecfff9;font-size:12px}
+.curriculum-document-info small{font-size:10px;color:#b5ced6}
+.curriculum-status{font-size:10px;font-weight:750;color:#f8d995}
+.curriculum-status.approved{color:#61f8d0}.curriculum-status.rejected{color:#ffadb3}
+.curriculum-document-actions{display:flex;flex-wrap:wrap;gap:6px}
+.curriculum-document-actions button{border-radius:7px;border:1px solid #36899b;background:#14556a;color:#e9fff9;min-height:31px;padding:5px 8px;font-size:10px;font-weight:750}
+.curriculum-document-actions button:hover{background:#0b746e}
+.curriculum-document-actions button.reject{border-color:#b56672;background:#653648;color:#fff}
+.curriculum-feedback{margin:0;padding:11px 13px;border-radius:10px;font-size:12px;color:#cdeefa;background:#0c394c;border:1px solid #25677a}
+.curriculum-feedback.error{background:#512634;border-color:#bd6075;color:#fff3f3}
+.curriculum-feedback.success{background:#0d5348;border-color:#36ad8a;color:#e4fff4}
+@media(max-width:1080px){.curriculum-library-columns{grid-template-columns:1fr}}
+@media(max-width:740px){
+  .curriculum-library{padding:14px;gap:14px;margin:10px 0}
+  .curriculum-library-head{align-items:flex-start;gap:10px}
+  .curriculum-library-icon{width:40px;height:40px;flex-basis:40px}
+  .curriculum-library-controls{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .curriculum-library-controls label:first-child{grid-column:1/-1}
+  .curriculum-grade-tabs{gap:5px}
+  .curriculum-grade-tabs button{min-height:53px}
+  .curriculum-grade-tabs button span{font-size:16px}
+  .curriculum-grade-tabs button small{font-size:9px}
+  .curriculum-upload,.curriculum-records{padding:14px}
+}
+@media(max-width:360px){.curriculum-grade-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}}
