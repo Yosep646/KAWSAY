@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Badge, Card, ErrorBox, Loading } from "../components/ui";
 import { QuestionsEditor } from "../components/QuestionsEditor";
@@ -6,7 +6,7 @@ import { TeacherPageIntro } from "../components/TeacherPageIntro";
 import { Icon } from "../components/Icon";
 import { useAsync } from "../hooks/useAsync";
 import { api } from "../services/api";
-import type { AdaptResult, AssignmentBrief, AssignmentDetail, Classroom, Grade, PlanVersionTree, Question, Variant } from "../types/api";
+import type { AdaptResult, AssignmentBrief, AssignmentDetail, Classroom, Grade, PlanBrief, PlanVersionTree, Question, Variant } from "../types/api";
 import { STATUS_LABEL, errMsg, gradeLabel } from "../utils/format";
 
 export function AssignmentList() {
@@ -22,23 +22,64 @@ export function AssignmentList() {
   );
 }
 
+const TEACHER_EXERCISE_DRAFT = "kawsay.teacher.exercise-draft.v1";
+type ExerciseDraft = { title:string; instructions:string; mode:"MANUAL"|"AI_ASSISTED" };
+function restoreExerciseDraft(): ExerciseDraft | null {
+  try {
+    if (typeof window === "undefined") return null;
+    const raw = window.sessionStorage.getItem(TEACHER_EXERCISE_DRAFT);
+    if (!raw) return null;
+    const draft: unknown = JSON.parse(raw);
+    if (!draft || typeof draft !== "object") return null;
+    const data = draft as Partial<ExerciseDraft>;
+    if (typeof data.title !== "string" || typeof data.instructions !== "string") return null;
+    if (data.mode !== "MANUAL" && data.mode !== "AI_ASSISTED") return null;
+    return { title:data.title.slice(0,300), instructions:data.instructions.slice(0,5000), mode:data.mode };
+  } catch { return null; }
+}
+
 export function CreateAssignment() {
   const nav = useNavigate();
   const rooms = useAsync(() => api.get<Classroom[]>("/classrooms"), []);
   const grades = useAsync(() => api.get<Grade[]>("/curriculum/grades"), []);
+  const plans = useAsync(() => api.get<PlanBrief[]>("/planning/plans"), []);
   const [roomId,setRoomId] = useState("");
   const rid = roomId || rooms.data?.[0]?.id || "";
   const active = useAsync(() => rid ? api.get<PlanVersionTree[]>(`/planning/active?classroom_id=${rid}`) : Promise.resolve([]), [rid]);
   const [picked,setPicked] = useState<Record<number,string>>({});
-  const [title,setTitle] = useState("");
-  const [instructions,setInstructions] = useState("");
-  const [mode,setMode] = useState<"MANUAL"|"AI_ASSISTED">("AI_ASSISTED");
+  const [savedDraft] = useState(restoreExerciseDraft);
+  const [title,setTitle] = useState(savedDraft?.title ?? "");
+  const [instructions,setInstructions] = useState(savedDraft?.instructions ?? "");
+  const [mode,setMode] = useState<"MANUAL"|"AI_ASSISTED">(savedDraft?.mode ?? "AI_ASSISTED");
+  useEffect(() => {
+    try {
+      window.sessionStorage.setItem(TEACHER_EXERCISE_DRAFT, JSON.stringify({ title, instructions, mode }));
+    } catch { /* Session storage may be unavailable; the form still works. */ }
+  }, [title,instructions,mode]);
   const [err,setErr] = useState<string|null>(null);
   const [busy,setBusy] = useState(false);
   const units = active.data?.flatMap(v => v.periods.flatMap(p=>p.units)) ?? [];
-  const gradeIds = [...new Set(units.map(u=>u.grade_id))].sort((a,b)=>a-b);
+  const selectableUnits = units.filter(u => u.topics.length > 0);
+  const gradeIds = [...new Set(selectableUnits.map(u=>u.grade_id))].sort((a,b)=>a-b);
   const selectedCount = Object.values(picked).filter(Boolean).length;
-  const ready = Boolean(rid && units.length && selectedCount && title.trim().length>=2 && instructions.trim().length>=5);
+  const ready = Boolean(rid && !active.loading && !active.error && selectableUnits.length && selectedCount && title.trim().length>=2 && instructions.trim().length>=5);
+  const planVersions = plans.data?.flatMap(p=>p.versions) ?? [];
+  const hasSubmittedPlan = planVersions.some(v=>v.status==="UNDER_REVIEW");
+  const hasApprovedPlan = planVersions.some(v=>v.status==="APPROVED");
+  const hasDraftPlan = planVersions.some(v=>v.status==="DRAFT");
+  const missingReason = !rid
+    ? "Debes crear o seleccionar un aula."
+    : active.loading
+      ? "Consultando la planificación vigente de tu aula…"
+      : active.error
+        ? "No se pudo consultar la planificación; revisa el error de conexión."
+        : gradeIds.length===0
+          ? "Primero necesitas una planificación estructurada activa, con temas del grado de tu aula."
+          : !selectedCount
+            ? "Selecciona al menos un grado y un tema."
+            : title.trim().length<2 || instructions.trim().length<5
+              ? "Completa el título y la actividad base."
+              : "";
 
   const submit = async (event:FormEvent) => {
     event.preventDefault();
@@ -50,6 +91,7 @@ export function CreateAssignment() {
       const record = await api.post<AssignmentDetail>("/assignments", {
         classroom_id:rid,title:title.trim(),instructions:instructions.trim(),mode,grade_topics,
       });
+      try { window.sessionStorage.removeItem(TEACHER_EXERCISE_DRAFT); } catch { /* Optional draft storage. */ }
       nav(`/actividades/${record.id}`);
     } catch(x) {setErr(errMsg(x));} finally {setBusy(false);}
   };
@@ -65,7 +107,7 @@ export function CreateAssignment() {
       <div className="teacher-flow-stat"><span><Icon name="book"/></span><div><strong>{active.loading?"…":gradeIds.length}</strong><small>Grados con temas activos</small></div></div>
       <div className="teacher-flow-stat"><span><Icon name="check"/></span><div><strong>{selectedCount}</strong><small>Grados seleccionados</small></div></div>
     </div>
-    <ErrorBox message={rooms.error ?? active.error ?? grades.error ?? err}/>
+    <ErrorBox message={rooms.error ?? active.error ?? grades.error ?? plans.error ?? err}/>
     <div className="teacher-flow-grid">
       <section className="teacher-flow-card">
         <div className="teacher-flow-card-heading"><span><Icon name="tasks"/></span><div><h3>Preparar actividad por grados</h3><p>Completa los datos, elige el contenido y guarda un borrador para revisión.</p></div></div>
@@ -78,9 +120,15 @@ export function CreateAssignment() {
               </select>
             </label>
             {active.loading ? <div className="wide"><Loading/></div> : gradeIds.length===0 ?
-              <div className="teacher-flow-empty wide"><Icon name="book"/><h3>No hay planificación estructurada activa</h3>
-                <p>Subir Word o PDF sirve para consultar la malla, pero las tareas necesitan temas y unidades de una versión aprobada y activada por administración.</p>
-                <Link to="/planificacion"><Icon name="arrow"/> Preparar planificación</Link>
+              <div className="teacher-flow-empty wide" role="status">
+                <Icon name="book"/><h3>{active.data?.length ? "El plan activo no tiene temas para seleccionar" : "Falta activar una planificación curricular"}</h3>
+                <p>Tu título y tus instrucciones se conservarán como borrador en esta pestaña mientras completas los requisitos.</p>
+                {plans.loading ? <p>Consultando los planes de la institución…</p> :
+                  <p>{hasSubmittedPlan ? "Hay una versión enviada a revisión: el administrador debe aprobarla y activarla." :
+                    hasApprovedPlan ? "Hay una versión aprobada pendiente de activación por el administrador." :
+                    hasDraftPlan ? "Hay un borrador: agrega periodo, unidad y tema, y envíalo a revisión." :
+                    "Primero crea un plan estructurado con competencias, periodo, unidad y tema; luego solicita su activación."}</p>}
+                <Link to="/planificacion#crear-plan-estructurado"><Icon name="arrow"/> Continuar con planificación</Link>
               </div> :
               <fieldset className="teacher-flow-grade-list wide"><legend>Grados y temas disponibles</legend>
                 {gradeIds.map(gid=>{
@@ -110,6 +158,8 @@ export function CreateAssignment() {
                 <span><strong>Creación manual</strong><small>Redacta las preguntas y adapta el contenido de cada grado directamente.</small></span>
               </label>
             </fieldset>
+            {!ready && <p className="teacher-activity-missing wide" role="status"><Icon name="book"/> {missingReason}</p>}
+            {(title.trim() || instructions.trim()) && <p className="teacher-activity-autosave wide">El ejercicio escrito se conserva temporalmente en esta pestaña. No se ha enviado a los estudiantes.</p>}
             <button type="submit" disabled={!ready||busy}>{busy?"Guardando…":"Crear variantes para revisión"} <Icon name="arrow"/></button>
           </form>}
       </section>
