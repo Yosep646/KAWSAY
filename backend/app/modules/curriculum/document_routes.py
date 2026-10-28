@@ -4,7 +4,6 @@ Accepts DOCX/PDF as opaque attachments; never executes document contents,
 never infers competencies or replaces an approved structured plan.
 """
 import io
-import re
 import uuid
 import zipfile
 from datetime import datetime, timezone
@@ -14,7 +13,7 @@ from urllib.parse import quote
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from fastapi.responses import Response
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, defer
 
 from app.core.database import get_db
 from app.core.exceptions import ForbiddenError, NotFoundError
@@ -78,7 +77,7 @@ def validate_payload(filename: str, body: bytes) -> tuple[str, str]:
                 if (len(entries) > 1200 or sum(x.file_size for x in entries) > 24 * 1024 * 1024
                         or any(x.filename.startswith("/") or ".." in x.filename.split("/") for x in entries)
                         or "[Content_Types].xml" not in names or "word/document.xml" not in names
-                        or "word/vbaProject.bin" in names):
+                        or any(x.lower().endswith("vbaproject.bin") for x in names)):
                     raise ValueError("DOCX no permitido")
         except (ValueError, zipfile.BadZipFile, OSError) as exc:
             raise HTTPException(422, "El archivo no es un Word DOCX válido") from exc
@@ -110,7 +109,7 @@ def list_documents(db: DB, user: Staff,
         CurriculumDocument.academic_year == academic_year,
         CurriculumDocument.education_level == education_level,
         CurriculumDocument.grade_number == grade_number,
-    ).order_by(CurriculumDocument.created_at.desc()).limit(150)).all()
+    ).options(defer(CurriculumDocument.file_data)).order_by(CurriculumDocument.created_at.desc(),CurriculumDocument.id.desc()).limit(150)).all()
     return [doc_info(x) for x in docs]
 
 
