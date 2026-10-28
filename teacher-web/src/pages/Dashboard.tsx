@@ -3,44 +3,147 @@ import { FlagCard } from "../components/FlagCard";
 import { Card, ErrorBox, Loading } from "../components/ui";
 import { useAsync } from "../hooks/useAsync";
 import { api } from "../services/api";
-import type { Classroom, CompetencyProgress, Forecast, Strength, Summary, SupportFlag } from "../types/api";
+import { useAuth } from "../app/AuthContext";
+import type { AssignmentBrief, Classroom, CompetencyProgress, Forecast, Strength, Summary, SupportFlag } from "../types/api";
 import { percent } from "../utils/format";
 import { Link } from "react-router-dom";
 import { Icon, type IconName } from "../components/Icon";
+import "./teacher-dashboard-v2.css";
 
 export function Dashboard() {
+  const { user } = useAuth();
   const rooms = useAsync(() => api.get<Classroom[]>("/classrooms"), []);
+  const assignments = useAsync(() => api.get<AssignmentBrief[]>("/assignments"), []);
   const [roomId, setRoomId] = useState<string>("");
-  useEffect(() => { if (!roomId && rooms.data?.[0]) setRoomId(rooms.data[0].id); }, [rooms.data, roomId]);
+  useEffect(() => {
+    if (!rooms.data?.length) { if (roomId) setRoomId(""); return; }
+    if (!rooms.data.some(room => room.id === roomId)) setRoomId(rooms.data[0]!.id);
+  }, [rooms.data, roomId]);
+  const hasRooms = (rooms.data?.length ?? 0) > 0;
+  const items = assignments.data ?? [];
+  const published = items.filter(a => a.status === "PUBLISHED");
+  const draftCount = items.filter(a => a.status !== "PUBLISHED").length;
+  const currentRoom = rooms.data?.find(r => r.id === roomId);
+  const visibleAssignments = items.filter(a => !roomId || a.classroom_id === roomId).slice(0, 4);
+  const firstName = user?.display_name?.trim().split(/\s+/)[0] || "Docente";
+  const statCards: { label: string; desc: string; icon: IconName; value: number | undefined; loading: boolean; color: string; to: string }[] = [
+    {label:"Aulas registradas",desc:"Mis espacios educativos",icon:"classroom",value:rooms.data?.length,loading:rooms.loading,color:"azure",to:"/aulas"},
+    {label:"Actividades creadas",desc:"En mis aulas",icon:"tasks",value:assignments.data?.length,loading:assignments.loading,color:"teal",to:"/actividades"},
+    {label:"Tareas publicadas",desc:"Disponibles para estudiantes",icon:"book",value:assignments.data?published.length:undefined,loading:assignments.loading,color:"amber",to:"/actividades"},
+    {label:"Por revisar",desc:"Aún no publicadas",icon:"activity",value:assignments.data?draftCount:undefined,loading:assignments.loading,color:"purple",to:"/actividades"},
+  ];
+  const readySteps = [
+    {done:hasRooms,label:"Crear mi primera aula",detail:"Organiza el grupo y su año escolar.",to:"/aulas"},
+    {done:items.length>0,label:"Preparar una actividad",detail:"Selecciona un grado y un tema de tu planificación.",to:"/actividades/nueva"},
+    {done:published.length>0,label:"Publicar para estudiantes",detail:"Revisa la actividad y habilita su entrega.",to:"/actividades"},
+  ];
+  const completedSteps = readySteps.filter(s => s.done).length;
 
-  return (
-    <div className="teacher-dashboard">
-      <header className="teacher-dashboard-hero">
-        <div className="teacher-dashboard-intro"><p className="eyebrow"><Icon name="leaf" /> ESPACIO DOCENTE · KAWSAY AI</p>
-          <h2>Bienvenido a tu <span>aula KAWSAY</span></h2>
-          <p>Gestiona tus aulas y acompaña el aprendizaje de tus estudiantes, con herramientas y datos reales.</p>
-          <div className="teacher-dashboard-actions"><Link className="button teacher-register-action" to="/estudiantes"><Icon name="students" /> Registrar estudiante</Link><Link className="button teacher-outline-action" to="/actividades/nueva"><Icon name="tasks" /> Crear actividad</Link></div>
+  return <div className="teacher-dashboard teacher-v2">
+    <header className="teacher-dashboard-hero">
+      <div className="teacher-dashboard-intro">
+        <p className="eyebrow"><Icon name="leaf" /> ESPACIO DOCENTE · KAWSAY AI</p>
+        <h2>Bienvenido, <span>{firstName}</span></h2>
+        <p>Transforma cada clase en una oportunidad para aprender, crecer y acompañar a tu comunidad.</p>
+        <div className="teacher-dashboard-actions">
+          <Link className="button teacher-register-action" to={hasRooms ? "/estudiantes" : "/aulas"}>
+            <Icon name={hasRooms?"students":"classroom"}/>{hasRooms?"Registrar estudiante":"Crear mi primera aula"}
+          </Link>
+          <Link className="button teacher-outline-action" to="/planificacion"><Icon name="book"/> Mi planificación</Link>
         </div>
-        <span className="teacher-hero-motto"><Icon name="book" /> Aprender · Crecer · Acompañar</span>
-      </header>
-      <div className="teacher-quick-grid" aria-label="Accesos rápidos del docente">
-        <Link to="/estudiantes"><span className="teacher-quick-icon t-emerald"><Icon name="students" /></span><strong>Registrar estudiantes</strong><small>Crea sus cuentas y credenciales</small><Icon name="arrow" /></Link>
-        <Link to="/actividades/nueva"><span className="teacher-quick-icon t-blue"><Icon name="tasks" /></span><strong>Asignar tareas</strong><small>Prepara actividades educativas</small><Icon name="arrow" /></Link>
-        <Link to="/planificacion"><span className="teacher-quick-icon t-gold"><Icon name="book" /></span><strong>Planificación</strong><small>Organiza contenidos por grado</small><Icon name="arrow" /></Link>
-        <Link to="/alertas"><span className="teacher-quick-icon t-violet"><Icon name="chart" /></span><strong>Ver reportes</strong><small>Monitorea progreso y alertas</small><Icon name="arrow" /></Link>
+        <div className="teacher-hero-meta">
+          <span><Icon name="classroom"/> {rooms.loading?"Consultando aulas":`${rooms.data?.length??"—"} aulas`}</span>
+          <span><Icon name="leaf"/> Aprender · Crecer · Acompañar</span>
+        </div>
       </div>
-      <ErrorBox message={rooms.error} />
-      <div className="room-selector">
-      {rooms.loading ? <Loading /> : rooms.data?.length === 0 ? <div className="teacher-empty-classroom"><span className="teacher-empty-icon"><Icon name="classroom" /></span><div><strong>Tu primera aula comienza aquí.</strong><p>Para agregar estudiantes y asignar tareas, primero registra el aula o sección que acompañas.</p></div><Link className="button" to="/aulas"><Icon name="arrow" /> Crear mi primera aula</Link></div> : (
-        <label>Aula<select value={roomId} onChange={(e) => setRoomId(e.target.value)}>
-          {rooms.data?.map((r) => <option key={r.id} value={r.id}>{r.name} ({r.academic_year})</option>)}
-        </select></label>
-      )}
-      <span className="muted selector-note">La información corresponde al aula seleccionada.</span>
-      </div>
-      {roomId && <RoomPanel key={roomId} roomId={roomId} />}
+      <span className="teacher-hero-motto">Educación que acompaña a cada comunidad.</span>
+    </header>
+
+    <div className="teacher-v2-section-title">
+      <div><p className="teacher-v2-eyebrow">TU ESPACIO EDUCATIVO</p><h3>Resumen general</h3></div>
+      <button type="button" className="teacher-v2-refresh" onClick={()=>{void rooms.reload();void assignments.reload();}} disabled={rooms.loading||assignments.loading}><Icon name="refresh"/> Actualizar</button>
     </div>
-  );
+    <ErrorBox message={rooms.error ?? assignments.error}/>
+    <div className="teacher-v2-kpis" aria-label="Indicadores reales del docente">
+      {statCards.map(card=><Link key={card.label} to={card.to} className={`teacher-v2-kpi teacher-v2-${card.color}`}>
+        <span className="teacher-v2-kpi-icon"><Icon name={card.icon}/></span>
+        <span className="teacher-v2-kpi-content"><small>{card.label}</small><strong>{card.loading?"…":card.value===undefined?"—":card.value.toLocaleString("es-PE")}</strong><span>{card.desc}</span></span>
+        <Icon name="arrow" />
+      </Link>)}
+    </div>
+
+    <div className="teacher-v2-overview-grid">
+      <section className="teacher-v2-panel teacher-v2-classroom" aria-labelledby="teacher-classroom-heading">
+        <div className="teacher-v2-panel-head">
+          <div><p className="teacher-v2-eyebrow">GESTIÓN ACADÉMICA</p><h3 id="teacher-classroom-heading">Mis aulas</h3></div>
+          <Link to="/aulas" className="teacher-v2-text-link">Ver aulas <Icon name="arrow"/></Link>
+        </div>
+        {rooms.loading ? <p className="teacher-v2-muted">Cargando aulas…</p> :
+          rooms.error ? <p className="teacher-v2-muted">No se pudieron consultar tus aulas.</p> :
+          !hasRooms ? <div className="teacher-v2-empty-classroom">
+            <span className="teacher-v2-empty-icon"><Icon name="classroom"/></span>
+            <div><strong>Tu primera aula empieza aquí</strong><p>Crea un aula o sección para registrar estudiantes, organizar actividades y consultar su progreso.</p></div>
+            <Link to="/aulas">Crear aula <Icon name="arrow"/></Link>
+          </div> :
+          <div className="teacher-v2-classroom-body">
+            <label htmlFor="teacher-dashboard-room">Aula seleccionada
+              <select id="teacher-dashboard-room" value={roomId} onChange={e=>setRoomId(e.target.value)}>
+                {rooms.data?.map(room=><option value={room.id} key={room.id}>{room.name} · {room.academic_year}</option>)}
+              </select>
+            </label>
+            <div className="teacher-v2-current-room"><span><Icon name="classroom"/></span><div><strong>{currentRoom?.name}</strong><small>Año escolar {currentRoom?.academic_year}</small></div><Link to="/estudiantes">Gestionar <Icon name="arrow"/></Link></div>
+            <p>Los indicadores y las alertas de aprendizaje se muestran debajo para el aula seleccionada.</p>
+          </div>}
+      </section>
+      <section className="teacher-v2-panel teacher-v2-work" aria-labelledby="teacher-work-heading">
+        <div className="teacher-v2-panel-head">
+          <div><p className="teacher-v2-eyebrow">ORGANIZACIÓN</p><h3 id="teacher-work-heading">Actividades registradas</h3></div>
+          <Link to="/actividades" className="teacher-v2-text-link">Ver todas <Icon name="arrow"/></Link>
+        </div>
+        {assignments.loading ? <p className="teacher-v2-muted">Cargando actividades…</p> :
+          assignments.error ? <p className="teacher-v2-muted">Las actividades no están disponibles.</p> :
+          visibleAssignments.length===0 ? <div className="teacher-v2-no-work"><Icon name="tasks"/><strong>Sin actividades registradas en esta aula</strong><p>Prepara tu primera actividad según la planificación del grado.</p><Link to="/actividades/nueva">Crear actividad <Icon name="arrow"/></Link></div> :
+          <div className="teacher-v2-assignment-list">{visibleAssignments.map(item=><Link key={item.id} to={`/actividades/${item.id}`}>
+            <span className="teacher-v2-assignment-icon"><Icon name="tasks"/></span><span className="teacher-v2-assignment-name"><strong>{item.title}</strong><small>{item.status==="PUBLISHED"?"Publicada":"Pendiente de publicación"}</small></span><Icon name="arrow"/>
+          </Link>)}</div>}
+      </section>
+    </div>
+
+    <div className="teacher-v2-bottom-grid">
+      <section className="teacher-v2-panel teacher-v2-roadmap" aria-labelledby="teacher-roadmap-title">
+        <div className="teacher-v2-panel-head">
+          <div><p className="teacher-v2-eyebrow">ACOMPAÑAMIENTO</p><h3 id="teacher-roadmap-title">Ruta de trabajo</h3></div>
+          <span className="teacher-v2-step-count">{rooms.loading||assignments.loading?"Cargando":`${completedSteps} de 3`} pasos</span>
+        </div>
+        <div className="teacher-v2-track" role="progressbar" aria-label="Pasos de configuración" aria-valuenow={completedSteps} aria-valuemin={0} aria-valuemax={3}><span style={{width:`${completedSteps/3*100}%`}}/></div>
+        <div className="teacher-v2-steps">
+          {readySteps.map((step,i)=><Link to={step.to} key={step.to} className="teacher-v2-step">
+            <span className={`teacher-v2-step-mark ${step.done?"is-done":""}`}>{step.done?<Icon name="check"/>:i+1}</span>
+            <span><strong>{step.label}</strong><small>{step.detail}</small></span>
+            <Icon name="arrow"/>
+          </Link>)}
+        </div>
+      </section>
+      <section className="teacher-v2-panel teacher-v2-tools" aria-labelledby="teacher-tools-title">
+        <div className="teacher-v2-panel-head"><div><p className="teacher-v2-eyebrow">HERRAMIENTAS</p><h3 id="teacher-tools-title">Accesos rápidos</h3></div></div>
+        <div className="teacher-quick-grid" aria-label="Herramientas del docente">
+          <Link to="/estudiantes"><span className="teacher-quick-icon t-emerald"><Icon name="students"/></span><strong>Estudiantes</strong><small>Registro y acceso</small><Icon name="arrow"/></Link>
+          <Link to="/planificacion"><span className="teacher-quick-icon t-blue"><Icon name="book"/></span><strong>Malla curricular</strong><small>Word, PDF y planes</small><Icon name="arrow"/></Link>
+          <Link to="/actividades/nueva"><span className="teacher-quick-icon t-gold"><Icon name="tasks"/></span><strong>Asignar tareas</strong><small>Actividades por grado</small><Icon name="arrow"/></Link>
+          <Link to="/alertas"><span className="teacher-quick-icon t-violet"><Icon name="alert"/></span><strong>Alertas y logros</strong><small>Revisión de evidencia</small><Icon name="arrow"/></Link>
+        </div>
+      </section>
+    </div>
+
+    {roomId && <section className="teacher-v2-learning" aria-label="Indicadores del aula seleccionada">
+      <div className="teacher-v2-section-title">
+        <div><p className="teacher-v2-eyebrow">DATOS DEL AULA · {currentRoom?.name}</p><h3>Seguimiento del aprendizaje</h3></div>
+        <Link to="/alertas" className="teacher-v2-text-link">Revisar alertas <Icon name="arrow"/></Link>
+      </div>
+      <RoomPanel key={roomId} roomId={roomId}/>
+    </section>}
+    <div className="teacher-v2-footer"><Icon name="book"/><span><strong>Juntos transformamos comunidades.</strong><small>La tecnología acompaña; cada decisión pedagógica pertenece al docente.</small></span><em>KAWSAY AI</em></div>
+  </div>;
 }
 
 function RoomPanel({ roomId }: { roomId: string }) {
