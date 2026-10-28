@@ -3,7 +3,6 @@ import { FlagCard } from "../components/FlagCard";
 import { Card, ErrorBox, Loading } from "../components/ui";
 import { useAsync } from "../hooks/useAsync";
 import { api } from "../services/api";
-import { useAuth } from "../app/AuthContext";
 import type { AssignmentBrief, Classroom, CompetencyProgress, Forecast, Strength, Summary, SupportFlag } from "../types/api";
 import { percent } from "../utils/format";
 import { Link } from "react-router-dom";
@@ -11,7 +10,6 @@ import { Icon, type IconName } from "../components/Icon";
 import "./teacher-dashboard-v2.css";
 
 export function Dashboard() {
-  const { user } = useAuth();
   const rooms = useAsync(() => api.get<Classroom[]>("/classrooms"), []);
   const assignments = useAsync(() => api.get<AssignmentBrief[]>("/assignments"), []);
   const [roomId, setRoomId] = useState<string>("");
@@ -25,7 +23,6 @@ export function Dashboard() {
   const draftCount = items.filter(a => a.status !== "PUBLISHED").length;
   const currentRoom = rooms.data?.find(r => r.id === roomId);
   const visibleAssignments = items.filter(a => !roomId || a.classroom_id === roomId).slice(0, 4);
-  const firstName = user?.display_name?.trim().split(/\s+/)[0] || "Docente";
   const statCards: { label: string; desc: string; icon: IconName; value: number | undefined; loading: boolean; color: string; to: string }[] = [
     {label:"Aulas registradas",desc:"Mis espacios educativos",icon:"classroom",value:rooms.data?.length,loading:rooms.loading,color:"azure",to:"/aulas"},
     {label:"Actividades creadas",desc:"En mis aulas",icon:"tasks",value:assignments.data?.length,loading:assignments.loading,color:"teal",to:"/actividades"},
@@ -43,11 +40,11 @@ export function Dashboard() {
     <header className="teacher-dashboard-hero">
       <div className="teacher-dashboard-intro">
         <p className="eyebrow"><Icon name="leaf" /> ESPACIO DOCENTE · KAWSAY AI</p>
-        <h2>Bienvenido, <span>{firstName}</span></h2>
+        <h2>Bienvenido, <span>Docente</span></h2>
         <p>Transforma cada clase en una oportunidad para aprender, crecer y acompañar a tu comunidad.</p>
         <div className="teacher-dashboard-actions">
-          <Link className="button teacher-register-action" to={hasRooms ? "/estudiantes" : "/aulas"}>
-            <Icon name={hasRooms?"students":"classroom"}/>{hasRooms?"Registrar estudiante":"Crear mi primera aula"}
+          <Link className="button teacher-register-action" to="/estudiantes">
+            <Icon name="students"/> Registrar estudiante
           </Link>
           <Link className="button teacher-outline-action" to="/planificacion"><Icon name="book"/> Mi planificación</Link>
         </div>
@@ -82,7 +79,7 @@ export function Dashboard() {
           rooms.error ? <p className="teacher-v2-muted">No se pudieron consultar tus aulas.</p> :
           !hasRooms ? <div className="teacher-v2-empty-classroom">
             <span className="teacher-v2-empty-icon"><Icon name="classroom"/></span>
-            <div><strong>Tu primera aula empieza aquí</strong><p>Crea un aula o sección para registrar estudiantes, organizar actividades y consultar su progreso.</p></div>
+            <div><strong>Tu primera aula empieza aquí</strong><p>Para agregar estudiantes y asignar tareas, primero registra el aula o sección que acompañas.</p></div>
             <Link to="/aulas">Crear aula <Icon name="arrow"/></Link>
           </div> :
           <div className="teacher-v2-classroom-body">
