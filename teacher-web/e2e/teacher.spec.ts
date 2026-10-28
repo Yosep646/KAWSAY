@@ -184,7 +184,7 @@ test("ejercicios de Matemática: docente visualiza, estudiante recibe y entrega 
   await expect(page.getByRole("heading", { name: "Actividades", exact: true })).toBeVisible();
   await page.getByRole("link", { name: "Comparamos cantidades" }).click();
   await expect(page.getByText("Preguntas (5)")).toHaveCount(3);
-  await expect(page.getByText("Instrucciones adaptadas para 1.º grado")).toBeVisible();
+  await expect(page.getByText("Instrucciones adaptadas para 1.º grado").first()).toBeVisible();
 
   // Datos de prueba creados solo en el servidor temporal levantado por browser_e2e.py.
   const student = await page.evaluate(async () => {
