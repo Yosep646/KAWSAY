@@ -1,0 +1,304 @@
+/* KAWSAY AI — diseño exclusivo de Instituciones (aislado de las reglas legacy .card) */
+.role-admin .admin-section-page[data-admin-section="schools"] .admin-section-hero {
+  background-image:
+    linear-gradient(90deg,rgba(2,24,40,.83) 0%,rgba(3,26,42,.64) 30%,rgba(3,25,39,.15) 65%,rgba(3,26,42,.02) 100%),
+    url('/kawsay-fondo-responsive-20261028.webp?v=instituciones-20261028') !important;
+  background-size:cover !important;
+  background-position:center, center 48% !important;
+  background-repeat:no-repeat !important;
+  border-color:#19758c !important;
+}
+.role-admin .admin-section-page[data-admin-section="schools"] .admin-section-hero::before{
+  background:linear-gradient(0deg,rgba(2,21,34,.3),transparent 52%) !important;
+}
+.role-admin .admin-institutions {
+  width:100%;
+  min-width:0;
+  color:#edfaff;
+}
+.role-admin .admin-institutions *,
+.role-admin .admin-institutions *::before,
+.role-admin .admin-institutions *::after {box-sizing:border-box}
+.role-admin .admin-institutions-layout {
+  display:grid;
+  grid-template-columns:minmax(0,1.42fr) minmax(320px,.86fr);
+  align-items:start;
+  gap:18px;
+}
+.role-admin .admin-institutions .admin-institution-panel {
+  min-width:0;
+  padding:clamp(20px,2vw,30px);
+  border:1px solid #23647a;
+  border-radius:18px;
+  background:linear-gradient(145deg,#0a3045 0%,#07273a 62%,#052134 100%);
+  box-shadow:0 12px 26px #00142152,inset 0 1px 0 #aafff010;
+  color:#f0fbff;
+}
+.role-admin .admin-institution-panel-head {
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:0 0 19px;
+  margin:0 0 21px;
+  border-bottom:1px solid #22566c;
+}
+.role-admin .admin-institution-symbol {
+  display:grid;
+  place-items:center;
+  width:51px;height:51px;
+  flex:0 0 51px;
+  color:#c4f9ff;
+  background:linear-gradient(145deg,#0d6390,#075277);
+  border:1px solid #2385a5;
+  border-radius:14px;
+}
+.role-admin .admin-institution-symbol svg {width:26px;height:26px}
+.role-admin .admin-institution-symbol-create {
+  color:#cbfff4;
+  background:linear-gradient(145deg,#0d917e,#085b60);
+  border-color:#1da992;
+}
+.role-admin .admin-institution-head-copy {min-width:0;flex:1}
+.role-admin .admin-institution-kicker {
+  margin:0 0 5px;
+  color:#4df0d3;
+  letter-spacing:.14em;
+  font-size:10px;
+  font-weight:850;
+}
+.role-admin .admin-institution-head-copy h3 {
+  color:#faffff !important;
+  margin:0;
+  font-size:clamp(18px,1.5vw,23px);
+  font-weight:850;
+  letter-spacing:-.025em;
+  line-height:1.25;
+}
+.role-admin .admin-institution-head-copy>p:last-child {
+  margin:6px 0 0;
+  font-size:12px;
+  font-weight:400;
+  color:#b1d0dd !important;
+  line-height:1.5;
+}
+.role-admin .admin-institution-count {
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  flex-direction:column;
+  gap:1px;
+  min-width:64px;
+  padding:7px 11px;
+  font-size:22px;
+  font-weight:850;
+  line-height:1.2;
+  color:#d7fff5;
+  background:#0d5555;
+  border:1px solid #218a83;
+  border-radius:12px;
+}
+.role-admin .admin-institution-count small{font-size:9px;color:#b9ede7;font-weight:700}
+.role-admin .admin-institution-search-label {
+  display:block;
+  margin:0 0 8px;
+  color:#cfeaf1 !important;
+  font-size:12px;
+  font-weight:750;
+}
+.role-admin .admin-institution-search {
+  display:flex;
+  align-items:center;
+  gap:11px;
+  width:100%;
+  padding:0 14px;
+  min-height:48px;
+  border:1px solid #396e84;
+  border-radius:11px;
+  background:#08263a;
+  transition:border-color .15s ease,box-shadow .15s ease;
+}
+.role-admin .admin-institution-search:focus-within {
+  border-color:#1fead2;
+  box-shadow:0 0 0 3px #08debb27;
+}
+.role-admin .admin-institution-search>svg {
+  flex:0 0 19px;
+  width:19px;height:19px;
+  color:#6fdccb;
+}
+.role-admin .admin-institutions .admin-institution-search input {
+  display:block;
+  min-width:0;
+  flex:1 1 auto;
+  width:100%;
+  height:45px;
+  min-height:45px;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:#efffff !important;
+  -webkit-text-fill-color:#efffff !important;
+  font-size:13px;
+  font-weight:500;
+  outline:none !important;
+}
+.role-admin .admin-institution-search input::placeholder{color:#9fbfcc !important;opacity:1}
+.role-admin .admin-institution-list {
+  display:grid;
+  gap:10px;
+  margin:16px 0 0;
+}
+.role-admin .admin-institution-item {
+  display:flex;
+  gap:13px;
+  align-items:center;
+  min-width:0;
+  padding:14px 15px;
+  background:#10394c;
+  border:1px solid #31637b;
+  border-radius:13px;
+  color:#e8f8ff;
+  transition:background .18s ease,border-color .18s ease;
+}
+.role-admin .admin-institution-item:hover{background:#114456;border-color:#399d9d}
+.role-admin .admin-institution-item-icon {
+  width:48px;height:48px;
+  flex:0 0 48px;
+  display:grid;place-items:center;
+  border-radius:12px;
+  background:#0a645c;
+  border:1px solid #188a7a;
+  color:#b7fff2;
+}
+.role-admin .admin-institution-item-icon svg{width:25px;height:25px}
+.role-admin .admin-institution-item-info{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
+.role-admin .admin-institution-item-info strong{color:#fff!important;font-size:13px;font-weight:750;line-height:1.4;overflow-wrap:anywhere}
+.role-admin .admin-institution-item-info small{display:flex;align-items:center;gap:5px;color:#acd1db!important;font-size:11px;line-height:1.4}
+.role-admin .admin-institution-item-info small svg{width:13px;height:13px;color:#42e9cb;flex-shrink:0}
+.role-admin .admin-institution-item-tag {
+  color:#80f6dd;
+  font-size:10px;
+  font-weight:700;
+  background:#0c5150;
+  border:1px solid #277d72;
+  border-radius:999px;
+  padding:6px 9px;
+  white-space:nowrap;
+}
+.role-admin .admin-institution-state{font-size:12px;color:#b9d3df}
+.role-admin .admin-institution-empty {
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  justify-content:center;gap:9px;
+  padding:30px 15px;
+  border:1px dashed #2b647b;
+  border-radius:12px;
+  background:#092a3f;
+  color:#b6d8df;
+  margin-top:15px;
+}
+.role-admin .admin-institution-empty svg{width:27px;height:27px;color:#49dfce}
+.role-admin .admin-institution-empty strong{font-size:13px;color:#edffff}
+.role-admin .admin-institution-empty span{font-size:11px;line-height:1.5;max-width:250px}
+.role-admin .admin-institution-panel-foot{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:20px;
+  padding-top:15px;
+  border-top:1px solid #245469;
+  color:#9ac5d4;
+  font-size:11px;
+  line-height:1.5;
+}
+.role-admin .admin-institution-panel-foot svg{flex:0 0 16px;width:16px;height:16px;color:#39dbbd}
+.role-admin .admin-institution-form{display:flex;flex-direction:column;gap:19px}
+.role-admin .admin-institution-form label{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  font-size:12px;
+  font-weight:750;
+  color:#d9eff4 !important;
+}
+.role-admin .admin-institution-form label span{color:#18e6c7}
+.role-admin .admin-institution-form label small{display:inline;color:#a8c5d0;font-weight:500}
+.role-admin .admin-institutions .admin-institution-form input{
+  display:block;
+  width:100%;
+  min-width:0;
+  padding:12px 14px;
+  height:49px;
+  min-height:49px;
+  border:1px solid #397087 !important;
+  background:#09283d !important;
+  border-radius:10px !important;
+  color:#eaffff !important;
+  -webkit-text-fill-color:#eaffff !important;
+  box-shadow:none;
+  font-size:13px;
+  font-weight:520;
+}
+.role-admin .admin-institution-form input::placeholder{color:#91b7c4 !important;opacity:1}
+.role-admin .admin-institution-form input:focus{
+  border-color:#2de7ce !important;
+  box-shadow:0 0 0 3px #10e3bf26;
+  outline:none;
+}
+.role-admin .admin-institutions .admin-institution-form button[type="submit"]{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:13px;
+  width:100%;
+  min-height:49px;
+  padding:11px 15px;
+  background:linear-gradient(112deg,#02c9af,#14e6c9) !important;
+  border:1px solid #44ecda !important;
+  border-radius:10px;
+  color:#01343b !important;
+  font-weight:850;
+  font-size:13px;
+  cursor:pointer;
+  transition:filter .15s ease,box-shadow .15s ease;
+}
+.role-admin .admin-institution-form button[type="submit"]:hover:not(:disabled) {filter:brightness(1.07);box-shadow:0 9px 23px #06c9ad36}
+.role-admin .admin-institution-form button[type="submit"]:disabled{opacity:.55;cursor:not-allowed}
+.role-admin .admin-institution-form button svg{width:18px;height:18px}
+.role-admin .admin-institution-next{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  background:#0b4144;
+  border:1px solid #276d69;
+  border-radius:12px;
+  padding:13px 14px;
+  margin-top:22px;
+}
+.role-admin .admin-institution-next svg{width:18px;height:18px;flex:0 0 18px;color:#42eace}
+.role-admin .admin-institution-next p {margin:0;color:#badfdc;font-size:11px;line-height:1.6}
+@media (max-width:1200px) {
+  .role-admin .admin-institutions-layout{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:800px) {
+  .role-admin .admin-institutions-layout{gap:12px}
+  .role-admin .admin-institutions .admin-institution-panel{padding:17px;border-radius:14px}
+  .role-admin .admin-institution-panel-head{gap:10px;padding-bottom:14px;margin-bottom:16px}
+  .role-admin .admin-institution-symbol{width:42px;height:42px;flex-basis:42px;border-radius:10px}
+  .role-admin .admin-institution-symbol svg{width:21px;height:21px}
+  .role-admin .admin-institution-head-copy h3{font-size:17px}
+  .role-admin .admin-institution-count{padding:6px 8px;min-width:53px;font-size:18px}
+  .role-admin .admin-institution-count small{font-size:8px}
+}
+@media (max-width:410px) {
+  .role-admin .admin-institutions .admin-institution-panel{padding:14px}
+  .role-admin .admin-institution-item{flex-wrap:wrap;padding:12px}
+  .role-admin .admin-institution-item-tag{margin-left:61px}
+  .role-admin .admin-institution-panel-head {align-items:flex-start}
+  .role-admin .admin-institution-kicker{letter-spacing:.07em;font-size:9px}
+}
+@media(prefers-reduced-motion:reduce) {
+  .role-admin .admin-institution-item,
+  .role-admin .admin-institutions .admin-institution-form button {transition:none}
+}
