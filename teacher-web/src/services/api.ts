@@ -100,6 +100,31 @@ export async function request<T>(method: string, path: string, body?: unknown, r
   return parse<T>(res);
 }
 
+/** Authenticated binary file transfer; refreshes tokens just like JSON requests. */
+async function binaryRequest<T extends Blob | object>(
+  method: "GET" | "POST", path: string, file?: File, retry = true,
+): Promise<T> {
+  const headers: Record<string,string> = {};
+  if (accessToken) headers.authorization = `Bearer ${accessToken}`;
+  if (file) headers["content-type"] = "application/octet-stream";
+  const res = await fetchWithTimeout(`${API}${path}`, {
+    method, headers, body: file, cache: "no-store",
+  }, { timeoutMs: 45000 });
+  if (res.status === 401 && retry) {
+    if (await refreshTokens()) return binaryRequest<T>(method,path,file,false);
+    setTokens(null);
+    onSessionLost?.();
+  }
+  if (!res.ok) return parse<T>(res);
+  if (method === "GET") return await res.blob() as T;
+  return parse<T>(res);
+}
+
+export const documentApi = {
+  upload: <T>(path: string, file: File) => binaryRequest<T>("POST",path,file),
+  download: (path: string) => binaryRequest<Blob>("GET",path),
+};
+
 export const api = {
   get: <T>(p: string, options?: RequestOptions) => request<T>("GET", p, undefined, true, options),
   post: <T>(p: string, b?: unknown) => request<T>("POST", p, b ?? {}),
