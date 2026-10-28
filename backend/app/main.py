@@ -86,33 +86,36 @@ def create_app() -> FastAPI:
         def serve_web(requested_path: str):
             if requested_path.startswith(("api/", "docs", "openapi", "ready", "health")):
                 raise HTTPException(status_code=404)
-            # Vite copia los archivos de public/ a la raíz de dist/.
-            # El banner utiliza esta foto local: debe servirse como JPEG,
-            # nunca como fallback HTML del SPA (evita un fondo invisible).
+            # Vite copia teacher-web/public/* directamente a dist/.
+            # Los fondos JPG/WEBP deben devolverse como IMAGEN, no index.html;
+            # restringirlos a ficheros kawsay-* en la raíz para evitar acceso
+            # a archivos internos, rutas arbitrarias y SVG ejecutable.
             public_static_files = {
                 "sw.js", "startup-check.js", "favicon.ico",
-                "manifest.webmanifest", "robots.txt", "kawsay-hero-rural.jpg",
-                "kawsay-diversidad-fondo.jpg",
-                "kawsay-login-encuadre-desktop.jpg",
-                "kawsay-login-encuadre-mobile.jpg",
-                "kawsay-reference-hero.jpg",
-                "kawsay-reference-mobile.jpg",
-                "kawsay-fondo-final.jpg",
+                "manifest.webmanifest", "robots.txt",
             }
-            if requested_path in public_static_files:
+            image_media_types = {
+                ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
+                ".png": "image/png", ".webp": "image/webp",
+                ".avif": "image/avif",
+            }
+            is_public_image = (
+                requested_path.startswith("kawsay-")
+                and "/" not in requested_path
+                and "\\" not in requested_path
+                and Path(requested_path).suffix.lower() in image_media_types
+            )
+            if requested_path in public_static_files or is_public_image:
                 requested_file = dist / requested_path
                 if not requested_file.is_file():
                     raise HTTPException(status_code=404, detail="Archivo estático no encontrado")
                 return FileResponse(
                     requested_file,
-                    media_type="image/jpeg" if requested_path in {
-                        "kawsay-hero-rural.jpg", "kawsay-diversidad-fondo.jpg",
-                        "kawsay-login-encuadre-desktop.jpg",
-                        "kawsay-login-encuadre-mobile.jpg",
-                        "kawsay-reference-hero.jpg", "kawsay-reference-mobile.jpg",
-                        "kawsay-fondo-final.jpg"
-                    } else None,
-                    headers={"Cache-Control": "no-store"},
+                    media_type=image_media_types.get(requested_file.suffix.lower()),
+                    headers={
+                        "Cache-Control": "no-store",
+                        "X-Content-Type-Options": "nosniff",
+                    },
                 )
             return FileResponse(index, media_type="text/html", headers={
                 "Cache-Control": "no-store",
