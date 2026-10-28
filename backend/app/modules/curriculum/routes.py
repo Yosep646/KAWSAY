@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.core.permissions import get_current_user
 from app.modules.curriculum.models import Grade
+from app.modules.curriculum.minedu_catalog import MINEDU_PRIMARY_SOURCES
 from app.modules.users.models import User
 
 router = APIRouter(prefix="/curriculum", tags=["curriculum"])
@@ -24,6 +25,14 @@ class GradeOut(BaseModel):
 def grades(db: Annotated[Session, Depends(get_db)],
            _: Annotated[User, Depends(get_current_user)]) -> list[Grade]:
     return list(db.scalars(select(Grade).order_by(Grade.level, Grade.number)))
+
+
+@router.get("/minedu/primaria")
+def minedu_primary_references(
+    _: Annotated[User, Depends(get_current_user)],
+) -> dict:
+    """Read-only verified public MINEDU links: not a sync or framework activation."""
+    return MINEDU_PRIMARY_SOURCES
 
 
 # ---------------- Catálogo curricular (importación estructurada, revisión humana previa) ----------------
