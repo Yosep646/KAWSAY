@@ -60,7 +60,7 @@ export function Login() {
     finally { setBusy(false); }
   };
 
-  return <main className="login-layout login-reimagined">
+  return <main id="kawsay-login" className="login-layout login-reimagined">
     <img
       className="login-scene-art"
       src="/kawsay-fondo-responsive-20261028.webp?v=full-bleed-20261028"
