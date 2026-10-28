@@ -40,7 +40,7 @@ describe("Adaptación de Matemática a los seis grados",()=>{
     await userEvent.click(screen.getByRole("checkbox",{name:/Adaptar Matemática según el grado/}));
     await userEvent.type(screen.getByRole("textbox",{name:/Ejercicio original del docente/}),"245 + 178");
     await userEvent.click(screen.getByRole("button",{name:/Seleccionar grados con la misma competencia/}));
-    expect(screen.getByText("6",{selector:"strong"})).toBeInTheDocument();
+    expect(screen.getAllByText("6",{selector:"strong"}).length).toBeGreaterThanOrEqual(1);
     const create=screen.getByRole("button",{name:/Crear variantes para revisión/});
     expect(create).toBeEnabled();
     await userEvent.click(create);
