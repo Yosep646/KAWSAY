@@ -1,15 +1,18 @@
+import uuid
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.core.permissions import get_current_user
-from app.modules.curriculum.models import Grade
+from app.core.exceptions import ConflictError, NotFoundError
+from app.core.permissions import get_current_user, require_roles
 from app.modules.curriculum.minedu_catalog import MINEDU_PRIMARY_SOURCES
-from app.modules.users.models import User
+from app.modules.curriculum.models import Capacity, Competency, CurriculumFramework, Grade, Subject
+from app.modules.users.models import Role, User
 
 router = APIRouter(prefix="/curriculum", tags=["curriculum"])
 
@@ -33,18 +36,6 @@ def minedu_primary_references(
 ) -> dict:
     """Read-only verified public MINEDU links: not a sync or framework activation."""
     return MINEDU_PRIMARY_SOURCES
-
-
-# ---------------- Catálogo curricular (importación estructurada, revisión humana previa) ----------------
-import uuid  # noqa: E402
-
-from pydantic import Field  # noqa: E402
-from sqlalchemy.exc import IntegrityError  # noqa: E402
-
-from app.core.exceptions import ConflictError, NotFoundError  # noqa: E402
-from app.core.permissions import require_roles  # noqa: E402
-from app.modules.curriculum.models import Capacity, Competency, CurriculumFramework, Subject  # noqa: E402
-from app.modules.users.models import Role  # noqa: E402
 
 
 class _Strict(BaseModel):
