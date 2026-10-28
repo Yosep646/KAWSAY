@@ -1,0 +1,73 @@
+name: ML — entrenar candidato sintético (NO producción)
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/ml-train-candidate.yml'
+permissions:
+  contents: read
+
+jobs:
+  train-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      APP_ENV: test
+      DATABASE_URL: sqlite:///./data/ml_train_ci.db
+      JWT_SECRET: "ml_ci_only_jwt_secret_ml_ci_only_jwt_secret_123"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Dependencias del modelo y validadores
+        run: python -m pip install -r backend/requirements.txt -r ml/requirements.txt
+      - name: Dataset sintético 1000 estudiantes; evaluación agrupada por estudiante
+        run: |
+          python -m ml.train --source synthetic --students 1000 --seed 7 --quick > ml-training-results.json
+          python -m ml.make_model_card
+      - name: Validación de artefacto y prohibición de aprobación sintética
+        run: |
+          python - <<'PY'
+          import json
+          from ml import predict, registry
+          from ml.common import MODELS_DIR
+          report=json.load(open("ml-training-results.json",encoding="utf-8"))
+          entry=next(x for x in registry.list_models() if x["model_id"]==report["model_id"])
+          assert entry["status"]=="CANDIDATE" and entry["data_kind"]=="SYNTHETIC"
+          assert (MODELS_DIR/(report["model_id"]+".joblib")).is_file()
+          result=predict.predict([{"score":0.4,"hints":1,"wrong":1}]*10,4,allow_experimental=True)
+          assert result["status"]=="OK" and result["model_status"]=="CANDIDATE"
+          try:
+              predict.predict([{"score":0.4,"hints":1,"wrong":1}]*10,4,allow_experimental=False)
+          except predict.NoApprovedModel:
+              pass
+          else:
+              raise AssertionError("No se debe usar un candidato sintético en modo producción")
+          print("MODELO ENTRENADO Y VERIFICADO COMO CANDIDATE; SIN APROBACIÓN PARA PRODUCCIÓN.")
+          PY
+      - name: Resumen de métricas (sin atribuir validación peruana)
+        run: |
+          python - <<'PY'
+          import json, os
+          r=json.load(open("ml-training-results.json",encoding="utf-8"))
+          with open(os.environ["GITHUB_STEP_SUMMARY"],"a",encoding="utf-8") as f:
+              f.write("## KAWSAY AI: entrenamiento con datos SINTÉTICOS\n\n")
+              f.write("**CANDIDATE · NO aprobado para niños ni colegios reales.**\n\n")
+              f.write(f"- Modelo: `{r['model_id']}`\n- Dataset: `{r['dataset_version']}`\n")
+              f.write(f"- ROC-AUC test: {r['test']['roc_auc']}\n- PR-AUC test: {r['test']['pr_auc']}\n")
+              f.write(f"- F1 test: {r['test']['f1']}\n- Umbral: {r['threshold']}\n")
+              f.write("\nVer artefactos: informe JSON, ficha de modelo y archivo .joblib (NO para producción).\n")
+          PY
+      - name: Guardar resultado reproducible sin guardar datos de menores
+        uses: actions/upload-artifact@v4
+        with:
+          name: kawsay-ml-sintetico-no-produccion
+          path: |
+            ml/models/*.joblib
+            ml/reports/*.json
+            ml/registry/registry.json
+            ml-training-results.json
+            docs/ml-model-card.md
+          retention-days: 30
