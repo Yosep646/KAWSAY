@@ -1,4 +1,5 @@
 import type { Question } from "../types/api";
+import "./exercise-preview.css";
 
 /**
  * Read-only rendering of what a learner can read.
