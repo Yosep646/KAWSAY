@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -18,6 +18,7 @@ describe("Creación de ejercicios cuando falta planificación", () => {
       throw new Error("Consulta no prevista: "+path);
     });
     const first = render(<MemoryRouter><CreateAssignment/></MemoryRouter>);
+    await act(async () => { await Promise.resolve(); await Promise.resolve(); });
     await screen.findByRole("textbox", {name:/Título de la actividad/});
     await waitFor(() => expect(screen.getByText(/Falta activar una planificación curricular/)).toBeInTheDocument());
     const create = screen.getByRole("button",{name:/Crear variantes para revisión/});
