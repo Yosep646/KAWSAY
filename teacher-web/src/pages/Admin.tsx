@@ -1,8 +1,9 @@
 import { useState, type FormEvent } from "react";
 import { useAuth } from "../app/AuthContext";
 import { Card, ErrorBox } from "../components/ui";
-import { Icon } from "../components/Icon";
+import { Icon, type IconName } from "../components/Icon";
 import { AdminOverview, type AdminStatistics } from "./AdminOverview";
+import "./admin-sections.css";
 import { useAsync } from "../hooks/useAsync";
 import { api } from "../services/api";
 import { errMsg } from "../utils/format";
@@ -12,7 +13,21 @@ interface Audit { id: string; action: string; target_type: string; created_at: s
 interface Ev { id: string; type: string; status: string; attempts: number; last_error: string | null }
 interface Staff { id: string; email: string | null; display_name: string; role: string; is_active: boolean }
 
-export function Admin({ section = "overview" }: { section?: "overview" | "schools" | "teachers" | "curriculum" | "system" | "students" | "tasks" | "reports" | "users" | "configuration" | "backups" }) {
+type AdminSection = "overview" | "schools" | "teachers" | "curriculum" | "system" | "students" | "tasks" | "reports" | "users" | "configuration" | "backups";
+const pageMeta: Record<Exclude<AdminSection,"overview">,{label:string;title:string;description:string;icon:IconName}> = {
+  schools:{label:"GESTIÓN ACADÉMICA",title:"Instituciones educativas",description:"Administra los colegios y sedes de tu comunidad educativa.",icon:"classroom"},
+  teachers:{label:"GESTIÓN ACADÉMICA",title:"Equipo docente",description:"Registra docentes y administra sus accesos de forma segura.",icon:"students"},
+  students:{label:"SEGUIMIENTO EDUCATIVO",title:"Estudiantes",description:"Consulta indicadores agregados y la distribución por grado.",icon:"graduation"},
+  curriculum:{label:"CONTENIDOS Y APRENDIZAJE",title:"Currículo y contenidos",description:"Revisa e importa marcos curriculares validados por una persona.",icon:"book"},
+  tasks:{label:"SEGUIMIENTO EDUCATIVO",title:"Asignaciones y tareas",description:"Visualiza las tareas y asignaciones de los grupos educativos.",icon:"tasks"},
+  reports:{label:"ANÁLISIS Y REPORTES",title:"Reportes de aprendizaje",description:"Consulta estadísticas reales de la plataforma, sin datos simulados.",icon:"chart"},
+  system:{label:"SEGURIDAD Y CONTROL",title:"Auditoría y registros",description:"Consulta las operaciones registradas y los eventos de automatización.",icon:"shield"},
+  users:{label:"SEGURIDAD Y CONTROL",title:"Usuarios y roles",description:"Supervisa el acceso del personal y los permisos activos.",icon:"students"},
+  configuration:{label:"CONFIGURACIÓN",title:"Configuración del sistema",description:"Consulta los controles de acceso y la configuración disponible.",icon:"settings"},
+  backups:{label:"SEGURIDAD DE DATOS",title:"Respaldos y persistencia",description:"Revisa el estado de almacenamiento y sus limitaciones.",icon:"database"},
+};
+
+export function Admin({ section = "overview" }: { section?: AdminSection }) {
   const { user } = useAuth();
   const schools = useAsync(() => api.get<School[]>("/schools"), []);
   const audit = useAsync(() => api.get<Audit[]>("/audit-log?limit=20"), []);
@@ -75,8 +90,11 @@ export function Admin({ section = "overview" }: { section?: "overview" | "school
     void run(() => api.post("/curriculum/frameworks", parsed), "Marco curricular importado");
   };
 
+  const page = section === "overview" ? null : pageMeta[section];
+  const pageCount = section === "schools" ? schools.data?.length : section === "teachers" ? staff.data?.filter(member => member.role === "TEACHER").length : section === "students" ? stats.data?.students : section === "tasks" ? stats.data?.student_assignments : section === "users" ? staff.data?.filter(member => member.role !== "STUDENT").length : undefined;
+  const countLabel = section === "schools" ? "instituciones" : section === "teachers" ? "docentes" : section === "students" ? "estudiantes" : section === "tasks" ? "asignaciones" : section === "users" ? "usuarios" : "";
   return (
-    <div>
+    <div className={section === "overview" ? "admin-overview-page" : "admin-section-page"} data-admin-section={section}>
       {section === "overview" ? (
         <AdminOverview
           schools={schools.data}
@@ -89,13 +107,14 @@ export function Admin({ section = "overview" }: { section?: "overview" | "school
           onRefresh={async () => { await Promise.all([schools.reload(), staff.reload(), audit.reload(), events.reload(), stats.reload()]); }}
         />
       ) : (
-      <header className="role-hero admin-hero">
+      <header className="role-hero admin-hero admin-section-hero">
         <div className="admin-hero-copy">
-          <p className="eyebrow">KAWSAY AI <span className="admin-hero-separator">/</span> CENTRO DE ADMINISTRACIÓN</p>
-          <h2>{({schools:"Instituciones educativas",teachers:"Equipo docente",curriculum:"Currículo educativo",system:"Sistema y auditoría",students:"Estudiantes de KAWSAY",tasks:"Asignaciones y tareas",reports:"Reportes de aprendizaje",users:"Usuarios y permisos",configuration:"Configuración",backups:"Respaldos"})[section] ?? "Centro de administración"}</h2>
-          <p>{section === "teachers" ? "Organiza los accesos del personal docente de manera segura y sencilla." : "Una visión clara para acompañar a las instituciones y sus comunidades."}</p>
+          <p className="eyebrow">KAWSAY AI <span className="admin-hero-separator">/</span> {page?.label}</p>
+          <h2>{page?.title}</h2>
+          <p>{page?.description}</p>
+          <div className="admin-hero-meta"><span><Icon name="leaf"/> Educación que acompaña</span>{pageCount !== undefined && <span><Icon name={page?.icon ?? "dashboard"}/> {pageCount.toLocaleString("es-PE")} {countLabel}</span>}</div>
         </div>
-        <div className="admin-hero-emblem" aria-hidden="true"><Icon name="leaf" /></div>
+        <div className="admin-hero-emblem" aria-hidden="true">{page && <Icon name={page.icon}/>}</div>
       </header>
       )}
       <ErrorBox message={section === "overview" ? null : schools.error ?? (section === "system" ? audit.error ?? events.error : null)} />
