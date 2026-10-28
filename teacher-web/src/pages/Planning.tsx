@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useAuth } from "../app/AuthContext";
+import { CurriculumDocuments } from "../components/CurriculumDocuments";
 import { Badge, Card, ErrorBox, Loading } from "../components/ui";
 import { useAsync } from "../hooks/useAsync";
 import { api } from "../services/api";
@@ -24,6 +25,7 @@ export function Planning() {
     <div>
       <h2>Planificación de la institución</h2>
       <p className="muted">La planificación vigente define QUÉ corresponde trabajar. Cada cambio crea una versión; las tareas históricas conservan la versión con la que se crearon.</p>
+      <CurriculumDocuments />
       <ErrorBox message={plans.error ?? err} />
       {user?.role === "TEACHER" && (
         <Card title="Nueva planificación">
