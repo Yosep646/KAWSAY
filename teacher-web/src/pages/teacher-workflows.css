@@ -121,3 +121,27 @@
 @media(max-width:800px){.role-teacher:has(.teacher-workflow) .main-content{padding:12px 11px 28px}.role-teacher .teacher-flow-hero{padding:18px;min-height:180px;gap:12px}.role-teacher .teacher-flow-hero-icon{width:42px;height:42px;flex-basis:42px}.role-teacher .teacher-flow-hero-icon svg{width:22px;height:22px}.role-teacher .teacher-flow-hero-art{display:none}.role-teacher .teacher-flow-hero h2{font-size:clamp(25px,5.5vw,36px)}.role-teacher .teacher-flow-card,.role-teacher .teacher-workflow .card{padding:16px!important}.role-teacher .teacher-flow-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.role-teacher .teacher-flow-hero{align-items:flex-start}.role-teacher .teacher-flow-hero-icon{display:none}.role-teacher .teacher-flow-hero h2{font-size:27px}.role-teacher .teacher-flow-form,.role-teacher .teacher-flow-assignment-mode{grid-template-columns:1fr}.role-teacher .teacher-flow-kpis{grid-template-columns:1fr}.role-teacher .teacher-flow-grade{grid-template-columns:20px minmax(0,1fr);gap:8px}.role-teacher .teacher-flow-grade select{grid-column:2}.role-teacher .teacher-flow-hero-actions a{flex:1}.role-teacher .teacher-flow-card,.role-teacher .teacher-workflow .card{padding:14px!important}}
 @media(prefers-reduced-motion:reduce){.role-teacher .teacher-room-item{transition:none}}
+
+
+/* Exercise authoring: explain the real curricular precondition instead of a silent disabled button. */
+.role-teacher .teacher-activities-page .teacher-activity-missing{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:13px 14px;margin:0;
+  border:1px solid #9a703b;border-radius:10px;
+  background:#493b226b;color:#ffe7b6;font-size:12px;line-height:1.55;
+}
+.role-teacher .teacher-activities-page .teacher-activity-missing svg{
+  width:18px;height:18px;flex:0 0 18px;color:#ffca73;
+}
+.role-teacher .teacher-activities-page .teacher-activity-autosave{
+  margin:0;color:#8fe6d0;font-size:11px;line-height:1.6;
+}
+.role-teacher .teacher-activities-page .teacher-flow-empty p{
+  max-width:540px;
+}
+.role-teacher .teacher-plan-editor{scroll-margin-top:110px;min-width:0}
+@media(max-width:600px){
+  .role-teacher .teacher-activities-page .teacher-activity-missing{
+    padding:11px;font-size:11px;
+  }
+}
