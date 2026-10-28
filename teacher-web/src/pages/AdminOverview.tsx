@@ -75,7 +75,7 @@ function MapPreview(){return <div className="kd-map" aria-label="Ilustración de
   <svg viewBox="0 0 460 255" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><defs><linearGradient id="kdPeru" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#0a5576"/><stop offset="1" stopColor="#17a76b"/></linearGradient><pattern id="kdGrid" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M22 0H0V22" fill="none" stroke="#10324f" strokeWidth=".8"/></pattern></defs><rect width="460" height="255" fill="#06182d"/><rect width="460" height="255" fill="url(#kdGrid)"/><path d="M163 8L184 40 178 65 199 87 197 113 221 135 217 153 241 180 237 203 260 232 242 251 216 224 200 201 183 173 164 151 156 126 137 111 119 87 132 72 143 52Z" fill="url(#kdPeru)" stroke="#6de8b4" strokeWidth="2" strokeLinejoin="round"/><path d="M145 61 164 84 156 110 176 144 181 165 198 195 236 237M181 39 173 85 194 111 193 145 214 173" fill="none" stroke="#b0f6bb" strokeWidth="1.5" opacity=".6"/><path d="M145 86 164 101 159 127 178 157" fill="none" stroke="#e4c969" strokeDasharray="5 5" strokeWidth="2"/><text x="290" y="78" fontSize="17" fill="#d4e7ef" fontWeight="700">PERÚ</text><text x="290" y="99" fontSize="12" fill="#99bdcb">Vista ilustrativa</text></svg>
   <p><Icon name="map-pin"/> Aún no se han registrado coordenadas de instituciones.</p>
 </div>;}
-export function AdminOverview({schools,staff,audits,events,stats,loading,errors,onRefresh}:Props){
+export function AdminOverview({schools,staff,audits,stats,loading,errors,onRefresh}:Props){
   const [filter,setFilter]=useState('');
   const [busy,setBusy]=useState(false);
   const tiles:{icon:IconName;title:string;value:number|undefined;desc:string;to:string}[]=[
