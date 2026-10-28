@@ -17,8 +17,8 @@ from app.modules.audit.routes import router as audit_router
 from app.modules.auth.routes import router as auth_router
 from app.modules.automation.routes import router as automation_router
 from app.modules.classrooms.routes import router as classrooms_router
-from app.modules.curriculum.routes import router as curriculum_router
 from app.modules.curriculum.document_routes import router as curriculum_document_router
+from app.modules.curriculum.routes import router as curriculum_router
 from app.modules.health.routes import router as health_router
 from app.modules.interventions.routes import router as interventions_router
 from app.modules.languages.routes import router as languages_router
