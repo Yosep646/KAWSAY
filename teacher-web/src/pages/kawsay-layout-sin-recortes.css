@@ -1,333 +1,309 @@
-/* KAWSAY AI | Responsive sign-in composition. 28 Oct 2026
- * Desktop: true full-bleed landscape with floating login card.
- * Mobile: one compact illustrated hero WITH text on the photograph;
- *         login card immediately follows it, with no empty navy band.
- * The image aspect ratio is always maintained (object-fit: cover);
- * only outer scenery may crop, never pixels stretched.
- */
-.login-layout.login-reimagined {
-  --login-teal: #00dec4;
-  --login-dark: #041e30;
+/* KAWSAY AI — página de acceso adaptable, referencia PC + teléfono 28/10/2026.
+   La imagen nunca se estira; los controles del formulario siguen siendo React.
+   ID único evita interferencias de estilos heredados de otras interfaces. */
+#kawsay-login {
+  --k-teal: #04e1c5;
+  --k-navy: #021c2e;
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) clamp(332px, 29%, 440px) !important;
-  align-items: stretch !important;
+  grid-template-columns: minmax(0, 1fr) minmax(348px, 30%) !important;
   position: relative !important;
   isolation: isolate !important;
+  align-items: stretch !important;
   width: 100% !important;
-  max-width: 100% !important;
+  max-width: none !important;
   min-height: 100svh !important;
   height: auto !important;
   margin: 0 !important;
   padding: 0 !important;
   overflow: clip !important;
-  color: #fff !important;
-  background: var(--login-dark) !important;
-  background-image: url('/kawsay-fondo-responsive-20261028.webp') !important;
-  background-position: center center !important;
-  background-size: cover !important;
+  background: #05273b url("/kawsay-fondo-responsive-20261028.webp") center center / cover no-repeat !important;
+  color: white !important;
 }
-/* Remove old pseudo backgrounds that could mask the actual photograph. */
-.login-layout.login-reimagined::before,
-.login-layout.login-reimagined::after,
-.login-layout.login-reimagined .login-story::before,
-.login-layout.login-reimagined .login-story::after {
-  content: none !important;
-  display: none !important;
-  background: none !important;
-}
-.login-layout.login-reimagined > img.login-scene-art {
+#kawsay-login::before,#kawsay-login::after,
+#kawsay-login .login-story::before,#kawsay-login .login-story::after {content:none !important;display:none !important;}
+#kawsay-login > img.login-scene-art {
   display: block !important;
   position: absolute !important;
+  z-index: 0 !important;
   inset: 0 !important;
   width: 100% !important;
   height: 100% !important;
   max-width: none !important;
   max-height: none !important;
-  z-index: 0 !important;
-  transform: translateX(-8%) !important;
-  -webkit-mask-image: linear-gradient(to right, black 0%, black 82%, transparent 98%) !important;
-  mask-image: linear-gradient(to right, black 0%, black 82%, transparent 98%) !important;
   object-fit: cover !important;
-  object-position: 72% center !important;
+  object-position: center 45% !important;
+  transform: translateX(-11%) !important;
+  mask-image: linear-gradient(to right, #000 0%, #000 77%, transparent 98%) !important;
+  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 77%, transparent 98%) !important;
   pointer-events: none !important;
   user-select: none !important;
 }
-.login-layout.login-reimagined > .login-story {
-  position: relative !important;
-  z-index: 1 !important;
+#kawsay-login > .login-story {
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-between !important;
   align-items: flex-start !important;
-  flex-wrap: nowrap !important;
+  position: relative !important;
+  z-index: 1 !important;
+  isolation: auto !important;
   box-sizing: border-box !important;
   min-width: 0 !important;
   width: 100% !important;
   min-height: 100svh !important;
-  height: auto !important;
   max-height: none !important;
+  padding: clamp(20px,3.1vw,46px) clamp(20px,3.3vw,57px) 26px !important;
+  gap: 15px !important;
   margin: 0 !important;
-  padding: clamp(22px,3.2vw,52px) clamp(21px,3.2vw,55px) 24px !important;
-  gap: 18px !important;
   overflow: visible !important;
-  isolation: auto !important;
-  background: linear-gradient(90deg,rgba(0,18,34,.52),rgba(0,18,34,.15) 55%,transparent 91%) !important;
+  background: linear-gradient(90deg,rgba(1,18,37,.52),rgba(1,18,37,.16) 59%,transparent 96%) !important;
 }
-.login-layout.login-reimagined .login-story > .brand {
+#kawsay-login .login-story > .brand {
+  display: flex !important;
+  flex-direction: row !important;
+  direction: ltr !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex: 0 0 auto !important;
   position: relative !important;
   z-index: 2 !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 10px !important;
+  width: max-content !important;
   max-width: 100% !important;
   margin: 0 !important;
+  padding: 0 !important;
   color: #fff !important;
-  flex: 0 0 auto !important;
-  text-shadow: 0 2px 12px rgba(0,16,32,.7) !important;
+  font-size: clamp(18px,2.2vw,30px) !important;
+  text-shadow: 0 2px 12px #00151d9f !important;
 }
-.login-layout.login-reimagined .login-story-copy {
+#kawsay-login .login-story .brand-mark {flex:0 0 auto !important;color:var(--k-teal) !important;}
+#kawsay-login .login-story-copy {
   position: relative !important;
   z-index: 2 !important;
-  flex: 0 1 auto !important;
-  width: min(100%, 475px) !important;
-  max-width: min(100%, 475px) !important;
+  flex: 0 0 auto !important;
+  width: min(100%,450px) !important;
+  max-width: 450px !important;
+  min-width: 0 !important;
   margin: auto 0 !important;
   padding: 0 !important;
   overflow: visible !important;
-  text-shadow: 0 2px 17px rgba(0,16,34,.75) !important;
+  text-shadow: 0 2px 15px #001a2ad9 !important;
 }
-.login-layout.login-reimagined .login-story-copy > .eyebrow {
-  display: block !important;
-  margin: 0 0 20px !important;
-  font-size: clamp(8px,.7vw,12px) !important;
-  letter-spacing: .22em !important;
-  white-space: normal !important;
+#kawsay-login .login-story-copy > .eyebrow {
+  display:block !important;
+  font-size:clamp(8px,.71vw,11px) !important;
+  letter-spacing:.22em !important;
+  margin:0 0 17px !important;
 }
-.login-layout.login-reimagined .login-story h1 {
-  max-width: 100% !important;
-  margin: 0 0 20px !important;
-  padding: 0 !important;
-  font-size: clamp(32px,3.65vw,63px) !important;
-  font-weight: 900 !important;
-  line-height: 1.035 !important;
-  letter-spacing: -.04em !important;
-  text-wrap: initial !important;
-  hyphens: none !important;
-  overflow: visible !important;
+#kawsay-login .login-story h1 {
+  font-size: clamp(32px,3.9vw,61px) !important;
+  line-height:1.03 !important;
+  letter-spacing:-.046em !important;
+  font-weight:900 !important;
+  text-wrap:initial !important;
+  hyphens:none !important;
+  max-width:100% !important;
+  margin:0 0 17px !important;
+  padding:0 !important;
 }
-.login-layout.login-reimagined .login-story h1 .login-heading-line {
-  display: block !important;
-  white-space: nowrap !important;
+#kawsay-login .login-story h1 .login-heading-line {display:block !important;white-space:nowrap !important;}
+#kawsay-login .login-story h1 .login-highlight {color:var(--k-teal) !important;}
+#kawsay-login .login-story-copy > p {
+  display:block !important;
+  max-width:390px !important;
+  margin:0 0 15px !important;
+  line-height:1.55 !important;
+  font-size:clamp(11px,1.02vw,15px) !important;
+  color:white !important;
 }
-.login-layout.login-reimagined .login-story h1 .login-highlight { color: #03f0d3 !important; }
-.login-layout.login-reimagined .login-story-copy > p {
-  max-width: 405px !important;
-  margin: 0 0 20px !important;
-  padding: 0 !important;
-  color: #fff !important;
-  font-size: clamp(12px,1.05vw,16px) !important;
-  line-height: 1.58 !important;
-}
-.login-layout.login-reimagined .login-values { display: flex !important; flex-wrap: wrap !important; gap: 8px !important; }
-.login-layout.login-reimagined .login-story-footer {
-  display: flex !important;
-  position: relative !important;
-  z-index: 1 !important;
-  margin: 0 !important;
-  flex: 0 0 auto !important;
-}
-.login-layout.login-reimagined > .login-form-panel {
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  align-items: center !important;
-  position: relative !important;
-  z-index: 2 !important;
-  min-width: 0 !important;
-  width: 100% !important;
-  min-height: 100svh !important;
-  max-height: none !important;
-  margin: 0 !important;
-  padding: 20px clamp(14px,2.1vw,34px) !important;
-  overflow: visible !important;
-  background: transparent !important;
-}
-.login-layout.login-reimagined > .login-form-panel > .login {
-  position: relative !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: flex-start !important;
-  flex-wrap: nowrap !important;
+#kawsay-login .login-values {display:flex !important;flex-wrap:wrap !important;gap:10px !important;}
+#kawsay-login .login-story-footer {display:flex !important;margin:0 !important;position:relative !important;z-index:2 !important;}
+#kawsay-login > .login-form-panel {
   box-sizing: border-box !important;
-  width: 100% !important;
-  max-width: 450px !important;
-  min-width: 0 !important;
-  min-height: 0 !important;
-  height: auto !important;
-  max-height: calc(100dvh - 38px) !important;
-  margin: 0 !important;
-  padding: clamp(18px,1.8vw,29px) !important;
-  gap: 0 !important;
-  overflow-x: hidden !important;
-  overflow-y: auto !important;
-  background: linear-gradient(145deg,rgba(1,22,36,.96),rgba(3,28,43,.96)) !important;
-  border: 1px solid rgba(11,203,208,.6) !important;
-  border-radius: 20px !important;
-  box-shadow: 0 16px 45px rgba(0,16,27,.6) !important;
-  backdrop-filter: blur(8px) !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  position:relative !important;
+  z-index:3 !important;
+  min-width:0 !important;
+  width:100% !important;
+  min-height:100svh !important;
+  max-height:none !important;
+  height:auto !important;
+  padding:clamp(10px,1.6vw,25px) clamp(12px,2.25vw,42px) !important;
+  margin:0 !important;
+  overflow:visible !important;
+  background:transparent !important;
+  background-image:none !important;
 }
-.login-layout.login-reimagined .login-card-head { flex: 0 0 auto !important; margin-bottom: 14px !important; }
-.login-layout.login-reimagined .login-card-head h2 { font-size: clamp(24px,2.1vw,34px) !important; }
-.login-layout.login-reimagined .login-role-tabs,
-.login-layout.login-reimagined .student-login-method { flex: 0 0 auto !important; margin: 0 0 12px !important; }
-.login-layout.login-reimagined .login-role-tabs button,
-.login-layout.login-reimagined .student-login-method button { min-height: 39px !important; font-size: 11px !important; }
-.login-layout.login-reimagined form.login-access-form { display: flex !important; flex-direction: column !important; gap: 0 !important; width: 100% !important; min-width: 0 !important; flex: 0 0 auto !important; margin: 0 !important; }
-.login-layout.login-reimagined form.login-access-form .kawsay-login-field { display: flex !important; flex-direction: column !important; gap: 5px !important; min-width: 0 !important; margin: 0 0 12px !important; }
-.login-layout.login-reimagined form.login-access-form .login-field-label { display: block !important; position: static !important; margin: 0 !important; font-size: 12px !important; line-height: 1.4 !important; opacity: 1 !important; visibility: visible !important; }
-.login-layout.login-reimagined form.login-access-form .login-input-wrap { min-height: 43px !important; margin: 0 !important; }
-.login-layout.login-reimagined .login-preferences { margin-bottom: 13px !important; }
-.login-layout.login-reimagined .login-submit { min-height: 45px !important; }
-.login-layout.login-reimagined .login-help { margin: 15px 0 12px !important; }
-.login-layout.login-reimagined .login-footnote { padding-top: 10px !important; }
+#kawsay-login > .login-form-panel > .login {
+  display:flex !important;
+  position:relative !important;
+  flex-direction:column !important;
+  justify-content:flex-start !important;
+  flex-wrap:nowrap !important;
+  box-sizing:border-box !important;
+  min-width:0 !important;
+  width:100% !important;
+  max-width:410px !important;
+  min-height:0 !important;
+  height:auto !important;
+  max-height:calc(100dvh - 25px) !important;
+  margin:0 !important;
+  padding:clamp(17px,1.9vw,26px) !important;
+  gap:0 !important;
+  overflow-x:hidden !important;
+  overflow-y:auto !important;
+  border:1px solid #197986 !important;
+  border-radius:18px !important;
+  background:linear-gradient(145deg,rgba(1,22,37,.97),rgba(2,29,42,.96)) !important;
+  box-shadow:0 17px 50px rgba(0,13,28,.55) !important;
+  backdrop-filter:blur(7px) !important;
+}
+#kawsay-login .login-card-head {margin:0 0 12px !important;}
+#kawsay-login .login-role-tabs,#kawsay-login .student-login-method {margin:0 0 12px !important;flex:0 0 auto !important;}
+#kawsay-login .login-role-tabs button,#kawsay-login .student-login-method button {min-height:37px !important;font-size:clamp(9px,.75vw,12px) !important;}
+#kawsay-login form.login-access-form {display:flex !important;flex-direction:column !important;width:100% !important;min-width:0 !important;gap:0 !important;flex:0 0 auto !important;margin:0 !important;}
+#kawsay-login form.login-access-form .kawsay-login-field {display:flex !important;flex-direction:column !important;gap:5px !important;min-width:0 !important;margin:0 0 11px !important;}
+#kawsay-login form.login-access-form .login-field-label {display:block !important;position:static !important;opacity:1 !important;visibility:visible !important;font-size:11px !important;line-height:1.4 !important;margin:0 !important;}
+#kawsay-login form.login-access-form .login-input-wrap {min-height:41px !important;margin:0 !important;}
+#kawsay-login .login-preferences {margin:0 0 12px !important;}
+#kawsay-login .login-submit {min-height:44px !important;}
+#kawsay-login .login-help {margin:12px 0 10px !important;}
+#kawsay-login .login-footnote {padding-top:11px !important;}
 
-/* Mid-size desktops retain the two-panel composition; do NOT switch to mobile
- * at 1100 or 1350 CSS pixels (this was the cause of the desktop screenshot bug). */
-@media (min-width: 900px) and (max-width: 1339px) {
-  .login-layout.login-reimagined { grid-template-columns: minmax(0, 1fr) minmax(328px, 30%) !important; }
-  .login-layout.login-reimagined > .login-story { padding-left: clamp(19px,3vw,37px) !important; padding-right: clamp(15px,2vw,28px) !important; }
-  .login-layout.login-reimagined .login-story h1 { font-size: clamp(30px,3.4vw,48px) !important; }
-  .login-layout.login-reimagined > .login-form-panel { padding-left: 8px !important; padding-right: 12px !important; }
+/* Tablet: misma imagen panorámica y acceso de tarjeta, sin deformaciones. */
+@media (min-width: 920px) and (max-width: 1350px) {
+ #kawsay-login {grid-template-columns:minmax(0,1fr) minmax(318px,32%) !important;}
+ #kawsay-login > .login-form-panel {padding-inline:8px !important;}
+ #kawsay-login .login-story h1 {font-size:clamp(31px,3.7vw,50px) !important;}
+ #kawsay-login > .login-form-panel > .login {padding:16px !important;}
 }
 
-/* MOBILE AND TABLET: hero and caption occupy the SAME visual region. The login
- * card rises directly over the bottom edge; no tall blank section between them. */
-@media (max-width: 899.98px) {
-  .login-layout.login-reimagined {
-    --mobile-hero-height: clamp(265px, 72vw, 465px);
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-    min-height: 100svh !important;
-    height: auto !important;
-    overflow-x: clip !important;
-    overflow-y: visible !important;
-    background: var(--login-dark) !important;
-    background-image: none !important;
-  }
-  .login-layout.login-reimagined > img.login-scene-art {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: auto !important;
-    width: 100% !important;
-    height: var(--mobile-hero-height) !important;
-    max-height: none !important;
-    transform: none !important;
-    -webkit-mask-image: none !important;
-    mask-image: none !important;
-    object-fit: cover !important;
-    object-position: 72% center !important;
-  }
-  .login-layout.login-reimagined > .login-story {
-    position: relative !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: space-between !important;
-    align-items: stretch !important;
-    min-height: var(--mobile-hero-height) !important;
-    height: var(--mobile-hero-height) !important;
-    max-height: var(--mobile-hero-height) !important;
-    flex: 0 0 var(--mobile-hero-height) !important;
-    margin: 0 !important;
-    padding: clamp(12px,3.2vw,25px) clamp(15px,4vw,26px) clamp(30px,7vw,60px) !important;
-    overflow: hidden !important;
-    background: linear-gradient(90deg,rgba(1,18,33,.53) 0%,rgba(1,18,33,.22) 48%,transparent 90%) !important;
-  }
-  .login-layout.login-reimagined .login-story > .brand {
-    display: flex !important;
-    flex: 0 0 auto !important;
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    z-index: 2 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    width: max-content !important;
-    max-width: 75% !important;
-    font-size: clamp(17px,3.7vw,25px) !important;
-  }
-  .login-layout.login-reimagined .login-story .brand-mark { width: clamp(27px,5.8vw,42px) !important; height: clamp(27px,5.8vw,42px) !important; }
-  .login-layout.login-reimagined .login-story .brand-mark svg { width: 100% !important; height: 100% !important; }
-  .login-layout.login-reimagined .login-story > .brand small { font-size: clamp(9px,1.9vw,11px) !important; }
-  .login-layout.login-reimagined .login-story-copy {
-    position: relative !important;
-    z-index: 2 !important;
-    width: 54% !important;
-    max-width: 260px !important;
-    min-width: 0 !important;
-    flex: 0 1 auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    text-shadow: 0 2px 13px rgba(0,12,25,.86) !important;
-  }
-  .login-layout.login-reimagined .login-story-copy > .eyebrow {
-    font-size: clamp(7px,1.4vw,9px) !important;
-    letter-spacing: .08em !important;
-    margin: 0 0 6px !important;
-  }
-  .login-layout.login-reimagined .login-story h1 {
-    font-size: clamp(19px,5.1vw,35px) !important;
-    line-height: 1.06 !important;
-    letter-spacing: -.035em !important;
-    margin: 0 0 8px !important;
-    text-wrap: initial !important;
-  }
-  .login-layout.login-reimagined .login-story h1 .login-heading-line { white-space: normal !important; }
-  .login-layout.login-reimagined .login-story-copy > p {
-    max-width: 100% !important;
-    font-size: clamp(9px,2vw,11px) !important;
-    line-height: 1.35 !important;
-    margin: 0 0 6px !important;
-  }
-  .login-layout.login-reimagined .login-values { display: none !important; }
-  .login-layout.login-reimagined .login-story-footer { display: none !important; }
-  .login-layout.login-reimagined > .login-form-panel {
-    display: flex !important;
-    flex-direction: column !important;
-    position: relative !important;
-    z-index: 4 !important;
-    min-height: 0 !important;
-    width: 100% !important;
-    flex: 0 0 auto !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    margin: -18px 0 0 !important;
-    padding: 0 12px 24px !important;
-    background: transparent !important;
-    overflow: visible !important;
-  }
-  .login-layout.login-reimagined > .login-form-panel > .login {
-    width: min(100%,520px) !important;
-    max-width: 520px !important;
-    min-height: 0 !important;
-    height: auto !important;
-    max-height: none !important;
-    margin: 0 auto !important;
-    padding: clamp(17px,3.8vw,25px) !important;
-    overflow: visible !important;
-    border-radius: 18px !important;
-  }
+/* Teléfono: logo y titular DENTRO de la foto, tarjeta inmediatamente debajo.
+ * El arte se recorta ópticamente con cover pero NO se estira.
+ * Evitar textos auxiliares sobre los rostros como en la referencia aprobada. */
+@media (max-width: 919.98px) {
+ #kawsay-login {
+   --hero-height: clamp(270px,82vw,440px);
+   display:flex !important;
+   flex-direction:column !important;
+   min-height:100svh !important;
+   height:auto !important;
+   overflow-x:clip !important;
+   overflow-y:visible !important;
+   background:#021c2c !important;
+ }
+ #kawsay-login > img.login-scene-art {
+   display:block !important;
+   position:absolute !important;
+   top:0 !important;
+   left:0 !important;
+   right:auto !important;
+   bottom:auto !important;
+   width:100% !important;
+   height:var(--hero-height) !important;
+   object-fit:cover !important;
+   object-position:62% 50% !important;
+   transform:none !important;
+   mask-image:none !important;
+   -webkit-mask-image:none !important;
+ }
+ #kawsay-login > .login-story {
+   position:relative !important;
+   display:block !important;
+   width:100% !important;
+   height:var(--hero-height) !important;
+   min-height:var(--hero-height) !important;
+   max-height:var(--hero-height) !important;
+   flex:0 0 var(--hero-height) !important;
+   overflow:hidden !important;
+   margin:0 !important;
+   padding:0 !important;
+   background:linear-gradient(90deg,rgba(1,16,27,.60),rgba(1,16,27,.22) 56%,transparent 90%),linear-gradient(0deg,rgba(1,16,27,.45),transparent 64%) !important;
+ }
+ #kawsay-login .login-story > .brand {
+   position:absolute !important;
+   z-index:4 !important;
+   left:clamp(14px,3.8vw,22px) !important;
+   top:clamp(13px,3vw,22px) !important;
+   width:max-content !important;
+   max-width:85% !important;
+   font-size:clamp(17px,4vw,23px) !important;
+   flex-direction:row !important;
+   align-items:center !important;
+   white-space:nowrap !important;
+ }
+ #kawsay-login .login-story .brand-mark {width:clamp(29px,7vw,39px) !important;height:clamp(29px,7vw,39px) !important;}
+ #kawsay-login .login-story .brand-mark svg {width:100% !important;height:100% !important;}
+ #kawsay-login .login-story > .brand small {font-size:9px !important;line-height:1.25 !important;}
+ #kawsay-login .login-story-copy {
+   position:absolute !important;
+   z-index:4 !important;
+   left:clamp(14px,3.8vw,22px) !important;
+   bottom:clamp(25px,6.5vw,44px) !important;
+   margin:0 !important;
+   padding:0 !important;
+   width:min(46%,240px) !important;
+   max-width:240px !important;
+   min-width:0 !important;
+   text-shadow:0 2px 15px #001a2e !important;
+ }
+ #kawsay-login .login-story-copy > .eyebrow {display:none !important;}
+ #kawsay-login .login-story h1 {
+   font-size:clamp(19px,5.9vw,30px) !important;
+   line-height:1.02 !important;
+   letter-spacing:-.04em !important;
+   margin:0 !important;
+   padding:0 !important;
+ }
+ #kawsay-login .login-story h1 .login-heading-line {display:block !important;white-space:normal !important;}
+ #kawsay-login .login-story-copy > p {display:none !important;}
+ #kawsay-login .login-story .login-values {display:none !important;}
+ #kawsay-login .login-story .login-story-footer {display:none !important;}
+ #kawsay-login > .login-form-panel {
+   display:flex !important;
+   flex-direction:column !important;
+   justify-content:flex-start !important;
+   align-items:center !important;
+   position:relative !important;
+   z-index:5 !important;
+   flex:0 0 auto !important;
+   min-height:0 !important;
+   max-height:none !important;
+   width:100% !important;
+   margin:-12px 0 0 !important;
+   padding:0 10px 22px !important;
+   overflow:visible !important;
+   background:transparent !important;
+ }
+ #kawsay-login > .login-form-panel > .login {
+   width:min(100%,440px) !important;
+   max-width:440px !important;
+   height:auto !important;
+   max-height:none !important;
+   min-height:0 !important;
+   overflow:visible !important;
+   margin:0 auto !important;
+   padding:clamp(15px,3.8vw,22px) !important;
+   border-radius:17px !important;
+ }
+ #kawsay-login .login-role-tabs button,#kawsay-login .student-login-method button {min-height:40px !important;font-size:clamp(10px,2.55vw,12px) !important;}
 }
-/* Narrow phones: keep all four faces inside the photo and type legible. */
-@media (max-width: 380px) {
-  .login-layout.login-reimagined { --mobile-hero-height: 268px; }
-  .login-layout.login-reimagined .login-story-copy { width: 57% !important; }
-  .login-layout.login-reimagined .login-story h1 { font-size: clamp(18px,5.4vw,21px) !important; }
-  .login-layout.login-reimagined .login-story-copy > p { font-size: 9px !important; }
-  .login-layout.login-reimagined > .login-form-panel { padding-inline: 9px !important; }
-  .login-layout.login-reimagined > .login-form-panel > .login { padding: 16px 13px !important; }
-  .login-layout.login-reimagined .login-role-tabs button,
-  .login-layout.login-reimagined .student-login-method button { font-size: 9px !important; }
+@media (max-width: 355px) {
+ #kawsay-login {--hero-height:270px;}
+ #kawsay-login .login-story-copy {width:49% !important;}
+ #kawsay-login .login-story h1 {font-size:19px !important;}
+ #kawsay-login > .login-form-panel {padding-inline:7px !important;}
+ #kawsay-login > .login-form-panel > .login {padding:14px 12px !important;}
+}
+@media (min-width:920px) and (max-height:725px) {
+ #kawsay-login > .login-form-panel > .login {padding:12px 16px !important;max-height:calc(100dvh - 15px) !important;}
+ #kawsay-login .login-card-head,#kawsay-login .login-role-tabs,#kawsay-login .student-login-method {margin-bottom:8px !important;}
+ #kawsay-login form.login-access-form .kawsay-login-field {margin-bottom:8px !important;}
+ #kawsay-login .login-help {margin:9px 0 7px !important;}
+}
+/* Compensar el encuadre en portátiles estrechos: las cuatro caras quedan
+   a la izquierda de la tarjeta sin escalar ni alterar sus proporciones. */
+@media (min-width: 920px) and (max-width: 1349.98px) {
+ #kawsay-login > img.login-scene-art {transform:translateX(-20%) !important;}
 }
