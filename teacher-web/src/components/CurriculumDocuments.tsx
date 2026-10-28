@@ -18,6 +18,7 @@ interface MineduCatalog {
   grades:MineduGrade[];
   math_competencies:string[];
 }
+export interface CurriculumDocumentReference { filename:string; academic_year:number; grade_number:number; area:string; }
 interface DocumentRecord {
   id: string; school_id: string; education_level: Level; grade_number: number;
   academic_year: number; area: string; filename: string; file_size: number;
@@ -31,7 +32,7 @@ const AREAS = [
 const MAX_SIZE = 4 * 1024 * 1024;
 
 /** Document library; Word/PDF attachments, NOT automated curriculum parsing. */
-export function CurriculumDocuments() {
+export function CurriculumDocuments({ onPreparePlan }: { onPreparePlan?: (document: CurriculumDocumentReference) => void } = {}) {
   const { user } = useAuth();
   const admin = user?.role === "ADMIN";
   const schools = useAsync(() => api.get<School[]>("/curriculum/documents/schools"), []);
@@ -197,11 +198,17 @@ export function CurriculumDocuments() {
               <strong title={doc.filename}>{doc.filename}</strong>
               <small>{Math.ceil(doc.file_size/1024)} KB · {new Date(doc.created_at).toLocaleDateString("es-PE")}</small>
               <span className={`curriculum-status ${doc.status.toLowerCase()}`}>
-                {doc.status==="PENDING"?"Pendiente de revisión":doc.status==="APPROVED"?"Revisado y aprobado":"Rechazado"}
+                {doc.status==="PENDING"?"Pendiente de revisión":doc.status==="APPROVED"?"Documento aprobado":"Documento rechazado"}
               </span>
             </div>
             <div className="curriculum-document-actions">
               <button type="button" onClick={()=>void download(doc)}>Descargar</button>
+              {!admin && doc.status === "APPROVED" && onPreparePlan && (
+                <button type="button" className="curriculum-continue" onClick={() => onPreparePlan({
+                  filename:doc.filename, academic_year:doc.academic_year,
+                  grade_number:doc.grade_number, area:doc.area,
+                })}>Preparar plan</button>
+              )}
               {admin&&doc.status==="PENDING"&&<>
                 <button type="button" disabled={reviewing===doc.id} onClick={()=>void review(doc,true)}>Aprobar</button>
                 <button type="button" className="reject" disabled={reviewing===doc.id} onClick={()=>void review(doc,false)}>Rechazar</button>
@@ -211,6 +218,15 @@ export function CurriculumDocuments() {
         </section>)}
       </div>
     </div>
+    {!admin && documents.data?.some(doc => doc.status==="APPROVED") && (
+      <div className="curriculum-next-step" role="note">
+        <Icon name="book" />
+        <p><strong>Documentos revisados, pero todavía no activos como planificación.</strong>
+          Elige «Preparar plan» para usar el grado, año y área como referencia de un borrador.
+          Después debes agregar y validar los contenidos, y el administrador debe activar la versión.
+          Este proceso no extrae automáticamente los temas del PDF.</p>
+      </div>
+    )}
     {error&&<p className="curriculum-feedback error" role="alert">{error}</p>}
     {notice&&<p className="curriculum-feedback success" role="status">{notice}</p>}
   </section>;
