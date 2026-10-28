@@ -1,396 +1,219 @@
 /*
- KAWSAY AI — composición sin superposición de niños y formulario.
- Foto original 1672x941 (aspect ratio 1.7768). No se deforma ni se recorta.
- Este archivo se importa AL FINAL para desactivar overrides heredados.
-*/
+ * KAWSAY AI — imagen nueva y login responsive
+ * Imagen optimizada REAL: /public/kawsay-fondo-responsive-20261028.webp
+ * No dibujar controles en la imagen; todos siguen siendo React.
+ * Importar DESPUES de todos los CSS de login.
+ */
 .login-reimagined {
-  --kawsay-photo: url('/kawsay-fondo-final.jpg?v=encuadre-sin-recortes-20261028');
+  display: grid !important;
+  grid-template-columns: minmax(0, 70%) minmax(0, 30%) !important;
+  width: 100% !important;
+  min-height: 100svh !important;
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: clip !important;
+  background: #041c2b !important;
 }
-@media (min-width: 1050px) {
+.login-reimagined::before,
+.login-reimagined::after,
+.login-reimagined .login-story::before,
+.login-reimagined .login-story::after {
+  content: none !important;
+  display: none !important;
+}
+.login-reimagined .login-story {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+  min-height: 100svh !important;
+  height: auto !important;
+  max-height: none !important;
+  padding: clamp(24px,2.8vw,48px) clamp(25px,3.2vw,58px) 24px !important;
+  gap: 16px !important;
+  overflow: hidden !important;
+  background-color: #07324a !important;
+  background-image:
+    linear-gradient(90deg,rgba(1,21,36,.56),rgba(1,21,36,.18) 44%,rgba(1,21,36,0) 78%),
+    url('/kawsay-fondo-responsive-20261028.webp?v=20261028r1') !important;
+  background-size: cover, cover !important;
+  background-position: center, 62% center !important;
+  background-repeat: no-repeat, no-repeat !important;
+}
+.login-reimagined .login-story .brand {
+  position: relative !important;
+  z-index: 2 !important;
+  margin: 0 !important;
+  flex: 0 0 auto !important;
+  color: #fff !important;
+  text-shadow: 0 2px 12px #001626a6 !important;
+}
+.login-reimagined .login-story-copy {
+  position: relative !important;
+  z-index: 1 !important;
+  flex: 0 1 auto !important;
+  margin: auto 0 !important;
+  padding: 0 !important;
+  width: min(100%,445px) !important;
+  max-width: min(100%,445px) !important;
+  text-shadow: 0 2px 16px #00162291 !important;
+}
+.login-reimagined .login-story h1 {
+  font-size: clamp(31px,3.25vw,59px) !important;
+  line-height: 1.055 !important;
+  letter-spacing: -.035em !important;
+  margin-bottom: 15px !important;
+  color: #fff !important;
+}
+.login-reimagined .login-story h1 .login-heading-line {
+  display: block !important;
+  white-space: nowrap !important;
+}
+.login-reimagined .login-story h1 .login-highlight {
+  color: #11e8c5 !important;
+}
+.login-reimagined .login-story-copy > p {
+  color: #fff !important;
+  font-size: clamp(11px,1vw,15px) !important;
+  max-width: 380px !important;
+  margin: 0 0 17px !important;
+}
+.login-reimagined .login-story-footer {
+  position: relative !important;
+  z-index: 1 !important;
+  margin: 0 !important;
+}
+.login-reimagined .login-form-panel {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 0 !important;
+  min-height: 100svh !important;
+  padding: clamp(12px,1.4vw,25px) !important;
+  background: linear-gradient(145deg,#051e2d,#062b3b) !important;
+  overflow: visible !important;
+}
+.login-reimagined .login-form-panel > .login {
+  box-sizing: border-box !important;
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  gap: 0 !important;
+  width: 100% !important;
+  max-width: 460px !important;
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: calc(100dvh - 26px) !important;
+  margin: 0 !important;
+  padding: clamp(18px,1.75vw,30px) !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+.login-reimagined form.login-access-form .kawsay-login-field {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  margin-bottom: 12px !important;
+}
+.login-reimagined form.login-access-form .kawsay-login-field > .login-field-label {
+  position: static !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  margin: 0 !important;
+  color: #e6f8fe !important;
+}
+.login-reimagined .login-card-head { margin-bottom: 13px !important; }
+.login-reimagined .login-role-tabs { margin-bottom: 12px !important; }
+.login-reimagined .login-preferences { margin-bottom: 12px !important; }
+.login-reimagined .login-help { margin: 13px 0 10px !important; }
+
+/* Teléfonos y tablets: mostrar panorama entero sobre el formulario.
+   No se utiliza cover ni se recortan los cuatro niños. */
+@media (max-width: 1119.98px) {
   .login-reimagined {
-    display: grid !important;
-    position: relative !important;
-    grid-template-columns: minmax(0,1fr) clamp(350px,27vw,460px) !important;
-    width: 100% !important;
-    min-height: 100svh !important;
-    overflow: visible !important;
-    isolation: isolate !important;
-    background: #051c2c !important;
-  }
-  /* La imagen global estaba pasando por detrás del formulario. */
-  .login-reimagined::before,
-  .login-reimagined::after {
-    content: none !important;
-    display: none !important;
-    background: none !important;
-  }
-  .login-reimagined .login-story {
-    position: relative !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between !important;
-    isolation: isolate !important;
-    align-self: stretch !important;
     min-height: 100svh !important;
     height: auto !important;
-    min-width: 0 !important;
-    overflow: hidden !important;
-    padding: clamp(20px,2.6vw,42px) clamp(22px,3.1vw,55px) 22px !important;
-    background: #06324a !important;
-  }
-  /* Fondo desenfocado únicamente para integrar las franjas
-     que deja el formato horizontal original en una columna vertical. */
-  .login-reimagined .login-story::before {
-    content: "" !important;
-    display: block !important;
-    position: absolute !important;
-    inset: -25px !important;
-    z-index: -2 !important;
-    background: var(--kawsay-photo) center / cover no-repeat !important;
-    filter: blur(28px) brightness(.67) !important;
-    transform: scale(1.04) !important;
-    opacity: 1 !important;
-  }
-  /* Fotografía principal: 100% de los cuatro niños queda dentro de esta
-     región; nunca debajo del formulario, ni escalada de forma desigual. */
-  .login-reimagined .login-story::after {
-    content: "" !important;
-    display: block !important;
-    position: absolute !important;
-    inset: 0 !important;
-    z-index: -1 !important;
-    background-image:
-      linear-gradient(90deg,rgba(1,20,34,.42),rgba(1,20,34,.16) 31%,transparent 68%),
-      var(--kawsay-photo) !important;
-    background-size: 100% 100%, contain !important;
-    background-position: center, center !important;
-    background-repeat: no-repeat !important;
-  }
-  .login-reimagined .login-story > * {
-    position: relative !important;
-    z-index: 1 !important;
-  }
-  .login-reimagined .login-story-copy {
-    width: min(100%,440px) !important;
-    max-width: min(100%,440px) !important;
-    margin: auto 0 !important;
-    padding: 0 !important;
-  }
-  .login-reimagined .login-story h1 {
-    font-size: clamp(32px,3.05vw,56px) !important;
-    line-height: 1.08 !important;
-  }
-  .login-reimagined .login-form-panel {
-    display: flex !important;
-    position: relative !important;
-    align-items: center !important;
-    justify-content: center !important;
-    min-height: 100svh !important;
-    height: auto !important;
-    padding: clamp(14px,2vw,28px) clamp(12px,1.3vw,24px) !important;
-    background: linear-gradient(135deg,#051b2c,#062638) !important;
-  }
-  .login-reimagined .login-form-panel > .login {
-    width: 100% !important;
-    max-width: 410px !important;
-    min-width: 0 !important;
-    min-height: 0 !important;
-    height: auto !important;
-    max-height: calc(100dvh - 28px) !important;
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
-    padding: clamp(17px,1.6vw,27px) !important;
-    margin: 0 !important;
-    justify-content: flex-start !important;
-    gap: 0 !important;
-  }
-}
-/* Tablets y móviles: imagen completa en banda panorámica, login debajo.
-   Así ningún tamaño estrecho oculta niños ni tapa los campos. */
-@media (max-width: 1049.98px) {
-  .login-reimagined {
-    display: flex !important;
-    position: relative !important;
-    flex-direction: column !important;
-    width: 100% !important;
-    min-height: 100svh !important;
     overflow-x: clip !important;
     overflow-y: visible !important;
-    background: #051b2d !important;
-  }
-  .login-reimagined::before,
-  .login-reimagined::after {
-    content: none !important;
-    display: none !important;
   }
   .login-reimagined .login-story {
-    display: flex !important;
     position: relative !important;
+    display: flex !important;
     flex-direction: column !important;
-    isolation: isolate !important;
+    justify-content: flex-start !important;
     min-height: 0 !important;
     height: auto !important;
     max-height: none !important;
-    padding: calc(100vw * 941 / 1672 + 14px) clamp(15px,4vw,30px) 22px !important;
     overflow: visible !important;
-    background: #051b2d !important;
-  }
-  .login-reimagined .login-story::before {
-    content: "" !important;
-    display: block !important;
-    position: absolute !important;
-    top: 0 !important;
-    right: 0 !important;
-    left: 0 !important;
-    bottom: auto !important;
-    width: 100% !important;
-    height: calc(100vw * 941 / 1672) !important;
-    z-index: -1 !important;
-    background-image:
-      linear-gradient(90deg,rgba(0,20,36,.36),transparent 65%),
-      var(--kawsay-photo) !important;
-    background-size: 100% 100%, 100% 100% !important;
-    background-position: center !important;
+    padding: calc(100vw * 873 / 1802 + 16px) clamp(16px,4vw,30px) 20px !important;
+    background-color: #041b2e !important;
+    background-image: url('/kawsay-fondo-responsive-20261028.webp?v=20261028r1') !important;
+    background-position: center top !important;
+    background-size: 100% auto !important;
     background-repeat: no-repeat !important;
-  }
-  .login-reimagined .login-story::after {
-    content: none !important;
-    display: none !important;
   }
   .login-reimagined .login-story .brand {
     position: absolute !important;
-    z-index: 2 !important;
-    top: clamp(13px,2.8vw,23px) !important;
-    left: clamp(15px,3vw,27px) !important;
-    max-width: 60% !important;
-    margin: 0 !important;
+    top: clamp(12px,2.7vw,23px) !important;
+    left: clamp(15px,3.5vw,28px) !important;
+    width: max-content !important;
+    max-width: 76% !important;
+    font-size: clamp(16px,3vw,23px) !important;
   }
   .login-reimagined .login-story-copy {
     position: relative !important;
-    z-index: 1 !important;
-    width: 100% !important;
-    max-width: 570px !important;
     margin: 0 !important;
     padding: 0 !important;
+    width: 100% !important;
+    max-width: 560px !important;
     text-shadow: none !important;
   }
   .login-reimagined .login-story h1 {
-    font-size: clamp(25px,4.2vw,42px) !important;
-    letter-spacing: -.03em !important;
-    line-height: 1.07 !important;
+    font-size: clamp(23px,4.5vw,42px) !important;
+    max-width: 100% !important;
+    letter-spacing: -.8px !important;
   }
-  .login-reimagined .login-story .login-story-copy > p {
-    max-width: 490px !important;
+  .login-reimagined .login-story-copy > p {
+    font-size: clamp(11px,2.7vw,14px) !important;
+    line-height: 1.5 !important;
+    max-width: 460px !important;
   }
-  .login-reimagined .login-story-footer {
-    display: none !important;
-  }
+  .login-reimagined .login-values { flex-wrap: wrap !important; }
+  .login-reimagined .login-story-footer { display: none !important; }
   .login-reimagined .login-form-panel {
-    display: flex !important;
-    min-height: 0 !important;
     width: 100% !important;
-    align-items: flex-start !important;
-    justify-content: center !important;
+    min-height: 0 !important;
     padding: 0 12px 24px !important;
-    background: #051b2d !important;
+    align-items: flex-start !important;
+    background: #041b2e !important;
   }
   .login-reimagined .login-form-panel > .login {
     width: min(100%,540px) !important;
-    min-height: 0 !important;
     max-width: 540px !important;
-    max-height: none !important;
-    height: auto !important;
-    overflow: visible !important;
-    margin: 0 !important;
-    padding: clamp(17px,3vw,24px) !important;
-    justify-content: flex-start !important;
-  }
-}
-/* Pantallas muy pequeñas: no ocultar texto ni botones de inicio de sesión. */
-@media (max-width: 430px) {
-  .login-reimagined .login-story {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-  }
-  .login-reimagined .login-story h1 {
-    font-size: clamp(22px,6vw,28px) !important;
-  }
-  .login-reimagined .login-story-copy {
-    max-width: 100% !important;
-  }
-  .login-reimagined .login-values {
-    flex-wrap: wrap !important;
-  }
-  .login-reimagined .login-form-panel > .login {
-    padding: 18px 15px !important;
-  }
-}
-
-
-/* KAWSAY-ART-20261028 START */
-/* Nuevo mural 1672×1140, con cielo y follaje ampliados sin cortar rostros.
-   Las credenciales y todos los botones continúan en React. */
-.login-reimagined {
-  --kawsay-photo: url('/kawsay-fondo-final.jpg?v=restore-photo-20261028') !important;
-}
-@media (min-width: 1050px) {
-  .login-reimagined {
-    grid-template-columns: minmax(0,70%) minmax(0,30%) !important;
-    background: #051e30 !important;
-  }
-  .login-reimagined .login-story {
-    isolation: isolate !important;
-    overflow: hidden !important;
-    background: #062736 !important;
-  }
-  .login-reimagined .login-story::before {
-    content: "" !important;
-    display: block !important;
-    position: absolute !important;
-    inset: 0 !important;
-    background-image: var(--kawsay-photo) !important;
-    background-size: cover !important;
-    background-position: right center !important;
-    background-repeat: no-repeat !important;
-    transform: none !important;
-    filter: none !important;
-    opacity: 1 !important;
-    z-index: -2 !important;
-  }
-  .login-reimagined .login-story::after {
-    content: "" !important;
-    display: block !important;
-    position: absolute !important;
-    inset: 0 !important;
-    background: linear-gradient(90deg,rgba(1,20,34,.34),rgba(1,20,34,.1) 36%,transparent 70%) !important;
-    z-index: -1 !important;
-  }
-  .login-reimagined .login-form-panel {
-    background: linear-gradient(145deg,#06192a,#052434) !important;
-    overflow: visible !important;
-  }
-  .login-reimagined .login-form-panel > .login {
-    max-height: calc(100dvh - 24px) !important;
     min-height: 0 !important;
-    overflow-y: auto !important;
-  }
-}
-/* Tablet y móvil: la fotografía entera, seguida del texto y el formulario. */
-@media (max-width: 1049.98px) {
-  .login-reimagined .login-story {
-    min-height: 0 !important;
-    height: auto !important;
     max-height: none !important;
-    padding-top: calc(100vw * 1140 / 1672 + 12px) !important;
-    overflow: visible !important;
-  }
-  .login-reimagined .login-story::before {
-    content: "" !important;
-    display: block !important;
-    position: absolute !important;
-    inset: 0 0 auto 0 !important;
-    height: calc(100vw * 1140 / 1672) !important;
-    background-image: var(--kawsay-photo) !important;
-    background-size: 100% 100% !important;
-    background-position: top center !important;
-    background-repeat: no-repeat !important;
-    transform: none !important;
-    filter: none !important;
-    opacity: 1 !important;
-  }
-  .login-reimagined .login-story::after { content: none !important;display: none !important; }
-  .login-reimagined .login-form-panel > .login {
-    max-height: none !important;
-    height: auto !important;
-    overflow: visible !important;
-    min-height: 0 !important;
-  }
-}
-@media (min-width: 1050px) and (max-width: 1349.98px) {
-  .login-reimagined {
-    display: flex !important;
-    flex-direction: column !important;
-    overflow-x: clip !important;
-    overflow-y: visible !important;
-  }
-  .login-reimagined::before { content: none !important; display: none !important; }
-  .login-reimagined .login-story {
-    min-height: 0 !important;
-    height: auto !important;
-    max-height: none !important;
-    position: relative !important;
-    overflow: visible !important;
-    padding: calc(100vw * 1140 / 1672 + 12px) 30px 24px !important;
-  }
-  .login-reimagined .login-story::before {
-    inset: 0 0 auto 0 !important;
-    height: calc(100vw * 1140 / 1672) !important;
-    background-size: 100% 100% !important;
-    background-position: top center !important;
-  }
-  .login-reimagined .login-story::after { content: none !important; display: none !important; }
-  .login-reimagined .login-story .brand {
-    position: absolute !important;
-    top: 22px !important;
-    left: 30px !important;
-  }
-  .login-reimagined .login-story-copy {
-    position: relative !important;
-    max-width: 570px !important;
-    margin: 0 !important;
-  }
-  .login-reimagined .login-story-footer { display: none !important; }
-  .login-reimagined .login-form-panel {
-    min-height: 0 !important;
-    padding: 0 16px 24px !important;
-  }
-  .login-reimagined .login-form-panel > .login {
-    width: min(100%,560px) !important;
-    max-width: 560px !important;
-    max-height: none !important;
-    height: auto !important;
     margin: 0 auto !important;
     overflow: visible !important;
+    padding: clamp(18px,3vw,26px) !important;
   }
 }
-/* Desktop con altura pequeña: no cortar campos del formulario. */
-@media (min-width:1350px) and (max-height:720px) {
+@media (max-width: 430px) {
+  .login-reimagined .login-story h1 { font-size: clamp(22px,6vw,28px) !important; }
+  .login-reimagined .login-story-copy { max-width: 100% !important; }
+  .login-reimagined .login-values > span { padding-inline: 5px !important; font-size: 9px !important; }
+  .login-reimagined .login-values > span:first-child { padding-left: 0 !important; }
+  .login-reimagined .login-form-panel > .login { padding: 18px 15px !important; }
+}
+@media (min-width: 1120px) and (max-height: 720px) {
   .login-reimagined .login-form-panel > .login {
     max-height: calc(100dvh - 12px) !important;
-    overflow-y: auto !important;
+    padding: 14px 18px !important;
   }
-}
-/* KAWSAY-ART-20261028 END */
-
-/* KAWSAY-RESTORE-ORIGINAL-PHOTO-20261028 */
-/* El SVG con JPEG incrustado no se visualizaba. Usamos directamente el
-   archivo JPG existente en /public, que ya funcionó en Render. */
-@media (min-width: 1350px) {
-  .login-reimagined .login-story {
-    /* Imagen principal JPG con respaldo siempre visible, sin dependencia de SVG. */
-    background-image: url('/kawsay-fondo-final.jpg?v=restore-photo-20261028') !important;
-    background-color: #061b2c !important;
-    background-size: cover !important;
-    background-position: center center !important;
-    background-repeat: no-repeat !important;
-  }
-  .login-reimagined .login-story::before {
-    /* La escena original completa está delante del respaldo ampliado. */
-    background-image: url('/kawsay-fondo-final.jpg?v=restore-photo-20261028') !important;
-    background-size: contain !important;
-    background-position: center center !important;
-    background-repeat: no-repeat !important;
-  }
-}
-@media (max-width: 1349.98px) {
-  .login-reimagined .login-story {
-    padding-top: calc(100vw * 941 / 1672 + 12px) !important;
-  }
-  .login-reimagined .login-story::before {
-    height: calc(100vw * 941 / 1672) !important;
-    background-image: url('/kawsay-fondo-final.jpg?v=restore-photo-20261028') !important;
-    background-size: 100% auto !important;
-    background-position: center top !important;
-    background-repeat: no-repeat !important;
-  }
+  .login-reimagined .login-story h1 { font-size: clamp(29px,3vw,46px) !important; }
 }
