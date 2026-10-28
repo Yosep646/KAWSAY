@@ -78,11 +78,11 @@ function MapPreview(){return <div className="kd-map" aria-label="Ilustración de
 export function AdminOverview({schools,staff,audits,stats,loading,errors,onRefresh}:Props){
   const [filter,setFilter]=useState('');
   const [busy,setBusy]=useState(false);
-  const tiles:{icon:IconName;title:string;value:number|undefined;desc:string;to:string}[]=[
-    {icon:'classroom',title:'Instituciones',value:stats?.institutions,desc:'Registradas',to:'/admin/instituciones'},
-    {icon:'students',title:'Docentes',value:stats?.teachers,desc:'Registrados',to:'/admin/docentes'},
-    {icon:'graduation',title:'Estudiantes',value:stats?.students,desc:'Activos',to:'/admin/estudiantes'},
-    {icon:'book',title:'Tareas asignadas',value:stats?.student_assignments,desc:'Registros',to:'/admin/tareas'},
+  const tiles:{icon:IconName;image:string;title:string;value:number|undefined;desc:string;to:string}[]=[
+    {icon:'classroom',image:'/kawsay-card-instituciones.webp',title:'Instituciones',value:stats?.institutions,desc:'Registradas',to:'/admin/instituciones'},
+    {icon:'students',image:'/kawsay-card-docentes.webp',title:'Docentes',value:stats?.teachers,desc:'Registrados',to:'/admin/docentes'},
+    {icon:'graduation',image:'/kawsay-card-estudiantes.webp',title:'Estudiantes',value:stats?.students,desc:'Activos',to:'/admin/estudiantes'},
+    {icon:'tasks',image:'/kawsay-card-tareas_asignadas.webp',title:'Tareas asignadas',value:stats?.student_assignments,desc:'Registros',to:'/admin/tareas'},
   ];
   const filtered=schools?.filter(s=>s.name.toLocaleLowerCase('es').includes(filter.toLocaleLowerCase('es')))??[];
   const records=staff?.filter(s=>s.role!=='STUDENT').slice(0,4)??[];
@@ -111,7 +111,11 @@ export function AdminOverview({schools,staff,audits,stats,loading,errors,onRefre
     </div>}
     <div className="kd-kpis" aria-label="Indicadores reales de la plataforma">{tiles.map((t,i)=>
       <Link className={'kd-kpi tone-'+tones[i]} to={t.to} key={t.to}>
-        <span className="kd-kpi-icon"><CounterIcon icon={t.icon}/></span>
+        <span className="kd-kpi-icon">
+          <img className="kd-kpi-art" src={t.image} width={96} height={96} alt="" decoding="async"
+            onError={(event) => { event.currentTarget.closest('.kd-kpi-icon')?.classList.add('kd-art-missing'); }} />
+          <span className="kd-kpi-fallback" aria-hidden="true"><CounterIcon icon={t.icon}/></span>
+        </span>
         <span className="kd-kpi-copy"><span>{t.title}</span><strong>{t.value===undefined?(loading?'…':'—'):t.value.toLocaleString('es-PE')}</strong><small>{t.desc}</small></span>
         <span className="kd-kpi-arrow" aria-hidden="true"><Icon name="arrow"/></span>
       </Link>
