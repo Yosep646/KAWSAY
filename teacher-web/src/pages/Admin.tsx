@@ -5,6 +5,7 @@ import { Icon, type IconName } from "../components/Icon";
 import { AdminOverview, type AdminStatistics } from "./AdminOverview";
 import { CurriculumDocuments } from "../components/CurriculumDocuments";
 import "./admin-sections.css";
+import "./admin-institutions.css";
 import { useAsync } from "../hooks/useAsync";
 import { api } from "../services/api";
 import { errMsg } from "../utils/format";
