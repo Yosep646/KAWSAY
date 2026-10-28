@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../app/AuthContext";
 import { CurriculumDocuments, type CurriculumDocumentReference } from "../components/CurriculumDocuments";
@@ -20,6 +20,14 @@ export function Planning() {
   const [fw, setFw] = useState("");
   const [err, setErr] = useState<string | null>(null);
   const [reference, setReference] = useState<CurriculumDocumentReference | null>(null);
+  useEffect(() => {
+    if (window.location.hash === "#crear-plan-estructurado") {
+      window.requestAnimationFrame(() => document.getElementById("crear-plan-estructurado")?.scrollIntoView({block:"start"}));
+    }
+  }, []);
+  useEffect(() => {
+    if (versionId) window.requestAnimationFrame(() => document.getElementById("editor-version-plan")?.scrollIntoView({behavior:"smooth",block:"start"}));
+  }, [versionId]);
 
   const prepareReference = (doc:CurriculumDocumentReference) => {
     setReference(doc);
@@ -30,7 +38,15 @@ export function Planning() {
 
   const create = async (e: FormEvent) => {
     e.preventDefault();
-    try { setErr(null); await api.post("/planning/plans", { academic_year: year, framework_id: fw || frameworks.data?.[0]?.id, name }); setName(""); await plans.reload(); } catch (x) { setErr(errMsg(x)); }
+    try {
+      setErr(null);
+      const record = await api.post<{id:string;version:{id:string}}>("/planning/plans", {
+        academic_year:year, framework_id:fw || frameworks.data?.[0]?.id, name,
+      });
+      setName("");
+      await plans.reload();
+      setVersionId(record.version.id);
+    } catch (x) { setErr(errMsg(x)); }
   };
   return (
     <div className="teacher-workflow teacher-planning-page">
@@ -78,7 +94,9 @@ export function Planning() {
           <ul className="list">{p.versions.map((v) => (
             <li key={v.id}><button className="link" onClick={() => setVersionId(v.id)}>Versión {v.label}</button> <Badge tone={v.status === "ACTIVE" ? "ok" : v.status === "ARCHIVED" ? "muted" : "info"}>{v.status}</Badge></li>))}</ul>
         </Card>))}
-      {versionId && <VersionEditor key={versionId} versionId={versionId} frameworkId={plans.data?.find((p) => p.versions.some((v) => v.id === versionId))?.framework_id ?? ""} onChanged={() => void plans.reload()} />}
+      {versionId && <section id="editor-version-plan" className="teacher-plan-editor">
+        <VersionEditor key={versionId} versionId={versionId} frameworkId={plans.data?.find((p) => p.versions.some((v) => v.id === versionId))?.framework_id ?? ""} onChanged={() => void plans.reload()} />
+      </section>}
     </div>
   );
 }
