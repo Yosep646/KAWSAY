@@ -4,6 +4,7 @@ import { Card, ErrorBox } from "../components/ui";
 import { Icon, type IconName } from "../components/Icon";
 import { AdminOverview, type AdminStatistics } from "./AdminOverview";
 import { CurriculumDocuments } from "../components/CurriculumDocuments";
+import { AdminPlanningReview } from "../components/AdminPlanningReview";
 import "./admin-sections.css";
 import "./admin-institutions.css";
 import { useAsync } from "../hooks/useAsync";
@@ -296,7 +297,7 @@ export function Admin({ section = "overview" }: { section?: AdminSection }) {
           </section>
         </div>
       )}
-      {section === "curriculum" && <CurriculumDocuments />}
+      {section === "curriculum" && <><CurriculumDocuments /><AdminPlanningReview /></>}
       {section === "system" && <Card title="Auditoría de accesos a datos de estudiantes (últimos 20)"><ul>{audit.data?.map((a) => <li key={a.id}>{new Date(a.created_at).toLocaleString()} · {a.action} · {a.target_type}</li>)}</ul></Card>}
       {section === "system" && <Card title="Eventos de automatización (n8n es opcional)"><ul>{events.data?.map((e) => <li key={e.id}>{e.type} · {e.status} · intentos {e.attempts}{e.last_error ? ` · ${e.last_error}` : ""}</li>)}</ul>
         <button className="ghost" onClick={() => void run(() => api.post("/automation/dispatch"), "Despacho ejecutado").then(() => events.reload())}>Despachar pendientes</button></Card>}
