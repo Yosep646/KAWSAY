@@ -92,7 +92,7 @@ export function Login() {
     <section className="login-form-panel" aria-label="Acceso a la plataforma">
       <div className="login" role="region" aria-labelledby="login-title">
         <div className="login-card-head">
-          <span className="login-symbol"><Icon name="leaf" /></span>
+          <span className="login-symbol" aria-hidden="true"><img className="login-brand-emblem" src="/kawsay-brand-icon.webp?v=logo-20261028" alt="" width={52} height={52} decoding="async" onError={event => { event.currentTarget.style.display = "none"; }} /></span>
           <h2 id="login-title">Bienvenido</h2>
           <p className="muted login-description">Ingresa a tu cuenta</p>
         </div>
