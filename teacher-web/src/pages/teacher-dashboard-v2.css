@@ -1,0 +1,155 @@
+
+/* KAWSAY AI Teacher dashboard – scoped design system, all metrics from existing API */
+.role-teacher:has(.teacher-v2){--bg:#041b2b;--fg:#f1fcff;--muted:#a9cbd8;--card:#092c40;--line:#205b72;--accent:#10e3c3;color-scheme:dark;background:#041b2b}
+.role-teacher:has(.teacher-v2) .workspace{background:linear-gradient(145deg,#052538,#04192b 72%)!important}
+.role-teacher:has(.teacher-v2) .main-content{max-width:1600px;padding:20px clamp(12px,1.8vw,30px) 30px;background:transparent!important}
+.role-teacher:has(.teacher-v2) .topbar{background:#071f32!important;color:#d6f7fd!important;border-color:#21516b!important}
+.role-teacher:has(.teacher-v2) .workspace-footer{color:#99bdca;border-color:#22546a}
+.role-teacher:has(.teacher-v2) .sidebar{background:linear-gradient(175deg,#041b2e,#042638 90%)!important;border-color:#18506a}
+.role-teacher:has(.teacher-v2) .primary-nav a.active{background:#0be5c4!important;color:#07343b!important;border-color:#65f8dd!important}
+.role-teacher:has(.teacher-v2) .primary-nav a.active .icon{color:#063b42!important}
+.role-teacher .teacher-v2{display:flex;flex-direction:column;gap:16px;min-width:0;color:#eafbff}
+.role-teacher .teacher-v2 *{box-sizing:border-box}
+.role-teacher .teacher-v2 .teacher-dashboard-hero{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:340px;margin:0!important;padding:clamp(24px,3vw,42px)!important;overflow:hidden;border:1px solid #247887;border-radius:19px;background:#06374d;box-shadow:0 14px 30px #00122166}
+.role-teacher .teacher-v2 .teacher-dashboard-hero::before{content:"";position:absolute;inset:0;z-index:-2;background:url('/kawsay-fondo-responsive-20261028.webp?v=teacher-v2') 62% 46%/cover no-repeat;filter:none;opacity:1}
+.role-teacher .teacher-v2 .teacher-dashboard-hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#011a2ced 0%,#011a2cc4 27%,#021c2b67 53%,transparent 88%),linear-gradient(0deg,#021c2b70,transparent 45%)}
+.role-teacher .teacher-v2 .teacher-dashboard-intro{max-width:440px;z-index:1;position:relative;text-shadow:0 2px 13px #001728a3}
+.role-teacher .teacher-v2 .teacher-dashboard-hero .eyebrow{display:flex;align-items:center;gap:7px;color:#83fce6!important;font-size:10px;letter-spacing:.13em;font-weight:800;margin:0 0 16px}
+.role-teacher .teacher-v2 .teacher-dashboard-hero h2{color:#fff!important;font-size:clamp(32px,3.5vw,52px);line-height:1.07;letter-spacing:-.045em;margin:0 0 14px;font-weight:900;overflow-wrap:anywhere}
+.role-teacher .teacher-v2 .teacher-dashboard-hero h2 span{color:#15ecc9!important}
+.role-teacher .teacher-v2 .teacher-dashboard-hero p:not(.eyebrow){color:#f2fffd;font-size:13px;line-height:1.65;max-width:385px;margin:0 0 18px}
+.role-teacher .teacher-v2 .teacher-dashboard-actions{display:flex;gap:9px;flex-wrap:wrap}
+.role-teacher .teacher-v2 .teacher-dashboard-actions a{display:inline-flex;align-items:center;gap:7px;justify-content:center;border-radius:9px;min-height:43px;padding:10px 13px;font-weight:800;font-size:11px;text-decoration:none}
+.role-teacher .teacher-v2 .teacher-dashboard-actions .teacher-register-action{background:#0ce5c6!important;color:#03313a!important;border:1px solid #64f5dd!important}
+.role-teacher .teacher-v2 .teacher-dashboard-actions .teacher-outline-action{background:#092e42d9!important;color:#fff!important;border:1px solid #9bd6d4!important}
+.role-teacher .teacher-v2 .teacher-hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:21px}
+.role-teacher .teacher-v2 .teacher-hero-meta span{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:#d9fff7;padding:6px 10px;border:1px solid #62e3d361;border-radius:50px;background:#073b49c4}
+.role-teacher .teacher-v2 .teacher-hero-meta svg{height:14px;width:14px;color:#49f1d5}
+.role-teacher .teacher-v2 .teacher-hero-motto{max-width:155px;white-space:normal;text-align:right;align-self:flex-end;position:relative;z-index:1;color:#fff;background:#042a3d9c;border:1px solid #56decc5e;padding:10px;border-radius:11px;font-weight:700;font-size:12px}
+.role-teacher .teacher-v2 .teacher-v2-section-title,.role-teacher .teacher-v2 .teacher-v2-panel-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.role-teacher .teacher-v2 .teacher-v2-eyebrow{font-size:10px;font-weight:850;letter-spacing:.14em;color:#34f2d1;margin:0 0 5px}
+.role-teacher .teacher-v2 .teacher-v2-section-title h3,.role-teacher .teacher-v2 .teacher-v2-panel h3{font-size:clamp(17px,1.25vw,20px);color:#fff;margin:0;line-height:1.3;letter-spacing:-.02em}
+.role-teacher .teacher-v2 .teacher-v2-refresh,.role-teacher .teacher-v2 .teacher-v2-text-link{display:inline-flex;gap:6px;align-items:center;border:1px solid #2e7182;background:#0b3449;border-radius:9px;padding:8px 11px;color:#78ffde;font-size:11px;font-weight:800;text-decoration:none;cursor:pointer}
+.role-teacher .teacher-v2 .teacher-v2-text-link{border:0;background:transparent}
+.role-teacher .teacher-v2 .teacher-v2-refresh:disabled{opacity:.55;cursor:wait}
+.role-teacher .teacher-v2 .teacher-v2-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+.role-teacher .teacher-v2 .teacher-v2-kpi{--tk-bg:#0a5183;--tk-end:#073352;--tk-border:#1b7ba9;--tk-icon:#088be7;display:flex;align-items:center;min-width:0;gap:9px;min-height:113px;padding:13px;border-radius:14px;border:1px solid var(--tk-border);background:linear-gradient(135deg,var(--tk-bg),var(--tk-end));color:#fff;text-decoration:none;box-shadow:0 9px 23px #00101a65;transition:transform .15s ease}
+.role-teacher .teacher-v2 .teacher-v2-kpi:hover{transform:translateY(-2px)}
+.role-teacher .teacher-v2 .teacher-v2-teal{--tk-bg:#087366;--tk-end:#06463f;--tk-border:#16a28f;--tk-icon:#0bb99b}
+.role-teacher .teacher-v2 .teacher-v2-amber{--tk-bg:#87611d;--tk-end:#583d1b;--tk-border:#b98b34;--tk-icon:#e7a825}
+.role-teacher .teacher-v2 .teacher-v2-purple{--tk-bg:#57328b;--tk-end:#38245d;--tk-border:#8d62b5;--tk-icon:#8b56df}
+.role-teacher .teacher-v2 .teacher-v2-kpi-icon{display:grid;place-items:center;background:var(--tk-icon);width:49px;height:49px;flex:0 0 49px;border:1px solid #ffffff22;border-radius:12px}
+.role-teacher .teacher-v2 .teacher-v2-kpi-icon svg{height:25px;width:25px}
+.role-teacher .teacher-v2 .teacher-v2-kpi-content{display:flex;flex:1;flex-direction:column;gap:3px;min-width:0}
+.role-teacher .teacher-v2 .teacher-v2-kpi-content small{font-size:11px;color:#ecfff9;font-weight:700;line-height:1.35}
+.role-teacher .teacher-v2 .teacher-v2-kpi-content strong{font-size:clamp(27px,2.5vw,36px);letter-spacing:-.035em;line-height:1}
+.role-teacher .teacher-v2 .teacher-v2-kpi-content>span{font-size:10px;color:#c5f6ed;line-height:1.35}
+.role-teacher .teacher-v2 .teacher-v2-kpi>.icon{height:16px;width:16px;opacity:.8}
+.role-teacher .teacher-v2 .teacher-v2-overview-grid,.role-teacher .teacher-v2 .teacher-v2-bottom-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.role-teacher .teacher-v2 .teacher-v2-bottom-grid{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)}
+.role-teacher .teacher-v2 .teacher-v2-panel{min-width:0;min-height:220px;padding:clamp(15px,1.5vw,23px);border:1px solid #1c6178;border-radius:15px;background:linear-gradient(145deg,#0b3147,#06273a 72%,#052235);box-shadow:inset 0 1px 0 #66ffe511,0 7px 20px #00152438}
+.role-teacher .teacher-v2 .teacher-v2-panel-head{margin:0 0 15px}
+.role-teacher .teacher-v2 .teacher-v2-muted{font-size:12px;color:#afcfda}
+.role-teacher .teacher-v2 .teacher-v2-empty-classroom,.role-teacher .teacher-v2 .teacher-v2-no-work{display:flex;align-items:center;gap:12px;min-height:130px;padding:16px;border-radius:11px;border:1px dashed #327b89;background:#0b384a}
+.role-teacher .teacher-v2 .teacher-v2-empty-icon{display:grid;place-items:center;width:43px;height:43px;flex:0 0 43px;background:#0b7972;border-radius:10px;color:#d8fff9}
+.role-teacher .teacher-v2 .teacher-v2-empty-classroom>div{flex:1;min-width:110px}
+.role-teacher .teacher-v2 .teacher-v2-empty-classroom strong,.role-teacher .teacher-v2 .teacher-v2-no-work strong{font-size:13px;color:#fff}
+.role-teacher .teacher-v2 .teacher-v2-empty-classroom p,.role-teacher .teacher-v2 .teacher-v2-no-work p{font-size:11px;color:#b2d2dc;line-height:1.55;margin:5px 0}
+.role-teacher .teacher-v2 .teacher-v2-empty-classroom a,.role-teacher .teacher-v2 .teacher-v2-no-work a{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:#0ae0bc;color:#052f36;font-size:11px;font-weight:800;border-radius:9px;padding:10px;text-decoration:none;white-space:nowrap}
+.role-teacher .teacher-v2 .teacher-v2-no-work{flex-direction:column;justify-content:center;text-align:center}
+.role-teacher .teacher-v2 .teacher-v2-no-work>.icon{color:#36f0d3;width:26px;height:26px}
+.role-teacher .teacher-v2 .teacher-v2-classroom-body label{display:flex;flex-direction:column;gap:6px;color:#c4e4ed;font-size:12px;font-weight:700}
+.role-teacher .teacher-v2 .teacher-v2-classroom-body select{color:#e7faff;min-height:42px;background:#0c3449;border:1px solid #397189;border-radius:9px;padding:9px;width:100%}
+.role-teacher .teacher-v2 .teacher-v2-current-room{display:flex;gap:10px;align-items:center;background:#0c3c50;border:1px solid #2b667c;border-radius:10px;padding:12px;margin:12px 0}
+.role-teacher .teacher-v2 .teacher-v2-current-room>span{display:grid;place-items:center;width:38px;height:38px;flex:0 0 38px;background:#08706c;border-radius:9px}
+.role-teacher .teacher-v2 .teacher-v2-current-room>div{flex:1;min-width:0}
+.role-teacher .teacher-v2 .teacher-v2-current-room strong{display:block;color:#fff;font-size:12px}
+.role-teacher .teacher-v2 .teacher-v2-current-room small,.role-teacher .teacher-v2 .teacher-v2-classroom-body>p{display:block;color:#a7d0dc;font-size:11px;line-height:1.5}
+.role-teacher .teacher-v2 .teacher-v2-current-room a{color:#52efd4;display:inline-flex;align-items:center;gap:5px;font-size:10px;text-decoration:none}
+.role-teacher .teacher-v2 .teacher-v2-assignment-list{display:grid;gap:8px}
+.role-teacher .teacher-v2 .teacher-v2-assignment-list>a{display:flex;gap:10px;align-items:center;border:1px solid #286279;background:#0c3549;border-radius:10px;padding:10px;text-decoration:none;color:#eaffff}
+.role-teacher .teacher-v2 .teacher-v2-assignment-icon{display:grid;place-items:center;width:35px;height:35px;flex:0 0 35px;border-radius:9px;background:#0d627b}
+.role-teacher .teacher-v2 .teacher-v2-assignment-name{flex:1;min-width:0}
+.role-teacher .teacher-v2 .teacher-v2-assignment-name strong{display:block;font-size:12px;overflow-wrap:anywhere}
+.role-teacher .teacher-v2 .teacher-v2-assignment-name small{display:block;color:#b1d1de;font-size:10px}
+.role-teacher .teacher-v2 .teacher-v2-assignment-list>a>.icon{width:15px;height:15px;color:#4be5d0}
+.role-teacher .teacher-v2 .teacher-v2-step-count{font-size:10px;color:#8dffe4;background:#0b5054;border:1px solid #2a847f;border-radius:50px;padding:5px 10px}
+.role-teacher .teacher-v2 .teacher-v2-track{height:7px;width:100%;overflow:hidden;border-radius:99px;background:#18465a;margin-bottom:12px}
+.role-teacher .teacher-v2 .teacher-v2-track>span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#0aa98e,#2bf5cd)}
+.role-teacher .teacher-v2 .teacher-v2-steps{display:grid;gap:8px}
+.role-teacher .teacher-v2 .teacher-v2-step{display:flex;gap:9px;align-items:center;padding:10px;background:#0c3549;border:1px solid #275e71;border-radius:10px;color:#fff;text-decoration:none}
+.role-teacher .teacher-v2 .teacher-v2-step-mark{display:grid;place-items:center;width:32px;height:32px;flex:0 0 32px;background:#174c60;border:1px solid #4f8c91;border-radius:50%;font-size:12px;font-weight:800}
+.role-teacher .teacher-v2 .teacher-v2-step-mark.is-done{background:#088d76;border-color:#55e9c7}
+.role-teacher .teacher-v2 .teacher-v2-step>span:nth-child(2){flex:1;min-width:0}
+.role-teacher .teacher-v2 .teacher-v2-step strong{display:block;font-size:12px}
+.role-teacher .teacher-v2 .teacher-v2-step small{display:block;color:#accdda;font-size:10px}
+.role-teacher .teacher-v2 .teacher-v2-step>.icon{height:16px;width:16px;color:#49eccb}
+.role-teacher .teacher-v2 .teacher-quick-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px;margin:0}
+.role-teacher .teacher-v2 .teacher-quick-grid>a{display:grid;grid-template-columns:38px minmax(0,1fr) auto;grid-template-rows:auto auto;min-width:0;min-height:80px;align-items:center;gap:1px 8px;padding:11px;background:#0d3549;border:1px solid #28647a;border-radius:11px;color:#fff;text-decoration:none;box-shadow:none}
+.role-teacher .teacher-v2 .teacher-quick-grid>a>.teacher-quick-icon{grid-column:1;grid-row:1/3;width:37px;height:37px;border-radius:9px}
+.role-teacher .teacher-v2 .teacher-quick-grid>a>strong{grid-column:2;grid-row:1;font-size:11px;color:#fff}
+.role-teacher .teacher-v2 .teacher-quick-grid>a>small{grid-column:2;grid-row:2;font-size:10px;color:#b2d5df}
+.role-teacher .teacher-v2 .teacher-quick-grid>a>.icon{grid-column:3;grid-row:1/3;width:14px;height:14px;color:#48ebc7}
+.role-teacher .teacher-v2 .teacher-v2-learning{display:flex;flex-direction:column;gap:12px}
+.role-teacher .teacher-v2 .teacher-v2-learning .room-selector{display:flex;align-items:center;justify-content:space-between;gap:10px;border-radius:11px;border:1px solid #28647c;background:#092f43;padding:10px 15px;margin:0}
+.role-teacher .teacher-v2 .teacher-v2-learning .room-selector .muted{color:#a8cbd7;font-size:11px;margin:0}
+.role-teacher .teacher-v2 .teacher-v2-learning .room-selector button{background:#124a5b;border:1px solid #36858b;color:#e5fff8;border-radius:8px;padding:8px 11px}
+.role-teacher .teacher-v2 .stats-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin:0}
+.role-teacher .teacher-v2 .stats-grid .stat{padding:15px;min-width:0;border-radius:13px;background:#0a3044!important;border:1px solid #24647a!important;box-shadow:none!important;color:#fff}
+.role-teacher .teacher-v2 .stats-grid .stat-n{font-size:25px;color:#fff}
+.role-teacher .teacher-v2 .stats-grid .muted{color:#afd1de!important;font-size:11px}
+.role-teacher .teacher-v2 .grade-distribution{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#0a3145;border:1px solid #246278;border-radius:11px;padding:12px}
+.role-teacher .teacher-v2 .grade-distribution .muted{color:#b7d8df}
+.role-teacher .teacher-v2 .grade-chip{border-radius:50px;color:#d2fff5;background:#0b5154;border:1px solid #277d79;padding:5px 10px;font-size:11px}
+.role-teacher .teacher-v2 .dashboard-columns{gap:12px}
+.role-teacher .teacher-v2 .dashboard-columns .card{background:linear-gradient(145deg,#0a3045,#052238)!important;border:1px solid #235d75!important;color:#fff!important;border-radius:14px!important;box-shadow:none!important;padding:17px!important}
+.role-teacher .teacher-v2 .dashboard-columns .card h3{color:#fff!important}
+.role-teacher .teacher-v2 .dashboard-columns .muted,.role-teacher .teacher-v2 .dashboard-columns .section-description{color:#b2d2df!important}
+.role-teacher .teacher-v2 .dashboard-columns .card li{color:#dbeef4}
+.role-teacher .teacher-v2 .dashboard-columns .ghost{background:#13495d;color:#e5f9f8;border:1px solid #347d89;border-radius:9px}
+.role-teacher .teacher-v2 .teacher-v2-footer{display:flex;align-items:center;gap:12px;min-width:0;padding:15px 17px;border:1px solid #1d6d7b;border-radius:12px;background:linear-gradient(90deg,#052e43ee,#062e43d0),url('/kawsay-fondo-responsive-20261028.webp') center 55%/cover}
+.role-teacher .teacher-v2 .teacher-v2-footer>.icon{width:31px;height:31px;color:#32edcb}
+.role-teacher .teacher-v2 .teacher-v2-footer>span{display:flex;flex:1;flex-direction:column;gap:3px}
+.role-teacher .teacher-v2 .teacher-v2-footer strong{font-size:12px;color:#fff}
+.role-teacher .teacher-v2 .teacher-v2-footer small{font-size:10px;color:#bdd9e3}
+.role-teacher .teacher-v2 .teacher-v2-footer em{color:#9affdf;font-size:12px;white-space:nowrap}
+.role-teacher .teacher-v2 a:focus-visible,.role-teacher .teacher-v2 button:focus-visible,.role-teacher .teacher-v2 select:focus-visible{outline:2px solid #42f7d7;outline-offset:2px}
+@media(max-width:1300px){.role-teacher .teacher-v2 .teacher-v2-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.role-teacher .teacher-v2 .stats-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:1020px){.role-teacher .teacher-v2 .teacher-v2-overview-grid,.role-teacher .teacher-v2 .teacher-v2-bottom-grid{grid-template-columns:1fr}}
+@media(max-width:800px){
+ .role-teacher:has(.teacher-v2) .main-content{padding:12px 10px 26px}
+ .role-teacher .teacher-v2 .teacher-dashboard-hero{min-height:0;padding:clamp(180px,46vw,245px) 18px 20px!important;align-items:flex-end}
+ .role-teacher .teacher-v2 .teacher-dashboard-hero::before{background-position:66% top}
+ .role-teacher .teacher-v2 .teacher-dashboard-hero::after{background:linear-gradient(0deg,#05263cf5 0%,#05263ce8 32%,#05263c60 66%,transparent 87%)}
+ .role-teacher .teacher-v2 .teacher-dashboard-hero .teacher-dashboard-intro{max-width:100%}
+ .role-teacher .teacher-v2 .teacher-dashboard-hero h2{font-size:clamp(28px,6vw,37px)}
+ .role-teacher .teacher-v2 .teacher-hero-motto{display:none}
+ .role-teacher .teacher-v2 .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .role-teacher .teacher-v2 .teacher-v2-kpi{min-height:96px;padding:10px}
+ .role-teacher .teacher-v2 .teacher-v2-kpi-icon{width:39px;height:39px;flex-basis:39px}
+ .role-teacher .teacher-v2 .teacher-v2-kpi-icon svg{width:21px;height:21px}
+ .role-teacher .teacher-v2 .teacher-v2-kpi>.icon{display:none}
+}
+@media(max-width:530px){
+ .role-teacher .teacher-v2 .teacher-dashboard-hero{padding:clamp(175px,50vw,220px) 14px 16px!important;border-radius:15px}
+ .role-teacher .teacher-v2 .teacher-dashboard-hero .eyebrow{font-size:8px;letter-spacing:.08em;margin-bottom:10px}
+ .role-teacher .teacher-v2 .teacher-dashboard-hero h2{font-size:clamp(27px,8vw,36px)}
+ .role-teacher .teacher-v2 .teacher-dashboard-actions a{flex:1;font-size:10px;padding:8px;min-height:40px}
+ .role-teacher .teacher-v2 .teacher-hero-meta{margin-top:13px}
+ .role-teacher .teacher-v2 .teacher-hero-meta span{font-size:9px}
+ .role-teacher .teacher-v2 .teacher-v2-kpis{gap:8px}
+ .role-teacher .teacher-v2 .teacher-v2-kpi{padding:8px;gap:6px}
+ .role-teacher .teacher-v2 .teacher-v2-kpi-icon{width:34px;height:34px;flex-basis:34px}
+ .role-teacher .teacher-v2 .teacher-v2-kpi-content small{font-size:9px}
+ .role-teacher .teacher-v2 .teacher-v2-kpi-content strong{font-size:23px}
+ .role-teacher .teacher-v2 .teacher-v2-kpi-content>span{font-size:9px}
+ .role-teacher .teacher-v2 .teacher-v2-empty-classroom{flex-direction:column;text-align:center}
+ .role-teacher .teacher-v2 .teacher-v2-empty-classroom a{width:100%}
+ .role-teacher .teacher-v2 .teacher-quick-grid>a{grid-template-columns:33px minmax(0,1fr);padding:8px}
+ .role-teacher .teacher-v2 .teacher-quick-grid>a>.teacher-quick-icon{width:32px;height:32px}
+ .role-teacher .teacher-v2 .teacher-quick-grid>a>.icon{display:none}
+ .role-teacher .teacher-v2 .teacher-quick-grid>a>strong{font-size:10px}
+ .role-teacher .teacher-v2 .teacher-quick-grid>a>small{font-size:9px}
+ .role-teacher .teacher-v2 .teacher-v2-footer em{display:none}
+}
+@media(prefers-reduced-motion:reduce){.role-teacher .teacher-v2 .teacher-v2-kpi{transition:none}}
