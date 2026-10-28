@@ -3,6 +3,7 @@ import { useAuth } from "../app/AuthContext";
 import { Card, ErrorBox } from "../components/ui";
 import { Icon, type IconName } from "../components/Icon";
 import { AdminOverview, type AdminStatistics } from "./AdminOverview";
+import { CurriculumDocuments } from "../components/CurriculumDocuments";
 import "./admin-sections.css";
 import { useAsync } from "../hooks/useAsync";
 import { api } from "../services/api";
@@ -41,7 +42,6 @@ export function Admin({ section = "overview" }: { section?: AdminSection }) {
   const [staffQuery, setStaffQuery] = useState("");
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [t, setT] = useState({ email: "", name: "", password: "", school_id: "" });
-  const [fwJson, setFwJson] = useState("");
   const [showTeacherPassword, setShowTeacherPassword] = useState(false);
   const [teacherBusy, setTeacherBusy] = useState(false);
 
@@ -82,12 +82,6 @@ export function Admin({ section = "overview" }: { section?: AdminSection }) {
     } finally {
       setTeacherBusy(false);
     }
-  };
-  const importFw = (e: FormEvent) => {
-    e.preventDefault();
-    let parsed: unknown;
-    try { parsed = JSON.parse(fwJson); } catch { setErr("El contenido no es un JSON válido. Corrígelo antes de importar."); return; }
-    void run(() => api.post("/curriculum/frameworks", parsed), "Marco curricular importado");
   };
 
   const page = section === "overview" ? null : pageMeta[section];
@@ -235,9 +229,7 @@ export function Admin({ section = "overview" }: { section?: AdminSection }) {
           </section>
         </div>
       )}
-      {section === "curriculum" && <Card title="Importar marco curricular (JSON revisado por una persona)">
-        <p className="muted">Debe indicar explícitamente <code>is_demo</code>. No se importa automáticamente ningún PDF como currículo oficial.</p>
-        <form className="stack" onSubmit={importFw}><textarea rows={6} value={fwJson} onChange={(e) => setFwJson(e.target.value)} required /><button>Importar</button></form></Card>}
+      {section === "curriculum" && <CurriculumDocuments />}
       {section === "system" && <Card title="Auditoría de accesos a datos de estudiantes (últimos 20)"><ul>{audit.data?.map((a) => <li key={a.id}>{new Date(a.created_at).toLocaleString()} · {a.action} · {a.target_type}</li>)}</ul></Card>}
       {section === "system" && <Card title="Eventos de automatización (n8n es opcional)"><ul>{events.data?.map((e) => <li key={e.id}>{e.type} · {e.status} · intentos {e.attempts}{e.last_error ? ` · ${e.last_error}` : ""}</li>)}</ul>
         <button className="ghost" onClick={() => void run(() => api.post("/automation/dispatch"), "Despacho ejecutado").then(() => events.reload())}>Despachar pendientes</button></Card>}
