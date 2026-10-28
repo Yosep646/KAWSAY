@@ -1,0 +1,12 @@
+/* Learner view: teacher directions accompany the questions and work offline. */
+.student-activity-instructions{
+  margin:14px 0 18px;
+  padding:clamp(12px,2vw,20px);
+  border:1px solid #398c91;
+  border-radius:12px;
+  background:linear-gradient(125deg,#0d4b56,#0c364a);
+  color:#eaffff;
+}
+.student-activity-instructions h3{font-size:clamp(14px,1.5vw,18px);margin:0 0 9px;color:#b7ffed}
+.student-activity-instructions p{margin:0;font-size:clamp(12px,1.2vw,14px);line-height:1.75;white-space:pre-wrap;overflow-wrap:anywhere;color:#f1fffc}
+@media(max-width:570px){.student-activity-instructions{padding:12px}}
