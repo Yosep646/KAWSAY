@@ -24,7 +24,7 @@ export function Planning() {
   const prepareReference = (doc:CurriculumDocumentReference) => {
     setReference(doc);
     setYear(doc.academic_year);
-    setName(`Planificación ${doc.area} ${doc.grade_number}.º primaria · ${doc.academic_year}`);
+    setName(`Planificación ${doc.area} ${doc.grade_number}.º ${doc.education_level === "PRIMARIA" ? "primaria" : "secundaria"} · ${doc.academic_year}`);
     window.requestAnimationFrame(() => document.getElementById("crear-plan-estructurado")?.scrollIntoView({behavior:"smooth",block:"center"}));
   };
 
