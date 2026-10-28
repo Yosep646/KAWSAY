@@ -2,6 +2,7 @@ import { useState, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, type IconName } from '../components/Icon';
 import './admin-overview.css';
+import './admin-refinement.css';
 
 export interface AdminStatistics {
   year: number;
