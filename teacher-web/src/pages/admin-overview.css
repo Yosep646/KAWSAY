@@ -601,3 +601,104 @@
   .role-admin .kd-design-2026 .kd-kpi-copy>strong{font-size:21px}
 }
 @media (prefers-reduced-motion:reduce){.role-admin .kd-design-2026 .kd-kpi:hover,.role-admin .kd-design-2026 .kd-shortcut:hover{transform:none}}
+
+
+/* KAWSAY AI — cuatro ilustraciones exclusivas de indicadores (2026-10-28)
+   Tarjetas de datos reales: la obra gráfica no contiene números incrustados. */
+.role-admin .kd-design-2026 .kd-kpi {
+  min-width:0;
+  min-height:118px;
+  align-items:center;
+  gap:7px;
+  padding:10px 12px 10px 6px;
+  border:1px solid var(--kd-border);
+  background:
+    radial-gradient(ellipse 72% 130% at -10% 107%, color-mix(in srgb,var(--kd-highlight) 25%,transparent),transparent 88%),
+    linear-gradient(128deg,var(--kd-start),var(--kd-end));
+  box-shadow:0 7px 18px #00112373,inset 0 1px 0 #ffffff28;
+  transition:box-shadow .18s ease,transform .18s ease,border-color .18s ease;
+}
+.role-admin .kd-design-2026 .kd-kpi:hover,
+.role-admin .kd-design-2026 .kd-kpi:focus-visible {
+  border-color:color-mix(in srgb,var(--kd-highlight) 80%,white);
+  box-shadow:0 12px 24px #0011239e,inset 0 1px 0 #ffffff33;
+}
+.role-admin .kd-design-2026 .kd-kpi .kd-kpi-icon {
+  display:grid;
+  place-items:center;
+  width:clamp(70px,6.2vw,100px);
+  height:clamp(70px,6.2vw,100px);
+  flex:0 0 clamp(70px,6.2vw,100px);
+  border:0;
+  border-radius:0;
+  background:transparent;
+  overflow:visible;
+  isolation:isolate;
+}
+.role-admin .kd-design-2026 .kd-kpi-icon .kd-kpi-art {
+  display:block;
+  grid-area:1 / 1;
+  object-fit:contain;
+  width:100%;
+  height:100%;
+  max-width:100%;
+  max-height:100%;
+  filter:drop-shadow(0 4px 6px #01152855);
+}
+.role-admin .kd-design-2026 .kd-kpi-icon .kd-kpi-fallback {display:none;grid-area:1 / 1}
+.role-admin .kd-design-2026 .kd-kpi-icon.kd-art-missing .kd-kpi-art {display:none}
+.role-admin .kd-design-2026 .kd-kpi-icon.kd-art-missing .kd-kpi-fallback {
+  display:grid;
+  place-items:center;
+  width:68%;
+  height:68%;
+  border-radius:13px;
+  background:var(--kd-highlight);
+}
+.role-admin .kd-design-2026 .kd-kpi-icon.kd-art-missing .kd-kpi-fallback svg {width:58%;height:58%}
+.role-admin .kd-design-2026 .kd-kpi-copy {gap:5px;min-width:0;position:relative;z-index:1}
+.role-admin .kd-design-2026 .kd-kpi-copy>span {font-size:clamp(11px,1vw,13px);line-height:1.25;font-weight:750}
+.role-admin .kd-design-2026 .kd-kpi-copy>strong {font-size:clamp(26px,2.55vw,35px);line-height:1;font-weight:800}
+.role-admin .kd-design-2026 .kd-kpi-copy>small {font-size:11px;line-height:1.2;color:#a2ffeb}
+.role-admin .kd-design-2026 .kd-kpi-arrow {
+  align-self:end;
+  width:29px;
+  height:29px;
+  flex:0 0 29px;
+  color:#f5ffff;
+  border:1px solid #ffffff7c;
+  background:#ffffff07;
+}
+.role-admin .kd-design-2026 .kd-kpi-arrow svg {width:16px;height:16px}
+@media(min-width:801px) and (max-width:1320px) {
+  .role-admin .kd-design-2026 .kd-kpi {gap:5px;padding:9px 8px 9px 3px}
+  .role-admin .kd-design-2026 .kd-kpi .kd-kpi-icon {width:68px;height:68px;flex-basis:68px}
+  .role-admin .kd-design-2026 .kd-kpi-copy>span {font-size:11px}
+  .role-admin .kd-design-2026 .kd-kpi-arrow {width:25px;height:25px;flex-basis:25px}
+}
+@media(max-width:800px) {
+  .role-admin .kd-design-2026 .kd-kpi {
+    min-height:91px;
+    padding:7px 6px 7px 2px;
+    gap:3px;
+    align-items:center;
+    border-radius:12px;
+  }
+  .role-admin .kd-design-2026 .kd-kpi .kd-kpi-icon {
+    width:clamp(57px,17vw,80px);
+    height:clamp(57px,17vw,80px);
+    flex:0 0 clamp(57px,17vw,80px);
+  }
+  .role-admin .kd-design-2026 .kd-kpi-copy {gap:3px}
+  .role-admin .kd-design-2026 .kd-kpi-copy>span {font-size:clamp(9px,2.6vw,11px);line-height:1.23;overflow-wrap:anywhere}
+  .role-admin .kd-design-2026 .kd-kpi-copy>strong {font-size:clamp(21px,6vw,28px)}
+  .role-admin .kd-design-2026 .kd-kpi-copy>small {font-size:9px}
+  .role-admin .kd-design-2026 .kd-kpi-arrow {display:none}
+}
+@media(max-width:360px) {
+  .role-admin .kd-design-2026 .kd-kpi .kd-kpi-icon {width:52px;height:52px;flex-basis:52px}
+  .role-admin .kd-design-2026 .kd-kpi-copy>span {font-size:9px}
+}
+@media(prefers-reduced-motion:reduce) {
+  .role-admin .kd-design-2026 .kd-kpi {transition:none}
+}
