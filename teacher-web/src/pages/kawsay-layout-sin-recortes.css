@@ -231,7 +231,7 @@
 /* Nuevo mural 1672×1140, con cielo y follaje ampliados sin cortar rostros.
    Las credenciales y todos los botones continúan en React. */
 .login-reimagined {
-  --kawsay-photo: url('/kawsay-hero-sin-recortes.svg?v=2') !important;
+  --kawsay-photo: url('/kawsay-fondo-final.jpg?v=restore-photo-20261028') !important;
 }
 @media (min-width: 1050px) {
   .login-reimagined {
@@ -361,3 +361,36 @@
   }
 }
 /* KAWSAY-ART-20261028 END */
+
+/* KAWSAY-RESTORE-ORIGINAL-PHOTO-20261028 */
+/* El SVG con JPEG incrustado no se visualizaba. Usamos directamente el
+   archivo JPG existente en /public, que ya funcionó en Render. */
+@media (min-width: 1350px) {
+  .login-reimagined .login-story {
+    /* Imagen principal JPG con respaldo siempre visible, sin dependencia de SVG. */
+    background-image: url('/kawsay-fondo-final.jpg?v=restore-photo-20261028') !important;
+    background-color: #061b2c !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+  }
+  .login-reimagined .login-story::before {
+    /* La escena original completa está delante del respaldo ampliado. */
+    background-image: url('/kawsay-fondo-final.jpg?v=restore-photo-20261028') !important;
+    background-size: contain !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+  }
+}
+@media (max-width: 1349.98px) {
+  .login-reimagined .login-story {
+    padding-top: calc(100vw * 941 / 1672 + 12px) !important;
+  }
+  .login-reimagined .login-story::before {
+    height: calc(100vw * 941 / 1672) !important;
+    background-image: url('/kawsay-fondo-final.jpg?v=restore-photo-20261028') !important;
+    background-size: 100% auto !important;
+    background-position: center top !important;
+    background-repeat: no-repeat !important;
+  }
+}
