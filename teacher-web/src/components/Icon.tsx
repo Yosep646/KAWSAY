@@ -47,6 +47,9 @@ export function Brand() {
         <Icon name="leaf" className="brand-mark-fallback"/>
       </span>
       <span className="brand-copy">
+        <img className="brand-wordmark" src="/kawsay-brand-wordmark.webp?v=tipografia-2"
+             alt="" aria-hidden="true" width={689} height={148} decoding="async"
+             onError={(event) => { event.currentTarget.style.display = "none"; event.currentTarget.nextElementSibling?.classList.add("brand-word-visible"); }} />
         <span className="brand-word">KAWSAY <em>AI</em></span>
         <small>Educación que acompaña</small>
       </span>
