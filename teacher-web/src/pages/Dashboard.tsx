@@ -198,7 +198,15 @@ function RoomPanel({ roomId }: { roomId: string }) {
           ? <p className="muted">Aún no hay suficientes ejercicios para estimar.</p> : (
             <>
               {forecast.data.experimental && <p role="alert" className="notice warn">Modelo EXPERIMENTAL no aprobado: solo demostración, no usar para decidir.</p>}
-              <ul>{forecast.data.items.map((f) => <li key={f.student.id + f.competency.id}><strong>{f.student.display_name}</strong> · {f.competency.name}: probabilidad estimada de dificultad {Math.round(f.probability * 100)} %{f.above_threshold ? " (revisar)" : ""}<small className="muted"> · Modelo {f.model_id} · {f.model_status}</small></li>)}</ul>
+              <ul>{forecast.data.items.map((f) => <li key={f.student.id + f.competency.id}>
+                <strong>{f.student.display_name}</strong> · {f.competency.name}: probabilidad estimada de dificultad {Math.round(f.probability * 100)} %{f.above_threshold ? " (revisar)" : ""}
+                <small className="muted"> · Modelo {f.model_id} · {f.model_status}</small>
+                {!forecast.data?.experimental && f.difficulty_recommendation && <div className="teacher-flow-guidance">
+                  <strong>Recomendación por reglas</strong> · {f.evidence_count ?? 0} ejercicios cerrados. {f.difficulty_recommendation.reason}
+                  {f.difficulty_recommendation.suggested_difficulty !== null && <> Dificultad orientativa: {f.difficulty_recommendation.suggested_difficulty} de 3.</>}
+                  <small> No cambia el grado ni asigna tareas automáticamente. El docente decide.</small>
+                </div>}
+              </li>)}</ul>
               <p className="muted">{forecast.data.items[0]?.advisory}</p>
             </>)}
       </Card>
