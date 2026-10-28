@@ -61,6 +61,19 @@ export function Login() {
   };
 
   return <main className="login-layout login-reimagined">
+    <img
+      className="login-scene-art"
+      src="/kawsay-fondo-responsive-20261028.webp?v=full-bleed-20261028"
+      alt=""
+      aria-hidden="true"
+      decoding="async"
+      onError={(event) => {
+        if (event.currentTarget.dataset.fallback !== "yes") {
+          event.currentTarget.dataset.fallback = "yes";
+          event.currentTarget.src = "/kawsay-fondo-final.jpg?v=background-fallback-20261028";
+        }
+      }}
+    />
     <section className="login-story" aria-label="Bienvenida a KAWSAY AI">
       <Brand />
       <div className="login-story-copy">
@@ -94,16 +107,18 @@ export function Login() {
           )}
         </div>
 
-        {student && <div className="student-login-method" role="group" aria-label="Tipo de acceso del estudiante">
-          <button type="button" className={studentMethod === "email" ? "active" : ""}
-            aria-pressed={studentMethod === "email"} onClick={() => { setStudentMethod("email"); setErr(null); setPassword(""); }}>
+        <div className="student-login-method" role="group" aria-label="Método de acceso">
+          <button type="button" className={!codeMode ? "active" : ""}
+            aria-pressed={!codeMode} disabled={busy}
+            onClick={() => { setStudentMethod("email"); setErr(null); setPassword(""); }}>
             Correo y contraseña
           </button>
-          <button type="button" className={studentMethod === "code" ? "active" : ""}
-            aria-pressed={studentMethod === "code"} onClick={() => { setStudentMethod("code"); setErr(null); setPassword(""); }}>
+          <button type="button" className={codeMode ? "active" : ""}
+            aria-pressed={codeMode} disabled={busy}
+            onClick={() => { if (!student) chooseRole("STUDENT"); setStudentMethod("code"); setErr(null); setPassword(""); }}>
             Código y PIN
           </button>
-        </div>}
+        </div>
 
         <form onSubmit={(e) => void submit(e)} className="stack login-access-form">
           <div className="kawsay-login-field">
