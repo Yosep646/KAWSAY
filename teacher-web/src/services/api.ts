@@ -101,7 +101,7 @@ export async function request<T>(method: string, path: string, body?: unknown, r
 }
 
 /** Authenticated binary file transfer; refreshes tokens just like JSON requests. */
-async function binaryRequest<T extends Blob | object>(
+async function binaryRequest<T>(
   method: "GET" | "POST", path: string, file?: File, retry = true,
 ): Promise<T> {
   const headers: Record<string,string> = {};
