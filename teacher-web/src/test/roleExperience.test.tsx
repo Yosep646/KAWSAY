@@ -50,6 +50,9 @@ describe("Experiencia por rol KAWSAY", () => {
     await userEvent.type(screen.getByLabelText("Buscar institución"), "Cayhuayna");
     expect(screen.queryByText("Colegio de Chupán")).not.toBeInTheDocument();
     expect(screen.getByText("Escuela de Cayhuayna")).toBeInTheDocument();
-    expect(screen.getByRole("button", {name:/Crear institución/})).toBeEnabled();
+    const createSchool = screen.getByRole("button", {name:/Crear institución/});
+    expect(createSchool).toBeDisabled(); // validación: no aceptar nombres vacíos
+    await userEvent.type(screen.getByLabelText(/Nombre de la institución/), "I. E. Escuela de Chupán");
+    expect(createSchool).toBeEnabled();
   });
 });
