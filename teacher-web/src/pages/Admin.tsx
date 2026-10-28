@@ -38,6 +38,8 @@ export function Admin({ section = "overview" }: { section?: AdminSection }) {
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [school, setSchool] = useState("");
+  const [schoolRegion, setSchoolRegion] = useState("");
+  const [schoolBusy, setSchoolBusy] = useState(false);
   const [schoolQuery, setSchoolQuery] = useState("");
   const [staffQuery, setStaffQuery] = useState("");
   const [updatingId, setUpdatingId] = useState<string | null>(null);
@@ -48,9 +50,15 @@ export function Admin({ section = "overview" }: { section?: AdminSection }) {
   const run = async (fn: () => Promise<unknown>, ok: string) => { try { setErr(null); await fn(); setMsg(ok); await schools.reload(); } catch (x) { setErr(errMsg(x)); } };
   const addSchool = async (e: FormEvent) => {
     e.preventDefault();
-    setErr(null);setMsg(null);
-    try { await api.post("/schools", {name:school.trim()});setSchool("");setMsg("Institución creada correctamente.");await schools.reload();await stats.reload(); }
-    catch (error) {setErr(errMsg(error));}
+    if (schoolBusy) return;
+    setErr(null);setMsg(null);setSchoolBusy(true);
+    try {
+      await api.post("/schools", { name: school.trim(), region: schoolRegion.trim() || null });
+      setSchool("");setSchoolRegion("");
+      setMsg("Institución creada correctamente.");
+      await Promise.all([schools.reload(), stats.reload()]);
+    } catch (error) {setErr(errMsg(error));}
+    finally {setSchoolBusy(false);}
   };
   const changeStaffStatus = async (member: Staff) => {
     if (member.id === user?.id) {setErr("No puedes modificar el estado de tu propia cuenta.");return;}
@@ -114,19 +122,77 @@ export function Admin({ section = "overview" }: { section?: AdminSection }) {
       <ErrorBox message={section === "overview" ? null : schools.error ?? (section === "system" ? audit.error ?? events.error : null)} />
       <ErrorBox message={err} />
       {msg && <p role="status" className="notice">{msg}</p>}
-      {section === "schools" && <div className="admin-schools-layout">
-        <Card title="Instituciones registradas">
-          <label>Buscar institución<input type="search" value={schoolQuery} onChange={e=>setSchoolQuery(e.target.value)} placeholder="Nombre de escuela o colegio" /></label>
-          {schools.loading && <p className="muted">Cargando instituciones…</p>}
-          {!schools.loading && schools.data?.length === 0 && <p className="muted">Aún no hay instituciones registradas.</p>}
-          <div className="admin-school-grid">{schools.data?.filter(s=>s.name.toLocaleLowerCase().includes(schoolQuery.trim().toLocaleLowerCase())).map(s=>
-            <div className="admin-school-card" key={s.id}><span><Icon name="classroom"/></span><div><strong>{s.name}</strong><small>{s.region ?? "Institución educativa"}</small></div></div>)}</div>
-        </Card>
-        <Card title="Agregar institución">
-          <p className="muted">Registra primero la institución. Después podrás asociarle docentes, aulas y estudiantes.</p>
-          <form className="stack" onSubmit={(e)=>void addSchool(e)}><label>Nombre de la institución<input value={school} onChange={e=>setSchool(e.target.value)} placeholder="Ej. I. E. Rural San José" maxLength={180} required /></label><button type="submit">Crear institución <Icon name="arrow"/></button></form>
-        </Card>
-      </div>}
+      {section === "schools" && <section className="admin-institutions" aria-label="Gestión de instituciones educativas">
+        <div className="admin-institutions-layout">
+          <section className="admin-institution-panel admin-institutions-directory" aria-labelledby="admin-institutions-heading">
+            <header className="admin-institution-panel-head">
+              <span className="admin-institution-symbol"><Icon name="classroom"/></span>
+              <div className="admin-institution-head-copy">
+                <p className="admin-institution-kicker">DIRECTORIO EDUCATIVO</p>
+                <h3 id="admin-institutions-heading">Instituciones registradas</h3>
+                <p>Consulta las instituciones asociadas a KAWSAY AI.</p>
+              </div>
+              <span className="admin-institution-count">{schools.loading ? "…" : schools.data?.length ?? "—"} <small>registradas</small></span>
+            </header>
+            <label className="admin-institution-search-label" htmlFor="admin-institution-search">Buscar institución</label>
+            <div className="admin-institution-search">
+              <Icon name="search"/>
+              <input id="admin-institution-search" type="search" autoComplete="off"
+                value={schoolQuery} onChange={e=>setSchoolQuery(e.target.value)}
+                placeholder="Busca por nombre o región…"/>
+            </div>
+            {schools.loading && <p className="admin-institution-state">Cargando instituciones…</p>}
+            {!schools.loading && !schools.data?.length && <div className="admin-institution-empty">
+              <Icon name="classroom"/>
+              <strong>Aún no hay instituciones registradas</strong>
+              <span>Utiliza el formulario para registrar tu primera institución.</span>
+            </div>}
+            {schools.data?.length ? <div className="admin-institution-list">
+              {schools.data.filter(s=>`${s.name} ${s.region || ""}`.toLocaleLowerCase("es").includes(schoolQuery.trim().toLocaleLowerCase("es"))).map(s=>
+                <article className="admin-institution-item" key={s.id}>
+                  <span className="admin-institution-item-icon"><Icon name="classroom"/></span>
+                  <div className="admin-institution-item-info">
+                    <strong>{s.name}</strong>
+                    <small><Icon name="map-pin"/> {s.region || "Región no especificada"}</small>
+                  </div>
+                  <span className="admin-institution-item-tag">Registrada</span>
+                </article>)}
+              {schools.data.filter(s=>`${s.name} ${s.region || ""}`.toLocaleLowerCase("es").includes(schoolQuery.trim().toLocaleLowerCase("es"))).length === 0 &&
+                <div className="admin-institution-empty"><Icon name="search"/><strong>No se encontraron instituciones</strong><span>Prueba con otro nombre o región.</span></div>}
+            </div> : null}
+            <footer className="admin-institution-panel-foot"><Icon name="shield"/> Información consultada desde el sistema, sin datos simulados.</footer>
+          </section>
+          <section className="admin-institution-panel admin-institutions-create" aria-labelledby="admin-create-school-heading">
+            <header className="admin-institution-panel-head">
+              <span className="admin-institution-symbol admin-institution-symbol-create"><Icon name="leaf"/></span>
+              <div className="admin-institution-head-copy">
+                <p className="admin-institution-kicker">NUEVA INSTITUCIÓN</p>
+                <h3 id="admin-create-school-heading">Registrar institución</h3>
+                <p>Agrega un colegio o sede a la plataforma.</p>
+              </div>
+            </header>
+            <form className="admin-institution-form" onSubmit={(e)=>void addSchool(e)}>
+              <label htmlFor="new-school-name">Nombre de la institución <span aria-hidden="true">*</span>
+                <input id="new-school-name" autoComplete="organization" value={school}
+                  onChange={e=>setSchool(e.target.value)}
+                  placeholder="Ej. I. E. Rural San José" minLength={2} maxLength={180} required />
+              </label>
+              <label htmlFor="new-school-region">Región o departamento <small>(opcional)</small>
+                <input id="new-school-region" value={schoolRegion}
+                  onChange={e=>setSchoolRegion(e.target.value)}
+                  placeholder="Ej. Huánuco" maxLength={120} />
+              </label>
+              <button type="submit" disabled={schoolBusy || school.trim().length < 2}>
+                {schoolBusy ? "Registrando…" : "Crear institución"}<Icon name="arrow"/>
+              </button>
+            </form>
+            <div className="admin-institution-next">
+              <Icon name="check"/>
+              <p>Después de registrar la institución podrás asociarle docentes, aulas y estudiantes.</p>
+            </div>
+          </section>
+        </div>
+      </section>}
       {section === "teachers" && (
         <div className="admin-teacher-layout">
           <section className="admin-form-card" aria-labelledby="teacher-form-title">
