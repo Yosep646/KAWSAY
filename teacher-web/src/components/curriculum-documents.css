@@ -150,3 +150,35 @@
   .curriculum-minedu-heading{align-items:flex-start;gap:10px}
   .curriculum-minedu-symbol{width:37px;height:37px;flex-basis:37px}
 }
+
+
+/* Document-to-plan handoff: a reviewed attachment is NOT an active curriculum. */
+.curriculum-library .curriculum-continue{
+  border:1px solid #79ffe8 !important;
+  border-radius:8px;
+  background:#0cdec0 !important;
+  color:#032b36 !important;
+  font-size:11px;
+  font-weight:800;
+  padding:9px 11px;
+  min-height:36px;
+  cursor:pointer;
+}
+.curriculum-library .curriculum-continue:hover{background:#5bf3d8!important}
+.curriculum-library .curriculum-next-step {
+  display:flex;align-items:flex-start;gap:11px;
+  margin-top:2px;padding:15px;
+  border:1px solid #379a91;border-radius:12px;
+  background:linear-gradient(120deg,#0a4e52,#0b3e50);
+  color:#e9fffb;
+}
+.curriculum-library .curriculum-next-step>.icon{flex:0 0 23px;width:23px;height:23px;color:#63f2d3}
+.curriculum-library .curriculum-next-step p{margin:0;font-size:12px;line-height:1.65;color:#c7e9ed}
+.curriculum-library .curriculum-next-step strong{color:#fff}
+.teacher-plan-create{scroll-margin-top:100px;min-width:0}
+.teacher-plan-create .teacher-flow-guidance {margin-bottom:14px;color:#ddfbf3}
+.teacher-plan-create .teacher-flow-guidance p{margin:6px 0 0;font-size:12px;line-height:1.6}
+@media(max-width:640px){
+  .curriculum-library .curriculum-next-step{padding:12px;gap:8px}
+  .curriculum-library .curriculum-next-step p{font-size:11px}
+}
