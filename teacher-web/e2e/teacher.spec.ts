@@ -11,7 +11,7 @@ test("la cola IndexedDB conserva el evento tras recargar", async ({ page }) => {
   const eventId = await page.evaluate(async () => {
     const modulePath = "/src/services/pendingAttempts.ts";
     const { pendingAttempts } = await import(/* @vite-ignore */ modulePath);
-    const saved = await pendingAttempts.get("test-user:test-task");
+    const saved = (await pendingAttempts.list("test-user:test-task"))[0];
     await pendingAttempts.removeConfirmed("test-user:test-task", "test-event");
     return saved?.event.event_id;
   });
@@ -26,7 +26,7 @@ test("una confirmación antigua no borra otra respuesta pendiente", async ({ pag
     const key = "user:task";
     await pendingAttempts.add({ key, deviceId: "device", event: { event_id: "new-event", type: "attempt.created", payload: {} } });
     const removed = await pendingAttempts.removeConfirmed(key, "old-event");
-    const saved = await pendingAttempts.get(key);
+    const saved = (await pendingAttempts.list(key))[0];
     await pendingAttempts.removeConfirmed(key, "new-event");
     return { removed, eventId: saved?.event.event_id };
   });
@@ -38,7 +38,7 @@ async function login(page: Page) {
   await page.getByLabel("Correo").fill("maestra@demo.pe");
   await page.getByLabel("Contraseña", { exact: true }).fill("Aula-Multigrado-2026!");
   await page.getByRole("button", { name: "Ingresar", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "Dashboard", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Bienvenido,\s*Docente/i })).toBeVisible();
 }
 
 test("login, evidencia calculada, progreso, restauración de sesión y logout", async ({ page }) => {
