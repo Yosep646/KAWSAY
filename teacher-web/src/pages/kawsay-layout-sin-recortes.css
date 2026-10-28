@@ -5,7 +5,7 @@
  */
 .login-layout.login-reimagined {
   display: grid !important;
-  grid-template-columns: minmax(0, 71.5fr) minmax(0, 28.5fr) !important;
+  grid-template-columns: minmax(0, 71fr) minmax(0, 29fr) !important;
   width: 100% !important;
   min-height: 100svh !important;
   height: auto !important;
@@ -27,12 +27,15 @@
 .login-layout.login-reimagined > img.login-scene-art {
   display: block !important;
   position: absolute !important;
-  inset: 0 !important;
+  top: 0 !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: -16% !important;
   z-index: 0 !important;
-  width: 100% !important;
+  width: 118% !important;
   height: 100% !important;
   object-fit: cover !important;
-  object-position: center center !important;
+  object-position: center 15% !important;
   pointer-events: none !important;
   user-select: none !important;
 }
@@ -115,7 +118,7 @@
   align-items: center !important;
   min-height: 100svh !important;
   min-width: 0 !important;
-  padding: clamp(14px,2vw,34px) clamp(18px,2.8vw,53px) !important;
+  padding: clamp(14px,2vw,34px) clamp(24px,5.4vw,98px) clamp(14px,2vw,34px) 0 !important;
   background: transparent !important;
   background-image: none !important;
   overflow: visible !important;
@@ -204,17 +207,17 @@
 
 /* Pantallas medianas y portátiles compactas: mantiene encuadre panorámico,
    pero el formulario nunca se coloca encima de las caras. */
-@media (min-width: 1100px) and (max-width: 1480px) {
-  .login-layout.login-reimagined { grid-template-columns: minmax(0,69%) minmax(0,31%) !important; }
+@media (min-width: 1350px) and (max-width: 1480px) {
+  .login-layout.login-reimagined { grid-template-columns: minmax(0,70%) minmax(0,30%) !important; }
   .login-layout.login-reimagined > .login-form-panel {
-    padding-left: clamp(8px,1.5vw,20px) !important;
-    padding-right: clamp(8px,1.5vw,20px) !important;
+    padding-left: 0 !important;
+    padding-right: clamp(14px,3vw,42px) !important;
   }
   .login-layout.login-reimagined .login-story h1 { font-size: clamp(35px,4.1vw,55px) !important; }
 }
 /* Móvil/tablet: nunca recortar imagen; mostrar foto 100% antes de formulario.
    Textos y todos los campos se colocan debajo, con scroll natural. */
-@media (max-width: 1099.98px) {
+@media (max-width: 1349.98px) {
   .login-layout.login-reimagined {
     display: flex !important;
     flex-direction: column !important;
@@ -226,7 +229,10 @@
   }
   .login-layout.login-reimagined > img.login-scene-art {
     position: absolute !important;
-    inset: 0 0 auto 0 !important;
+    top: 0 !important;
+    right: 0 !important;
+    left: 0 !important;
+    bottom: auto !important;
     width: 100% !important;
     height: auto !important;
     max-height: none !important;
@@ -296,7 +302,7 @@
   .login-layout.login-reimagined > .login-form-panel > .login { padding: 19px 15px !important; }
 }
 /* Pantallas horizontales bajas: tarjeta desplazable sin ocultar inputs. */
-@media (min-width: 1100px) and (max-height: 730px) {
+@media (min-width: 1350px) and (max-height: 730px) {
   .login-layout.login-reimagined > .login-form-panel { padding: 8px 15px !important; }
   .login-layout.login-reimagined > .login-form-panel > .login {
     max-height: calc(100dvh - 16px) !important;
