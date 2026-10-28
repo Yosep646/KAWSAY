@@ -36,6 +36,20 @@ export function Icon({ name, className = "" }: { name: IconName; className?: str
   return <svg className={`icon ${className}`} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false"><path d={paths[name]} /></svg>;
 }
 
+/** Identity shared by the login, administrator, teacher and student navigation. */
 export function Brand() {
-  return <div className="brand"><span className="brand-mark"><Icon name="leaf" /></span><span>KAWSAY <em>AI</em><small>Educación que acompaña</small></span></div>;
+  return (
+    <div className="brand" aria-label="KAWSAY AI, Educación que acompaña">
+      <span className="brand-mark" aria-hidden="true">
+        <img className="brand-emblem" src="/kawsay-brand-icon.webp?v=logo-20261028"
+             alt="" width={56} height={56} decoding="async"
+             onError={(event) => { event.currentTarget.style.display = "none"; event.currentTarget.nextElementSibling?.classList.add("brand-show-fallback"); }} />
+        <Icon name="leaf" className="brand-mark-fallback"/>
+      </span>
+      <span className="brand-copy">
+        <span className="brand-word">KAWSAY <em>AI</em></span>
+        <small>Educación que acompaña</small>
+      </span>
+    </div>
+  );
 }
