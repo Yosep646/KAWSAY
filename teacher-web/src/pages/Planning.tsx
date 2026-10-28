@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../app/AuthContext";
-import { CurriculumDocuments } from "../components/CurriculumDocuments";
+import { CurriculumDocuments, type CurriculumDocumentReference } from "../components/CurriculumDocuments";
 import { TeacherPageIntro } from "../components/TeacherPageIntro";
 import { Icon } from "../components/Icon";
 import { Badge, Card, ErrorBox, Loading } from "../components/ui";
@@ -19,6 +19,14 @@ export function Planning() {
   const [year, setYear] = useState(new Date().getFullYear());
   const [fw, setFw] = useState("");
   const [err, setErr] = useState<string | null>(null);
+  const [reference, setReference] = useState<CurriculumDocumentReference | null>(null);
+
+  const prepareReference = (doc:CurriculumDocumentReference) => {
+    setReference(doc);
+    setYear(doc.academic_year);
+    setName(`Planificación ${doc.area} ${doc.grade_number}.º primaria · ${doc.academic_year}`);
+    window.requestAnimationFrame(() => document.getElementById("crear-plan-estructurado")?.scrollIntoView({behavior:"smooth",block:"center"}));
+  };
 
   const create = async (e: FormEvent) => {
     e.preventDefault();
@@ -45,19 +53,23 @@ export function Planning() {
           </ol>
         </div>
       </section>
-      <CurriculumDocuments />
+      <CurriculumDocuments onPreparePlan={user?.role === "TEACHER" ? prepareReference : undefined} />
       <div className="teacher-flow-guidance"><strong>Nota:</strong> Los planes activos mantienen trazabilidad curricular. Los documentos adjuntos no sustituyen la aprobación humana.</div>
       <ErrorBox message={plans.error ?? err} />
       {user?.role === "TEACHER" && (
+        <section id="crear-plan-estructurado" className="teacher-plan-create" aria-label="Crear planificación estructurada">
         <Card title="Crear planificación estructurada">
+          {reference && <div className="teacher-flow-guidance" role="status"><strong>Referencia seleccionada:</strong> {reference.filename} · {reference.area} · {reference.grade_number}.º grado · {reference.academic_year}.<p>El nombre y año están preparados. El PDF no se ha convertido automáticamente en temas: registra el contenido revisado y envíalo a aprobación.</p></div>}
+          {!frameworks.loading && !frameworks.data?.length && <div className="teacher-flow-guidance" role="note"><strong>Falta un marco curricular estructurado.</strong> Solicita al administrador que registre y valide las competencias del MINEDU. Sin ese catálogo aún no es posible crear el plan.</div>}
           <form className="row" onSubmit={(e) => void create(e)}>
             <label>Nombre<input value={name} onChange={(e) => setName(e.target.value)} required minLength={2} /></label>
             <label>Año<input type="number" value={year} onChange={(e) => setYear(Number(e.target.value))} /></label>
             <label>Marco curricular<select value={fw} onChange={(e) => setFw(e.target.value)}>
               {frameworks.data?.map((f) => <option key={f.id} value={f.id}>{f.name} {f.is_demo ? "(DEMO)" : ""}</option>)}</select></label>
-            <button type="submit" disabled={!frameworks.data?.length}>Crear plan</button>
+            <button type="submit" disabled={!frameworks.data?.length}>Crear borrador de planificación</button>
           </form>
         </Card>
+        </section>
       )}
       {frameworks.error && <ErrorBox message={frameworks.error}/>}
       {!plans.loading && !plans.data?.length && <div className="teacher-flow-empty"><Icon name="book"/><h3>Aún no hay planes estructurados</h3><p>La biblioteca de documentos funciona de manera independiente. Para crear ejercicios por grado necesitas crear un plan, definir sus unidades y solicitar la activación de la versión.</p></div>}
