@@ -18,7 +18,7 @@ interface MineduCatalog {
   grades:MineduGrade[];
   math_competencies:string[];
 }
-export interface CurriculumDocumentReference { filename:string; academic_year:number; grade_number:number; area:string; }
+export interface CurriculumDocumentReference { filename:string; academic_year:number; education_level:Level; grade_number:number; area:string; }
 interface DocumentRecord {
   id: string; school_id: string; education_level: Level; grade_number: number;
   academic_year: number; area: string; filename: string; file_size: number;
