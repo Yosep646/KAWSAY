@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from "react";
+import { Link } from "react-router-dom";
 import { Card, ErrorBox, Loading } from "../components/ui";
 import { Icon } from "../components/Icon";
+import { TeacherPageIntro } from "../components/TeacherPageIntro";
 import "./student-enroll.css";
 import { useAsync } from "../hooks/useAsync";
 import { api } from "../services/api";
@@ -13,28 +15,45 @@ export function Classrooms() {
   const [name, setName] = useState("");
   const [year, setYear] = useState(new Date().getFullYear());
   const [err, setErr] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
 
   const create = async (e: FormEvent) => {
     e.preventDefault();
-    try { setErr(null); await api.post("/classrooms", { name, academic_year: year }); setName(""); await rooms.reload(); } catch (x) { setErr(errMsg(x)); }
+    if (busy) return;
+    try { setBusy(true);setErr(null); const created = await api.post<Classroom>("/classrooms", { name:name.trim(), academic_year: year }); setName(""); await rooms.reload(); if (created?.id) setSelected(created.id); } catch (x) { setErr(errMsg(x)); } finally { setBusy(false); }
   };
   return (
-    <div>
-      <h2>Mis aulas</h2>
-      <Card title="Nueva aula (puede mezclar grados)">
-        <form className="row" onSubmit={(e) => void create(e)}>
-          <label>Nombre<input value={name} onChange={(e) => setName(e.target.value)} required maxLength={100} /></label>
-          <label>Año<input type="number" value={year} min={2020} max={2100} onChange={(e) => setYear(Number(e.target.value))} /></label>
-          <button type="submit">Crear aula</button>
-        </form>
-        <ErrorBox message={err} />
-      </Card>
-      <ErrorBox message={rooms.error} />
-      {rooms.loading ? <Loading /> : (
-        <ul className="list">{rooms.data?.map((r) => (
-          <li key={r.id}><button className="link" onClick={() => setSelected(r.id)}>{r.name} · {r.academic_year}</button></li>))}</ul>
-      )}
-      {selected && <RoomDetail key={selected} id={selected} />}
+    <div className="teacher-workflow teacher-classrooms-page">
+      <TeacherPageIntro kicker="GESTIÓN DE AULAS · KAWSAY AI" title="Mis aulas" description="Organiza tus secciones, incluso cuando enseñas varios grados en una misma aula." icon="classroom">
+        <Link to="/estudiantes"><Icon name="students"/> Gestionar estudiantes</Link>
+        <Link className="secondary" to="/planificacion"><Icon name="book"/> Ver planificación</Link>
+      </TeacherPageIntro>
+      <div className="teacher-flow-kpis">
+        <div className="teacher-flow-stat"><span><Icon name="classroom"/></span><div><strong>{rooms.loading?"…":rooms.data?.length??"—"}</strong><small>Aulas registradas</small></div></div>
+        <div className="teacher-flow-stat"><span><Icon name="graduation"/></span><div><strong>{rooms.data?.length ? new Set(rooms.data.map(r => r.academic_year)).size : rooms.loading ? "…" : 0}</strong><small>Años escolares con aulas</small></div></div>
+        <div className="teacher-flow-stat"><span><Icon name="leaf"/></span><div><strong>Multigrado</strong><small>Cada estudiante conserva su grado oficial</small></div></div>
+      </div>
+      <ErrorBox message={rooms.error ?? err}/>
+      <div className="teacher-flow-grid">
+        <section className="teacher-flow-card">
+          <div className="teacher-flow-card-heading"><span><Icon name="classroom"/></span><div><h3>Mis secciones</h3><p>Selecciona un aula para consultar su lista de estudiantes.</p></div></div>
+          {rooms.loading ? <Loading/> : rooms.data?.length ? (
+            <div className="teacher-room-list">{rooms.data.map(r => <button key={r.id} type="button" className="teacher-room-item" aria-pressed={selected===r.id} onClick={() => setSelected(r.id)}>
+              <span><Icon name="classroom"/></span><div><strong>{r.name}</strong><small>Año escolar {r.academic_year}</small></div><Icon name="arrow"/>
+            </button>)}</div>
+          ) : <div className="teacher-flow-empty"><Icon name="classroom"/><h3>Aún no tienes aulas</h3><p>Registra tu primera aula. Después podrás agregar estudiantes y preparar actividades por grado.</p></div>}
+        </section>
+        <section className="teacher-flow-card">
+          <div className="teacher-flow-card-heading"><span><Icon name="book"/></span><div><h3>Registrar nueva aula</h3><p>Los estudiantes pueden pertenecer a distintos grados.</p></div></div>
+          <form className="teacher-flow-form" onSubmit={e=>void create(e)}>
+            <label>Nombre de la sección<input value={name} onChange={e=>setName(e.target.value)} placeholder="Ej. Aula multigrado A" minLength={2} maxLength={100} required/></label>
+            <label>Año escolar<input type="number" value={year} min={2020} max={2100} onChange={e=>setYear(Number(e.target.value))} required/></label>
+            <button type="submit" disabled={busy||name.trim().length<2}>{busy?"Creando aula…":"Crear aula"} <Icon name="arrow"/></button>
+          </form>
+          <div className="teacher-flow-guidance" style={{marginTop:16}}>Después de crear el aula, registra a los estudiantes y activa una planificación estructurada. <Link to="/planificacion">Revisar planificación</Link></div>
+        </section>
+      </div>
+      {selected && <section className="teacher-flow-card" aria-label="Detalle del aula seleccionada"><RoomDetail key={selected} id={selected}/></section>}
     </div>
   );
 }
