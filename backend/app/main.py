@@ -18,6 +18,7 @@ from app.modules.auth.routes import router as auth_router
 from app.modules.automation.routes import router as automation_router
 from app.modules.classrooms.routes import router as classrooms_router
 from app.modules.curriculum.routes import router as curriculum_router
+from app.modules.curriculum.document_routes import router as curriculum_document_router
 from app.modules.health.routes import router as health_router
 from app.modules.interventions.routes import router as interventions_router
 from app.modules.languages.routes import router as languages_router
@@ -65,7 +66,7 @@ def create_app() -> FastAPI:
     app.include_router(health_router)
     api = APIRouter(prefix=API_PREFIX)
     for r in (auth_router, users_router, schools_router, classrooms_router, students_router,
-              curriculum_router, planning_router, assignments_router,
+              curriculum_router, curriculum_document_router, planning_router, assignments_router,
               sync_router, flags_router, interventions_router, analytics_router, progress_router,
               audit_router, automation_router, languages_router, tutor_router, learning_router):
         api.include_router(r)
