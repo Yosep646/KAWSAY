@@ -8,6 +8,16 @@ import "./curriculum-documents.css";
 
 type Level = "PRIMARIA" | "SECUNDARIA";
 interface School { id: string; name: string }
+interface MineduGrade { number:number; name:string; planning_pdf_url:string; planning_word_url:string }
+interface MineduCatalog {
+  source_label:string;
+  curriculum:{name:string;year:number;url:string};
+  national_framework:{name:string;year:number;url:string};
+  resource_index_url:string;
+  notice:string;
+  grades:MineduGrade[];
+  math_competencies:string[];
+}
 interface DocumentRecord {
   id: string; school_id: string; education_level: Level; grade_number: number;
   academic_year: number; area: string; filename: string; file_size: number;
@@ -25,6 +35,7 @@ export function CurriculumDocuments() {
   const { user } = useAuth();
   const admin = user?.role === "ADMIN";
   const schools = useAsync(() => api.get<School[]>("/curriculum/documents/schools"), []);
+  const official = useAsync(() => api.get<MineduCatalog>("/curriculum/minedu/primaria"), []);
   const [selectedSchool,setSelectedSchool] = useState("");
   const schoolId = selectedSchool || schools.data?.[0]?.id || "";
   const [year,setYear] = useState(new Date().getFullYear());
@@ -44,6 +55,7 @@ export function CurriculumDocuments() {
   );
   const activeAreas = AREAS.filter(a => documents.data?.some(d => d.area === a));
   const grouped = activeAreas.map(a => ({name:a,files:(documents.data||[]).filter(d=>d.area===a)}));
+  const mineduGrade = official.data?.grades.find(g => g.number === grade);
 
   async function upload(event: FormEvent) {
     event.preventDefault();
@@ -125,6 +137,29 @@ export function CurriculumDocuments() {
         <span>{n}.º</span><small>grado</small>
       </button>)}
     </div>
+    {level==="PRIMARIA" && <section className="curriculum-minedu" aria-labelledby="curriculum-minedu-heading">
+      <div className="curriculum-minedu-heading">
+        <span className="curriculum-minedu-symbol"><Icon name="book"/></span>
+        <div><p>FUENTES EDUCATIVAS DEL PERÚ</p><h4 id="curriculum-minedu-heading">Referencias oficiales MINEDU · {grade}.º de primaria</h4>
+          <small>Material público de consulta. El colegio decide su programación; no se activa automáticamente.</small></div>
+      </div>
+      {official.loading && <p className="curriculum-minedu-notice">Consultando el catálogo curricular…</p>}
+      {official.error && <p className="curriculum-feedback error" role="alert">No se pudo cargar el catálogo MINEDU: {official.error}</p>}
+      {official.data && <>
+        <div className="curriculum-minedu-links">
+          <a href={official.data.curriculum.url} target="_blank" rel="noopener noreferrer"><Icon name="book"/> Programa de Educación Primaria <Icon name="arrow"/></a>
+          {mineduGrade && <>
+            <a href={mineduGrade.planning_pdf_url} target="_blank" rel="noopener noreferrer"><Icon name="book"/> Planificación {grade}.º · PDF <Icon name="arrow"/></a>
+            <a href={mineduGrade.planning_word_url} target="_blank" rel="noopener noreferrer"><Icon name="book"/> Planificación {grade}.º · Word <Icon name="arrow"/></a>
+          </>}
+          <a href={official.data.resource_index_url} target="_blank" rel="noopener noreferrer">Más recursos MINEDU <Icon name="arrow"/></a>
+        </div>
+        {area==="Matemática" && <div className="curriculum-minedu-math"><strong>Competencias de Matemática</strong>
+          <ul>{official.data.math_competencies.map(item=><li key={item}>{item}</li>)}</ul>
+        </div>}
+        <p className="curriculum-minedu-notice">{official.data.notice}</p>
+      </>}
+    </section>}
     <div className="curriculum-library-columns">
       <form className="curriculum-upload" onSubmit={e=>void upload(e)}>
         <h4><Icon name="book"/> Subir material de {grade}.º de {level.toLowerCase()}</h4>
