@@ -1,6 +1,8 @@
 import { useEffect, useState, type FormEvent } from "react";
+import { Link } from "react-router-dom";
 import { Card, ErrorBox, Loading } from "../components/ui";
 import { Icon } from "../components/Icon";
+import { TeacherPageIntro } from "../components/TeacherPageIntro";
 import "./student-enroll.css";
 import { useAsync } from "../hooks/useAsync";
 import { api } from "../services/api";
@@ -17,9 +19,12 @@ export function Students() {
   useEffect(() => { if (!classroomId && rooms.data?.length === 1 && rooms.data[0]) setClassroomId(rooms.data[0].id); }, [rooms.data, classroomId]);
 
   return (
-    <div className="student-management">
-      <header className="student-management-hero"><span><Icon name="graduation" /> GESTIÓN DEL AULA</span><h2>Mis estudiantes</h2><p>Registra estudiantes y asigna sus credenciales para entrar a KAWSAY AI, incluso desde su teléfono.</p></header>
-      <p className="muted">Gestiona estudiantes y registra el idioma que cada persona declara. KAWSAY nunca lo infiere por su ubicación.</p>
+    <div className="student-management teacher-workflow">
+      <TeacherPageIntro kicker="APRENDIZAJE · GESTIÓN DEL AULA" title="Mis estudiantes" icon="graduation" description="Registra estudiantes por grado, asigna sus credenciales y acompaña su progreso individual.">
+        <Link to="/aulas"><Icon name="classroom"/> Mis aulas</Link>
+        <Link to="/actividades/nueva" className="secondary"><Icon name="tasks"/> Preparar actividad</Link>
+      </TeacherPageIntro>
+      <div className="teacher-flow-guidance"><strong>Acceso protegido.</strong> Cada estudiante mantiene su grado oficial y el idioma que declara. El docente gestiona las credenciales de forma privada.</div>
       <Card title="Seleccionar aula">
         <ErrorBox message={rooms.error ?? languages.error} />
         {rooms.loading || languages.loading ? <Loading /> : rooms.data?.length ? (
@@ -29,7 +34,7 @@ export function Students() {
               {rooms.data.map((room) => <option key={room.id} value={room.id}>{room.name} · {room.academic_year}</option>)}
             </select>
           </label>
-        ) : <p>No hay aulas creadas. Crea una en “Mis aulas” antes de registrar estudiantes.</p>}
+        ) : <div className="teacher-flow-empty"><Icon name="classroom"/><h3>Primero crea un aula</h3><p>No hay aulas registradas. Para agregar estudiantes necesitas crear una sección e indicar su año escolar.</p><Link to="/aulas"><Icon name="arrow"/> Crear mi primera aula</Link></div>}
       </Card>
       {classroomId && <ClassroomStudents key={classroomId} classroomId={classroomId} languages={languages.data ?? []} />}
     </div>
