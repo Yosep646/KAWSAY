@@ -102,3 +102,51 @@
   .curriculum-upload,.curriculum-records{padding:14px}
 }
 @media(max-width:360px){.curriculum-grade-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+
+/* MINEDU primary references — source links, never an automatic curriculum sync */
+.curriculum-library .curriculum-minedu {
+  min-width:0;
+  padding:18px;
+  border:1px solid #27817f;
+  border-radius:13px;
+  background:linear-gradient(120deg,#0a444c,#082d40 68%,#08283c);
+}
+.curriculum-minedu-heading {
+  display:flex;align-items:center;gap:13px;margin-bottom:13px;
+}
+.curriculum-minedu-symbol {
+  display:grid;place-items:center;
+  width:44px;height:44px;flex:0 0 44px;
+  background:#096d66;border:1px solid #38b7a1;color:#c9fff4;border-radius:12px;
+}
+.curriculum-minedu-heading>div{min-width:0}
+.curriculum-minedu-heading p{color:#5df5d7;font-size:10px;letter-spacing:.12em;font-weight:800;margin:0 0 5px}
+.curriculum-minedu-heading h4{color:#fff;font-size:clamp(14px,1.35vw,17px);font-weight:800;margin:0 0 5px}
+.curriculum-minedu-heading small{color:#b4d9dd;font-size:11px;line-height:1.5;display:block}
+.curriculum-minedu-links {
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;
+}
+.curriculum-minedu-links a {
+  display:flex;align-items:center;justify-content:space-between;gap:9px;
+  color:#eafffc!important;text-decoration:none!important;
+  border:1px solid #27767c;border-radius:9px;
+  background:#0b394c;padding:11px;font-size:12px;font-weight:700;
+  min-width:0;line-height:1.4;
+}
+.curriculum-minedu-links a:hover{background:#12556b;border-color:#4be1ce}
+.curriculum-minedu-links a:focus-visible {outline:2px solid #46f5d6;outline-offset:2px}
+.curriculum-minedu-links a>.icon:first-child{flex:0 0 18px;color:#56efdc}
+.curriculum-minedu-links a>.icon:last-child{flex:0 0 14px;margin-left:auto;color:#42f2d3}
+.curriculum-minedu-math{margin-top:14px;background:#0b3345;border:1px solid #20667a;border-radius:11px;padding:13px}
+.curriculum-minedu-math>strong{display:block;color:#f8ffff;font-size:12px;margin-bottom:9px}
+.curriculum-minedu-math ul{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:0;list-style:none}
+.curriculum-minedu-math li{display:flex;align-items:center;gap:7px;font-size:11px;color:#c8f0f0}
+.curriculum-minedu-math li::before{content:"";display:block;flex:0 0 6px;width:6px;height:6px;border-radius:50%;background:#44e9ce}
+.curriculum-minedu-notice{color:#b8d5db;font-size:11px;line-height:1.6;margin:13px 0 0}
+@media(max-width:740px){
+  .curriculum-library .curriculum-minedu{padding:13px}
+  .curriculum-minedu-links,.curriculum-minedu-math ul{grid-template-columns:1fr}
+  .curriculum-minedu-heading{align-items:flex-start;gap:10px}
+  .curriculum-minedu-symbol{width:37px;height:37px;flex-basis:37px}
+}
