@@ -75,6 +75,7 @@ def main() -> None:
             "DATABASE_URL": f"sqlite:///{Path(folder).as_posix()}/browser.db",
             "JWT_SECRET": secrets.token_hex(32),
             "CORS_ORIGINS": WEB_URL,
+            "DEMO_ALLOW_WRITES": "1",  # only SQLite file inside TemporaryDirectory, never Render
             "AI_PROVIDER": "disabled",
             "AI_API_KEY": "",
             "AUTOMATION_WEBHOOK_URL": "",
