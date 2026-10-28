@@ -18,7 +18,8 @@ describe("Creación de ejercicios cuando falta planificación", () => {
       throw new Error("Consulta no prevista: "+path);
     });
     const first = render(<MemoryRouter><CreateAssignment/></MemoryRouter>);
-    expect(await screen.findByText("Falta activar una planificación curricular")).toBeInTheDocument();
+    await screen.findByRole("textbox", {name:/Título de la actividad/});
+    await waitFor(() => expect(screen.getByText(/Falta activar una planificación curricular/)).toBeInTheDocument());
     const create = screen.getByRole("button",{name:/Crear variantes para revisión/});
     expect(create).toBeDisabled();
     const title = screen.getByRole("textbox",{name:/Título de la actividad/});
