@@ -45,5 +45,5 @@ export interface PlanBrief { id: string; name: string; school_id: string; framew
 export interface Framework { id: string; name: string; version_label: string; is_demo: boolean }
 export interface FrameworkTree extends Framework { subjects: { id: string; name: string; competencies: { id: string; name: string; capacities: { id: string; name: string }[] }[] }[] }
 export interface AdaptResult { assignment_id: string; results: { variant_id: string; grade_id: number; status: string; reasons: string[] }[] }
-export interface ForecastItem { student: { id: string; display_name: string }; competency: { id: string; name: string | null }; probability: number; above_threshold: boolean; model_id: string; model_status: string; warning: string | null; advisory: string; inference_ms?: number }
+export interface ForecastItem { student: { id: string; display_name: string }; competency: { id: string; name: string | null }; probability: number; above_threshold: boolean; model_id: string; model_status: string; warning: string | null; advisory: string; inference_ms?: number; evidence_count?: number; difficulty_recommendation?: CompetencyProgress["difficulty_recommendation"] }
 export interface Forecast { available: boolean; experimental?: boolean; reason?: string; items: ForecastItem[] }
