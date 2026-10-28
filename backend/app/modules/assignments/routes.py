@@ -13,12 +13,12 @@ from app.core.rate_limit import check_rate
 from app.modules.ai.adaptation import PROMPT_VERSION, adapt_one
 from app.modules.ai.gateway import AIGateway, get_gateway
 from app.modules.assignments import service
-from app.modules.assignments.math_grade_rules import (RULE_VERSION, generate_questions, instructions_for_grade, parse_example)
+from app.modules.assignments.math_grade_rules import RULE_VERSION, generate_questions, instructions_for_grade, parse_example
 from app.modules.assignments.models import Assignment, AssignmentVariant
 from app.modules.assignments.schemas import QuestionsIn
+from app.modules.classrooms.service import list_teacher_classrooms
 from app.modules.curriculum.models import Grade, Subject
 from app.modules.planning.models import CurriculumTopic
-from app.modules.classrooms.service import list_teacher_classrooms
 from app.modules.users.models import Role, User
 
 router = APIRouter(prefix="/assignments", tags=["assignments"])
