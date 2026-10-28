@@ -47,6 +47,8 @@ def forecast_for_students(db: Session, students: dict[uuid.UUID, dict]) -> dict:
     for (sid, cid), facts in by_key.items():
         results = sorted((r for r in adaptive.question_results(facts) if r.closed), key=lambda r: r.at)
         hist = [{"score": r.score, "hints": r.hints, "wrong": r.wrong_attempts} for r in results]
+        progress_score, evidence_count = adaptive.compute_progress(results)
+        support = adaptive.difficulty_recommendation(progress_score, evidence_count)
         started = perf_counter()
         try:
             out = pred.predict(hist, students[sid]["grade_number"], allow_experimental=allow)
@@ -59,6 +61,13 @@ def forecast_for_students(db: Session, students: dict[uuid.UUID, dict]) -> dict:
         items.append({"student": {"id": sid, "display_name": students[sid]["display_name"]},
                       "competency": {"id": cid, "name": names.get(cid)}, "probability": out["probability"],
                       "above_threshold": out["above_threshold"], "model_id": out["model_id"], "model_status": out["model_status"],
-                      "warning": out["warning"], "advisory": ADVISORY, "inference_ms": inference_ms})
+                      "warning": out["warning"], "advisory": ADVISORY, "inference_ms": inference_ms,
+                      "evidence_count": evidence_count,
+                      "difficulty_recommendation": {
+                          **support,
+                          "source": "RULES",
+                          "method_version": adaptive.METHOD_VERSION,
+                          "requires_teacher_decision": True,
+                      }})
     items.sort(key=lambda x: -x["probability"])
     return {"available": True, "experimental": bool(items and items[0]["model_status"] != "APPROVED"), "items": items}
