@@ -206,7 +206,7 @@ export function CurriculumDocuments({ onPreparePlan }: { onPreparePlan?: (docume
               {!admin && doc.status === "APPROVED" && onPreparePlan && (
                 <button type="button" className="curriculum-continue" onClick={() => onPreparePlan({
                   filename:doc.filename, academic_year:doc.academic_year,
-                  grade_number:doc.grade_number, area:doc.area,
+                  education_level:doc.education_level, grade_number:doc.grade_number, area:doc.area,
                 })}>Preparar plan</button>
               )}
               {admin&&doc.status==="PENDING"&&<>
