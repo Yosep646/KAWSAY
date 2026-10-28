@@ -30,7 +30,7 @@ export function CurriculumDocuments() {
   const [year,setYear] = useState(new Date().getFullYear());
   const [level,setLevel] = useState<Level>("PRIMARIA");
   const [grade,setGrade] = useState(1);
-  const [area,setArea] = useState(AREAS[0]);
+  const [area,setArea] = useState(AREAS[0] ?? "Matemática");
   const [file,setFile] = useState<File|null>(null);
   const [busy,setBusy] = useState(false);
   const [reviewing,setReviewing] = useState<string|null>(null);
