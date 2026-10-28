@@ -1,48 +1,54 @@
-/* KAWSAY AI | Canonical login layout, 2026-10-28.
-   This is intentionally the LAST login stylesheet. It only affects /login.
-   No transform scale, no background-size 100% 100%, no image stretching. */
+/* KAWSAY AI | Responsive sign-in composition. 28 Oct 2026
+ * Desktop: true full-bleed landscape with floating login card.
+ * Mobile: one compact illustrated hero WITH text on the photograph;
+ *         login card immediately follows it, with no empty navy band.
+ * The image aspect ratio is always maintained (object-fit: cover);
+ * only outer scenery may crop, never pixels stretched.
+ */
 .login-layout.login-reimagined {
-  --kawsay-ink: #041d2c;
+  --login-teal: #00dec4;
+  --login-dark: #041e30;
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) minmax(350px, 28%) !important;
+  grid-template-columns: minmax(0, 1fr) clamp(332px, 29%, 440px) !important;
   align-items: stretch !important;
   position: relative !important;
   isolation: isolate !important;
   width: 100% !important;
-  max-width: none !important;
+  max-width: 100% !important;
   min-height: 100svh !important;
   height: auto !important;
   margin: 0 !important;
   padding: 0 !important;
-  overflow: hidden !important;
-  color: white !important;
-  background: var(--kawsay-ink) !important;
+  overflow: clip !important;
+  color: #fff !important;
+  background: var(--login-dark) !important;
+  background-image: url('/kawsay-fondo-responsive-20261028.webp') !important;
+  background-position: center center !important;
+  background-size: cover !important;
 }
-/* Disable old faux backgrounds, masks and unintentional overlays. */
+/* Remove old pseudo backgrounds that could mask the actual photograph. */
 .login-layout.login-reimagined::before,
 .login-layout.login-reimagined::after,
 .login-layout.login-reimagined .login-story::before,
 .login-layout.login-reimagined .login-story::after {
   content: none !important;
   display: none !important;
-  background-image: none !important;
+  background: none !important;
 }
 .login-layout.login-reimagined > img.login-scene-art {
   display: block !important;
   position: absolute !important;
-  z-index: 0 !important;
-  inset: 0 auto auto 0 !important;
+  inset: 0 !important;
   width: 100% !important;
-  max-width: none !important;
   height: 100% !important;
+  max-width: none !important;
   max-height: none !important;
-  aspect-ratio: auto !important;
+  z-index: 0 !important;
+  transform: translateX(-8%) !important;
+  -webkit-mask-image: linear-gradient(to right, black 0%, black 82%, transparent 98%) !important;
+  mask-image: linear-gradient(to right, black 0%, black 82%, transparent 98%) !important;
   object-fit: cover !important;
-  object-position: center center !important;
-  /* Shift the scenery, NOT scale the children; reserve clean space for login. */
-  transform: translateX(-10.5%) !important;
-  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 87%, transparent 99%) !important;
-  mask-image: linear-gradient(to right, #000 0%, #000 87%, transparent 99%) !important;
+  object-position: 72% center !important;
   pointer-events: none !important;
   user-select: none !important;
 }
@@ -52,259 +58,276 @@
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-between !important;
-  gap: 18px !important;
+  align-items: flex-start !important;
+  flex-wrap: nowrap !important;
   box-sizing: border-box !important;
-  width: 100% !important;
   min-width: 0 !important;
+  width: 100% !important;
   min-height: 100svh !important;
   height: auto !important;
   max-height: none !important;
   margin: 0 !important;
-  padding: clamp(22px, 3vw, 53px) clamp(18px, 3vw, 57px) 25px !important;
-  background: linear-gradient(90deg, rgba(0,23,37,.54), rgba(0,23,37,.21) 42%, transparent 79%) !important;
-  background-image: linear-gradient(90deg, rgba(0,23,37,.54), rgba(0,23,37,.21) 42%, transparent 79%) !important;
+  padding: clamp(22px,3.2vw,52px) clamp(21px,3.2vw,55px) 24px !important;
+  gap: 18px !important;
   overflow: visible !important;
   isolation: auto !important;
+  background: linear-gradient(90deg,rgba(0,18,34,.52),rgba(0,18,34,.15) 55%,transparent 91%) !important;
 }
 .login-layout.login-reimagined .login-story > .brand {
   position: relative !important;
-  z-index: 3 !important;
-  margin: 0 !important;
-  flex: 0 0 auto !important;
+  z-index: 2 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
   max-width: 100% !important;
-  color: white !important;
-  text-shadow: 0 3px 14px rgba(0,18,32,.7) !important;
+  margin: 0 !important;
+  color: #fff !important;
+  flex: 0 0 auto !important;
+  text-shadow: 0 2px 12px rgba(0,16,32,.7) !important;
 }
 .login-layout.login-reimagined .login-story-copy {
   position: relative !important;
   z-index: 2 !important;
-  box-sizing: border-box !important;
   flex: 0 1 auto !important;
-  width: min(100%, 490px) !important;
-  max-width: min(100%, 490px) !important;
+  width: min(100%, 475px) !important;
+  max-width: min(100%, 475px) !important;
   margin: auto 0 !important;
   padding: 0 !important;
-  text-shadow: 0 2px 12px rgba(0,17,32,.65) !important;
+  overflow: visible !important;
+  text-shadow: 0 2px 17px rgba(0,16,34,.75) !important;
 }
-.login-layout.login-reimagined .login-story-copy .eyebrow {
+.login-layout.login-reimagined .login-story-copy > .eyebrow {
   display: block !important;
-  margin: 0 0 clamp(13px, 2vw, 22px) !important;
+  margin: 0 0 20px !important;
+  font-size: clamp(8px,.7vw,12px) !important;
   letter-spacing: .22em !important;
-  font-size: clamp(8px, .68vw, 11px) !important;
+  white-space: normal !important;
 }
 .login-layout.login-reimagined .login-story h1 {
-  display: block !important;
-  width: 100% !important;
-  max-width: none !important;
-  margin: 0 0 15px !important;
-  font-size: clamp(34px, 3.65vw, 62px) !important;
-  line-height: 1.06 !important;
-  letter-spacing: -.045em !important;
+  max-width: 100% !important;
+  margin: 0 0 20px !important;
+  padding: 0 !important;
+  font-size: clamp(32px,3.65vw,63px) !important;
   font-weight: 900 !important;
-  color: #fff !important;
-  filter: none !important;
+  line-height: 1.035 !important;
+  letter-spacing: -.04em !important;
+  text-wrap: initial !important;
+  hyphens: none !important;
+  overflow: visible !important;
 }
-.login-layout.login-reimagined .login-story h1 .login-heading-line { display:block !important;white-space:normal !important; }
-.login-layout.login-reimagined .login-story h1 .login-highlight { color: #0debc6 !important; }
+.login-layout.login-reimagined .login-story h1 .login-heading-line {
+  display: block !important;
+  white-space: nowrap !important;
+}
+.login-layout.login-reimagined .login-story h1 .login-highlight { color: #03f0d3 !important; }
 .login-layout.login-reimagined .login-story-copy > p {
-  width: 100% !important;
-  max-width: 385px !important;
-  margin: 0 0 16px !important;
-  color: #f4fdff !important;
-  font-size: clamp(12px, 1vw, 16px) !important;
-  line-height: 1.55 !important;
+  max-width: 405px !important;
+  margin: 0 0 20px !important;
+  padding: 0 !important;
+  color: #fff !important;
+  font-size: clamp(12px,1.05vw,16px) !important;
+  line-height: 1.58 !important;
 }
-.login-layout.login-reimagined .login-values { display:flex !important;flex-wrap:wrap !important;gap:8px !important;max-width:100% !important; }
+.login-layout.login-reimagined .login-values { display: flex !important; flex-wrap: wrap !important; gap: 8px !important; }
 .login-layout.login-reimagined .login-story-footer {
   display: flex !important;
   position: relative !important;
-  z-index: 2 !important;
-  flex: 0 0 auto !important;
-  width: max-content !important;
-  max-width: 100% !important;
+  z-index: 1 !important;
   margin: 0 !important;
+  flex: 0 0 auto !important;
 }
 .login-layout.login-reimagined > .login-form-panel {
   display: flex !important;
-  position: relative !important;
-  z-index: 3 !important;
-  box-sizing: border-box !important;
-  align-items: center !important;
+  flex-direction: column !important;
   justify-content: center !important;
+  align-items: center !important;
+  position: relative !important;
+  z-index: 2 !important;
   min-width: 0 !important;
-  min-height: 100svh !important;
   width: 100% !important;
-  height: auto !important;
+  min-height: 100svh !important;
+  max-height: none !important;
   margin: 0 !important;
-  padding: clamp(12px, 2vw, 34px) clamp(12px, 1.6vw, 28px) !important;
-  background: transparent !important;
-  background-image: none !important;
+  padding: 20px clamp(14px,2.1vw,34px) !important;
   overflow: visible !important;
+  background: transparent !important;
 }
 .login-layout.login-reimagined > .login-form-panel > .login {
+  position: relative !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: flex-start !important;
+  flex-wrap: nowrap !important;
   box-sizing: border-box !important;
-  position: relative !important;
   width: 100% !important;
-  max-width: 445px !important;
+  max-width: 450px !important;
   min-width: 0 !important;
   min-height: 0 !important;
   height: auto !important;
-  max-height: calc(100dvh - 24px) !important;
+  max-height: calc(100dvh - 38px) !important;
   margin: 0 !important;
-  padding: clamp(15px, 1.65vw, 30px) !important;
+  padding: clamp(18px,1.8vw,29px) !important;
   gap: 0 !important;
   overflow-x: hidden !important;
   overflow-y: auto !important;
-  scrollbar-width: thin !important;
-  border: 1px solid rgba(36,191,199,.5) !important;
-  border-radius: 18px !important;
-  background: rgba(2,23,36,.96) !important;
-  box-shadow: 0 18px 55px rgba(0,15,23,.34) !important;
-  backdrop-filter: blur(10px) !important;
+  background: linear-gradient(145deg,rgba(1,22,36,.96),rgba(3,28,43,.96)) !important;
+  border: 1px solid rgba(11,203,208,.6) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 16px 45px rgba(0,16,27,.6) !important;
+  backdrop-filter: blur(8px) !important;
 }
-.login-layout.login-reimagined .login-card-head { margin: 0 0 11px !important; }
-.login-layout.login-reimagined .login-card-head h2 { font-size: clamp(24px,2vw,33px) !important; }
-.login-layout.login-reimagined .login-role-tabs { margin: 0 0 9px !important; }
-.login-layout.login-reimagined .student-login-method { display: flex !important;flex:0 0 auto !important;margin:0 0 12px !important; }
+.login-layout.login-reimagined .login-card-head { flex: 0 0 auto !important; margin-bottom: 14px !important; }
+.login-layout.login-reimagined .login-card-head h2 { font-size: clamp(24px,2.1vw,34px) !important; }
+.login-layout.login-reimagined .login-role-tabs,
+.login-layout.login-reimagined .student-login-method { flex: 0 0 auto !important; margin: 0 0 12px !important; }
 .login-layout.login-reimagined .login-role-tabs button,
-.login-layout.login-reimagined .student-login-method button { min-height: 38px !important; min-width: 0 !important; font-size: clamp(10px,.76vw,12px) !important; }
-.login-layout.login-reimagined form.login-access-form {
-  display:flex !important; flex-direction:column !important;align-items:stretch !important;
-  gap:0 !important; flex:0 0 auto !important; width:100% !important;min-width:0 !important; margin:0 !important;
-}
-.login-layout.login-reimagined form.login-access-form .kawsay-login-field {
-  display:flex !important;flex-direction:column !important;gap:5px !important;
-  width:100% !important;min-width:0 !important;margin:0 0 12px !important;
-}
-.login-layout.login-reimagined form.login-access-form .kawsay-login-field > label.login-field-label {
-  display:block !important;position:static !important;transform:none !important;
-  height:auto !important;opacity:1 !important;visibility:visible !important;
-  margin:0 !important;font-size:12px !important;line-height:1.4 !important;color:white !important;
-}
-.login-layout.login-reimagined form.login-access-form .kawsay-login-field .login-input-wrap {
-  display:flex !important;align-items:center !important;box-sizing:border-box !important;
-  min-height:43px !important;width:100% !important;min-width:0 !important;margin:0 !important;
-}
-.login-layout.login-reimagined .login-input-wrap input { width:100% !important;min-width:0 !important; }
-.login-layout.login-reimagined .login-preferences { margin:0 0 12px !important;flex-wrap:wrap !important; }
-.login-layout.login-reimagined .login-submit { min-height:46px !important; }
-.login-layout.login-reimagined .login-help { margin:13px 0 10px !important;line-height:1.5 !important; }
-.login-layout.login-reimagined .login-footnote { padding-top:11px !important;margin:0 !important; }
+.login-layout.login-reimagined .student-login-method button { min-height: 39px !important; font-size: 11px !important; }
+.login-layout.login-reimagined form.login-access-form { display: flex !important; flex-direction: column !important; gap: 0 !important; width: 100% !important; min-width: 0 !important; flex: 0 0 auto !important; margin: 0 !important; }
+.login-layout.login-reimagined form.login-access-form .kawsay-login-field { display: flex !important; flex-direction: column !important; gap: 5px !important; min-width: 0 !important; margin: 0 0 12px !important; }
+.login-layout.login-reimagined form.login-access-form .login-field-label { display: block !important; position: static !important; margin: 0 !important; font-size: 12px !important; line-height: 1.4 !important; opacity: 1 !important; visibility: visible !important; }
+.login-layout.login-reimagined form.login-access-form .login-input-wrap { min-height: 43px !important; margin: 0 !important; }
+.login-layout.login-reimagined .login-preferences { margin-bottom: 13px !important; }
+.login-layout.login-reimagined .login-submit { min-height: 45px !important; }
+.login-layout.login-reimagined .login-help { margin: 15px 0 12px !important; }
+.login-layout.login-reimagined .login-footnote { padding-top: 10px !important; }
 
-/* Switch to a clean vertical flow when viewport is narrow OR tall.
-   Crucially: the photo is an ordinary responsive image in document flow;
-   nothing covers the children, and the page scrolls naturally. */
-@media (max-width: 1099.98px), (max-aspect-ratio: 29/20) {
+/* Mid-size desktops retain the two-panel composition; do NOT switch to mobile
+ * at 1100 or 1350 CSS pixels (this was the cause of the desktop screenshot bug). */
+@media (min-width: 900px) and (max-width: 1339px) {
+  .login-layout.login-reimagined { grid-template-columns: minmax(0, 1fr) minmax(328px, 30%) !important; }
+  .login-layout.login-reimagined > .login-story { padding-left: clamp(19px,3vw,37px) !important; padding-right: clamp(15px,2vw,28px) !important; }
+  .login-layout.login-reimagined .login-story h1 { font-size: clamp(30px,3.4vw,48px) !important; }
+  .login-layout.login-reimagined > .login-form-panel { padding-left: 8px !important; padding-right: 12px !important; }
+}
+
+/* MOBILE AND TABLET: hero and caption occupy the SAME visual region. The login
+ * card rises directly over the bottom edge; no tall blank section between them. */
+@media (max-width: 899.98px) {
   .login-layout.login-reimagined {
+    --mobile-hero-height: clamp(265px, 72vw, 465px);
     display: flex !important;
     flex-direction: column !important;
-    overflow-x: clip !important;
-    overflow-y: visible !important;
+    width: 100% !important;
     min-height: 100svh !important;
     height: auto !important;
+    overflow-x: clip !important;
+    overflow-y: visible !important;
+    background: var(--login-dark) !important;
+    background-image: none !important;
   }
   .login-layout.login-reimagined > img.login-scene-art {
-    display:block !important;
-    order: 0 !important;
-    position:relative !important;
-    inset:auto !important;
-    top:auto !important;right:auto !important;bottom:auto !important;left:auto !important;
-    transform:none !important;
-    width:100% !important;
-    height:auto !important;
-    max-width:100% !important;
-    max-height:none !important;
-    aspect-ratio:1802 / 873 !important;
-    object-fit:contain !important;
-    object-position:center !important;
-    -webkit-mask-image:none !important;
-    mask-image:none !important;
-    flex: 0 0 auto !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: auto !important;
+    width: 100% !important;
+    height: var(--mobile-hero-height) !important;
+    max-height: none !important;
+    transform: none !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    object-fit: cover !important;
+    object-position: 72% center !important;
   }
   .login-layout.login-reimagined > .login-story {
-    display:flex !important;
-    order:1 !important;
-    position:static !important;
-    z-index:auto !important;
-    justify-content:flex-start !important;
-    width:100% !important;
-    min-height:0 !important;
-    height:auto !important;
-    max-height:none !important;
-    margin:0 !important;
-    padding:clamp(12px,3.5vw,26px) clamp(16px,4vw,34px) 16px !important;
-    overflow:visible !important;
-    background:none !important;
-    background-image:none !important;
-    gap:0 !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    align-items: stretch !important;
+    min-height: var(--mobile-hero-height) !important;
+    height: var(--mobile-hero-height) !important;
+    max-height: var(--mobile-hero-height) !important;
+    flex: 0 0 var(--mobile-hero-height) !important;
+    margin: 0 !important;
+    padding: clamp(12px,3.2vw,25px) clamp(15px,4vw,26px) clamp(30px,7vw,60px) !important;
+    overflow: hidden !important;
+    background: linear-gradient(90deg,rgba(1,18,33,.53) 0%,rgba(1,18,33,.22) 48%,transparent 90%) !important;
   }
   .login-layout.login-reimagined .login-story > .brand {
-    position:absolute !important;
-    z-index:4 !important;
-    top:clamp(10px,2.2vw,24px) !important;
-    left:clamp(12px,3vw,30px) !important;
-    width:max-content !important;
-    max-width:75vw !important;
-    margin:0 !important;
-    font-size:clamp(17px,3vw,25px) !important;
+    display: flex !important;
+    flex: 0 0 auto !important;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    z-index: 2 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: max-content !important;
+    max-width: 75% !important;
+    font-size: clamp(17px,3.7vw,25px) !important;
   }
+  .login-layout.login-reimagined .login-story .brand-mark { width: clamp(27px,5.8vw,42px) !important; height: clamp(27px,5.8vw,42px) !important; }
+  .login-layout.login-reimagined .login-story .brand-mark svg { width: 100% !important; height: 100% !important; }
+  .login-layout.login-reimagined .login-story > .brand small { font-size: clamp(9px,1.9vw,11px) !important; }
   .login-layout.login-reimagined .login-story-copy {
-    width:100% !important;
-    max-width:610px !important;
-    margin:0 !important;
-    padding:0 !important;
-    text-shadow:none !important;
+    position: relative !important;
+    z-index: 2 !important;
+    width: 54% !important;
+    max-width: 260px !important;
+    min-width: 0 !important;
+    flex: 0 1 auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-shadow: 0 2px 13px rgba(0,12,25,.86) !important;
+  }
+  .login-layout.login-reimagined .login-story-copy > .eyebrow {
+    font-size: clamp(7px,1.4vw,9px) !important;
+    letter-spacing: .08em !important;
+    margin: 0 0 6px !important;
   }
   .login-layout.login-reimagined .login-story h1 {
-    font-size:clamp(24px,4.5vw,40px) !important;
-    line-height:1.08 !important;
-    letter-spacing:-.035em !important;
+    font-size: clamp(19px,5.1vw,35px) !important;
+    line-height: 1.06 !important;
+    letter-spacing: -.035em !important;
+    margin: 0 0 8px !important;
+    text-wrap: initial !important;
   }
-  .login-layout.login-reimagined .login-story-copy .eyebrow { font-size:9px !important;letter-spacing:.14em !important;margin-bottom:10px !important; }
-  .login-layout.login-reimagined .login-story-copy > p { max-width:520px !important;font-size:clamp(12px,2vw,15px) !important; }
-  .login-layout.login-reimagined .login-story-footer { display:none !important; }
+  .login-layout.login-reimagined .login-story h1 .login-heading-line { white-space: normal !important; }
+  .login-layout.login-reimagined .login-story-copy > p {
+    max-width: 100% !important;
+    font-size: clamp(9px,2vw,11px) !important;
+    line-height: 1.35 !important;
+    margin: 0 0 6px !important;
+  }
+  .login-layout.login-reimagined .login-values { display: none !important; }
+  .login-layout.login-reimagined .login-story-footer { display: none !important; }
   .login-layout.login-reimagined > .login-form-panel {
-    display:flex !important;
-    order:2 !important;
-    width:100% !important;
-    min-height:0 !important;
-    height:auto !important;
-    align-items:flex-start !important;
-    justify-content:center !important;
-    padding:0 12px 28px !important;
-    background:transparent !important;
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative !important;
+    z-index: 4 !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    flex: 0 0 auto !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    margin: -18px 0 0 !important;
+    padding: 0 12px 24px !important;
+    background: transparent !important;
+    overflow: visible !important;
   }
   .login-layout.login-reimagined > .login-form-panel > .login {
-    width:min(100%,540px) !important;
-    max-width:540px !important;
-    min-height:0 !important;
-    height:auto !important;
-    max-height:none !important;
-    overflow:visible !important;
-    margin:0 !important;
-    padding:clamp(16px,3vw,27px) !important;
+    width: min(100%,520px) !important;
+    max-width: 520px !important;
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 auto !important;
+    padding: clamp(17px,3.8vw,25px) !important;
+    overflow: visible !important;
+    border-radius: 18px !important;
   }
+}
+/* Narrow phones: keep all four faces inside the photo and type legible. */
+@media (max-width: 380px) {
+  .login-layout.login-reimagined { --mobile-hero-height: 268px; }
+  .login-layout.login-reimagined .login-story-copy { width: 57% !important; }
+  .login-layout.login-reimagined .login-story h1 { font-size: clamp(18px,5.4vw,21px) !important; }
+  .login-layout.login-reimagined .login-story-copy > p { font-size: 9px !important; }
+  .login-layout.login-reimagined > .login-form-panel { padding-inline: 9px !important; }
+  .login-layout.login-reimagined > .login-form-panel > .login { padding: 16px 13px !important; }
   .login-layout.login-reimagined .login-role-tabs button,
-  .login-layout.login-reimagined .student-login-method button { font-size:clamp(10px,2.3vw,12px) !important; }
-}
-@media (max-width: 430px) {
-  .login-layout.login-reimagined .login-story > .brand { font-size:16px !important; }
-  .login-layout.login-reimagined .login-story .brand-mark { width:35px !important;height:35px !important; }
-  .login-layout.login-reimagined .login-story .brand small { font-size:9px !important; }
-  .login-layout.login-reimagined .login-story h1 { font-size:clamp(22px,6.1vw,28px) !important; }
-  .login-layout.login-reimagined .login-values { gap:4px !important; }
-  .login-layout.login-reimagined .login-values > span { font-size:9px !important;padding:0 5px !important; }
-  .login-layout.login-reimagined > .login-form-panel > .login { padding:16px 14px !important; }
-}
-@media (min-width: 1100px) and (max-height: 730px) and (min-aspect-ratio:29/20) {
-  .login-layout.login-reimagined > .login-form-panel { padding:6px 12px !important; }
-  .login-layout.login-reimagined > .login-form-panel > .login { max-height:calc(100dvh - 12px) !important;padding:12px 18px !important; }
-  .login-layout.login-reimagined .login-card-head { margin-bottom:7px !important; }
-  .login-layout.login-reimagined .login-role-tabs { margin-bottom:7px !important; }
-  .login-layout.login-reimagined .student-login-method { margin-bottom:7px !important; }
-  .login-layout.login-reimagined form.login-access-form .kawsay-login-field { margin-bottom:7px !important; }
-  .login-layout.login-reimagined .login-story h1 { font-size:clamp(29px,3vw,46px) !important; }
+  .login-layout.login-reimagined .student-login-method button { font-size: 9px !important; }
 }
