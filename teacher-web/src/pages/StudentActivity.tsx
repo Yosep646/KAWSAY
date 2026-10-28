@@ -6,9 +6,10 @@ import { api } from "../services/api";
 import { pendingAttempts, type PendingAttempt } from "../services/pendingAttempts";
 import { offlineTasks } from "../services/offlineTasks";
 import { errMsg } from "../utils/format";
+import "./student-activity-exercises.css";
 
 type Question = { id: string; type: "MULTIPLE_CHOICE" | "NUMERIC" | "SHORT_TEXT"; prompt: string; options: string[] | null };
-type Task = { student_assignment_id: string; title: string; questions: Question[] };
+type Task = { student_assignment_id: string; title: string; instructions?: string; questions: Question[] };
 type Status = { question_id: string; closed: boolean; device_attempt_number: number };
 
 export function StudentActivity() {
@@ -112,6 +113,7 @@ export function StudentActivity() {
   };
   return <div><Link to="/estudiante">← Volver a mi inicio</Link><ErrorBox message={error} />{loading ? <Loading /> : task && <Card title={task.title}>
     <p role="status" className={`connection-status ${online && !offline ? "connected" : "disconnected"}`}>{offline || !online ? "Sin conexión con el servidor. Tus respuestas se guardan en este dispositivo." : "Conectado: tus entregas se confirmarán en el servidor."}</p>
+    {task.instructions?.trim() && <section className="student-activity-instructions" aria-label="Indicaciones de la actividad"><h3>Indicaciones del docente</h3><p>{task.instructions}</p></section>}
     {message && <p role="status">{message}</p>}
     {pending.length > 0 && <><p role="status">{pending.length} respuesta(s) pendientes. Puedes seguir resolviendo otras preguntas.</p><button type="button" disabled={!online || busy} onClick={() => { const next = pending[0]; if (!next) return; attempted.current.clear(); void send(next); }}>Reintentar sincronización</button></>}
     {current ? <form className="stack" onSubmit={e => void submit(e)}><div className="question-progress">Pregunta {task.questions.findIndex(q => q.id === current.id) + 1} de {task.questions.length}</div><div className="activity-progress-track" role="progressbar" aria-label="Preguntas confirmadas" aria-valuemin={0} aria-valuemax={task.questions.length} aria-valuenow={completedCount}><span style={{width:`${Math.round(completedCount / task.questions.length * 100)}%`}} /></div><h3>{current.prompt}</h3>
