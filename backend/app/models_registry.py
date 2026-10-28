@@ -5,6 +5,7 @@ from app.modules.audit.models import AuditLog  # noqa: F401
 from app.modules.auth.models import RefreshToken  # noqa: F401
 from app.modules.automation.models import DomainEvent  # noqa: F401
 from app.modules.classrooms.models import Classroom, ClassroomStudent, ClassroomTeacher  # noqa: F401
+from app.modules.curriculum.document_models import CurriculumDocument  # noqa: F401
 from app.modules.curriculum.models import (  # noqa: F401
     Capacity,
     Competency,
