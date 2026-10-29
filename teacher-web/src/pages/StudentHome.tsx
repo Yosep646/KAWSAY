@@ -43,8 +43,8 @@ export function StudentHome({ focus = "home" }: { focus?: "home" | "activities" 
     const key = course.name.trim().toLocaleLowerCase("es");
     if (!courseIdByName.has(key)) courseIdByName.set(key, course.id);
   }
-  const tasksByCourse = new Map<string, Task[]>();
-  const priorTasks: Task[] = [];
+  const tasksByCourse = new Map<string, OfflineTask[]>();
+  const priorTasks: OfflineTask[] = [];
   for (const task of visibleTasks) {
     const courseId = task.course_id ?? courseIdByName.get((task.subject ?? "").trim().toLocaleLowerCase("es"));
     if (courseId && courseIds.has(courseId)) {
