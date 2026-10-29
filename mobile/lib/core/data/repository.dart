@@ -44,11 +44,12 @@ class LocalQuestion {
 }
 
 class LocalTask {
-  LocalTask(this.id, this.origin, this.subject, this.competencyId, this.competencyName, this.title, this.instructions,
+  LocalTask(this.id, this.origin, this.subject, this.courseId, this.competencyId, this.competencyName, this.title, this.instructions,
       this.objective, this.total, this.closed);
   final String id;
   final String origin;
   final String? subject;
+  final String? courseId;
   final String competencyId;
   final String? competencyName;
   final String title;
@@ -148,6 +149,7 @@ class Repository {
             {
               'student_assignment_id': sa, 'assignment_id': k['assignment_id'], 'variant_id': k['variant_id'],
               'origin': k['origin'] ?? 'TEACHER', 'grade_id': k['grade_id'], 'subject': k['subject'],
+              'course_id': k['course_id'],
               'competency_id': k['competency_id'], 'competency_name': k['competency_name'], 'topic_id': k['topic_id'],
               'topic_title': k['topic_title'],
               // solo traducciones VERIFICADAS llegan del servidor; si no hay, se muestra el idioma base
@@ -191,7 +193,8 @@ class Repository {
     for (final r in rows) {
       final id = r['student_assignment_id'] as String;
       final results = rules.questionResults(await _facts(id));
-      out.add(LocalTask(id, r['origin'] as String, r['subject'] as String?, r['competency_id'] as String,
+      out.add(LocalTask(id, r['origin'] as String, r['subject'] as String?, r['course_id'] as String?,
+          r['competency_id'] as String,
           r['competency_name'] as String?, r['title'] as String, r['instructions'] as String, r['learning_objective'] as String,
           r['total'] as int, results.where((x) => x.closed).length));
     }
