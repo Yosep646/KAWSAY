@@ -37,6 +37,7 @@ const adminLinks: typeof teacherLinks = [
 ];
 const studentLinks: typeof teacherLinks = [
   { to: "/estudiante", label: "Mi inicio", icon: "dashboard" },
+  { to: "/estudiante/cursos", label: "Mis cursos", icon: "book" },
   { to: "/estudiante/actividades", label: "Mis actividades", icon: "tasks" },
   { to: "/estudiante/progreso", label: "Mi progreso", icon: "activity" },
 ];
@@ -112,6 +113,7 @@ function Shell() {
           <Route path="/" element={user?.role === "ADMIN" ? <Navigate to="/admin" replace /> : user?.role === "STUDENT" ? <Navigate to="/estudiante" replace /> : <Dashboard />} />
           <Route path="/docente" element={<Protected roles={["TEACHER"]}><Dashboard /></Protected>} />
           <Route path="/estudiante" element={<Protected roles={["STUDENT"]}><StudentHome /></Protected>} />
+          <Route path="/estudiante/cursos" element={<Protected roles={["STUDENT"]}><StudentHome focus="courses" /></Protected>} />
           <Route path="/estudiante/actividades" element={<Protected roles={["STUDENT"]}><StudentHome focus="activities" /></Protected>} />
           <Route path="/estudiante/progreso" element={<Protected roles={["STUDENT"]}><StudentHome focus="progress" /></Protected>} />
           <Route path="/estudiante/actividad/:id" element={<Protected roles={["STUDENT"]}><StudentActivity /></Protected>} />

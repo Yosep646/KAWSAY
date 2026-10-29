@@ -6,13 +6,15 @@ import 'package:sqflite/sqflite.dart';
 class AppDatabase {
   AppDatabase._(this.db);
   final Database db;
-  static const int schemaVersion = 1;
+  static const int schemaVersion = 2;
 
   static Future<AppDatabase> open({String? path}) async {
     final dbPath = path ?? p.join(await getDatabasesPath(), 'kawsay.db');
     final db = await openDatabase(dbPath, version: schemaVersion, onConfigure: (d) async {
       await d.execute('PRAGMA foreign_keys = ON');
-    }, onCreate: (d, v) async => _create(d));
+    }, onCreate: (d, v) async => _create(d), onUpgrade: (d, from, to) async {
+      if (from < 2) await d.execute('ALTER TABLE tasks ADD COLUMN course_id TEXT');
+    });
     // Recuperación ante cierre brusco: lo que quedó SYNCING vuelve a PENDING (el servidor es idempotente).
     await db.update('sync_queue', {'status': 'PENDING'}, where: "status = 'SYNCING'");
     return AppDatabase._(db);
@@ -24,7 +26,7 @@ class AppDatabase {
       preferred_language TEXT, mother_language TEXT, updated_at TEXT NOT NULL)''');
     await d.execute('''CREATE TABLE tasks(
       student_assignment_id TEXT PRIMARY KEY, assignment_id TEXT NOT NULL, variant_id TEXT NOT NULL,
-      origin TEXT NOT NULL CHECK(origin IN ('TEACHER','SELF')), grade_id INTEGER NOT NULL,
+      origin TEXT NOT NULL CHECK(origin IN ('TEACHER','SELF')), grade_id INTEGER NOT NULL, course_id TEXT,
       subject TEXT, competency_id TEXT NOT NULL, competency_name TEXT, topic_id TEXT, topic_title TEXT,
       title TEXT NOT NULL, instructions TEXT NOT NULL, learning_objective TEXT NOT NULL,
       translation_json TEXT, seq INTEGER NOT NULL, pulled_at TEXT NOT NULL)''');

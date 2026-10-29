@@ -46,6 +46,13 @@ def pull(db: DB, student: Student, cursor: Annotated[int, Query(ge=0)] = 0,
     return service.pull(db, student, cursor, limit)
 
 
+@router.get("/courses")
+def my_courses(db: DB, student: Student) -> list[dict]:
+    """Áreas activas del grado y aula del alumno; accesibles antes de publicar tareas."""
+    from app.modules.sync.courses import student_courses
+    return student_courses(db, student.id)
+
+
 @router.get("/tasks/{student_assignment_id}/attempts")
 def task_attempts(student_assignment_id: uuid.UUID, device_id: uuid.UUID, db: DB, student: Student) -> dict:
     """Estado propio para reanudar una actividad en línea, sin devolver respuestas."""
