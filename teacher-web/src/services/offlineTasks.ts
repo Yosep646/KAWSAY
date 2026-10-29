@@ -1,5 +1,5 @@
 /** Caché explícita, por estudiante, de actividades descargadas. Sin contraseñas ni tokens. */
-export interface OfflineTask { student_assignment_id: string; title: string; subject?: string | null; instructions?: string; questions?: {id:string;type:string;prompt:string;options:string[]|null}[] }
+export interface OfflineTask { student_assignment_id: string; title: string; subject?: string | null; course_id?: string | null; instructions?: string; questions?: {id:string;type:string;prompt:string;options:string[]|null}[] }
 function database(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open("kawsay-offline-activities", 1);
