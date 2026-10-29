@@ -4,6 +4,33 @@ import 'package:uuid/uuid.dart';
 import '../database/app_database.dart';
 import '../offline/rules.dart' as rules;
 
+/// Curso de la planificación ACTIVE del aula y grado del estudiante.
+class LocalCourse {
+  const LocalCourse({
+    required this.id,
+    required this.name,
+    required this.classroomName,
+    required this.academicYear,
+    required this.gradeId,
+    required this.isDemo,
+  });
+  final String id;
+  final String name;
+  final String classroomName;
+  final int academicYear;
+  final int gradeId;
+  final bool isDemo;
+
+  factory LocalCourse.fromJson(Map<String, dynamic> data) => LocalCourse(
+    id: data['id'] as String,
+    name: data['name'] as String,
+    classroomName: data['classroom_name'] as String,
+    academicYear: data['academic_year'] as int,
+    gradeId: data['grade_id'] as int,
+    isDemo: data['is_demo'] == true,
+  );
+}
+
 class LocalQuestion {
   LocalQuestion(this.id, this.position, this.type, this.prompt, this.options, this.correct, this.hints, this.explanation);
   final String id;
@@ -88,6 +115,26 @@ class Repository {
 
   Future<void> saveLanguages(String? mother, String? preferred) =>
       db.update('profile', {'mother_language': mother, 'preferred_language': preferred});
+
+  /// Reemplaza el catálogo local con la foto de la planificación ACTIVE del servidor.
+  /// Guardado en SQLite: se conserva cuando el dispositivo queda sin conexión.
+  Future<void> saveCourses(List<dynamic> courses) async {
+    final clean = courses.map((item) =>
+        LocalCourse.fromJson((item as Map).cast<String, dynamic>())).toList();
+    await db.insert('meta', {
+      'key': 'courses_catalog',
+      'value': jsonEncode(courses),
+    }, conflictAlgorithm: ConflictAlgorithm.replace);
+    assert(clean.length == courses.length);
+  }
+
+  Future<List<LocalCourse>> courses() async {
+    final rows = await db.query('meta', where: "key = 'courses_catalog'");
+    if (rows.isEmpty) return [];
+    final raw = jsonDecode(rows.first['value'] as String) as List;
+    return raw.map((item) =>
+        LocalCourse.fromJson((item as Map).cast<String, dynamic>())).toList();
+  }
 
   /// Guarda/actualiza tareas descargadas (pull o "Quiero aprender") en una transacción.
   Future<void> upsertTasks(List<dynamic> tasks) async {
