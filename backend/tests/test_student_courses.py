@@ -108,6 +108,7 @@ def test_teacher_publication_links_to_student_course_and_keeps_grade(w):
     assert len(fourth_data["tasks"]) == 1
     task = fourth_data["tasks"][0]
     assert task["subject"] == "Matemática (DEMO)"
+    assert task["course_id"] == next(x["id"] for x in fourth_data["courses"] if x["name"] == task["subject"])
     assert task["grade_id"] == grade
     assert task["questions"][0]["correct_answer"] == {"index": 1}
     assert fifth_data["tasks"] == []
