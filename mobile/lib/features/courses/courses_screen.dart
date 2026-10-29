@@ -59,14 +59,26 @@ class _CoursesScreenState extends State<CoursesScreen> {
             }
             final courses = snapshot.data!.catalog;
             final downloaded = snapshot.data!.tasks;
-            final byName = <String, List<LocalTask>>{};
-            for (final task in downloaded) {
-              final name = task.subject?.trim().toLowerCase() ?? '';
-              byName.putIfAbsent(name, () => <LocalTask>[]).add(task);
+            final byCourse = <String, List<LocalTask>>{};
+            final knownCourseIds = courses.map((c) => c.id).toSet();
+            final firstIdByName = <String, String>{};
+            for (final course in courses) {
+              firstIdByName.putIfAbsent(
+                course.name.trim().toLowerCase(), () => course.id,
+              );
             }
-            final knownNames = courses.map((c) => c.name.trim().toLowerCase()).toSet();
-            final archived = downloaded.where((t) =>
-                !knownNames.contains(t.subject?.trim().toLowerCase() ?? '')).toList();
+            final archived = <LocalTask>[];
+            for (final task in downloaded) {
+              // courseId es preciso incluso con varias aulas multigrado.
+              // Solo las tareas antiguas usan el nombre como compatibilidad.
+              final courseId = task.courseId ??
+                  firstIdByName[task.subject?.trim().toLowerCase() ?? ''];
+              if (courseId != null && knownCourseIds.contains(courseId)) {
+                byCourse.putIfAbsent(courseId, () => <LocalTask>[]).add(task);
+              } else {
+                archived.add(task);
+              }
+            }
 
             return RefreshIndicator(
               onRefresh: _refresh,
@@ -91,7 +103,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                       classroom: course.classroomName,
                       year: course.academicYear,
                       isDemo: course.isDemo,
-                      tasks: byName[course.name.trim().toLowerCase()] ?? const [],
+                      tasks: byCourse[course.id] ?? const <LocalTask>[],
                       onReturned: () => setState(_reload),
                     ),
                   if (archived.isNotEmpty) ...[
