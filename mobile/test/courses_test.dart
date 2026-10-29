@@ -75,10 +75,12 @@ void main() {
 
   testWidgets('Mis cursos muestra Matemática y Comunicación sin tareas',
       (tester) async {
-    final db = await AppDatabase.open(path: inMemoryDatabasePath);
+    // sqflite FFI usa I/O real; no bloquearlo en el reloj virtual de testWidgets.
+    final db = await tester.runAsync(() => AppDatabase.open(path: inMemoryDatabasePath));
+    if (db == null) throw StateError('SQLite no pudo abrirse');
     addTearDown(db.close);
     final repo = Repository(db);
-    await repo.saveCourses([mathCourse, languageCourse]);
+    await tester.runAsync(() => repo.saveCourses([mathCourse, languageCourse]));
     final sync = SyncManager(repo, ApiClient(TokenStore()), ConnectivityMonitor());
     addTearDown(sync.dispose);
     await tester.pumpWidget(MultiProvider(
@@ -88,6 +90,7 @@ void main() {
       ],
       child: const MaterialApp(home: CoursesScreen()),
     ));
+    await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 50)));
     await tester.pumpAndSettle();
     expect(find.text('Matemática'), findsOneWidget);
     expect(find.text('Comunicación'), findsOneWidget);
