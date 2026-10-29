@@ -185,7 +185,9 @@ def task_payload(db: Session, sa: StudentAssignment, v: AssignmentVariant, pref:
     subject = db.get(Subject, a.subject_id) if a else None
     comp = db.get(Competency, v.competency_id)
     topic = db.get(CurriculumTopic, v.topic_id)
-    return {"subject": subject.name if subject else None, "competency_name": comp.name if comp else None,
+    return {"subject": subject.name if subject else None,
+            "course_id": f"{a.classroom_id}:{subject.id}" if a and subject else None,
+            "competency_name": comp.name if comp else None,
             "topic_title": topic.title if topic else None,
             "language": {"preferred": pref, "translation_available": translation is not None},
             "translation": translation, "student_assignment_id": sa.id, "assignment_id": sa.assignment_id,
