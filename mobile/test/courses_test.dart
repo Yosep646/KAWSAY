@@ -23,7 +23,8 @@ final languageCourse = <String, dynamic>{
 
 Map<String, dynamic> publishedTask() => {
   'student_assignment_id': 'sa-math', 'assignment_id': 'a-math', 'variant_id': 'v-math',
-  'origin': 'TEACHER', 'grade_id': 4, 'subject': 'Matemática', 'competency_id': 'comp-math',
+  'origin': 'TEACHER', 'grade_id': 4, 'subject': 'Matemática',
+  'course_id': 'room1:math', 'competency_id': 'comp-math',
   'competency_name': 'Resuelve problemas de cantidad', 'topic_id': 't-math',
   'topic_title': 'Sumas', 'title': 'Actividad del maestro',
   'instructions': 'Resuelve las preguntas', 'learning_objective': 'Sumar números naturales',
@@ -64,6 +65,7 @@ void main() {
     final tasks = await repo.tasks(origin: 'TEACHER');
     expect(tasks, hasLength(1));
     expect(tasks.single.subject, 'Matemática');
+    expect(tasks.single.courseId, mathCourse['id']);
     final q = (await repo.questions(tasks.single.id)).single;
     expect(await repo.recordAttempt(tasks.single.id, q, {'index': 1}, 0, 1500), isTrue);
     expect((await repo.queueCounts())['PENDING'], 1);
