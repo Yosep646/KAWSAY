@@ -21,11 +21,30 @@ class CoursesScreen extends StatefulWidget {
 
 class _CoursesScreenState extends State<CoursesScreen> {
   late Future<_CourseData> _future;
+  late final SyncManager _sync;
+  late SyncState _previousSyncState;
 
   @override
   void initState() {
     super.initState();
+    _sync = context.read<SyncManager>();
+    _previousSyncState = _sync.state;
+    _sync.addListener(_onSyncUpdated);
     _reload();
+  }
+
+  void _onSyncUpdated() {
+    final state = _sync.state;
+    if (_previousSyncState == SyncState.syncing && state != SyncState.syncing && mounted) {
+      setState(_reload); // nuevas actividades aparecen sin cerrar la página
+    }
+    _previousSyncState = state;
+  }
+
+  @override
+  void dispose() {
+    _sync.removeListener(_onSyncUpdated);
+    super.dispose();
   }
 
   Future<_CourseData> _load() async {
