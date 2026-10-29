@@ -109,6 +109,7 @@ export function StudentHome({ focus = "home" }: { focus?: "home" | "activities" 
     <div className="student-columns">
       {focus === "courses" && <Card title="Cursos de mi aula">
         <p>Estas áreas provienen de la planificación activa de tu institución y tu grado. Puedes consultar los cursos guardados sin Internet.</p>
+        <button type="button" className="ghost" onClick={() => { void courses.reload(); void tasks.reload(); }} disabled={courses.loading || tasks.loading}>Actualizar cursos y actividades</button>
         {courses.error && <p className="notice warn" role="status">No se pudo actualizar el catálogo. Se muestran los cursos guardados en este dispositivo, si existen.</p>}
         {courses.loading && !savedCourses.length ? <Loading /> : <div className="student-courses-grid">
           {courseCatalog.map(course => {
