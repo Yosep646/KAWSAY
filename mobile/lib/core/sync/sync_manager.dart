@@ -153,6 +153,9 @@ class SyncManager extends ChangeNotifier {
         throw ApiException(502, 'invalid_cursor', 'El servidor devolvió un cursor de sincronización inválido');
       }
       await _repo.upsertTasks(d['tasks'] as List);
+      if (d['courses'] is List) {
+        await _repo.saveCourses(d['courses'] as List);
+      }
       await _repo.saveOfficialProgress(d['progress'] as List);
       cursor = next;
       await _repo.setCursor(cursor);
