@@ -215,5 +215,6 @@ def pull(db: Session, student: User, cursor: int, limit: int) -> dict:
              "evidence_count": p.evidence_count}
             for p in db.scalars(select(StudentCompetencyProgress).where(
                 StudentCompetencyProgress.student_user_id == student.id))]
-    return {"tasks": tasks, "progress": prog, "cursor": next_cursor, "has_more": has_more,
+    from app.modules.sync.courses import student_courses
+    return {"courses": student_courses(db, student.id), "tasks": tasks, "progress": prog, "cursor": next_cursor, "has_more": has_more,
             "server_time": datetime.now(UTC).isoformat()}
