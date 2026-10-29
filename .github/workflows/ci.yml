@@ -69,7 +69,7 @@ jobs:
           cache: true
       - run: flutter pub get
       - run: flutter analyze --no-fatal-infos --no-fatal-warnings
-      - run: flutter test
+      - run: flutter test --reporter expanded --concurrency=1 --timeout 60s
       - name: Generate Android project files (not committed)
         run: flutter create . --platforms=android
       - name: Validate Android debug build
