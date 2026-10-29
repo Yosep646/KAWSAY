@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kawsay_student/core/api/api_client.dart';
 import 'package:kawsay_student/core/data/repository.dart';
 import 'package:kawsay_student/core/database/app_database.dart';
-import 'package:kawsay_student/core/network/connectivity_monitor.dart';
-import 'package:kawsay_student/core/security/token_store.dart';
-import 'package:kawsay_student/core/sync/sync_manager.dart';
 import 'package:kawsay_student/features/courses/courses_screen.dart';
-import 'package:provider/provider.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 final mathCourse = <String, dynamic>{
@@ -75,22 +70,15 @@ void main() {
 
   testWidgets('Mis cursos muestra Matemática y Comunicación sin tareas',
       (tester) async {
-    // sqflite FFI usa I/O real; no bloquearlo en el reloj virtual de testWidgets.
-    final db = await tester.runAsync(() => AppDatabase.open(path: inMemoryDatabasePath));
-    if (db == null) throw StateError('SQLite no pudo abrirse');
-    addTearDown(db.close);
-    final repo = Repository(db);
-    await tester.runAsync(() => repo.saveCourses([mathCourse, languageCourse]));
-    final sync = SyncManager(repo, ApiClient(TokenStore()), ConnectivityMonitor());
-    addTearDown(sync.dispose);
-    await tester.pumpWidget(MultiProvider(
-      providers: [
-        Provider<Repository>.value(value: repo),
-        ChangeNotifierProvider<SyncManager>.value(value: sync),
-      ],
-      child: const MaterialApp(home: CoursesScreen()),
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: CoursesContent(
+          courses: [LocalCourse.fromJson(mathCourse), LocalCourse.fromJson(languageCourse)],
+          downloaded: const <LocalTask>[],
+          onOpen: (_) {},
+        ),
+      ),
     ));
-    await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 50)));
     await tester.pumpAndSettle();
     expect(find.text('Matemática'), findsOneWidget);
     expect(find.text('Comunicación'), findsOneWidget);
