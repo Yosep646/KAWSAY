@@ -1,8 +1,8 @@
 import uuid
+from datetime import UTC, datetime
 
 from sqlalchemy import exists, select
 from sqlalchemy.exc import IntegrityError
-from datetime import UTC, datetime
 from sqlalchemy.orm import Session
 
 from app.core.exceptions import ConflictError, NotFoundError
