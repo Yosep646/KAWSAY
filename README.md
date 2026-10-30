@@ -5,7 +5,7 @@ Foco del hackathon: **Reto 10 — tecnología que encuentre a quien estamos deja
 necesitan apoyo y en qué competencia, también donde Internet no siempre llega. KAWSAY **no reemplaza al docente**: el currículo define qué se
 aprende, el docente decide qué publicar, y KAWSAY adapta cómo.
 
-> **Cómo ejecutarlo en VS Code: `docs/GUIA_VSCODE.md`** (3 comandos: `setup`, `demo`, `web`). Base de datos: **SQLite** (sin instalar nada).
+> **Cómo ejecutarlo en VS Code: `docs/GUIA_VSCODE.md`**. Base de datos: **SQLite** (sin instalar nada). Para trabajos que deban conservarse, usa `python scripts/dev.py db`, `python scripts/dev.py run` y `python scripts/dev.py web`; no reinicies los datos DEMO. Consulta **`docs/GUIA_PERSISTENCIA_SQLITE.md`**.
 > **Estado real y límites de cada componente: `docs/00-repository-audit.md`.** Nada se da por funcionando sin una verificación ejecutada.
 
 ## Qué contiene
@@ -34,6 +34,7 @@ python scripts/dev.py demo      # datos DEMO + backend en :8000
 python scripts/dev.py web       # panel docente en :5173
 python scripts/dev.py test      # backend, ML y unitarias del panel
 python scripts/dev.py backup    # respaldo de la base SQLite
+python scripts/dev.py db        # aplica migraciones y muestra ruta/estado de la base
 ```
 
 E2E en Chromium (instalación y ejecución): `docs/16-testing.md`; comando desde la raíz: `npm --prefix teacher-web run test:e2e`.

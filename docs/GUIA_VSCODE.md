@@ -31,6 +31,12 @@ Para: **Yosep**. Tiempo: ~5 minutos. No necesitas instalar ninguna base de datos
 También puedes usar **Terminal → Ejecutar tarea…** (hay tareas «1) Instalar todo», «2) Cargar datos DEMO», «3) Panel docente») o
 **Ejecutar y depurar (F5)** → «Backend KAWSAY (FastAPI)» para depurar con puntos de interrupción.
 
+## Mantener los datos guardados entre sesiones de VS Code
+
+Para trabajo normal, tras la primera instalación utiliza `py scripts/dev.py db` (muestra la ruta exacta de SQLite) y `py scripts/dev.py run` (arranca con migraciones verificadas). Inicia el frontend con `py scripts/dev.py web` en otra terminal. El comando `demo` solo es para introducir datos de ejemplo; no necesitas ejecutarlo cada vez.
+
+Antes de cambiar equipos, reinstalar o subir a Render, crea un respaldo con `py scripts/dev.py backup`. **Render Free sin disco persistente no conserva la base local entre despliegues**. Diagnóstico completo: `docs/GUIA_PERSISTENCIA_SQLITE.md`.
+
 ## Qué verás en el demo
 Una planificación activa por institución → un aula multigrado → una actividad que genera **una variante por grado** → revisión y aprobación
 docente → publicación → los estudiantes reciben solo la variante de su grado → trabajo «sin Internet» (simulado) → sincronización sin duplicados →
