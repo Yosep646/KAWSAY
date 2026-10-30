@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../app/AuthContext";
 import { ErrorBox } from "../components/ui";
 import { errMsg } from "../utils/format";
-import { Brand, Icon } from "../components/Icon";
+import { Brand, BrandMark, Icon } from "../components/Icon";
 
 export function Login() {
   const { login, loginStudent, unlockOffline } = useAuth();
@@ -32,7 +32,7 @@ export function Login() {
       </section>
       <section className="login-form-panel">
       <div className="login">
-      <span className="login-symbol"><Icon name="leaf" /></span>
+      <span className="login-symbol"><BrandMark /></span>
       <p className="eyebrow">{student ? "Espacio estudiante" : "Docencia y administración"}</p>
       <h2>Bienvenido a tu aula</h2>
       <p className="muted login-description">Ingresa para planificar, descubrir avances y acompañar a tus estudiantes.</p>

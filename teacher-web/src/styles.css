@@ -37,8 +37,10 @@ svg { flex-shrink: 0; }
 .brand { display: flex; align-items: center; gap: 11px; font-size: 22px; font-weight: 800; letter-spacing: -.8px; line-height: 1.2; }
 .brand em { color: var(--accent); font-style: normal; font-weight: 400; }
 .brand small { display: block; color: var(--muted); font-size: 10px; font-weight: 400; letter-spacing: .15px; margin-top: 5px; }
-.brand-mark { display: grid; place-items: center; width: 43px; height: 45px; border-radius: 13px 13px 13px 3px; background: var(--accent); color: #fff; }
-.brand-mark .icon { width: 27px; height: 27px; }
+.brand-mark { display: grid; place-items: center; width: 48px; height: 48px; flex-shrink: 0; }
+.brand-icon { display: block; width: 100%; height: 100%; object-fit: contain; }
+.brand-caption { display: block; min-width: 0; }
+.brand-wordmark { display: none; }
 .nav-caption { font-size: 9px; letter-spacing: 1.4px; font-weight: 700; color: var(--muted); margin: 44px 12px 14px; }
 .primary-nav { display: flex; flex-direction: column; gap: 7px; }
 .primary-nav a { display: flex; align-items: center; gap: 13px; color: var(--muted); text-decoration: none; padding: 13px 15px; border-radius: 9px; font-size: 13px; font-weight: 550; border: 1px solid transparent; }
@@ -165,7 +167,9 @@ meter { accent-color: var(--accent); max-width: 100%; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .login-layout { display: grid; grid-template-columns: 1fr 1fr; min-height: 100dvh; }
 .login-story { background: #154c40; color: #fff; padding: 44px 52px 30px; display: flex; flex-direction: column; position: relative; overflow: hidden; }
-.login-story .brand-mark { background: #ffffff15; }
+.login-story .brand-mark { width: 62px; height: 62px; }
+.login-story .brand-name { display: none; }
+.login-story .brand-wordmark { display: block; width: clamp(180px, 18vw, 260px); height: auto; }
 .login-story .brand em { color: #d6c28c; }
 .login-story .brand small { color: #c1d5cb; }
 .login-story-copy { position: relative; z-index: 1; margin: auto 0; padding: 70px 0 200px; }
@@ -178,8 +182,7 @@ meter { accent-color: var(--accent); max-width: 100%; }
 .login-story-footer { font-size: 10px; color: #b2cabc; margin: 0; position: relative; z-index: 1; }
 .login-form-panel { display: flex; align-items: center; justify-content: center; padding: 48px; background: var(--card); }
 .login { width: 100%; max-width: 370px; }
-.login-symbol { display: grid; place-items: center; background: var(--soft); color: var(--accent); border-radius: 13px; width: 48px; height: 48px; margin-bottom: 28px; }
-.login-symbol .icon { width: 28px; height: 28px; }
+.login-symbol { display: grid; place-items: center; width: 72px; height: 72px; margin: 0 auto 24px; }
 .login h2 { font-size: 28px; margin-bottom: 13px; }
 .login-description { font-size: 13px; line-height: 1.8; margin-bottom: 30px; }
 .login .stack { gap: 16px; }

@@ -1,3 +1,6 @@
+import brandIcon from "../assets/kawsay-brand-icon.webp";
+import brandWordmark from "../assets/kawsay-brand-wordmark.webp";
+
 const paths = {
   leaf: "M12 21v-9m0 4C4 17 2 10 3 4c7 0 10 4 9 12Zm0-3c0-6 4-10 9-10 1 6-2 11-9 10Z",
   dashboard: "M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z",
@@ -21,6 +24,10 @@ export function Icon({ name, className = "" }: { name: IconName; className?: str
   return <svg className={`icon ${className}`} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false"><path d={paths[name]} /></svg>;
 }
 
+export function BrandMark() {
+  return <img className="brand-icon" src={brandIcon} width="400" height="400" alt="" aria-hidden="true" />;
+}
+
 export function Brand() {
-  return <div className="brand"><span className="brand-mark"><Icon name="leaf" /></span><span>KAWSAY <em>AI</em><small>Educación que acompaña</small></span></div>;
+  return <div className="brand"><span className="brand-mark"><BrandMark /></span><span className="brand-caption"><span className="brand-name">KAWSAY <em>AI</em></span><img className="brand-wordmark" src={brandWordmark} width="689" height="148" alt="KAWSAY AI" /><small>Educación que acompaña</small></span></div>;
 }
