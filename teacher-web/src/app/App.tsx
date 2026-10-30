@@ -10,6 +10,7 @@ import { Planning } from "../pages/Planning";
 import { Students } from "../pages/Students";
 import { StudentHome } from "../pages/StudentHome";
 import { StudentActivity } from "../pages/StudentActivity";
+import { StudentLanguageSettings } from "../pages/StudentLanguageSettings";
 import { AuthProvider, useAuth } from "./AuthContext";
 import type { Role } from "../types/api";
 import { Brand, Icon, type IconName } from "../components/Icon";
@@ -40,6 +41,7 @@ const studentLinks: typeof teacherLinks = [
   { to: "/estudiante/cursos", label: "Mis cursos", icon: "book" },
   { to: "/estudiante/actividades", label: "Mis actividades", icon: "tasks" },
   { to: "/estudiante/progreso", label: "Mi progreso", icon: "activity" },
+  { to: "/estudiante/idioma", label: "Mi idioma", icon: "settings" },
 ];
 
 function Protected({ roles, children }: { roles?: Role[]; children: ReactNode }) {
@@ -116,6 +118,7 @@ function Shell() {
           <Route path="/estudiante/cursos" element={<Protected roles={["STUDENT"]}><StudentHome focus="courses" /></Protected>} />
           <Route path="/estudiante/actividades" element={<Protected roles={["STUDENT"]}><StudentHome focus="activities" /></Protected>} />
           <Route path="/estudiante/progreso" element={<Protected roles={["STUDENT"]}><StudentHome focus="progress" /></Protected>} />
+          <Route path="/estudiante/idioma" element={<Protected roles={["STUDENT"]}><StudentLanguageSettings /></Protected>} />
           <Route path="/estudiante/actividad/:id" element={<Protected roles={["STUDENT"]}><StudentActivity /></Protected>} />
           <Route path="/aulas" element={<Protected roles={["TEACHER"]}><Classrooms /></Protected>} />
           <Route path="/estudiantes" element={<Protected roles={["TEACHER"]}><Students /></Protected>} />
