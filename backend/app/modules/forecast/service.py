@@ -81,7 +81,7 @@ def forecast_for_students(db: Session, students: dict[uuid.UUID, dict]) -> dict:
     # predictions must not be interpreted as recommendations for real learners.
     experimental = meta.get("status") != "APPROVED"
     items = []
-    for sid, cid, student, results, score, count, recommendation in histories:
+    for sid, cid, student, results, _score, count, recommendation in histories:
         hist = [{"score": r.score, "hints": r.hints, "wrong": r.wrong_attempts} for r in results[-10:]]
         started = perf_counter()
         try:
