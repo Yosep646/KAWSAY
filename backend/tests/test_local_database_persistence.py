@@ -14,8 +14,8 @@ from app.modules.classrooms.models import Classroom
 
 def test_classroom_saved_via_api_survives_database_engine_restart(w):
     school = w.school("Escuela Persistencia Local")
-    w.staff("TEACHER", "persistencia@kawsay.test", school)
-    teacher = w.login("persistencia@kawsay.test")
+    w.staff("TEACHER", "persistencia@kawsay.com", school)
+    teacher = w.login("persistencia@kawsay.com")
     classroom_id = w.classroom(teacher, name="Aula que debe conservarse")
 
     # Se cierran las conexiones existentes de la aplicación, como en un reinicio.
