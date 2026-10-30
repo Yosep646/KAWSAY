@@ -1,7 +1,8 @@
 import uuid
 from typing import Annotated
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
+from sqlalchemy import select
 from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy.orm import Session
 
@@ -9,6 +10,10 @@ from app.core.database import get_db
 from app.core.permissions import require_roles
 from app.core.rate_limit import check_rate
 from app.modules.ai.gateway import AIGateway, get_gateway
+from app.modules.audit.service import log_access
+from app.modules.automation.models import DomainEvent
+from app.modules.classrooms.service import teacher_can_access_student
+from app.modules.assignments.models import Assignment
 from app.modules.tutor import service
 from app.modules.users.models import Role, User
 
@@ -27,3 +32,44 @@ def turn(body: TurnIn, db: Annotated[Session, Depends(get_db)], student: Annotat
          gateway: Annotated[AIGateway, Depends(get_gateway)]) -> dict:
     check_rate(f"tutor:{student.id}", 30, 60)
     return service.turn(db, gateway, student, body.student_assignment_id, body.question_id, body.step)
+
+
+@router.get("/help-requests")
+def teacher_help_requests(
+    db: Annotated[Session, Depends(get_db)],
+    teacher: Annotated[User, Depends(require_roles(Role.TEACHER))],
+    limit: Annotated[int, Query(ge=1, le=100)] = 40,
+) -> list[dict]:
+    """Señales reales de apoyo solicitadas por alumnos del docente; no son diagnósticos."""
+    rows = db.scalars(
+        select(DomainEvent).where(DomainEvent.type == "tutor.help.requested")
+        .order_by(DomainEvent.created_at.desc()).limit(200)
+    )
+    out = []
+    for ev in rows:
+        payload = ev.payload if isinstance(ev.payload, dict) else {}
+        if payload.get("teacher_id") != str(teacher.id):
+            continue
+        try:
+            sid = uuid.UUID(payload["student_id"])
+            aid = uuid.UUID(payload["assignment_id"])
+        except (KeyError, ValueError, TypeError):
+            continue
+        if not teacher_can_access_student(db, teacher.id, sid):
+            continue
+        student = db.get(User, sid)
+        assignment = db.get(Assignment, aid)
+        if student is None or assignment is None:
+            continue
+        out.append({
+            "id": ev.id, "student": student.display_name,
+            "assignment_title": assignment.title,
+            "requested_at": ev.created_at,
+            "reason": "El estudiante solicitó al menos dos niveles de ayuda en un ejercicio.",
+            "source": "TUTOR_RULES",
+            "requires_teacher_decision": True,
+        })
+        if len(out) >= limit:
+            break
+    log_access(db, teacher, "tutor.help_requests.read", "tutor")
+    return out
