@@ -1,5 +1,6 @@
 """Pruebas de persistencia local: escritura HTTP, nuevo motor y lectura durable."""
 from pathlib import Path
+import uuid
 
 import pytest
 from sqlalchemy import select
@@ -20,7 +21,7 @@ def test_classroom_saved_via_api_survives_database_engine_restart(w):
     # Se cierran las conexiones existentes de la aplicación, como en un reinicio.
     reset_engine()
     with Session(get_engine()) as db:
-        room = db.scalar(select(Classroom).where(Classroom.id == classroom_id))
+        room = db.scalar(select(Classroom).where(Classroom.id == uuid.UUID(classroom_id)))
         assert room is not None
         assert room.name == "Aula que debe conservarse"
 
@@ -69,5 +70,5 @@ def test_dev_run_migrates_before_starting(monkeypatch, tmp_path):
     dev.ensure_database_ready()
     assert len(commands) == 2
     assert commands[0][0][-3:] == ["alembic", "upgrade", "head"]
-    assert commands[1][0][-3:] == ["app.cli", "db-status"]
+    assert commands[1][0][-2:] == ["app.cli", "db-status"]
     assert all(cwd == backend for _, cwd in commands)
