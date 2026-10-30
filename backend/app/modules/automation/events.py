@@ -7,6 +7,7 @@ SUPPORT_FLAG_CREATED = "student.support_flag.created"
 INTERVENTION_CREATED = "teacher.intervention.created"
 ASSIGNMENT_PUBLISHED = "assignment.published"
 SYNC_COMPLETED = "sync.completed"
+TUTOR_HELP_REQUESTED = "tutor.help.requested"
 
 
 def emit(db: Session, event_type: str, payload: dict) -> None:
