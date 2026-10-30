@@ -80,6 +80,7 @@ def export_database(db: DB, admin: Admin) -> StreamingResponse:
 
     # Auditoría del acceso a una copia con datos personales (no registra su contenido).
     log_access(db, admin, "SQLITE_BACKUP_REQUESTED", "DATABASE")
+    path = path.resolve()  # SQLite local usa rutas relativas; as_uri requiere ruta absoluta.
     temporary = tempfile.TemporaryDirectory(prefix="kawsay-sqlite-export-")
     backup_path = Path(temporary.name) / "snapshot.db"
     try:
