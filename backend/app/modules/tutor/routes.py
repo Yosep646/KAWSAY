@@ -2,18 +2,18 @@ import uuid
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query
-from sqlalchemy import select
 from pydantic import BaseModel, ConfigDict, Field
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
 from app.core.permissions import require_roles
 from app.core.rate_limit import check_rate
 from app.modules.ai.gateway import AIGateway, get_gateway
+from app.modules.assignments.models import Assignment
 from app.modules.audit.service import log_access
 from app.modules.automation.models import DomainEvent
 from app.modules.classrooms.service import teacher_can_access_student
-from app.modules.assignments.models import Assignment
 from app.modules.tutor import service
 from app.modules.users.models import Role, User
 
