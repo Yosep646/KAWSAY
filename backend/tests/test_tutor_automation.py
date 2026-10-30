@@ -41,6 +41,8 @@ def test_repeated_tutor_help_emits_one_minimal_signed_outbox_event(w, db, monkey
     result = dispatch.dispatch_pending(db, httpx.Client(transport=httpx.MockTransport(receiver)))
     assert result["delivered"] >= 1
     msg = next(x for x in received if "tutor.help.requested" in x.content.decode())
+    assert "student_id" not in msg.content.decode()  # seudónimo interno no sale a n8n
+    assert "question_id" not in msg.content.decode()
     assert dispatch.verify("secreto-compartido-n8n-0123456789",
                            msg.headers["X-Kawsay-Timestamp"], msg.content.decode(),
                            msg.headers["X-Kawsay-Signature"])
