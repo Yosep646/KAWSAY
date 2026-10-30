@@ -49,7 +49,13 @@ def dispatch_pending(db: Session, client: httpx.Client | None = None, limit: int
             .order_by(DomainEvent.created_at).limit(limit))]
         db.commit()  # SQLite: NO retener la transacción durante las llamadas HTTP (n8n puede tardar o caer)
         for ev_id, ev_type, payload, created in due:
-            body = json.dumps({"event_id": str(ev_id), "type": ev_type, "created_at": created, "payload": payload},
+            # La señal del tutor conserva el ID estudiantil SOLO en la BD interna.
+            # Al receptor n8n se envía lo mínimo para avisar al docente; éste
+            # consulta los detalles mediante API autenticada y permisos por aula.
+            outbound = ({k: payload[k] for k in ("teacher_id", "classroom_id", "assignment_id", "min_help_step")
+                         if k in payload} if ev_type == "tutor.help.requested" and isinstance(payload, dict)
+                        else payload)
+            body = json.dumps({"event_id": str(ev_id), "type": ev_type, "created_at": created, "payload": outbound},
                               separators=(",", ":"), sort_keys=True)
             ts = str(int(time.time()))
             try:

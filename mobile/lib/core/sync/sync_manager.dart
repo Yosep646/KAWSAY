@@ -71,6 +71,7 @@ class SyncManager extends ChangeNotifier {
     notifyListeners();
     try {
       await _push();
+      await _syncLanguagePreferences();
       await _pull();
       lastError = null;
       state = SyncState.idle;
@@ -86,6 +87,19 @@ class SyncManager extends ChangeNotifier {
       _running = false;
       await refreshCounts();
     }
+  }
+
+  /// La preferencia local se confirma en servidor antes de descargar traducciones.
+  /// Si la red cae se conserva la misma operación para reintentar, sin inventar traducciones.
+  Future<void> _syncLanguagePreferences() async {
+    final pending = await _repo.pendingLanguagePreferences();
+    if (pending == null) return;
+    final response = await _api.setLanguages(
+      pending['mother_language_code'] as String?,
+      pending['mother_variant_id'] as String?,
+      pending['preferred_language_code'] as String?,
+    );
+    await _repo.acknowledgeLanguagePreferences(pending, response);
   }
 
   Future<void> _push() async {

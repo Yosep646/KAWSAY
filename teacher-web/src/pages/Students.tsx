@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Card, ErrorBox, Loading } from "../components/ui";
 import { Icon } from "../components/Icon";
 import { TeacherPageIntro } from "../components/TeacherPageIntro";
+import { ExistingEnrollment } from "../components/ExistingEnrollment";
 import "./student-enroll.css";
 import { useAsync } from "../hooks/useAsync";
 import { api } from "../services/api";
@@ -20,7 +21,7 @@ export function Students() {
 
   return (
     <div className="student-management teacher-workflow">
-      <TeacherPageIntro kicker="APRENDIZAJE · GESTIÓN DEL AULA" title="Mis estudiantes" icon="graduation" description="Registra estudiantes por grado, asigna sus credenciales y acompaña su progreso individual.">
+      <TeacherPageIntro kicker="APRENDIZAJE · GESTIÓN DEL AULA" title="Mis estudiantes" icon="graduation" description="Registra y matricula estudiantes por aula y grado, manteniendo sus cuentas y su progreso.">
         <Link to="/aulas"><Icon name="classroom"/> Mis aulas</Link>
         <Link to="/actividades/nueva" className="secondary"><Icon name="tasks"/> Preparar actividad</Link>
       </TeacherPageIntro>
@@ -157,6 +158,8 @@ function ClassroomStudents({ classroomId, languages }: { classroomId: string; la
             <button type="submit" disabled={busy || !grades.data?.length}>{busy ? "Registrando…" : "Crear estudiante"} <Icon name="arrow" /></button></div>
         </form>
       </section>
+
+      <ExistingEnrollment classroomId={classroomId} onEnrolled={room.reload} />
 
       {credentials && <div className="student-access-created" role="status">
         <strong><Icon name="check" /> Estudiante registrado: {credentials.display_name}</strong>
