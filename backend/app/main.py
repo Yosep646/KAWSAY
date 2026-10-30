@@ -27,6 +27,7 @@ from app.modules.planning.routes import router as planning_router
 from app.modules.progress.routes import router as progress_router
 from app.modules.schools.routes import router as schools_router
 from app.modules.students.routes import router as students_router
+from app.modules.storage.routes import router as storage_router
 from app.modules.support_flags.routes import router as flags_router
 from app.modules.sync.routes import router as sync_router
 from app.modules.tutor.routes import router as tutor_router
@@ -68,7 +69,8 @@ def create_app() -> FastAPI:
     for r in (auth_router, users_router, schools_router, classrooms_router, students_router,
               curriculum_router, curriculum_document_router, planning_router, assignments_router,
               sync_router, flags_router, interventions_router, analytics_router, progress_router,
-              audit_router, automation_router, languages_router, tutor_router, learning_router):
+              audit_router, automation_router, languages_router, tutor_router, learning_router,
+              storage_router):
         api.include_router(r)
     app.include_router(api)
 
