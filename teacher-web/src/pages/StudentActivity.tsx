@@ -5,11 +5,16 @@ import { Card, ErrorBox, Loading } from "../components/ui";
 import { api } from "../services/api";
 import { pendingAttempts, type PendingAttempt } from "../services/pendingAttempts";
 import { offlineTasks } from "../services/offlineTasks";
+import { StudentTutorHelp } from "../components/StudentTutorHelp";
+import "./student-preferences.css";
 import { errMsg } from "../utils/format";
 import "./student-activity-exercises.css";
 
-type Question = { id: string; type: "MULTIPLE_CHOICE" | "NUMERIC" | "SHORT_TEXT"; prompt: string; options: string[] | null };
-type Task = { student_assignment_id: string; title: string; instructions?: string; questions: Question[] };
+type Question = { id: string; type: "MULTIPLE_CHOICE" | "NUMERIC" | "SHORT_TEXT"; prompt: string; options: string[] | null; hints?: string[] | null };
+type Task = { student_assignment_id: string; title: string; instructions?: string; questions: Question[];
+  translation?: { title: string; instructions: string; question_prompts: Record<string, string> } | null;
+  language?: { preferred: string | null; translation_available: boolean };
+};
 type Status = { question_id: string; closed: boolean; device_attempt_number: number };
 
 export function StudentActivity() {
@@ -27,6 +32,7 @@ export function StudentActivity() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [value, setValue] = useState("");
+  const [hintsUsed, setHintsUsed] = useState(0);
   const [busy, setBusy] = useState(false);
   const [pending, setPending] = useState<PendingAttempt[]>([]);
   const attempted = useRef(new Set<string>());
@@ -70,6 +76,7 @@ export function StudentActivity() {
   }, [id, device, key]);
 
   const current = task?.questions.find(q => !statuses.find(s => s.question_id === q.id)?.closed && !pending.some(p => p.event.payload.question_id === q.id));
+  useEffect(() => { setHintsUsed(0); }, [current?.id]);
   const completedCount = task ? task.questions.filter(q => statuses.some(s => s.question_id === q.id && s.closed) || pending.some(p => p.event.payload.question_id === q.id)).length : 0;
   const send = async (record: PendingAttempt) => {
     if (!device || !id || sending.current) return;
@@ -102,7 +109,7 @@ export function StudentActivity() {
     const answer = current.type === "MULTIPLE_CHOICE" ? { index: Number(value) } : current.type === "NUMERIC" ? { value: Number(value.replace(",", ".")) } : { text: value };
     if (current.type === "NUMERIC" && !Number.isFinite((answer as { value: number }).value)) { setError("Escribe un número válido."); return; }
     const n = (statuses.find(s => s.question_id === current.id)?.device_attempt_number ?? 0) + pending.filter(p => p.event.payload.question_id === current.id).length + 1;
-    const event = { event_id: crypto.randomUUID(), type: "attempt.created", payload: { student_assignment_id: id, question_id: current.id, attempt_number: n, answer, hints_used: 0, response_time_ms: 0, client_created_at: new Date().toISOString() } };
+    const event = { event_id: crypto.randomUUID(), type: "attempt.created", payload: { student_assignment_id: id, question_id: current.id, attempt_number: n, answer, hints_used: hintsUsed, response_time_ms: 0, client_created_at: new Date().toISOString() } };
     const record = { key, deviceId: device, event };
     setBusy(true);
     try { await pendingAttempts.add(record); setPending(old => [...old, record]); setValue(""); }
@@ -111,13 +118,15 @@ export function StudentActivity() {
     // El envío se hace después de que IndexedDB confirme la escritura.
     // El efecto de cola inicia el envío tras confirmar la escritura. No duplica peticiones.
   };
-  return <div><Link to="/estudiante">← Volver a mi inicio</Link><ErrorBox message={error} />{loading ? <Loading /> : task && <Card title={task.title}>
+  return <div><Link to="/estudiante">← Volver a mi inicio</Link><ErrorBox message={error} />{loading ? <Loading /> : task && <Card title={task.translation?.title || task.title}>
     <p role="status" className={`connection-status ${online && !offline ? "connected" : "disconnected"}`}>{offline || !online ? "Sin conexión con el servidor. Tus respuestas se guardan en este dispositivo." : "Conectado: tus entregas se confirmarán en el servidor."}</p>
-    {task.instructions?.trim() && <section className="student-activity-instructions" aria-label="Indicaciones de la actividad"><h3>Indicaciones del docente</h3><p>{task.instructions}</p></section>}
+    {(task.translation?.instructions || task.instructions)?.trim() && <section className="student-activity-instructions" aria-label="Indicaciones de la actividad"><h3>Indicaciones del docente</h3><p>{task.translation?.instructions || task.instructions}</p></section>}
+    {task.language?.preferred && !task.language.translation_available && <p role="note" className="notice">Todavía no hay una traducción educativa verificada en tu idioma preferido. Se presenta el contenido original del docente.</p>}
     {message && <p role="status">{message}</p>}
     {pending.length > 0 && <><p role="status">{pending.length} respuesta(s) pendientes. Puedes seguir resolviendo otras preguntas.</p><button type="button" disabled={!online || busy} onClick={() => { const next = pending[0]; if (!next) return; attempted.current.clear(); void send(next); }}>Reintentar sincronización</button></>}
-    {current ? <form className="stack" onSubmit={e => void submit(e)}><div className="question-progress">Pregunta {task.questions.findIndex(q => q.id === current.id) + 1} de {task.questions.length}</div><div className="activity-progress-track" role="progressbar" aria-label="Preguntas confirmadas" aria-valuemin={0} aria-valuemax={task.questions.length} aria-valuenow={completedCount}><span style={{width:`${Math.round(completedCount / task.questions.length * 100)}%`}} /></div><h3>{current.prompt}</h3>
+    {current ? <form className="stack" onSubmit={e => void submit(e)}><div className="question-progress">Pregunta {task.questions.findIndex(q => q.id === current.id) + 1} de {task.questions.length}</div><div className="activity-progress-track" role="progressbar" aria-label="Preguntas confirmadas" aria-valuemin={0} aria-valuemax={task.questions.length} aria-valuenow={completedCount}><span style={{width:`${Math.round(completedCount / task.questions.length * 100)}%`}} /></div><h3>{task.translation?.question_prompts?.[current.id] || current.prompt}</h3>
       {current.type === "MULTIPLE_CHOICE" ? current.options?.map((option, i) => <label className="inline" key={i}><input type="radio" name="answer" value={String(i)} checked={value === String(i)} onChange={e => setValue(e.target.value)} />{option}</label>) : <label>Tu respuesta<input value={value} onChange={e => setValue(e.target.value)} required /></label>}
+      <StudentTutorHelp key={current.id} assignmentId={id!} question={current} onHintUsed={setHintsUsed} />
       <button disabled={busy}>Guardar respuesta localmente</button>
     </form> : pending.length > 0 ? <p>Tus respuestas están guardadas en este dispositivo. Se enviarán cuando vuelva la conexión.</p> : <p>Terminaste los ejercicios disponibles.</p>}
   </Card>}</div>;
