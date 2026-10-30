@@ -61,7 +61,7 @@ def forecast_for_students(db: Session, students: dict[uuid.UUID, dict]) -> dict:
             "reason": recommendation["reason"], "source": "RULES",
             "requires_teacher_decision": True,
         })
-        if student.get("grade_number") in range(1, 7) and len(results) >= 10:
+        if student.get("grade_number") in range(1, 7):
             histories.append((sid, cid, student, results, score, count, recommendation))
     guidance.sort(key=lambda x: (x["student"]["display_name"], str(x["competency"]["id"])))
 
@@ -75,7 +75,7 @@ def forecast_for_students(db: Session, students: dict[uuid.UUID, dict]) -> dict:
     try:
         _, meta = pred.load(allow_experimental=allow)
     except Exception:
-        return unavailable("No hay modelo ML aprobado y disponible. Continúan las recomendaciones por reglas.")
+        return unavailable("No hay modelo aprobado y disponible. Continúan las recomendaciones por reglas.")
 
     # Synthetic models are for explicitly enabled demonstration ONLY: their
     # predictions must not be interpreted as recommendations for real learners.
