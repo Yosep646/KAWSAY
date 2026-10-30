@@ -20,6 +20,7 @@ from sqlalchemy.orm import Session
 from app.core.config import get_settings
 from app.core.database import _db_path, get_db
 from app.core.permissions import require_roles
+from app.modules.audit.service import log_access
 from app.modules.users.models import Role, User
 
 router = APIRouter(prefix="/admin/storage", tags=["admin-storage"])
@@ -66,7 +67,7 @@ def _bytes(path: Path, temporary: tempfile.TemporaryDirectory[str]) -> Iterator[
 
 
 @router.get("/export")
-def export_database(db: DB, _: Admin) -> StreamingResponse:
+def export_database(db: DB, admin: Admin) -> StreamingResponse:
     """Descarga íntegra con SQLite online-backup API; incluye transacciones en WAL.
 
     El archivo temporal se elimina al terminar/cancelar la descarga. No incluye
@@ -77,6 +78,8 @@ def export_database(db: DB, _: Admin) -> StreamingResponse:
     if path is None or not path.is_file():
         raise HTTPException(503, detail="La base SQLite no está disponible para respaldo.")
 
+    # Auditoría del acceso a una copia con datos personales (no registra su contenido).
+    log_access(db, admin, "SQLITE_BACKUP_REQUESTED", "DATABASE")
     temporary = tempfile.TemporaryDirectory(prefix="kawsay-sqlite-export-")
     backup_path = Path(temporary.name) / "snapshot.db"
     try:
