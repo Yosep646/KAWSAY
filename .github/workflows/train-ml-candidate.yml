@@ -1,0 +1,61 @@
+name: Train ML candidate (synthetic data, never production)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/train-ml-candidate.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  train-ml-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install ML dependencies
+        run: python -m pip install -r ml/requirements.txt
+      - name: Train, group-validate, calibrate and test a candidate on synthetic histories
+        run: python -m ml.train --source synthetic --students 450 --seed 7 --quick
+      - name: Verify artifact, local inference and non-approval
+        run: |
+          python - <<'PY'
+          from ml import predict, registry
+          items = registry.list_models()
+          m = items[-1]
+          assert m["data_kind"] == "SYNTHETIC"
+          assert m["status"] == "CANDIDATE"
+          assert m["metrics_test"]["roc_auc"] > 0.5
+          history = [{"score":0.4, "hints":1, "wrong":2}] * 10
+          try:
+              predict.predict(history, 4)
+          except predict.NoApprovedModel:
+              pass
+          else:
+              raise AssertionError("Synthetic ML must never run in production inference")
+          out = predict.predict(history, 4, allow_experimental=True)
+          assert out["model_status"] == "CANDIDATE"
+          assert out["data_kind"] == "SYNTHETIC"
+          print("MODELO CANDIDATO ENTRENADO. Producción BLOQUEADA; inferencia experimental probada.")
+          PY
+      - name: Generate report and model card from real training output
+        run: python -m ml.make_model_card
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kawsay-ml-synthetic-candidate-${{ github.run_id }}
+          path: |
+            ml/models/*.joblib
+            ml/reports/*.json
+            ml/registry/registry.json
+            docs/ml-model-card.md
+          retention-days: 30
+          if-no-files-found: error
