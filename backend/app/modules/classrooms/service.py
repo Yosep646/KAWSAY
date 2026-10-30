@@ -106,7 +106,7 @@ def eligible_students(db: Session, teacher_id: uuid.UUID, classroom_id: uuid.UUI
                ClassroomStudent.left_at.is_(None))
     ))
     candidates = {}
-    for sid, display_name, grade, source_id, source_name, source_year in rows:
+    for sid, display_name, grade, _source_id, source_name, source_year in rows:
         if source_year == room.academic_year or sid in enrolled_in_target_year:
             continue  # Una matrícula activa por año y sin traslados automáticos.
         candidates[str(sid)] = {
