@@ -26,8 +26,8 @@ from app.modules.learning.routes import router as learning_router
 from app.modules.planning.routes import router as planning_router
 from app.modules.progress.routes import router as progress_router
 from app.modules.schools.routes import router as schools_router
-from app.modules.students.routes import router as students_router
 from app.modules.storage.routes import router as storage_router
+from app.modules.students.routes import router as students_router
 from app.modules.support_flags.routes import router as flags_router
 from app.modules.sync.routes import router as sync_router
 from app.modules.tutor.routes import router as tutor_router
