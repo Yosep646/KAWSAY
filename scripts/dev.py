@@ -8,6 +8,7 @@
   python scripts/dev.py demo      arranca el backend y carga datos DEMO completos (aula multigrado, alertas, etc.)
   python scripts/dev.py test      ejecuta todas las pruebas (backend, ML y panel)
   python scripts/dev.py backup    copia consistente de la base de datos
+  python scripts/dev.py db        comprueba/migra SQLite y muestra su ruta y conteos
 """
 import getpass
 import os
@@ -53,7 +54,23 @@ def setup(with_ml: bool = True) -> None:
             pass
         print("» backend/.env creado con un JWT_SECRET aleatorio (no lo subas a Git)")
     run([PY, "-m", "alembic", "upgrade", "head"], cwd=BACKEND)
+    run([PY, "-m", "app.cli", "db-status"], cwd=BACKEND)
     print("\nListo. Siguiente: `python scripts/dev.py demo` (con datos de ejemplo) o `python scripts/dev.py admin` + `run`.")
+
+
+
+def ensure_database_ready() -> None:
+    """Utiliza siempre el mismo backend/.env y cwd que FastAPI y Alembic.
+
+    No elimina ni reinicializa los datos existentes. Las migraciones son incrementales.
+    """
+    if not PY.is_file() or not (BACKEND / ".env").is_file():
+        print("» Instalación local incompleta: creando entorno y migrando SQLite.")
+        setup(with_ml=False)
+    else:
+        print("» Verificando migraciones de la base configurada (sin borrar datos).")
+        run([PY, "-m", "alembic", "upgrade", "head"], cwd=BACKEND)
+    run([PY, "-m", "app.cli", "db-status"], cwd=BACKEND)
 
 
 def wait_ready(url: str = "http://127.0.0.1:8000/ready", seconds: int = 60) -> None:
@@ -80,8 +97,7 @@ def start_backend(reload: bool = True) -> subprocess.Popen:
 
 
 def demo() -> None:
-    if not PY.exists() or not (BACKEND / ".env").exists():
-        setup()
+    ensure_database_ready()
     create_admin(*DEMO_ADMIN, name="Admin Demo")
     proc = start_backend(reload=False)
     try:
@@ -112,8 +128,7 @@ def main() -> None:
     elif cmd == "admin":
         create_admin()
     elif cmd == "run":
-        if not PY.exists():
-            setup()
+        ensure_database_ready()
         try:
             start_backend().wait()
         except KeyboardInterrupt:
@@ -130,6 +145,8 @@ def main() -> None:
         npm = "npm.cmd" if os.name == "nt" else "npm"
         run([npm, "install"], cwd=WEB)
         run([npm, "test"], cwd=WEB)
+    elif cmd == "db":
+        ensure_database_ready()
     elif cmd == "backup":
         run([PY, "-m", "app.cli", "backup", ROOT / "backups"], cwd=BACKEND)
     else:
