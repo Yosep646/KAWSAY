@@ -1,13 +1,18 @@
+import mimetypes
+
 from fastapi.testclient import TestClient
 
 from app.deploy import create_deployment_app
 
 
-def test_deployment_serves_shell_worker_assets_and_keeps_api_404(tmp_path):
+def test_deployment_serves_shell_worker_assets_and_keeps_api_404(tmp_path, monkeypatch):
+    mimetypes.init()
+    monkeypatch.setitem(mimetypes.types_map, ".webp", "application/octet-stream")
     (tmp_path / "assets").mkdir()
     (tmp_path / "index.html").write_text("<html>KAWSAY shell</html>", encoding="utf-8")
     (tmp_path / "sw.js").write_text("self.addEventListener('fetch', () => {});", encoding="utf-8")
     (tmp_path / "assets" / "app.js").write_text("const app='KAWSAY';", encoding="utf-8")
+    (tmp_path / "assets" / "logo.webp").write_bytes(b"RIFF-test-WEBP")
     client = TestClient(create_deployment_app(tmp_path))
     for path in ("/", "/login", "/estudiante/descargada/example"):
         result = client.get(path)
@@ -19,6 +24,7 @@ def test_deployment_serves_shell_worker_assets_and_keeps_api_404(tmp_path):
     assert worker.headers["service-worker-allowed"] == "/"
     assert "connect-src 'self'" in worker.headers["content-security-policy"]
     assert "KAWSAY" in client.get("/assets/app.js").text
+    assert client.get("/assets/logo.webp").headers["content-type"] == "image/webp"
     assert client.get("/api/v1/not-an-endpoint").status_code == 404
     assert client.get("/assets/not-a-file").status_code == 404
     assert client.get("/health").json()["status"] == "ok"

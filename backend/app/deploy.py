@@ -1,5 +1,6 @@
 """Single-origin web/API entry point for the isolated Render demonstration."""
 import os
+import mimetypes
 from pathlib import Path
 
 from fastapi import HTTPException
@@ -10,6 +11,8 @@ from app.main import create_app
 
 
 def create_deployment_app(web_directory: str | Path):
+    # Minimal container images may not have a system MIME database for WebP.
+    mimetypes.add_type("image/webp", ".webp")
     app = create_app()
     directory = Path(web_directory).resolve()
     index = directory / "index.html"
