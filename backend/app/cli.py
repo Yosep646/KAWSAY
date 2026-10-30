@@ -72,10 +72,16 @@ def db_status() -> dict:
         )}
         version = c.execute("SELECT version_num FROM alembic_version").fetchone()[0] \
             if "alembic_version" in tables else None
-        names = ("schools", "classrooms", "student_profiles", "assignments",
-                 "student_assignments", "curriculum_documents")
-        counts = {name: int(c.execute(f'SELECT COUNT(*) FROM "{name}"').fetchone()[0])
-                  for name in names if name in tables}
+        # Consultas literales predefinidas; ninguna entrada del usuario forma parte de SQL.
+        queries = (
+            ("schools", "SELECT COUNT(*) FROM schools"),
+            ("classrooms", "SELECT COUNT(*) FROM classrooms"),
+            ("student_profiles", "SELECT COUNT(*) FROM student_profiles"),
+            ("assignments", "SELECT COUNT(*) FROM assignments"),
+            ("student_assignments", "SELECT COUNT(*) FROM student_assignments"),
+            ("curriculum_documents", "SELECT COUNT(*) FROM curriculum_documents"),
+        )
+        counts = {name: int(c.execute(sql).fetchone()[0]) for name, sql in queries if name in tables}
     return {
         "database": "sqlite",
         "path": str(path),
