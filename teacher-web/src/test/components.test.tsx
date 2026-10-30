@@ -66,7 +66,7 @@ describe("Login y control de acceso", () => {
 
   it("sin sesión redirige a /login", async () => {
     render(<MemoryRouter initialEntries={["/aulas"]}><App /></MemoryRouter>);
-    expect(await screen.findByText("Docencia y administración")).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Bienvenido" })).toBeInTheDocument();
   });
 
   it("permite acceso de estudiante y muestra sus datos sin exponer rutas docentes", async () => {
@@ -79,7 +79,7 @@ describe("Login y control de acceso", () => {
     });
     localStorage.removeItem("kawsay_web_device_id");
     render(<MemoryRouter initialEntries={["/login"]}><App /></MemoryRouter>);
-    await userEvent.click(screen.getByText("Soy estudiante"));
+    await userEvent.click(screen.getByRole("button", { name: "Estudiante" }));
     await userEvent.type(screen.getByLabelText("Código de estudiante"), "ABCD");
     await userEvent.type(screen.getByLabelText("PIN"), "1234");
     await userEvent.click(screen.getByText("Ingresar"));
@@ -99,7 +99,7 @@ describe("Login y control de acceso", () => {
       return new Response(JSON.stringify([]));
     });
     render(<MemoryRouter initialEntries={["/login"]}><App /></MemoryRouter>);
-    await userEvent.click(screen.getByText("Soy estudiante"));
+    await userEvent.click(screen.getByRole("button", { name: "Estudiante" }));
     await userEvent.type(screen.getByLabelText("Código de estudiante"), "ABCD");
     await userEvent.type(screen.getByLabelText("PIN"), "1234");
     await userEvent.click(screen.getByText("Ingresar"));

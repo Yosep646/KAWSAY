@@ -1,0 +1,153 @@
+/* Original welcome scene, scoped so the classroom keeps its own theme. */
+#kawsay-login {
+  --login-teal: #00dec2;
+  --login-text: #e9f6fb;
+  --login-muted: #bdd5df;
+  color-scheme: dark;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(400px, 490px);
+  align-items: stretch;
+  min-height: 100svh;
+  padding-right: clamp(24px, 2.2vw, 44px);
+  color: var(--login-text);
+  background: #032337 url("../assets/kawsay-fondo-responsive-20261028.webp") center 45% / cover no-repeat;
+  overflow: clip;
+}
+#kawsay-login .login-scene-art {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 45%;
+  transform: translateX(-11%);
+  mask-image: linear-gradient(to right, #000 77%, transparent 98%);
+  pointer-events: none;
+}
+#kawsay-login::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(90deg, #00182e80, #00182e26 43%, transparent 70%);
+  pointer-events: none;
+}
+#kawsay-login .login-story {
+  background: transparent;
+  padding: clamp(32px, 3.1vw, 60px) clamp(28px, 3.15vw, 60px) 30px;
+  min-width: 0;
+  min-height: 100svh;
+  overflow: visible;
+  justify-content: space-between;
+  gap: 36px;
+}
+#kawsay-login .brand { gap: 12px; }
+#kawsay-login .brand-mark { width: 66px; height: 66px; }
+#kawsay-login .brand-wordmark { width: clamp(220px, 14.5vw, 280px); height: auto; }
+#kawsay-login .brand small { color: #e2f4fb; font-size: 13px; margin-top: 7px; }
+#kawsay-login .login-story-copy { margin: auto 0; padding: 0; max-width: 590px; text-shadow: 0 2px 16px #001b34a6; }
+#kawsay-login .login-story .eyebrow { display: block; color: #e4faff; font-size: 13px; letter-spacing: .22em; font-weight: 850; margin-bottom: 26px; }
+#kawsay-login h1 { margin: 0 0 22px; font-size: clamp(46px, 4vw, 76px); line-height: 1.03; letter-spacing: -.045em; font-weight: 900; color: white; }
+#kawsay-login h1 span { display: block; }
+#kawsay-login h1 .login-highlight { color: var(--login-teal); }
+#kawsay-login .login-story-copy > p { max-width: 445px; color: #fff; font-size: 18px; line-height: 1.6; margin-bottom: 17px; }
+#kawsay-login .login-values { display: flex; flex-wrap: wrap; gap: 25px; font-size: 13px; font-weight: 750; color: white; }
+#kawsay-login .login-values span { display: inline-flex; align-items: center; gap: 10px; }
+#kawsay-login .login-values .icon { color: var(--login-teal); width: 22px; height: 22px; }
+#kawsay-login .login-story-footer { display: flex; align-items: center; gap: 17px; align-self: flex-start; padding: 14px 19px; margin: 0; border: 1px solid #539587a6; border-radius: 12px; background: #082e35d9; color: #f0fffc; font-size: 13px; line-height: 1.6; backdrop-filter: blur(8px); }
+#kawsay-login .login-story-footer .icon { width: 36px; height: 36px; color: #baffee; }
+#kawsay-login .login-story-footer strong { font-weight: 800; }
+#kawsay-login .login-form-panel { position: relative; padding: 40px 0; background: transparent; min-width: 0; }
+#kawsay-login .login { width: 100%; max-width: 490px; padding: 30px 32px 27px; border: 1px solid #276779; border-radius: 23px; background: #021c29; box-shadow: 0 18px 48px #00111d45; }
+#kawsay-login .login-card-head { text-align: center; }
+#kawsay-login .login-symbol { display: grid; width: 66px; height: 66px; margin: 0 auto 9px; }
+#kawsay-login h2 { margin: 0 0 6px; color: white; font-size: 36px; font-weight: 900; letter-spacing: -.045em; }
+#kawsay-login .login-card-head p { color: #d5e6ed; font-size: 13px; margin: 0 0 15px; }
+#kawsay-login .login-role-tabs, #kawsay-login .login-method-tabs { display: flex; gap: 5px; padding: 5px; background: #0b3043; border: 1px solid #285e73; border-radius: 13px; margin-bottom: 14px; }
+#kawsay-login button { min-width: 0; font-weight: 750; }
+#kawsay-login .login-role-tabs button, #kawsay-login .login-method-tabs button { flex: 1; justify-content: center; padding: 12px 5px; min-height: 45px; border: 0; border-radius: 10px; background: transparent; color: #dbedf5; font-size: 13px; line-height: 1.3; }
+#kawsay-login .login-role-tabs button[aria-pressed="true"] { background: var(--login-teal); color: #002733; }
+#kawsay-login .login-method-tabs button[aria-pressed="true"] { background: #cffff1; color: #00584f; box-shadow: inset 0 0 0 1px #9de8d9; }
+#kawsay-login .login-access-form { display: flex; flex-direction: column; gap: 14px; }
+#kawsay-login .login-field { display: flex; flex-direction: column; gap: 6px; color: var(--login-text); font-weight: 750; font-size: 13px; }
+#kawsay-login .login-input-wrap { display: flex; align-items: center; position: relative; }
+#kawsay-login .login-input-wrap > .icon { position: absolute; left: 17px; color: #b3d3e5; width: 20px; height: 20px; pointer-events: none; }
+#kawsay-login input:not([type="checkbox"]) { min-width: 0; width: 100%; min-height: 51px; padding: 12px 16px; background: #13364c; color: #f4fbff; border: 1px solid #2b6983; border-radius: 11px; font-size: 15px; font-weight: 400; }
+#kawsay-login .login-input-wrap input { padding-left: 54px; }
+#kawsay-login .password-field input { padding-right: 50px; }
+#kawsay-login .password-toggle { display: grid; place-items: center; position: absolute; top: 5px; right: 5px; width: 40px; min-height: 40px; padding: 0; border: 0; background: transparent; color: #acd0d8; }
+#kawsay-login .password-toggle:hover { background: #ffffff0c; color: white; }
+#kawsay-login .login-preferences { display: flex; justify-content: space-between; align-items: center; gap: 10px; color: #e5f1f5; font-size: 11px; min-height: 25px; }
+#kawsay-login .login-remember { display: flex; flex-direction: row; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
+#kawsay-login input[type="checkbox"] { width: 18px; height: 18px; min-height: 18px; margin: 0; accent-color: var(--login-teal); }
+#kawsay-login .login-forgot { padding: 0; min-height: 28px; border: 0; background: transparent; color: #00e7cd; text-decoration: underline; font-size: 12px; line-height: 1.4; text-align: right; }
+#kawsay-login .login-recovery { padding: 10px 12px; border: 1px solid #2b6983; border-radius: 9px; color: var(--login-text); font-size: 12px; margin: 0; }
+#kawsay-login .login-submit { display: flex; justify-content: center; gap: 21px; align-items: center; width: 100%; min-height: 56px; padding: 12px 20px; margin: 0; border: 1px solid var(--login-teal); border-radius: 11px; background: var(--login-teal); color: #00202b; font-size: 15px; }
+#kawsay-login .login-submit:hover { background: #41efdb; }
+#kawsay-login button:disabled { opacity: .6; cursor: wait; }
+#kawsay-login :focus-visible { outline: 3px solid #89ffe7; outline-offset: 3px; }
+#kawsay-login .login-offline { margin-top: 12px; color: var(--login-muted); font-size: 11px; }
+#kawsay-login .login-offline summary { cursor: pointer; padding: 3px 0; }
+#kawsay-login .login-offline .stack { padding-top: 13px; gap: 10px; }
+#kawsay-login .login-offline p { margin: 0; }
+#kawsay-login .login-offline label { color: var(--login-text); }
+#kawsay-login .login-offline button { justify-content: center; background: var(--login-teal); color: #00202b; border-color: var(--login-teal); }
+#kawsay-login .login-help { color: #d6e8ed; font-size: 10px; line-height: 1.6; margin: 14px 0 12px; text-align: center; }
+#kawsay-login .login-footnote { padding-top: 15px; border-color: #284b5b; font-size: 10px; color: #b3cedc; }
+#kawsay-login .error { background: #532c36; color: #ffe4e6; border-color: #a85d70; }
+@media (min-width: 1600px) {
+  #kawsay-login .login-story-copy { transform: translateY(5px); }
+}
+@media (max-width: 1200px) {
+  #kawsay-login { grid-template-columns: minmax(0, 1fr) 420px; }
+  #kawsay-login .login { padding: 26px 25px; }
+  #kawsay-login h1 { font-size: clamp(40px, 4.6vw, 56px); }
+  #kawsay-login .login-story-copy > p { max-width: 350px; font-size: 16px; }
+  #kawsay-login .login-story .eyebrow { font-size: 10px; }
+  #kawsay-login .brand-mark { width: 55px; height: 55px; }
+  #kawsay-login .brand-wordmark { width: 210px; }
+}
+@media (max-width: 900px) {
+  #kawsay-login { display: flex; flex-direction: column; padding: 0; background: #032337; }
+  #kawsay-login .login-scene-art { height: 620px; object-position: 45% center; transform: none; mask-image: none; }
+  #kawsay-login::before { background: linear-gradient(90deg, #00182e99, #00182e20), linear-gradient(0deg, #032337 0%, transparent 65%); }
+  #kawsay-login .login-story { min-height: 450px; padding: 28px 28px 20px; gap: 30px; }
+  #kawsay-login .login-story-copy { margin: 12px 0 0; max-width: 560px; }
+  #kawsay-login h1 { font-size: clamp(42px, 7vw, 60px); }
+  #kawsay-login .login-story-copy > p { max-width: 460px; }
+  #kawsay-login .login-story-footer { display: none; }
+  #kawsay-login .login-form-panel { padding: 10px 24px 30px; }
+  #kawsay-login .login { max-width: 490px; }
+}
+@media (min-width: 901px) and (max-height: 850px) {
+  #kawsay-login .login-form-panel { padding-block: 24px; }
+  #kawsay-login .login { padding-block: 22px; }
+  #kawsay-login .login-symbol { width: 56px; height: 56px; margin-bottom: 6px; }
+  #kawsay-login h2 { font-size: 32px; }
+  #kawsay-login .login-card-head p { margin-bottom: 12px; }
+  #kawsay-login .login-role-tabs, #kawsay-login .login-method-tabs { margin-bottom: 10px; }
+  #kawsay-login .login-role-tabs button, #kawsay-login .login-method-tabs button { min-height: 40px; padding-block: 10px; }
+  #kawsay-login .login-access-form { gap: 11px; }
+  #kawsay-login input:not([type="checkbox"]) { min-height: 47px; }
+  #kawsay-login .login-submit { min-height: 51px; }
+}
+@media (max-width: 480px) {
+  #kawsay-login .login-story { padding: 24px 22px 15px; min-height: 400px; gap: 22px; }
+  #kawsay-login .brand-mark { width: 50px; height: 50px; }
+  #kawsay-login .brand-wordmark { width: 210px; }
+  #kawsay-login .brand small { font-size: 10px; }
+  #kawsay-login .login-story .eyebrow { font-size: 9px; margin-bottom: 16px; }
+  #kawsay-login h1 { font-size: clamp(36px, 10.8vw, 50px); margin-bottom: 16px; }
+  #kawsay-login .login-story-copy > p { max-width: 315px; font-size: 14px; line-height: 1.5; }
+  #kawsay-login .login-values { gap: 18px; font-size: 11px; }
+  #kawsay-login .login-values span { gap: 7px; }
+  #kawsay-login .login-form-panel { padding: 10px 14px 24px; }
+  #kawsay-login .login { padding: 23px 18px; border-radius: 20px; }
+  #kawsay-login h2 { font-size: 32px; }
+  #kawsay-login .login-role-tabs button, #kawsay-login .login-method-tabs button { font-size: 11px; padding-inline: 3px; }
+  #kawsay-login .login-preferences { gap: 7px; }
+  #kawsay-login .login-forgot { font-size: 11px; }
+}

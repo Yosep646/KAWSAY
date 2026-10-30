@@ -57,7 +57,7 @@ test("diez respuestas cifradas sobreviven al cierre total y se sincronizan una s
     context = await chromium.launchPersistentContext(profile, { headless: true });
     let page = await context.newPage();
     await page.goto(`${URL}/login`);
-    await page.getByRole("button", { name: "Soy estudiante", exact: true }).click();
+    await page.getByRole("button", { name: "Estudiante", exact: true }).click();
     await page.getByLabel("Código de estudiante", { exact: true }).fill(student.login_code);
     await page.getByLabel("PIN", { exact: true }).fill(student.pin);
     await page.getByRole("button", { name: "Ingresar", exact: true }).click();
