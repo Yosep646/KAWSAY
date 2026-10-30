@@ -97,10 +97,18 @@ def eligible_students(db: Session, teacher_id: uuid.UUID, classroom_id: uuid.UUI
             Classroom.id != room.id,
         ).order_by(User.display_name)
     )
+    enrolled_in_target_year = set(db.scalars(
+        select(ClassroomStudent.student_user_id)
+        .join(Classroom, Classroom.id == ClassroomStudent.classroom_id)
+        .where(Classroom.school_id == room.school_id,
+               Classroom.academic_year == room.academic_year,
+               Classroom.deleted_at.is_(None),
+               ClassroomStudent.left_at.is_(None))
+    ))
     candidates = {}
     for sid, display_name, grade, source_id, source_name, source_year in rows:
-        if source_year == room.academic_year:
-            continue  # La transferencia en el mismo año requiere un procedimiento distinto.
+        if source_year == room.academic_year or sid in enrolled_in_target_year:
+            continue  # Una matrícula activa por año y sin traslados automáticos.
         candidates[str(sid)] = {
             "id": sid, "display_name": display_name, "grade_number": grade,
             "previous_classroom": source_name, "previous_academic_year": source_year,
