@@ -1,0 +1,16 @@
+.role-student .student-language-settings {display:grid;gap:18px;min-width:0}
+.role-student .student-preference-hero{padding:clamp(23px,4vw,42px);border:1px solid #247b8b;border-radius:20px;background:linear-gradient(125deg,#073447,#087e83);color:#fff;}
+.role-student .student-preference-hero p{display:flex;gap:9px;align-items:center;font-size:11px;letter-spacing:.12em;font-weight:700;color:#9cf7e7;}
+.role-student .student-preference-hero h2{font-size:clamp(26px,4vw,41px);margin:10px 0;}
+.role-student .student-preference-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));align-items:end;gap:16px;margin:22px 0;}
+.role-student .student-preference-form label{display:grid;gap:7px;color:inherit;font-weight:700;font-size:13px;}
+.role-student .student-preference-form select{max-width:100%;width:100%;min-height:46px;border:1px solid #568b9d;border-radius:10px;padding:9px;font:inherit;}
+.role-student .student-preference-form button{min-height:46px;border:0;border-radius:10px;background:#0a867e;color:white;font-weight:800;padding:12px;}
+.role-student .student-preference-form button:disabled{opacity:.6;}
+.role-student .student-preference-help{margin:12px 0;line-height:1.7;font-size:12px;}
+.role-student .student-tutor-box{border:1px solid #6b9eab;border-radius:12px;padding:16px;margin:16px 0;background:#eaf7f8;color:#123d4f;}
+.role-student .student-tutor-box h4{display:flex;align-items:center;gap:9px;margin:0 0 10px;font-size:16px;}
+.role-student .student-tutor-box p{font-size:13px;line-height:1.7;margin:9px 0;}
+.role-student .student-tutor-box button{background:#087e83;color:#fff;border:0;border-radius:9px;min-height:44px;padding:10px 15px;font-weight:700;}
+.role-student .student-tutor-box .student-tutor-source{font-size:11px;color:#336975;}
+.role-student .student-tutor-box button:disabled{opacity:.5;}
