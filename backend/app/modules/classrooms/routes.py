@@ -63,3 +63,22 @@ def detail(classroom_id: uuid.UUID, db: DB, teacher: Teacher) -> dict:
     students = service.classroom_students(db, room.id)
     grades = sorted({f"{s['grade_number']}.º {s['grade_level']}" for s in students})
     return {**ClassroomOut.model_validate(room).model_dump(), "students": students, "grades_present": grades}
+
+
+class EnrollExistingIn(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    student_id: uuid.UUID
+
+
+@router.get("/{classroom_id}/eligible-students")
+def available_for_enrollment(classroom_id: uuid.UUID, db: DB, teacher: Teacher) -> list[dict]:
+    """Alumnos de cursos anteriores del docente, no de toda la escuela."""
+    return service.eligible_students(db, teacher.id, classroom_id)
+
+
+@router.post("/{classroom_id}/enrollments", status_code=201)
+def enroll_existing(classroom_id: uuid.UUID, body: EnrollExistingIn, db: DB, teacher: Teacher) -> dict:
+    """Matrícula del mismo estudiante en un nuevo año, sin crear otra cuenta."""
+    result = service.enroll_existing_student(db, teacher, classroom_id, body.student_id)
+    log_access(db, teacher, "classrooms.enroll_existing", "student", body.student_id)
+    return result
