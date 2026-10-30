@@ -9,12 +9,12 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.exceptions import NotFoundError
-from app.modules.automation.events import TUTOR_HELP_REQUESTED
-from app.modules.automation.models import DomainEvent
 from app.domain.adaptive import RULES
 from app.modules.ai.gateway import AIGateway, AIProviderError, AIRequest, AITimeout, AIUnavailable
 from app.modules.ai.validators import EMAIL_RE, URL_RE, norm
 from app.modules.assignments.models import Assignment, AssignmentVariant, Question, StudentAssignment
+from app.modules.automation.events import TUTOR_HELP_REQUESTED
+from app.modules.automation.models import DomainEvent
 from app.modules.curriculum.models import Grade
 from app.modules.learning.models import LearningAttempt
 from app.modules.planning.models import CurriculumTopic
