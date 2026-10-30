@@ -117,6 +117,69 @@ class Repository {
   Future<void> saveLanguages(String? mother, String? preferred) =>
       db.update('profile', {'mother_language': mother, 'preferred_language': preferred});
 
+  /// Catálogo descargado una sola vez; no se inventan variantes lingüísticas.
+  Future<void> saveLanguageCatalog(List<dynamic> languages) async {
+    await db.insert('meta', {'key': 'language_catalog', 'value': jsonEncode(languages)},
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  Future<List<dynamic>> languageCatalog() async {
+    final rows = await db.query('meta', where: "key = 'language_catalog'");
+    return rows.isEmpty ? [] : jsonDecode(rows.first['value'] as String) as List<dynamic>;
+  }
+
+  Future<void> storeLanguagePreferences(Map<String, dynamic> values) async {
+    await db.insert('meta', {'key': 'language_preferences', 'value': jsonEncode(values)},
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  Future<Map<String, dynamic>?> languagePreferencesLocal() async {
+    final pending = await pendingLanguagePreferences();
+    if (pending != null) {
+      return {'mother_language': pending['mother_language_code'],
+              'mother_variant_id': pending['mother_variant_id'],
+              'preferred_language': pending['preferred_language_code']};
+    }
+    final rows = await db.query('meta', where: "key = 'language_preferences'");
+    return rows.isEmpty ? null :
+        (jsonDecode(rows.first['value'] as String) as Map).cast<String, dynamic>();
+  }
+
+  /// Un único cambio pendiente por estudiante; se almacena ANTES de intentar subirlo.
+  /// No expone nuevas identidades: se sincroniza con el token del alumno actual.
+  Future<void> queueLanguagePreferences(String? mother, String? variant, String? preferred) async {
+    final body = <String, dynamic>{
+      'mother_language_code': mother,
+      'mother_variant_id': variant,
+      'preferred_language_code': preferred,
+    };
+    await db.transaction((transaction) async {
+      await transaction.insert('meta', {'key': 'pending_language_preferences', 'value': jsonEncode(body)},
+          conflictAlgorithm: ConflictAlgorithm.replace);
+      await transaction.update('profile', {'mother_language': mother, 'preferred_language': preferred});
+    });
+  }
+
+  Future<Map<String, dynamic>?> pendingLanguagePreferences() async {
+    final rows = await db.query('meta', where: "key = 'pending_language_preferences'");
+    return rows.isEmpty ? null :
+        (jsonDecode(rows.first['value'] as String) as Map).cast<String, dynamic>();
+  }
+
+  Future<void> acknowledgeLanguagePreferences(Map<String, dynamic> submitted,
+      Map<String, dynamic> serverResponse) async {
+    await db.transaction((t) async {
+      final rows = await t.query('meta', where: "key = 'pending_language_preferences'");
+      // Si el alumno eligió otro idioma mientras llegaba el ACK, no borrar el cambio más reciente.
+      if (rows.isEmpty || rows.first['value'] != jsonEncode(submitted)) return;
+      await t.delete('meta', where: "key = 'pending_language_preferences'");
+      await t.insert('meta', {'key': 'language_preferences', 'value': jsonEncode(serverResponse)},
+          conflictAlgorithm: ConflictAlgorithm.replace);
+      await t.update('profile', {'mother_language': serverResponse['mother_language'],
+                                'preferred_language': serverResponse['preferred_language']});
+    });
+  }
+
   /// Reemplaza el catálogo local con la foto de la planificación ACTIVE del servidor.
   /// Guardado en SQLite: se conserva cuando el dispositivo queda sin conexión.
   Future<void> saveCourses(List<dynamic> courses) async {
