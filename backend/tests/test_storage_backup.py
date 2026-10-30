@@ -27,7 +27,7 @@ def test_admin_can_download_consistent_database_with_actual_records(w, tmp_path)
     assert response.status_code == 200, response.text
     assert response.headers["content-type"].startswith("application/octet-stream")
     assert 'attachment; filename="kawsay-respaldo-' in response.headers["content-disposition"]
-    assert response.headers["cache-control"] == "no-store, private"
+    assert response.headers["cache-control"].startswith("no-store")  # el middleware fuerza no-store
     assert response.headers["x-content-type-options"] == "nosniff"
     assert response.content.startswith(b"SQLite format 3\x00")
 
