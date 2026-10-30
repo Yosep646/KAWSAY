@@ -7,7 +7,7 @@ from app.core.database import get_db
 from app.core.permissions import get_current_user, require_roles
 from app.core.rate_limit import login_rate_limit
 from app.modules.auth import service
-from app.modules.auth.schemas import ChangePasswordIn, PasswordLogin, RefreshIn, StudentEmailLoginIn, StudentLogin, TokenOut, UserBrief
+from app.modules.auth.schemas import ChangePasswordIn, PasswordLogin, RefreshIn, StudentLogin, TokenOut, UserBrief
 from app.modules.users.models import Role, User
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -22,11 +22,6 @@ def login(body: PasswordLogin, db: DB) -> dict:
 @router.post("/student-login", response_model=TokenOut, dependencies=[Depends(login_rate_limit)])
 def student_login(body: StudentLogin, db: DB) -> dict:
     return service.login_student(db, body.login_code, body.pin, body.device_id)
-
-
-@router.post("/student-email-login", response_model=TokenOut, dependencies=[Depends(login_rate_limit)])
-def student_email_login(body: StudentEmailLoginIn, db: DB) -> dict:
-    return service.login_student_email(db, str(body.email), body.password, body.device_id)
 
 
 @router.post("/refresh", response_model=TokenOut, dependencies=[Depends(login_rate_limit)])

@@ -52,8 +52,6 @@ def test_candidate_model_is_not_used_by_default_and_is_labeled_when_explicitly_a
     assert r["available"] is True and r["experimental"] is True and len(r["items"]) == 1
     it = r["items"][0]
     assert it["model_status"] == "CANDIDATE" and "EXPERIMENTAL" in it["warning"] and 0 <= it["probability"] <= 1
-    assert it["difficulty_recommendation"]["source"] == "RULES"
-    assert it["difficulty_recommendation"]["requires_teacher_decision"] is True
 
 
 def test_approved_model_gives_advisory_probability_only_with_enough_evidence(w, tmp_path, monkeypatch):
@@ -63,12 +61,7 @@ def test_approved_model_gives_advisory_probability_only_with_enough_evidence(w, 
     assert r["available"] is True and r["experimental"] is False and len(r["items"]) == 1
     it = r["items"][0]
     assert it["model_status"] == "APPROVED" and it["warning"] is None and "No es un diagnóstico" in it["advisory"]
-    assert it["probability"] < 0.5
-    assert it["evidence_count"] >= 10
-    assert it["difficulty_recommendation"]["source"] == "RULES"
-    assert it["difficulty_recommendation"]["requires_teacher_decision"] is True
-    assert it["difficulty_recommendation"]["action"] in {"LOWER", "MAINTAIN", "RAISE"}
-    assert it["difficulty_recommendation"]["suggested_difficulty"] in {1, 2, 3}                              # 12 ejercicios resueltos sin ayuda: baja probabilidad de dificultad
+    assert it["probability"] < 0.5                              # 12 ejercicios resueltos sin ayuda: baja probabilidad de dificultad
 
 
 def test_no_forecast_is_invented_with_fewer_than_10_closed_exercises(w, tmp_path, monkeypatch):

@@ -114,26 +114,6 @@ def apply_ai_content(db: Session, variant: AssignmentVariant, content, generated
     _reset_translations(db, variant.id)
     db.flush()
 
-
-def apply_math_rule_content(db: Session, variant: AssignmentVariant, title: str, instructions: str,
-                            questions: list[dict[str, Any]], provenance: str) -> None:
-    """Deterministic rules, NOT ML/AI. Always requires explicit teacher review and approval."""
-    if variant.status == "PUBLISHED":
-        raise ConflictError("La variante publicada no se modifica")
-    variant.title, variant.instructions = title, instructions
-    variant.source, variant.generated_by, variant.status = "TEACHER", provenance, "TEACHER_REVIEW"
-    variant.approved_by = variant.approved_at = None
-    variant.validation_status = "NEEDS_REVIEW"
-    variant.validation_notes = [
-        "Adaptación automática por reglas, no entrenada con ML.",
-        "Verifica que los ejercicios y la competencia correspondan al grado y al MINEDU antes de aprobar.",
-    ]
-    db.execute(delete(Question).where(Question.variant_id == variant.id))
-    db.add_all([Question(variant_id=variant.id, position=i + 1, **q) for i, q in enumerate(questions)])
-    _reset_translations(db, variant.id)
-    db.flush()
-
-
 def _invalidate_approval(v: AssignmentVariant) -> None:
     """Cualquier cambio de contenido anula la aprobación previa y devuelve a revisión/borrador."""
     v.approved_by = v.approved_at = None

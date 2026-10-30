@@ -42,20 +42,7 @@ describe("FlagCard", () => {
 });
 
 describe("Login y control de acceso", () => {
-  beforeEach(() => { sessionStorage.clear(); localStorage.removeItem("kawsay_last_email"); svc.setTokens(null); vi.restoreAllMocks(); });
-
-  it("ofrece administrador, docente y estudiante con controles accesibles y recuperación honesta", async () => {
-    render(<MemoryRouter><AuthProvider><Login /></AuthProvider></MemoryRouter>);
-    expect(screen.getByRole("button", {name:"Administrador"})).toHaveAttribute("aria-pressed","true");
-    await userEvent.click(screen.getByRole("button", {name:"Docente"}));
-    expect(screen.getByRole("button", {name:"Docente"})).toHaveAttribute("aria-pressed","true");
-    await userEvent.click(screen.getByRole("button", {name:"Estudiante"}));
-    expect(screen.getByRole("button", {name:"Estudiante"})).toHaveAttribute("aria-pressed","true");
-    expect(screen.getByRole("button", {name:"Código y PIN"})).toBeInTheDocument();
-    await userEvent.click(screen.getByRole("button", {name:"¿Olvidaste tu contraseña?"}));
-    expect(screen.getByRole("status")).toHaveTextContent("Solicita a tu docente");
-    expect(screen.getByText(/Más educación/)).toBeInTheDocument();
-  });
+  beforeEach(() => { sessionStorage.clear(); svc.setTokens(null); vi.restoreAllMocks(); });
 
   it("muestra el error del servidor sin exponer detalles", async () => {
     vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response(JSON.stringify({ code: "unauthorized", message: "Credenciales inválidas" }), { status: 401 }));
@@ -79,7 +66,7 @@ describe("Login y control de acceso", () => {
 
   it("sin sesión redirige a /login", async () => {
     render(<MemoryRouter initialEntries={["/aulas"]}><App /></MemoryRouter>);
-    expect(await screen.findByRole("heading", {name: "Bienvenido"})).toBeInTheDocument();
+    expect(await screen.findByText("Docencia y administración")).toBeInTheDocument();
   });
 
   it("permite acceso de estudiante y muestra sus datos sin exponer rutas docentes", async () => {
@@ -92,15 +79,14 @@ describe("Login y control de acceso", () => {
     });
     localStorage.removeItem("kawsay_web_device_id");
     render(<MemoryRouter initialEntries={["/login"]}><App /></MemoryRouter>);
-    await userEvent.click(screen.getByRole("button", {name: "Estudiante"}));
-    await userEvent.click(screen.getByRole("button", {name: "Código y PIN"}));
+    await userEvent.click(screen.getByText("Soy estudiante"));
     await userEvent.type(screen.getByLabelText("Código de estudiante"), "ABCD");
     await userEvent.type(screen.getByLabelText("PIN"), "1234");
     await userEvent.click(screen.getByText("Ingresar"));
     expect(await screen.findByText("Mi tarea")).toBeInTheDocument();
     expect(screen.getByText("70 % de progreso")).toBeInTheDocument();
     expect(screen.queryByText("Mis aulas")).not.toBeInTheDocument();
-    expect(screen.getByText(/Puedes responder actividades descargadas sin conexión/)).toBeInTheDocument();
+    expect(screen.getByText(/Esta vista necesita conexión/)).toBeInTheDocument();
   });
 
   it("consulta actividades por páginas usando el límite admitido por la API", async () => {
@@ -113,8 +99,7 @@ describe("Login y control de acceso", () => {
       return new Response(JSON.stringify([]));
     });
     render(<MemoryRouter initialEntries={["/login"]}><App /></MemoryRouter>);
-    await userEvent.click(screen.getByRole("button", {name: "Estudiante"}));
-    await userEvent.click(screen.getByRole("button", {name: "Código y PIN"}));
+    await userEvent.click(screen.getByText("Soy estudiante"));
     await userEvent.type(screen.getByLabelText("Código de estudiante"), "ABCD");
     await userEvent.type(screen.getByLabelText("PIN"), "1234");
     await userEvent.click(screen.getByText("Ingresar"));

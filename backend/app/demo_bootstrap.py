@@ -1,8 +1,4 @@
-"""Inicialización opt-in de una cuenta docente con datos exclusivamente ficticios.
-
-Sólo se ejecuta con KAWSAY_DEMO_BOOTSTRAP=1 y credenciales en variables privadas
-de entorno. No hay contraseñas por defecto ni puntos de acceso públicos para crear usuarios.
-"""
+"""Opt-in DEMO staff; passwords are provided only through server secrets."""
 import os
 
 from sqlalchemy import select
@@ -14,57 +10,30 @@ from app.modules.users.models import Role, User
 from app.modules.users.schemas import UserCreate
 from app.modules.users.service import create_staff_user
 
-DEMO_SCHOOL_CODE = "KAWSAY-DEMO-2026"
 
-
-def bootstrap_teacher() -> None:
+def bootstrap():
     if os.environ.get("KAWSAY_DEMO_BOOTSTRAP") != "1":
         return
-    email = os.environ.get("KAWSAY_DEMO_TEACHER_EMAIL", "").strip().lower()
-    password = os.environ.get("KAWSAY_DEMO_TEACHER_PASSWORD", "")
-    if not email or not password:
-        raise RuntimeError("La inicializacion DEMO requiere correo y clave definidos en Render")
-
-    # Nunca imprimir ni registrar la contraseña, ni almacenarla en archivos.
+    credentials = {role: (os.environ[f"KAWSAY_DEMO_{role}_EMAIL"], os.environ[f"KAWSAY_DEMO_{role}_PASSWORD"])
+                   for role in ("ADMIN", "TEACHER")}
     with Session(get_engine(), expire_on_commit=False) as db:
-        existing = db.scalar(select(User).where(User.email == email, User.deleted_at.is_(None)))
-        if existing is not None:
-            if existing.role != Role.TEACHER:
-                raise RuntimeError("El correo DEMO ya pertenece a otro rol")
-            print("KAWSAY DEMO: cuenta docente existente (sin modificar)", flush=True)
-            return
-
-        school = db.scalar(select(School).where(
-            School.code == DEMO_SCHOOL_CODE, School.deleted_at.is_(None)))
+        school = db.scalar(select(School).where(School.code == "OFFLINE-DEMO-20261030", School.deleted_at.is_(None)))
         if school is None:
-            school = School(name="Institucion educativa KAWSAY - DEMO", code=DEMO_SCHOOL_CODE,
-                            region="Datos ficticios")
+            school = School(name="Escuela ficticia KAWSAY offline", code="OFFLINE-DEMO-20261030", region="DEMO")
             db.add(school)
             db.flush()
-        data = UserCreate(role="TEACHER", email=email, password=password,
-                          display_name="Docente demostracion", school_id=school.id)
-        create_staff_user(db, data)
-        print("KAWSAY DEMO: docente habilitado con datos ficticios", flush=True)
-
-
-def bootstrap_administrator() -> None:
-    if os.getenv("KAWSAY_DEMO_ADMIN_ENABLED") != "1":
-        return
-    username = os.environ["KAWSAY_DEMO_ADMIN_EMAIL"].strip().lower()
-    passphrase = os.environ["KAWSAY_DEMO_ADMIN_PASSWORD"]
-    with Session(get_engine(), expire_on_commit=False) as db:
-        existing = db.scalar(select(User).where(User.email == username, User.deleted_at.is_(None)))
-        if existing is not None:
-            if existing.role != Role.ADMIN:
-                raise ValueError("El correo ya pertenece a otro rol")
-            print("KAWSAY DEMO: administrador existente", flush=True)
-            return
-        create_staff_user(db, UserCreate(
-            role="ADMIN", email=username, password=passphrase, display_name="Administrador KAWSAY"
-        ))
-        print("KAWSAY DEMO: administrador creado", flush=True)
+        for role, (email, password) in credentials.items():
+            existing = db.scalar(select(User).where(User.email == email.lower(), User.deleted_at.is_(None)))
+            if existing is not None:
+                if existing.role != role:
+                    raise RuntimeError("A DEMO email already belongs to a different role")
+                continue
+            create_staff_user(db, UserCreate(role=role, email=email, password=password,
+                display_name="Administrador DEMO" if role == Role.ADMIN else "Docente DEMO",
+                school_id=school.id if role == Role.TEACHER else None))
+        db.commit()
+    print("KAWSAY: DEMO initialization completed without personal student data", flush=True)
 
 
 if __name__ == "__main__":
-    bootstrap_teacher()
-    bootstrap_administrator()
+    bootstrap()

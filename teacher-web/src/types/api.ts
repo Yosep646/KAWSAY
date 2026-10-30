@@ -5,8 +5,8 @@ export interface Grade { id: number; level: string; number: number }
 export interface Classroom { id: string; school_id: string; name: string; academic_year: number }
 export interface StudentBrief { id: string; display_name: string; grade_id: number; grade_level: string; grade_number: number }
 export interface ClassroomDetail extends Classroom { students: StudentBrief[]; grades_present: string[] }
-export interface StudentCredentials { id: string; display_name: string; grade_id: number; login_code: string | null; pin: string | null; email?: string | null }
-export interface StudentDetail { id: string; display_name: string; grade_id: number; login_code: string | null; email?: string | null }
+export interface StudentCredentials { id: string; display_name: string; grade_id: number; login_code: string; pin: string }
+export interface StudentDetail { id: string; display_name: string; grade_id: number; login_code: string | null }
 export interface LanguageVariant { id: string; code: string; name: string; note: string | null }
 export interface Language { code: string; name: string; variants: LanguageVariant[] }
 export interface StudentLanguages { mother_language: string | null; mother_variant_id: string | null; preferred_language: string | null }
@@ -45,15 +45,5 @@ export interface PlanBrief { id: string; name: string; school_id: string; framew
 export interface Framework { id: string; name: string; version_label: string; is_demo: boolean }
 export interface FrameworkTree extends Framework { subjects: { id: string; name: string; competencies: { id: string; name: string; capacities: { id: string; name: string }[] }[] }[] }
 export interface AdaptResult { assignment_id: string; results: { variant_id: string; grade_id: number; status: string; reasons: string[] }[] }
-export interface ForecastItem { student: { id: string; display_name: string }; competency: { id: string; name: string | null }; probability: number; above_threshold: boolean; model_id: string; model_status: string; warning: string | null; advisory: string; inference_ms?: number; evidence_count?: number; difficulty_recommendation?: CompetencyProgress["difficulty_recommendation"] }
-export interface TeacherSupportGuidance {
-  student: {id:string;display_name:string};
-  competency: {id:string;name:string|null};
-  evidence_count:number;
-  action:"LOWER"|"MAINTAIN"|"RAISE"|"INSUFFICIENT_EVIDENCE";
-  suggested_difficulty:number|null;
-  reason:string;
-  source:"RULES";
-  requires_teacher_decision:true;
-}
-export interface Forecast { available: boolean; experimental?: boolean; reason?: string; items: ForecastItem[]; guidance?: TeacherSupportGuidance[] }
+export interface ForecastItem { student: { id: string; display_name: string }; competency: { id: string; name: string | null }; probability: number; above_threshold: boolean; model_id: string; model_status: string; warning: string | null; advisory: string; inference_ms?: number }
+export interface Forecast { available: boolean; experimental?: boolean; reason?: string; items: ForecastItem[] }

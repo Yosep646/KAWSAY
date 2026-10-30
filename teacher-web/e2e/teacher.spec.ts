@@ -11,7 +11,7 @@ test("la cola IndexedDB conserva el evento tras recargar", async ({ page }) => {
   const eventId = await page.evaluate(async () => {
     const modulePath = "/src/services/pendingAttempts.ts";
     const { pendingAttempts } = await import(/* @vite-ignore */ modulePath);
-    const saved = (await pendingAttempts.list("test-user:test-task"))[0];
+    const saved = await pendingAttempts.get("test-user:test-task");
     await pendingAttempts.removeConfirmed("test-user:test-task", "test-event");
     return saved?.event.event_id;
   });
@@ -26,7 +26,7 @@ test("una confirmación antigua no borra otra respuesta pendiente", async ({ pag
     const key = "user:task";
     await pendingAttempts.add({ key, deviceId: "device", event: { event_id: "new-event", type: "attempt.created", payload: {} } });
     const removed = await pendingAttempts.removeConfirmed(key, "old-event");
-    const saved = (await pendingAttempts.list(key))[0];
+    const saved = await pendingAttempts.get(key);
     await pendingAttempts.removeConfirmed(key, "new-event");
     return { removed, eventId: saved?.event.event_id };
   });
@@ -38,7 +38,7 @@ async function login(page: Page) {
   await page.getByLabel("Correo").fill("maestra@demo.pe");
   await page.getByLabel("Contraseña", { exact: true }).fill("Aula-Multigrado-2026!");
   await page.getByRole("button", { name: "Ingresar", exact: true }).click();
-  await expect(page.getByRole("heading", { name: /Bienvenido,\s*Docente/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Dashboard", exact: true })).toBeVisible();
 }
 
 test("login, evidencia calculada, progreso, restauración de sesión y logout", async ({ page }) => {
@@ -145,12 +145,6 @@ for (const viewport of [{ name: "escritorio", width: 1440, height: 1000 }, { nam
     await login(page);
     await expect(page.getByText("Intentos registrados", { exact: true })).toBeVisible();
     const nav = page.getByRole("navigation", { name: "Principal" });
-    const openMobileMenu = async () => {
-      if (viewport.name === "móvil") {
-        await page.getByRole("button", { name: "Abrir menú principal" }).click();
-      }
-    };
-    await openMobileMenu();
     await expect(nav.getByRole("link", { name: "Dashboard", exact: true })).toHaveAttribute("aria-current", "page");
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     await page.screenshot({ path: testInfo.outputPath("dashboard.png"), fullPage: true });
@@ -160,10 +154,8 @@ for (const viewport of [{ name: "escritorio", width: 1440, height: 1000 }, { nam
     await expect(flag.getByRole("row")).toHaveCount(6);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     await page.screenshot({ path: testInfo.outputPath("alertas.png"), fullPage: true });
-    await openMobileMenu();
     await nav.getByRole("link", { name: "Mis aulas", exact: true }).click();
     await expect(page).toHaveURL(/\/aulas$/);
-    await openMobileMenu();
     await expect(nav.getByRole("link", { name: "Mis aulas", exact: true })).toHaveAttribute("aria-current", "page");
     await expect(nav.getByRole("link", { name: "Dashboard", exact: true })).not.toHaveAttribute("aria-current", "page");
     if (viewport.name === "móvil") {
@@ -176,43 +168,3 @@ for (const viewport of [{ name: "escritorio", width: 1440, height: 1000 }, { nam
     expect(errors).toEqual([]);
   });
 }
-
-
-test("ejercicios de Matemática: docente visualiza, estudiante recibe y entrega respuesta", async ({ page }) => {
-  await login(page);
-  await page.goto("/actividades");
-  await expect(page.getByRole("heading", { name: "Actividades", exact: true })).toBeVisible();
-  await page.getByRole("link", { name: "Comparamos cantidades" }).click();
-  await expect(page.getByText("Preguntas (5)")).toHaveCount(3);
-  await expect(page.getByText("Instrucciones adaptadas para 1.º grado").first()).toBeVisible();
-
-  // Datos de prueba creados solo en el servidor temporal levantado por browser_e2e.py.
-  const student = await page.evaluate(async () => {
-    const { api } = await import("/src/services/api.ts") as typeof import("../src/services/api");
-    const rooms = await api.get<Array<{id:string}>>("/classrooms");
-    const grades = await api.get<Array<{id:number;number:number;level:string}>>("/curriculum/grades");
-    const grade = grades.find(x => x.level === "PRIMARIA" && x.number === 1);
-    if (!rooms[0] || !grade) throw new Error("Faltan aula/grado en los datos sintéticos");
-    return api.post<{login_code:string;pin:string}>("/students", {
-      display_name:"Estudiante E2E sintético", grade_id:grade.id, classroom_id:rooms[0].id,
-    });
-  });
-
-  await page.getByRole("button", { name: "Salir", exact: true }).click();
-  await expect(page).toHaveURL(/\/login$/);
-  await page.getByRole("button", { name: "Estudiante", exact: true }).click();
-  await page.getByRole("button", { name: "Código y PIN", exact: true }).click();
-  await page.getByLabel("Código de estudiante").fill(student.login_code);
-  await page.getByLabel("PIN", { exact: true }).fill(student.pin);
-  await page.getByRole("button", { name: "Ingresar", exact: true }).click();
-  await expect(page).toHaveURL(/\/estudiante$/);
-  await page.goto("/estudiante/actividades");
-  await expect(page.getByText("Variante 1.º (DEMO)")).toBeVisible();
-  await page.getByRole("link", { name: /Abrir actividad/ }).first().click();
-  await expect(page.getByRole("heading", { name:"Indicaciones del docente" })).toBeVisible();
-  await expect(page.getByText("Instrucciones adaptadas para 1.º grado")).toBeVisible();
-  await expect(page.getByRole("heading", { name:/\[1.º\] Ejercicio 1/ })).toBeVisible();
-  await page.getByRole("radio", { name:"mayor" }).check();
-  await page.getByRole("button", { name:"Guardar respuesta localmente" }).click();
-  await expect(page.getByText("Respuesta guardada en el servidor.")).toBeVisible({timeout:15000});
-});

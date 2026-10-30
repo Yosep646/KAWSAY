@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     refresh_token_expire_days: int = 30
 
     cors_origins: str = ""  # lista separada por comas; vacío = ninguno
-    max_request_bytes: int = 5_242_880  # 5 MB incl. metadata; curricular files limited to 4 MB
+    max_request_bytes: int = 1_048_576
 
     # Reservados (fases posteriores)
     ml_allow_experimental: bool = False   # solo para demostraciones: permite usar un modelo CANDIDATE (siempre con advertencia)

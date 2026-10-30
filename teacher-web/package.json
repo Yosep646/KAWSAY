@@ -10,7 +10,7 @@
     "test": "vitest run --exclude src/test/integration.test.ts",
     "test:integration": "vitest run src/test/integration.test.ts",
     "test:e2e": "tsc --noEmit -p tsconfig.e2e.json && node e2e/run.cjs",
-    "preflight": "node scripts/preflight.mjs"
+    "test:offline": "tsc --noEmit -p tsconfig.e2e.json && node e2e/run.cjs --config=playwright.offline.config.ts"
   },
   "dependencies": {
     "react": "18.3.1",
@@ -22,6 +22,7 @@
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.1.0",
     "@testing-library/user-event": "^14.5.2",
+    "@types/node": "24.19.2",
     "@types/react": "18.3.18",
     "@types/react-dom": "18.3.5",
     "@vitejs/plugin-react": "6.1.2",
@@ -29,9 +30,5 @@
     "typescript": "5.7.2",
     "vite": "8.3.4",
     "vitest": "5.0.5"
-  },
-  "engines": {
-    "node": ">=24.15.0",
-    "npm": ">=10"
   }
 }

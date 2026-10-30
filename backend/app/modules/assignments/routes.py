@@ -13,12 +13,9 @@ from app.core.rate_limit import check_rate
 from app.modules.ai.adaptation import PROMPT_VERSION, adapt_one
 from app.modules.ai.gateway import AIGateway, get_gateway
 from app.modules.assignments import service
-from app.modules.assignments.math_grade_rules import RULE_VERSION, generate_questions, instructions_for_grade, parse_example
 from app.modules.assignments.models import Assignment, AssignmentVariant
 from app.modules.assignments.schemas import QuestionsIn
 from app.modules.classrooms.service import list_teacher_classrooms
-from app.modules.curriculum.models import Grade, Subject
-from app.modules.planning.models import CurriculumTopic
 from app.modules.users.models import Role, User
 
 router = APIRouter(prefix="/assignments", tags=["assignments"])
@@ -121,70 +118,6 @@ def approve(assignment_id: uuid.UUID, variant_id: uuid.UUID, db: DB, teacher: Te
 @router.post("/{assignment_id}/publish")
 def publish(assignment_id: uuid.UUID, db: DB, teacher: Teacher) -> dict:
     return service.publish(db, teacher, assignment_id)
-
-
-class MathGradeAdaptIn(_In):
-    source_grade_id: int = Field(ge=1)
-    example: str = Field(min_length=3, max_length=36)
-
-    @field_validator("example")
-    @classmethod
-    def _is_arithmetic(cls, value: str) -> str:
-        parse_example(value)
-        return value
-
-
-@router.post("/{assignment_id}/adapt-math")
-def adapt_math_by_rules(assignment_id: uuid.UUID, body: MathGradeAdaptIn,
-                        db: DB, teacher: Teacher) -> dict:
-    """Offline-capable arithmetic differentiation. No provider keys or ML involved.
-
-    The six grade variants must already belong to the school's ACTIVE plan
-    (same mathematics competency and area). Never publishes or approves.
-    """
-    assignment = service.get_assignment(db, teacher, assignment_id)
-    if assignment.status != "DRAFT":
-        raise ConflictError("Solo se adaptan actividades todavía no publicadas")
-    subject = db.get(Subject, assignment.subject_id)
-    if not subject or "matem" not in subject.name.casefold():
-        raise ConflictError("La automatización por reglas solo admite el área de Matemática")
-    variants = list(db.scalars(select(AssignmentVariant).where(
-        AssignmentVariant.assignment_id == assignment.id).order_by(AssignmentVariant.grade_id)))
-    source = next((v for v in variants if v.grade_id == body.source_grade_id), None)
-    if source is None:
-        raise ConflictError("El grado de origen debe tener una variante en la planificación activa")
-    source_grade = db.get(Grade, source.grade_id)
-    if source_grade is None or source_grade.level != "PRIMARIA":
-        raise ConflictError("Solo se admiten grados de primaria")
-    example = parse_example(body.example)
-    prepared = []
-    # Validate ALL variants BEFORE writing ANY: no partial generation or mixed competencies.
-    for variant in variants:
-        grade = db.get(Grade, variant.grade_id)
-        topic = db.get(CurriculumTopic, variant.topic_id)
-        if grade is None or grade.level != "PRIMARIA" or not 1 <= grade.number <= 6:
-            raise ConflictError("Las variantes deben corresponder a grados de primaria")
-        if topic is None or variant.competency_id != source.competency_id:
-            raise ConflictError("Cada grado requiere un tema revisado de la misma competencia en la malla vigente")
-        questions = generate_questions(example, grade.number, source_grade.number)
-        prepared.append((variant, grade, topic, questions))
-    for variant, grade, topic, questions in prepared:
-        title = f"{assignment.title} · {grade.number}.º primaria"
-        instructions = instructions_for_grade(grade.number, source_grade.number,
-                                               topic.title, variant.learning_objective)
-        service.apply_math_rule_content(
-            db, variant, title, instructions,
-            [q.model_dump() for q in questions], f"RULES/{RULE_VERSION}",
-        )
-    db.commit()
-    return {
-        "assignment_id": assignment.id, "engine": "RULES", "rule_version": RULE_VERSION,
-        "source_grade_id": source_grade.id, "status": "TEACHER_REVIEW",
-        "variants": [{"variant_id":v.id, "grade_id":g.id, "grade_number":g.number,
-                      "questions":len(questions), "status":v.status}
-                     for v,g,_,questions in prepared],
-        "note": "Los ejercicios generados requieren revisión y aprobación docente antes de publicar.",
-    }
 
 
 class AdaptIn(_In):

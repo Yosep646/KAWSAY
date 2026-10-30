@@ -3,12 +3,12 @@ from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, Query
 from pydantic import BaseModel, ConfigDict, Field
-from sqlalchemy import select
 from sqlalchemy.orm import Session
+from sqlalchemy import select
 
 from app.core.database import get_db
-from app.core.exceptions import NotFoundError
 from app.core.permissions import require_roles
+from app.core.exceptions import NotFoundError
 from app.domain import adaptive
 from app.modules.assignments.models import StudentAssignment
 from app.modules.learning.models import LearningAttempt
@@ -44,13 +44,6 @@ def push(body: PushIn, db: DB, student: Student) -> dict:
 def pull(db: DB, student: Student, cursor: Annotated[int, Query(ge=0)] = 0,
          limit: Annotated[int, Query(ge=1, le=50)] = 20) -> dict:
     return service.pull(db, student, cursor, limit)
-
-
-@router.get("/courses")
-def my_courses(db: DB, student: Student) -> list[dict]:
-    """Áreas activas del grado y aula del alumno; accesibles antes de publicar tareas."""
-    from app.modules.sync.courses import student_courses
-    return student_courses(db, student.id)
 
 
 @router.get("/tasks/{student_assignment_id}/attempts")

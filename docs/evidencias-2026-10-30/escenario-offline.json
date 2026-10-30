@@ -1,0 +1,11 @@
+{
+  "sqlite": [
+    10,
+    10,
+    10
+  ],
+  "teacherAttempts": 33,
+  "offlineAnswers": 10,
+  "fullBrowserRestart": true,
+  "wrongPhraseRejected": true
+}

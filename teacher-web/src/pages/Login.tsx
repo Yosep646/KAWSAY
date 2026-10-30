@@ -5,173 +5,57 @@ import { ErrorBox } from "../components/ui";
 import { errMsg } from "../utils/format";
 import { Brand, Icon } from "../components/Icon";
 
-type LoginRole = "ADMIN" | "TEACHER" | "STUDENT";
-const REMEMBER_EMAIL_KEY = "kawsay_last_email";
-
-function storedEmail(): string {
-  try { return localStorage.getItem(REMEMBER_EMAIL_KEY) ?? ""; } catch { return ""; }
-}
-
-/** Acceso único: personal con correo/contraseña; estudiantes con correo o código/PIN. */
 export function Login() {
-  const { login, loginStudent, loginStudentEmail } = useAuth();
+  const { login, loginStudent, unlockOffline } = useAuth();
   const nav = useNavigate();
-  const [role, setRole] = useState<LoginRole>("ADMIN");
-  const [email, setEmail] = useState(storedEmail);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [code, setCode] = useState("");
-  const [studentMethod, setStudentMethod] = useState<"email" | "code">("email");
-  const [rememberEmail, setRememberEmail] = useState(() => !!storedEmail());
-  const [helpOpen, setHelpOpen] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const student = role === "STUDENT";
-  const codeMode = student && studentMethod === "code";
-
-  const chooseRole = (next: LoginRole) => {
-    if (busy) return;
-    setRole(next);
-    setErr(null);
-    setPassword("");
-    setShowPassword(false);
-    setHelpOpen(false);
-  };
+  const [student, setStudent] = useState(false);
+  const [code, setCode] = useState("");
+  const [phrase, setPhrase] = useState("");
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
-    if (busy) return;
     setBusy(true); setErr(null);
-    try {
-      if (student) {
-        if (studentMethod === "email") await loginStudentEmail(email.trim(), password);
-        else await loginStudent(code.trim(), password);
-        nav("/estudiante", { replace: true });
-      } else {
-        await login(email.trim(), password);
-        nav("/", { replace: true });
-      }
-      // Recordar únicamente el correo, NUNCA la contraseña o un token de autenticación.
-      try {
-        if (rememberEmail && !codeMode) localStorage.setItem(REMEMBER_EMAIL_KEY, email.trim());
-        else localStorage.removeItem(REMEMBER_EMAIL_KEY);
-      } catch { /* Modo privado: no persistir preferencias. */ }
-    } catch (reason) { setErr(errMsg(reason)); }
-    finally { setBusy(false); }
+    try { if (student) { await loginStudent(code, password); nav("/estudiante"); } else { await login(email, password); nav("/"); } } catch (x) { setErr(errMsg(x)); } finally { setBusy(false); }
   };
-
-  return <main id="kawsay-login" className="login-layout login-reimagined">
-    <img
-      className="login-scene-art"
-      src="/kawsay-fondo-responsive-20261028.webp?v=full-bleed-20261028"
-      alt=""
-      aria-hidden="true"
-      decoding="async"
-      onError={(event) => {
-        if (event.currentTarget.dataset.fallback !== "yes") {
-          event.currentTarget.dataset.fallback = "yes";
-          event.currentTarget.src = "/kawsay-fondo-final.jpg?v=background-fallback-20261028";
-        }
-      }}
-    />
-    <section className="login-story" aria-label="Bienvenida a KAWSAY AI">
-      <Brand />
-      <div className="login-story-copy">
-        <span className="eyebrow">APRENDER · CRECER · ACOMPAÑAR</span>
-        <h1><span className="login-heading-line">Más educación</span><span className="login-heading-line">para más</span><span className="login-heading-line login-highlight">comunidades.</span></h1>
-        <p>Herramientas digitales para docentes, estudiantes e instituciones educativas del Perú.</p>
-        <div className="login-values" aria-label="Nuestros valores">
-          <span><Icon name="book"/> Aprender</span>
-          <span><Icon name="leaf"/> Crecer</span>
-          <span><Icon name="students"/> Acompañar</span>
-        </div>
-      </div>
-      <p className="login-story-footer"><Icon name="book"/> <span>Educación adaptativa.<strong>Decisiones siempre humanas.</strong></span></p>
-    </section>
-
-    <section className="login-form-panel" aria-label="Acceso a la plataforma">
-      <div className="login" role="region" aria-labelledby="login-title">
-        <div className="login-card-head">
-          <span className="login-symbol" aria-hidden="true"><img className="login-brand-emblem" src="/kawsay-brand-icon.webp?v=logo-20261028" alt="" width={52} height={52} decoding="async" onError={event => { event.currentTarget.style.display = "none"; }} /></span>
-          <h2 id="login-title">Bienvenido</h2>
-          <p className="muted login-description">Ingresa a tu cuenta</p>
-        </div>
-
-        <div className="login-role-tabs" role="group" aria-label="Tipo de usuario">
-          {(["ADMIN", "TEACHER", "STUDENT"] as const).map((kind) =>
-            <button type="button" key={kind} onClick={() => chooseRole(kind)}
-              className={role === kind ? "active" : ""}
-              aria-pressed={role === kind} disabled={busy}>
-              {kind === "ADMIN" ? "Administrador" : kind === "TEACHER" ? "Docente" : "Estudiante"}
-            </button>
-          )}
-        </div>
-
-        <div className="student-login-method" role="group" aria-label="Método de acceso">
-          <button type="button" className={!codeMode ? "active" : ""}
-            aria-pressed={!codeMode} disabled={busy}
-            onClick={() => { setStudentMethod("email"); setErr(null); setPassword(""); }}>
-            Correo y contraseña
-          </button>
-          <button type="button" className={codeMode ? "active" : ""}
-            aria-pressed={codeMode} disabled={busy}
-            onClick={() => { if (!student) chooseRole("STUDENT"); setStudentMethod("code"); setErr(null); setPassword(""); }}>
-            Código y PIN
-          </button>
-        </div>
-
-        <form onSubmit={(e) => void submit(e)} className="stack login-access-form">
-          <div className="kawsay-login-field">
-            <label htmlFor="login-identity" className="login-field-label">{codeMode ? "Código de estudiante" : student ? "Correo electrónico" : "Correo"}</label>
-            <div className="login-input-wrap">
-              <Icon name={codeMode ? "shield" : "mail"}/>
-              <input id="login-identity"
-                type={codeMode ? "text" : "email"}
-                value={codeMode ? code : email}
-                onChange={(e) => codeMode ? setCode(e.target.value) : setEmail(e.target.value)}
-                autoComplete="username"
-                placeholder={codeMode ? "Código entregado por tu docente" : "Correo electrónico"}
-                required/>
-            </div>
-          </div>
-
-          <div className="kawsay-login-field">
-            <label htmlFor="password" className="login-field-label">{codeMode ? "PIN" : "Contraseña"}</label>
-            <div className="login-input-wrap password-field">
-              <Icon name="lock"/>
-              <input id="password" type={showPassword ? "text" : "password"}
-                value={password} onChange={(e) => setPassword(e.target.value)}
-                autoComplete="current-password" placeholder={codeMode ? "Tu PIN de acceso" : "Tu contraseña"} required/>
-              <button type="button" className="password-toggle"
-                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
-                aria-pressed={showPassword} onClick={() => setShowPassword(!showPassword)}>
-                <Icon name={showPassword ? "eye-off" : "eye"}/>
-              </button>
-            </div>
-          </div>
-
-          <div className="login-preferences">
-            <label className="login-remember">
-              <input type="checkbox" checked={rememberEmail} onChange={(e) => setRememberEmail(e.target.checked)}/>
-              <span>Recordarme</span>
-            </label>
-            <button type="button" className="login-forgot" aria-expanded={helpOpen}
-              onClick={() => setHelpOpen(!helpOpen)}>¿Olvidaste tu contraseña?</button>
-          </div>
-          {helpOpen && <p className="login-recovery" role="status">
-            {student ? "Solicita a tu docente que restablezca la contraseña o el PIN de tu cuenta." :
-              "Solicita a la administración de tu institución que restablezca tu acceso."}
-            {" "}Este formulario no envía correos automáticos.
-          </p>}
-          <ErrorBox message={err}/>
-          <button type="submit" className="login-submit" disabled={busy}>
-            {busy ? "Ingresando…" : "Ingresar"} <Icon name="arrow"/>
-          </button>
+  return (
+    <main className="login-layout">
+      <section className="login-story" aria-label="Bienvenida a KAWSAY AI">
+        <Brand />
+        <div className="login-story-copy"><span className="eyebrow">APRENDER · CRECER · ACOMPAÑAR</span><h1>Que nadie se quede<br />atrás.</h1><p>Cada aula es un mundo. Cada estudiante, una oportunidad de aprender a su manera.</p><div className="story-principle"><Icon name="book" /><span>Educación adaptativa.<br /><strong>Decisiones siempre humanas.</strong></span></div></div>
+        <svg className="landscape" viewBox="0 0 600 300" fill="none" aria-hidden="true"><circle cx="450" cy="65" r="35" fill="#e9c779" /><path d="m0 240 160-180 140 160L410 90l190 150v60H0Z" fill="#367a69" /><path d="m112 114 48-54 43 55-43-16Z" fill="#abc4a2" /><path d="m0 260 170-90 180 100 140-110 110 85v55H0Z" fill="#205c50" /><path d="M0 285c140-80 220 60 350-5s160-45 250-5v25H0Z" fill="#154b42" /><path d="m280 300 48-36-18-12 30-15" stroke="#d2b980" strokeWidth="12" /></svg>
+        <p className="login-story-footer">Diseñado para la diversidad de nuestras aulas.</p>
+      </section>
+      <section className="login-form-panel">
+      <div className="login">
+      <span className="login-symbol"><Icon name="leaf" /></span>
+      <p className="eyebrow">{student ? "Espacio estudiante" : "Docencia y administración"}</p>
+      <h2>Bienvenido a tu aula</h2>
+      <p className="muted login-description">Ingresa para planificar, descubrir avances y acompañar a tus estudiantes.</p>
+      <button type="button" className="ghost" onClick={() => { setStudent(!student); setErr(null); setPassword(""); }}>{student ? "Acceso docente o administrador" : "Soy estudiante"}</button>
+      <form onSubmit={(e) => void submit(e)} className="stack">
+        {student ? <label>Código de estudiante<input value={code} onChange={(e) => setCode(e.target.value)} autoComplete="username" required /></label> : <label>Correo<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="username" required /></label>}
+        <label htmlFor="password">{student ? "PIN" : "Contraseña"}</label>
+        <div className="password-field"><input id="password" type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" required /><button type="button" className="password-toggle" aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"} aria-pressed={showPassword} onClick={() => setShowPassword(!showPassword)}><Icon name="eye" /></button></div>
+        <ErrorBox message={err} />
+        <button type="submit" className="login-submit" disabled={busy}>{busy ? "Ingresando…" : "Ingresar"}<Icon name="arrow" /></button>
+      </form>
+      <details><summary>Abrir actividades descargadas sin conexión</summary>
+        <form className="stack" onSubmit={e => { e.preventDefault(); setBusy(true); setErr(null);
+          void unlockOffline(phrase).then(() => nav("/estudiante")).catch(x => setErr(errMsg(x))).finally(() => { setBusy(false); setPhrase(""); }); }}>
+          <p>Usa la frase local que elegiste al descargar. Para enviar tus respuestas necesitarás volver a iniciar sesión con conexión.</p>
+          <label>Frase local<input type="password" value={phrase} onChange={e => setPhrase(e.target.value)} autoComplete="off" required /></label>
+          <button disabled={busy}>Desbloquear actividades</button>
         </form>
-
-        <p className="login-help">¿Necesitas acceso? Contacta a la administración de tu institución.</p>
-        <div className="login-footnote"><Icon name="students"/> Educación que acompaña a cada comunidad</div>
+      </details>
+      <p className="login-help">¿Necesitas acceso? Contacta a la administración de tu institución.</p>
+      <div className="login-footnote"><Icon name="students" /> Un espacio para docentes y administración</div>
       </div>
-    </section>
-  </main>;
+      </section>
+    </main>
+  );
 }

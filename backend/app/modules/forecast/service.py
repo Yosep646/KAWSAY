@@ -29,76 +29,36 @@ def _load_predictor() -> Any | None:
 
 
 def forecast_for_students(db: Session, students: dict[uuid.UUID, dict]) -> dict:
-    """Teacher support: auditable rules always work; approved real-data ML is optional.
-
-    Recommendations and probabilities are never an automatic placement, assignment,
-    diagnosis or change of the student's official grade.
-    """
-    if not students:
-        return {"available": False, "reason": "El aula no tiene estudiantes.", "items": [], "guidance": []}
+    pred = _load_predictor()
+    if pred is None:
+        return {"available": False, "reason": "El módulo de ML no está instalado en este servidor (es opcional).", "items": []}
+    allow = get_settings().ml_allow_experimental
+    try:
+        pred.load(allow_experimental=allow)
+    except Exception:
+        return {"available": False, "items": [],
+                "reason": "No hay ningún modelo aprobado por una persona. Se usan solo las alertas por reglas."}
     names = {c.id: c.name for c in db.scalars(select(Competency))}
     by_key: dict[tuple, list] = {}
     for a in db.scalars(select(LearningAttempt).where(LearningAttempt.student_user_id.in_(list(students)))):
         by_key.setdefault((a.student_user_id, a.competency_id), []).append(adaptive.AttemptFact(
             str(a.id), str(a.question_id), a.attempt_number, a.is_correct, a.hints_used, a.effective_at))
-
-    # Real classroom evidence is available even when ML cannot load. Do not fill
-    # empty observations with made-up predictions or synthetic values.
-    guidance: list[dict] = []
-    histories: list[tuple] = []
-    for (sid, cid), facts in by_key.items():
-        student = students.get(sid)
-        if not student:
-            continue
-        results = sorted((r for r in adaptive.question_results(facts) if r.closed), key=lambda r: r.at)
-        score, count = adaptive.compute_progress(results)
-        recommendation = adaptive.difficulty_recommendation(score, count)
-        guidance.append({
-            "student": {"id": sid, "display_name": student["display_name"]},
-            "competency": {"id": cid, "name": names.get(cid)},
-            "evidence_count": count, "action": recommendation["action"],
-            "suggested_difficulty": recommendation["suggested_difficulty"],
-            "reason": recommendation["reason"], "source": "RULES",
-            "requires_teacher_decision": True,
-        })
-        if student.get("grade_number") in range(1, 7):
-            histories.append((sid, cid, student, results, score, count, recommendation))
-    guidance.sort(key=lambda x: (x["student"]["display_name"], str(x["competency"]["id"])))
-
-    def unavailable(reason: str) -> dict:
-        return {"available": False, "reason": reason, "items": [], "guidance": guidance}
-
-    pred = _load_predictor()
-    if pred is None:
-        return unavailable("El módulo de ML no está instalado; continúan las recomendaciones por reglas.")
-    allow = get_settings().ml_allow_experimental
-    try:
-        _, meta = pred.load(allow_experimental=allow)
-    except Exception:
-        return unavailable("No hay modelo aprobado y disponible. Continúan las recomendaciones por reglas.")
-
-    # Synthetic models are for explicitly enabled demonstration ONLY: their
-    # predictions must not be interpreted as recommendations for real learners.
-    experimental = meta.get("status") != "APPROVED"
     items = []
-    for sid, cid, student, results, _score, count, recommendation in histories:
-        hist = [{"score": r.score, "hints": r.hints, "wrong": r.wrong_attempts} for r in results[-10:]]
+    for (sid, cid), facts in by_key.items():
+        results = sorted((r for r in adaptive.question_results(facts) if r.closed), key=lambda r: r.at)
+        hist = [{"score": r.score, "hints": r.hints, "wrong": r.wrong_attempts} for r in results]
         started = perf_counter()
         try:
-            out = pred.predict(hist, student["grade_number"], allow_experimental=allow)
+            out = pred.predict(hist, students[sid]["grade_number"], allow_experimental=allow)
         except Exception:
-            return unavailable("La inferencia ML falló. Se mantienen las recomendaciones por reglas.")
+            return {"available": False, "items": [],
+                    "reason": "La inferencia no está disponible. Se mantienen las alertas por reglas."}
+        inference_ms = round((perf_counter() - started) * 1000, 3)
         if out.get("status") != "OK":
             continue
-        items.append({"student": {"id": sid, "display_name": student["display_name"]},
+        items.append({"student": {"id": sid, "display_name": students[sid]["display_name"]},
                       "competency": {"id": cid, "name": names.get(cid)}, "probability": out["probability"],
-                      "above_threshold": out["above_threshold"], "model_id": out["model_id"],
-                      "model_status": out["model_status"], "warning": out["warning"],
-                      "advisory": ADVISORY, "inference_ms": round((perf_counter() - started) * 1000, 3),
-                      "evidence_count": count,
-                      "difficulty_recommendation": {
-                          **recommendation, "source": "RULES",
-                          "method_version": adaptive.METHOD_VERSION, "requires_teacher_decision": True,
-                      }})
+                      "above_threshold": out["above_threshold"], "model_id": out["model_id"], "model_status": out["model_status"],
+                      "warning": out["warning"], "advisory": ADVISORY, "inference_ms": inference_ms})
     items.sort(key=lambda x: -x["probability"])
-    return {"available": True, "experimental": experimental, "items": items, "guidance": guidance}
+    return {"available": True, "experimental": bool(items and items[0]["model_status"] != "APPROVED"), "items": items}

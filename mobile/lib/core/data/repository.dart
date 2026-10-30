@@ -4,33 +4,6 @@ import 'package:uuid/uuid.dart';
 import '../database/app_database.dart';
 import '../offline/rules.dart' as rules;
 
-/// Curso de la planificación ACTIVE del aula y grado del estudiante.
-class LocalCourse {
-  const LocalCourse({
-    required this.id,
-    required this.name,
-    required this.classroomName,
-    required this.academicYear,
-    required this.gradeId,
-    required this.isDemo,
-  });
-  final String id;
-  final String name;
-  final String classroomName;
-  final int academicYear;
-  final int gradeId;
-  final bool isDemo;
-
-  factory LocalCourse.fromJson(Map<String, dynamic> data) => LocalCourse(
-    id: data['id'] as String,
-    name: data['name'] as String,
-    classroomName: data['classroom_name'] as String,
-    academicYear: data['academic_year'] as int,
-    gradeId: data['grade_id'] as int,
-    isDemo: data['is_demo'] == true,
-  );
-}
-
 class LocalQuestion {
   LocalQuestion(this.id, this.position, this.type, this.prompt, this.options, this.correct, this.hints, this.explanation);
   final String id;
@@ -44,12 +17,11 @@ class LocalQuestion {
 }
 
 class LocalTask {
-  LocalTask(this.id, this.origin, this.subject, this.courseId, this.competencyId, this.competencyName, this.title, this.instructions,
+  LocalTask(this.id, this.origin, this.subject, this.competencyId, this.competencyName, this.title, this.instructions,
       this.objective, this.total, this.closed);
   final String id;
   final String origin;
   final String? subject;
-  final String? courseId;
   final String competencyId;
   final String? competencyName;
   final String title;
@@ -117,26 +89,6 @@ class Repository {
   Future<void> saveLanguages(String? mother, String? preferred) =>
       db.update('profile', {'mother_language': mother, 'preferred_language': preferred});
 
-  /// Reemplaza el catálogo local con la foto de la planificación ACTIVE del servidor.
-  /// Guardado en SQLite: se conserva cuando el dispositivo queda sin conexión.
-  Future<void> saveCourses(List<dynamic> courses) async {
-    final clean = courses.map((item) =>
-        LocalCourse.fromJson((item as Map).cast<String, dynamic>())).toList();
-    await db.insert('meta', {
-      'key': 'courses_catalog',
-      'value': jsonEncode(courses),
-    }, conflictAlgorithm: ConflictAlgorithm.replace);
-    assert(clean.length == courses.length);
-  }
-
-  Future<List<LocalCourse>> courses() async {
-    final rows = await db.query('meta', where: "key = 'courses_catalog'");
-    if (rows.isEmpty) return [];
-    final raw = jsonDecode(rows.first['value'] as String) as List;
-    return raw.map((item) =>
-        LocalCourse.fromJson((item as Map).cast<String, dynamic>())).toList();
-  }
-
   /// Guarda/actualiza tareas descargadas (pull o "Quiero aprender") en una transacción.
   Future<void> upsertTasks(List<dynamic> tasks) async {
     await db.transaction((t) async {
@@ -149,7 +101,6 @@ class Repository {
             {
               'student_assignment_id': sa, 'assignment_id': k['assignment_id'], 'variant_id': k['variant_id'],
               'origin': k['origin'] ?? 'TEACHER', 'grade_id': k['grade_id'], 'subject': k['subject'],
-              'course_id': k['course_id'],
               'competency_id': k['competency_id'], 'competency_name': k['competency_name'], 'topic_id': k['topic_id'],
               'topic_title': k['topic_title'],
               // solo traducciones VERIFICADAS llegan del servidor; si no hay, se muestra el idioma base
@@ -193,8 +144,7 @@ class Repository {
     for (final r in rows) {
       final id = r['student_assignment_id'] as String;
       final results = rules.questionResults(await _facts(id));
-      out.add(LocalTask(id, r['origin'] as String, r['subject'] as String?, r['course_id'] as String?,
-          r['competency_id'] as String,
+      out.add(LocalTask(id, r['origin'] as String, r['subject'] as String?, r['competency_id'] as String,
           r['competency_name'] as String?, r['title'] as String, r['instructions'] as String, r['learning_objective'] as String,
           r['total'] as int, results.where((x) => x.closed).length));
     }

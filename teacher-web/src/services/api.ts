@@ -3,11 +3,6 @@ import type { TokenOut } from "../types/api";
 const BASE: string = (import.meta.env.VITE_API_URL as string | undefined) ?? "";
 const API = `${BASE}/api/v1`;
 const RT_KEY = "kawsay_rt";
-const sessionStore = {
-  getItem(key: string): string | null { try { return window.sessionStorage.getItem(key); } catch { return null; } },
-  setItem(key: string, value: string): void { try { window.sessionStorage.setItem(key, value); } catch { /* Storage disabled: continue without persisted session. */ } },
-  removeItem(key: string): void { try { window.sessionStorage.removeItem(key); } catch { /* Ignore blocked storage. */ } },
-};
 
 export class ApiError extends Error {
   constructor(public status: number, public code: string, message: string, public requestId?: string) {
@@ -26,11 +21,11 @@ export function setSessionLostHandler(fn: (() => void) | null): void {
 }
 export function setTokens(t: Pick<TokenOut, "access_token" | "refresh_token"> | null): void {
   accessToken = t?.access_token ?? null;
-  if (t) sessionStore.setItem(RT_KEY, t.refresh_token);
-  else sessionStore.removeItem(RT_KEY);
+  if (t) sessionStorage.setItem(RT_KEY, t.refresh_token);
+  else sessionStorage.removeItem(RT_KEY);
 }
 export function hasStoredSession(): boolean {
-  return sessionStore.getItem(RT_KEY) !== null;
+  return sessionStorage.getItem(RT_KEY) !== null;
 }
 
 async function parse<T>(res: Response): Promise<T> {
@@ -72,7 +67,7 @@ async function fetchWithTimeout(url: string, init: RequestInit, options: Request
 }
 
 async function refreshTokens(): Promise<boolean> {
-  const rt = sessionStore.getItem(RT_KEY);
+  const rt = sessionStorage.getItem(RT_KEY);
   if (!rt) return false;
   refreshing ??= (async () => {
     try {
@@ -100,31 +95,6 @@ export async function request<T>(method: string, path: string, body?: unknown, r
   return parse<T>(res);
 }
 
-/** Authenticated binary file transfer; refreshes tokens just like JSON requests. */
-async function binaryRequest<T>(
-  method: "GET" | "POST", path: string, file?: File, retry = true,
-): Promise<T> {
-  const headers: Record<string,string> = {};
-  if (accessToken) headers.authorization = `Bearer ${accessToken}`;
-  if (file) headers["content-type"] = "application/octet-stream";
-  const res = await fetchWithTimeout(`${API}${path}`, {
-    method, headers, body: file, cache: "no-store",
-  }, { timeoutMs: 45000 });
-  if (res.status === 401 && retry) {
-    if (await refreshTokens()) return binaryRequest<T>(method,path,file,false);
-    setTokens(null);
-    onSessionLost?.();
-  }
-  if (!res.ok) return parse<T>(res);
-  if (method === "GET") return await res.blob() as T;
-  return parse<T>(res);
-}
-
-export const documentApi = {
-  upload: <T>(path: string, file: File) => binaryRequest<T>("POST",path,file),
-  download: (path: string) => binaryRequest<Blob>("GET",path),
-};
-
 export const api = {
   get: <T>(p: string, options?: RequestOptions) => request<T>("GET", p, undefined, true, options),
   post: <T>(p: string, b?: unknown) => request<T>("POST", p, b ?? {}),
@@ -142,18 +112,12 @@ export async function studentLogin(loginCode: string, pin: string, deviceId: str
   setTokens(t);
   return t;
 }
-
-export async function studentEmailLogin(email: string, password: string, deviceId: string): Promise<TokenOut> {
-  const t = await request<TokenOut>("POST", "/auth/student-email-login", { email, password, device_id: deviceId });
-  setTokens(t);
-  return t;
-}
 export async function restoreSession(): Promise<TokenOut["user"] | null> {
   if (!(await refreshTokens())) return null;
   return request<TokenOut["user"]>("GET", "/auth/me");
 }
 export async function logout(): Promise<void> {
-  const rt = sessionStore.getItem(RT_KEY);
+  const rt = sessionStorage.getItem(RT_KEY);
   setTokens(null);
   if (rt) await fetchWithTimeout(`${API}/auth/logout`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ refresh_token: rt }) }).catch(() => undefined);
 }

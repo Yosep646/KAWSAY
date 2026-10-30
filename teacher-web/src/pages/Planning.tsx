@@ -1,9 +1,5 @@
-import { useEffect, useState, type FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { useState, type FormEvent } from "react";
 import { useAuth } from "../app/AuthContext";
-import { CurriculumDocuments, type CurriculumDocumentReference } from "../components/CurriculumDocuments";
-import { TeacherPageIntro } from "../components/TeacherPageIntro";
-import { Icon } from "../components/Icon";
 import { Badge, Card, ErrorBox, Loading } from "../components/ui";
 import { useAsync } from "../hooks/useAsync";
 import { api } from "../services/api";
@@ -19,84 +15,33 @@ export function Planning() {
   const [year, setYear] = useState(new Date().getFullYear());
   const [fw, setFw] = useState("");
   const [err, setErr] = useState<string | null>(null);
-  const [reference, setReference] = useState<CurriculumDocumentReference | null>(null);
-  useEffect(() => {
-    if (window.location.hash === "#crear-plan-estructurado") {
-      window.requestAnimationFrame(() => document.getElementById("crear-plan-estructurado")?.scrollIntoView({block:"start"}));
-    }
-  }, []);
-  useEffect(() => {
-    if (versionId) window.requestAnimationFrame(() => document.getElementById("editor-version-plan")?.scrollIntoView({behavior:"smooth",block:"start"}));
-  }, [versionId]);
-
-  const prepareReference = (doc:CurriculumDocumentReference) => {
-    setReference(doc);
-    setYear(doc.academic_year);
-    setName(`Planificación ${doc.area} ${doc.grade_number}.º ${doc.education_level === "PRIMARIA" ? "primaria" : "secundaria"} · ${doc.academic_year}`);
-    window.requestAnimationFrame(() => document.getElementById("crear-plan-estructurado")?.scrollIntoView({behavior:"smooth",block:"center"}));
-  };
 
   const create = async (e: FormEvent) => {
     e.preventDefault();
-    try {
-      setErr(null);
-      const record = await api.post<{id:string;version:{id:string}}>("/planning/plans", {
-        academic_year:year, framework_id:fw || frameworks.data?.[0]?.id, name,
-      });
-      setName("");
-      await plans.reload();
-      setVersionId(record.version.id);
-    } catch (x) { setErr(errMsg(x)); }
+    try { setErr(null); await api.post("/planning/plans", { academic_year: year, framework_id: fw || frameworks.data?.[0]?.id, name }); setName(""); await plans.reload(); } catch (x) { setErr(errMsg(x)); }
   };
   return (
-    <div className="teacher-workflow teacher-planning-page">
-      <TeacherPageIntro kicker="PLANIFICACIÓN · CONTENIDOS EDUCATIVOS" title="Planificación de la institución"
-        description="Organiza contenidos por año, grado, área y competencia, respetando la malla curricular de cada institución." icon="book">
-        <Link to="/actividades/nueva"><Icon name="tasks"/> Crear actividad</Link>
-        <Link to="/aulas" className="secondary"><Icon name="classroom"/> Mis aulas</Link>
-      </TeacherPageIntro>
-      <section className="teacher-flow-grid" aria-label="Cómo usar la planificación">
-        <div className="teacher-flow-card">
-          <div className="teacher-flow-card-heading"><span><Icon name="book"/></span><div><h3>Documentos por grado y área</h3><p>Sube archivos PDF o Word como referencia educativa.</p></div></div>
-          <p className="teacher-flow-description">Puedes almacenar una malla por cada grado, pero <strong>subir un archivo no crea ni activa automáticamente la planificación estructurada.</strong> Los documentos deben revisarse antes de convertirse en actividades.</p>
-        </div>
-        <div className="teacher-flow-card">
-          <div className="teacher-flow-card-heading"><span><Icon name="check"/></span><div><h3>Planificación vigente</h3><p>Los temas activos habilitan la creación de ejercicios.</p></div></div>
-          <ol className="teacher-flow-steps">
-            <li><span>1</span><div><strong>Crea un plan por año escolar</strong><p>Selecciona el marco curricular revisado y agrega periodos, unidades y temas.</p></div></li>
-            <li><span>2</span><div><strong>Solicita revisión</strong><p>La administración aprueba y activa la versión estructurada.</p></div></li>
-            <li><span>3</span><div><strong>Prepara actividades</strong><p>Las tareas se vinculan a la versión activa y a cada grado.</p></div></li>
-          </ol>
-        </div>
-      </section>
-      <CurriculumDocuments onPreparePlan={user?.role === "TEACHER" ? prepareReference : undefined} />
-      <div className="teacher-flow-guidance"><strong>Nota:</strong> Los planes activos mantienen trazabilidad curricular. Los documentos adjuntos no sustituyen la aprobación humana.</div>
+    <div>
+      <h2>Planificación de la institución</h2>
+      <p className="muted">La planificación vigente define QUÉ corresponde trabajar. Cada cambio crea una versión; las tareas históricas conservan la versión con la que se crearon.</p>
       <ErrorBox message={plans.error ?? err} />
       {user?.role === "TEACHER" && (
-        <section id="crear-plan-estructurado" className="teacher-plan-create" aria-label="Crear planificación estructurada">
-        <Card title="Crear planificación estructurada">
-          {reference && <div className="teacher-flow-guidance" role="status"><strong>Referencia seleccionada:</strong> {reference.filename} · {reference.area} · {reference.grade_number}.º grado · {reference.academic_year}.<p>El nombre y año están preparados. El PDF no se ha convertido automáticamente en temas: registra el contenido revisado y envíalo a aprobación.</p></div>}
-          {!frameworks.loading && !frameworks.data?.length && <div className="teacher-flow-guidance" role="note"><strong>Falta un marco curricular estructurado.</strong> Solicita al administrador que registre y valide las competencias del MINEDU. Sin ese catálogo aún no es posible crear el plan.</div>}
+        <Card title="Nueva planificación">
           <form className="row" onSubmit={(e) => void create(e)}>
             <label>Nombre<input value={name} onChange={(e) => setName(e.target.value)} required minLength={2} /></label>
             <label>Año<input type="number" value={year} onChange={(e) => setYear(Number(e.target.value))} /></label>
             <label>Marco curricular<select value={fw} onChange={(e) => setFw(e.target.value)}>
               {frameworks.data?.map((f) => <option key={f.id} value={f.id}>{f.name} {f.is_demo ? "(DEMO)" : ""}</option>)}</select></label>
-            <button type="submit" disabled={!frameworks.data?.length}>Crear borrador de planificación</button>
+            <button type="submit">Crear</button>
           </form>
         </Card>
-        </section>
       )}
-      {frameworks.error && <ErrorBox message={frameworks.error}/>}
-      {!plans.loading && !plans.data?.length && <div className="teacher-flow-empty"><Icon name="book"/><h3>Aún no hay planes estructurados</h3><p>La biblioteca de documentos funciona de manera independiente. Para crear ejercicios por grado necesitas crear un plan, definir sus unidades y solicitar la activación de la versión.</p></div>}
       {plans.loading ? <Loading /> : plans.data?.map((p) => (
         <Card key={p.id} title={p.name} actions={user?.role === "TEACHER" && <button className="ghost" onClick={() => void api.post(`/planning/plans/${p.id}/versions`).then(() => plans.reload()).catch((x: unknown) => setErr(errMsg(x)))}>Nueva versión</button>}>
           <ul className="list">{p.versions.map((v) => (
             <li key={v.id}><button className="link" onClick={() => setVersionId(v.id)}>Versión {v.label}</button> <Badge tone={v.status === "ACTIVE" ? "ok" : v.status === "ARCHIVED" ? "muted" : "info"}>{v.status}</Badge></li>))}</ul>
         </Card>))}
-      {versionId && <section id="editor-version-plan" className="teacher-plan-editor">
-        <VersionEditor key={versionId} versionId={versionId} frameworkId={plans.data?.find((p) => p.versions.some((v) => v.id === versionId))?.framework_id ?? ""} onChanged={() => void plans.reload()} />
-      </section>}
+      {versionId && <VersionEditor key={versionId} versionId={versionId} frameworkId={plans.data?.find((p) => p.versions.some((v) => v.id === versionId))?.framework_id ?? ""} onChanged={() => void plans.reload()} />}
     </div>
   );
 }

@@ -13,13 +13,7 @@ import httpx
 BASE = os.environ.get("KAWSAY_URL", "http://127.0.0.1:8000").rstrip("/")
 ADMIN = (os.environ["KAWSAY_ADMIN_EMAIL"], os.environ["KAWSAY_ADMIN_PASSWORD"])
 TEACHER_EMAIL = os.environ.get("KAWSAY_TEACHER_EMAIL", "maestra@demo.pe")
-TEACHER_PW = os.environ.get("KAWSAY_TEACHER_PASSWORD", "")
-if os.environ.get("DEMO_ALLOW_WRITES") != "1":
-    sys.exit("La demostración crea registros: define DEMO_ALLOW_WRITES=1 explícitamente.")
-if not TEACHER_PW:
-    sys.exit("Define KAWSAY_TEACHER_PASSWORD (clave exclusiva de demostración).")
-if not (BASE.startswith("http://127.0.0.1:") or BASE.startswith("http://localhost:")) and os.environ.get("DEMO_ALLOW_REMOTE") != "1":
-    sys.exit("No ejecutar demo contra un servidor remoto sin DEMO_ALLOW_REMOTE=1.")
+TEACHER_PW = os.environ.get("KAWSAY_TEACHER_PASSWORD", "Aula-Multigrado-2026!")
 c = httpx.Client(base_url=BASE + "/api/v1", timeout=20)
 
 

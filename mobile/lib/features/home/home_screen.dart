@@ -5,7 +5,6 @@ import '../../core/data/repository.dart';
 import '../../core/sync/sync_manager.dart';
 import '../../shared/widgets/big_button.dart';
 import '../assignments/tasks_screen.dart';
-import '../courses/courses_screen.dart';
 import '../learn/learn_screen.dart';
 import '../progress/progress_screen.dart';
 import '../settings/settings_screen.dart';
@@ -36,8 +35,6 @@ class HomeScreen extends StatelessWidget {
                 onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const TasksScreen(origin: 'TEACHER', title: 'Mis tareas'))));
           },
         ),
-        BigButton(label: 'MIS CURSOS', subtitle: 'Áreas curriculares y actividades del docente', icon: Icons.menu_book,
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const CoursesScreen()))),
         BigButton(label: 'QUIERO APRENDER', icon: Icons.explore, onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const LearnScreen()))),
         BigButton(label: 'MI PROGRESO', icon: Icons.stacked_bar_chart, onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ProgressScreen()))),
         BigButton(label: 'TUTOR KAWSAY', subtitle: 'Abre una actividad y pide ayuda', icon: Icons.support_agent,

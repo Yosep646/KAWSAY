@@ -1,18 +1,21 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { hasStoredSession, login as apiLogin, studentLogin as apiStudentLogin, studentEmailLogin as apiStudentEmailLogin, logout as apiLogout, restoreSession, setSessionLostHandler } from "../services/api";
+import { hasStoredSession, login as apiLogin, studentLogin as apiStudentLogin, logout as apiLogout, restoreSession, setSessionLostHandler, setTokens } from "../services/api";
 import type { UserBrief } from "../types/api";
+import { offlineVault } from "../services/offlineVault";
+import { pendingAttempts } from "../services/pendingAttempts";
 
-interface AuthState { user: UserBrief | null; loading: boolean; login: (e: string, p: string) => Promise<void>; loginStudent: (code: string, pin: string) => Promise<void>; loginStudentEmail: (email: string, password: string) => Promise<void>; logout: () => Promise<void> }
+interface AuthState { user: UserBrief | null; loading: boolean; onlineSession: boolean; login: (e: string, p: string) => Promise<void>; loginStudent: (code: string, pin: string) => Promise<void>; unlockOffline: (phrase: string) => Promise<void>; logout: () => Promise<void> }
 const Ctx = createContext<AuthState | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserBrief | null>(null);
   const [loading, setLoading] = useState<boolean>(hasStoredSession());
+  const [onlineSession, setOnlineSession] = useState(false);
 
   useEffect(() => {
-    setSessionLostHandler(() => setUser(null));
+    setSessionLostHandler(() => { offlineVault.lock(); setOnlineSession(false); setUser(null); });
     if (hasStoredSession()) {
-      restoreSession().then(setUser).catch(() => setUser(null)).finally(() => setLoading(false));
+      restoreSession().then(restored => { setUser(restored); setOnlineSession(Boolean(restored)); }).catch(() => setUser(null)).finally(() => setLoading(false));
     }
     return () => setSessionLostHandler(null);
   }, []);
@@ -23,29 +26,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await apiLogout();
       throw new Error("Este panel es solo para docentes y administración");
     }
-    setUser(t.user);
+    offlineVault.lock(); setOnlineSession(true); setUser(t.user);
   }, []);
   const loginStudent = useCallback(async (code: string, pin: string) => {
+    const localStudentId = offlineVault.isOpen() ? (await offlineVault.snapshot()).user.id : null;
     const key = "kawsay_web_device_id";
     let id = localStorage.getItem(key);
     if (!id) { id = crypto.randomUUID(); localStorage.setItem(key, id); }
     const t = await apiStudentLogin(code, pin, id);
-    setUser(t.user);
-  }, []);
-  const loginStudentEmail = useCallback(async (email: string, password: string) => {
-    const key = "kawsay_web_device_id";
-    let deviceId: string | null = null;
-    try { deviceId = localStorage.getItem(key); } catch { /* Storage restricted */ }
-    if (!deviceId) {
-      deviceId = crypto.randomUUID();
-      try { localStorage.setItem(key, deviceId); } catch { /* Session-only device */ }
+    if (localStudentId && localStudentId !== t.user.id) {
+      await apiLogout();
+      throw new Error("Inicia sesión con la cuenta de las actividades descargadas, o bloquea primero el acceso local.");
     }
-    const token = await apiStudentEmailLogin(email, password, deviceId);
-    if (token.user.role !== "STUDENT") { await apiLogout(); throw new Error("Esta cuenta no es de estudiante"); }
-    setUser(token.user);
+    setOnlineSession(true); setUser(t.user);
   }, []);
-  const logout = useCallback(async () => { await apiLogout(); setUser(null); }, []);
-  const value = useMemo(() => ({ user, loading, login, loginStudent, loginStudentEmail, logout }), [user, loading, login, loginStudent, loginStudentEmail, logout]);
+  const unlockOffline = useCallback(async (phrase: string) => {
+    const local = await offlineVault.unlock(phrase);
+    setTokens(null);
+    setOnlineSession(false); setUser(local.user);
+  }, []);
+  const logout = useCallback(async () => {
+    if (user?.role === "STUDENT" && typeof indexedDB !== "undefined" && await pendingAttempts.hasForStudent(user.id)) {
+      throw new Error("Hay una respuesta de la vista en línea pendiente. Confírmala antes de salir.");
+    }
+    offlineVault.lock(); setOnlineSession(false); setUser(null); await apiLogout();
+  }, [user]);
+  const value = useMemo(() => ({ user, loading, onlineSession, login, loginStudent, unlockOffline, logout }), [user, loading, onlineSession, login, loginStudent, unlockOffline, logout]);
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 

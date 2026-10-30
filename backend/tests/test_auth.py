@@ -82,6 +82,33 @@ def test_logout_revokes_refresh(w):
     t = w.c.post("/api/v1/auth/login", json={"email": "admin@x.pe", "password": PW}).json()
     assert w.c.post("/api/v1/auth/logout", json={"refresh_token": t["refresh_token"]}).status_code == 204
     assert w.c.post("/api/v1/auth/refresh", json={"refresh_token": t["refresh_token"]}).status_code == 401
+    assert w.c.get("/api/v1/auth/me", headers={"Authorization": f"Bearer {t['access_token']}"}).status_code == 401
+
+
+def test_rotation_preserves_access_but_refresh_replay_revokes_access_immediately(w):
+    w.staff("ADMIN", "admin@x.pe")
+    first = w.c.post("/api/v1/auth/login", json={"email": "admin@x.pe", "password": PW}).json()
+    second = w.c.post("/api/v1/auth/refresh", json={"refresh_token": first["refresh_token"]}).json()
+    old_access = {"Authorization": f"Bearer {first['access_token']}"}
+    new_access = {"Authorization": f"Bearer {second['access_token']}"}
+    assert w.c.get("/api/v1/auth/me", headers=old_access).status_code == 200
+    assert w.c.post("/api/v1/auth/refresh", json={"refresh_token": first["refresh_token"]}).status_code == 401
+    assert w.c.get("/api/v1/auth/me", headers=old_access).status_code == 401
+    assert w.c.get("/api/v1/auth/me", headers=new_access).status_code == 401
+
+
+def test_pin_reset_revokes_student_access_without_revoking_teacher(w):
+    school = w.school()
+    w.staff("TEACHER", "teacher@x.pe", school)
+    teacher = w.login("teacher@x.pe")
+    student = w.student(teacher, w.classroom(teacher), 1, "Estudiante ficticio")
+    token = w.c.post("/api/v1/auth/student-login", json={
+        "login_code": student["login_code"], "pin": student["pin"], "device_id": new_device()}).json()
+    headers = {"Authorization": f"Bearer {token['access_token']}"}
+    assert w.c.get("/api/v1/sync/pull", headers=headers).status_code == 200
+    assert w.c.post(f"/api/v1/students/{student['id']}/reset-pin", headers=teacher).status_code == 200
+    assert w.c.get("/api/v1/sync/pull", headers=headers).status_code == 401
+    assert w.c.get("/api/v1/auth/me", headers=teacher).status_code == 200
 
 
 def test_deactivated_user_loses_access_immediately(w, db):

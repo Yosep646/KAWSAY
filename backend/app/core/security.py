@@ -42,11 +42,11 @@ def burn_verification_time(password: str) -> None:
     verify_password(_dummy_hash(), password)
 
 
-def create_access_token(user_id: uuid.UUID, role: str) -> tuple[str, int]:
+def create_access_token(user_id: uuid.UUID, role: str, family_id: uuid.UUID) -> tuple[str, int]:
     s = get_settings()
     now = datetime.now(UTC)
     ttl = timedelta(minutes=s.access_token_expire_minutes)
-    payload = {"sub": str(user_id), "role": role, "typ": "access", "jti": uuid.uuid4().hex,
+    payload = {"sub": str(user_id), "sid": str(family_id), "role": role, "typ": "access", "jti": uuid.uuid4().hex,
                "iat": now, "exp": now + ttl, "iss": "kawsay"}
     return jwt.encode(payload, s.jwt_secret, algorithm="HS256"), int(ttl.total_seconds())
 
@@ -54,7 +54,7 @@ def create_access_token(user_id: uuid.UUID, role: str) -> tuple[str, int]:
 def decode_access_token(token: str) -> dict:
     try:
         data = jwt.decode(token, get_settings().jwt_secret, algorithms=["HS256"], issuer="kawsay",
-                          options={"require": ["exp", "sub", "typ", "iss"]})
+                          options={"require": ["exp", "sub", "sid", "typ", "iss"]})
     except jwt.PyJWTError as exc:
         raise UnauthorizedError("Token inválido o expirado") from exc
     if data.get("typ") != "access":

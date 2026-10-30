@@ -1,19 +1,13 @@
 #!/usr/bin/env bash
-# KAWSAY AI, servidor local (SQLite persistente en volumen Docker).
+# Alternativa con Docker. Lo más simple (sin Docker): python scripts/dev.py demo
 set -euo pipefail
 cd "$(dirname "$0")/.."
-if ! command -v docker >/dev/null 2>&1; then echo "Instala Docker Desktop / Docker Engine." >&2; exit 1; fi
-if [ ! -f .env ]; then
-  python - <<'PYINNER'
-from pathlib import Path
-import secrets
-Path('.env').write_text('JWT_SECRET='+secrets.token_hex(32)+'\nAPP_ENV=development\nWEB_BIND_IP=127.0.0.1\nAI_PROVIDER=disabled\n')
-PYINNER
-  chmod 600 .env 2>/dev/null || true
-  echo "Se creó .env con JWT_SECRET aleatorio; no compartas el archivo."
-fi
-docker compose up -d --build backend teacher-web
-echo 'Servidor web: http://127.0.0.1:8080'
-echo 'Salud API: http://127.0.0.1:8080/health'
-echo 'Para crear el primer administrador, ejecuta: docker compose exec -e ADMIN_PASSWORD=... backend python -m app.cli create-admin correo@ejemplo.pe "Administrador"'
-echo 'Usa una contraseña fuerte y evita credenciales de ejemplo para datos reales.'
+[ -f .env ] || { printf "JWT_SECRET=%s\n" "$(openssl rand -hex 32)" > .env; echo ".env creado con un secreto aleatorio"; }
+set -a; . ./.env; set +a
+docker compose up -d --build
+until curl -sf localhost:8000/ready >/dev/null; do sleep 2; done
+ADMIN_PASSWORD="${ADMIN_PASSWORD:-Kawsay-Demo-Local-2026}"
+docker compose exec -T -e ADMIN_PASSWORD="$ADMIN_PASSWORD" backend python -m app.cli create-admin admin@demo.pe "Admin Demo" || true
+pip install -q httpx
+KAWSAY_URL=http://127.0.0.1:8000 KAWSAY_ADMIN_EMAIL=admin@demo.pe KAWSAY_ADMIN_PASSWORD="$ADMIN_PASSWORD" python scripts/demo_e2e.py
+echo "Docs: http://127.0.0.1:8000/docs · Panel: http://127.0.0.1:8080"

@@ -1,0 +1,81 @@
+{
+  "browser": {
+    "stats": {
+      "startTime": "2026-10-30T16:23:01.767Z",
+      "duration": 20151.137,
+      "expected": 10,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "la cola IndexedDB conserva el evento tras recargar",
+        "status": "passed",
+        "duration_ms": 1347
+      },
+      {
+        "title": "una confirmación antigua no borra otra respuesta pendiente",
+        "status": "passed",
+        "duration_ms": 691
+      },
+      {
+        "title": "login, evidencia calculada, progreso, restauración de sesión y logout",
+        "status": "passed",
+        "duration_ms": 4615
+      },
+      {
+        "title": "intervención docente persistida y alerta resuelta con filtros",
+        "status": "passed",
+        "duration_ms": 1971
+      },
+      {
+        "title": "idioma declarado guardado y recuperado tras recargar",
+        "status": "passed",
+        "duration_ms": 2389
+      },
+      {
+        "title": "diseño adaptable en escritorio: acceso y navegación sin desbordamiento",
+        "status": "passed",
+        "duration_ms": 2199
+      },
+      {
+        "title": "diseño adaptable en móvil: acceso y navegación sin desbordamiento",
+        "status": "passed",
+        "duration_ms": 2246
+      },
+      {
+        "title": "el almacén cifra identidad y respuestas, rechaza otra frase y detecta manipulación",
+        "status": "passed",
+        "duration_ms": 1027
+      },
+      {
+        "title": "dos pestañas conservan ambas respuestas sin sobrescribir la cola",
+        "status": "passed",
+        "duration_ms": 1319
+      },
+      {
+        "title": "el acceso local vencido conserva la cola y exige renovación con la misma cuenta",
+        "status": "passed",
+        "duration_ms": 909
+      }
+    ]
+  },
+  "offline": {
+    "stats": {
+      "startTime": "2026-10-30T16:24:33.241Z",
+      "duration": 7377.31,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "diez respuestas cifradas sobreviven al cierre total y se sincronizan una sola vez",
+        "status": "passed",
+        "duration_ms": 5654
+      }
+    ]
+  }
+}

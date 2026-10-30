@@ -32,8 +32,7 @@ def test_requests_without_verifiable_length_are_rejected(w):
     r = w.c.post("/api/v1/auth/login", content=b"{}", headers={"transfer-encoding": "chunked", "content-type": "application/json"})
     assert r.status_code == 411
     assert w.c.post("/api/v1/auth/login", content=b"{}", headers={"content-length": "abc"}).status_code in (400, 411)
-    # Superar el límite configurado (5 MiB); los payloads menores llegan a validación 422.
-    big = json.dumps({"email": "a@b.pe", "password": "x" * (get_settings().max_request_bytes + 1)})
+    big = json.dumps({"email": "a@b.pe", "password": "x" * 2_000_000})
     assert w.c.post("/api/v1/auth/login", content=big, headers={"content-type": "application/json"}).status_code == 413
 
 

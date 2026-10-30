@@ -13,21 +13,6 @@ const paths = {
   spark: "m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z",
   check: "m5 12 4 4L19 6",
   eye: "M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Zm10-3a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z",
-  mail: "M3 5h18v14H3V5Zm0 2 9 7 9-7",
-  lock: "M5 10h14v11H5V10Zm3 0V7a4 4 0 1 1 8 0v3M12 14v3",
-  graduation: "M2 9 12 4l10 5-10 5L2 9Zm4 4v5c4 3 8 3 12 0v-5M22 9v7",
-  chart: "M4 20V11m5 9V5m5 15v-8m5 8V3M2 20h20",
-  "map-pin": "M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Zm-8-3a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z",
-  refresh: "M21 6v6h-6M3 18v-6h6m-5-2a8 8 0 0 1 14-4l3 6M3 12l3 6a8 8 0 0 0 14-4",
-  search: "M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm6-2 5 5",
-  bell: "M18 8a6 6 0 0 0-12 0c0 7-3 8-3 9h18c0-1-3-2-3-9ZM10 21h4",
-  sun: "M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6 7 7m10 10 1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z",
-  moon: "M20 15.7A8.5 8.5 0 0 1 8.3 4 8.5 8.5 0 1 0 20 15.7Z",
-  menu: "M3 6h18M3 12h18M3 18h18",
-  x: "M5 5l14 14M19 5 5 19",
-  shield: "M12 22c-7-4-9-8-9-15l9-4 9 4c0 7-2 11-9 15Zm-4-10 3 3 5-6",
-  database: "M21 6c0 2-4 4-9 4S3 8 3 6s4-4 9-4 9 2 9 4Zm-18 0v6c0 2 4 4 9 4s9-2 9-4V6M3 12v6c0 2 4 4 9 4s9-2 9-4v-6",
-  "eye-off": "m3 3 18 18M10.6 5.1A11 11 0 0 1 12 5c6 0 10 7 10 7a15.8 15.8 0 0 1-3.4 4.3M6.2 6.3A16 16 0 0 0 2 12s4 7 10 7a9.6 9.6 0 0 0 4.3-1M9.2 9.2A4 4 0 0 0 14.8 14.8",
 } as const;
 
 export type IconName = keyof typeof paths;
@@ -36,23 +21,6 @@ export function Icon({ name, className = "" }: { name: IconName; className?: str
   return <svg className={`icon ${className}`} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false"><path d={paths[name]} /></svg>;
 }
 
-/** Identity shared by the login, administrator, teacher and student navigation. */
 export function Brand() {
-  return (
-    <div className="brand" aria-label="KAWSAY AI, Educación que acompaña">
-      <span className="brand-mark" aria-hidden="true">
-        <img className="brand-emblem" src="/kawsay-brand-icon.webp?v=logo-20261028"
-             alt="" width={56} height={56} decoding="async"
-             onError={(event) => { event.currentTarget.style.display = "none"; event.currentTarget.nextElementSibling?.classList.add("brand-show-fallback"); }} />
-        <Icon name="leaf" className="brand-mark-fallback"/>
-      </span>
-      <span className="brand-copy">
-        <img className="brand-wordmark" src="/kawsay-brand-wordmark.webp?v=tipografia-2"
-             alt="" aria-hidden="true" width={689} height={148} decoding="async"
-             onError={(event) => { event.currentTarget.style.display = "none"; event.currentTarget.nextElementSibling?.classList.add("brand-word-visible"); }} />
-        <span className="brand-word">KAWSAY <em>AI</em></span>
-        <small>Educación que acompaña</small>
-      </span>
-    </div>
-  );
+  return <div className="brand"><span className="brand-mark"><Icon name="leaf" /></span><span>KAWSAY <em>AI</em><small>Educación que acompaña</small></span></div>;
 }

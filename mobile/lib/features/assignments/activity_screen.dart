@@ -22,6 +22,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
   String? _hintText;
   bool _closed = false;
   bool _loading = true;
+  bool _saving = false;
   final _text = TextEditingController();
   late DateTime _shownAt;
 
@@ -36,37 +37,53 @@ class _ActivityScreenState extends State<ActivityScreen> {
     final qs = await repo.questions(widget.task.id);
     var i = 0;
     while (i < qs.length && await repo.questionClosed(widget.task.id, qs[i].id)) { i++; } // continúa donde quedó
+    if (!mounted) return;
     setState(() { _qs = qs; _i = i; _loading = false; _shownAt = DateTime.now(); });
   }
 
   LocalQuestion get _q => _qs[_i];
 
   Future<void> _answer(Map<String, dynamic> answer) async {
+    if (_saving || _closed) return;
     final repo = context.read<Repository>();
+    final sync = context.read<SyncManager>();
+    final question = _q;
     final ms = DateTime.now().difference(_shownAt).inMilliseconds;
-    final ok = await repo.recordAttempt(widget.task.id, _q, answer, _hints, ms);
+    setState(() => _saving = true);
+    try {
+    final ok = await repo.recordAttempt(widget.task.id, question, answer, _hints, ms);
+    final closed = await repo.questionClosed(widget.task.id, question.id);
+    sync.refreshCounts();
+    sync.syncNow(); // no bloquea: si no hay red, queda PENDING
+    if (!mounted) return;
     _hints = 0;
-    final closed = await repo.questionClosed(widget.task.id, _q.id);
     setState(() {
       _closed = closed;
       _hintText = null;
       _feedback = ok
           ? 'Correcto.'
-          : closed ? (_q.explanation ?? 'Revisemos juntos cómo se resuelve.') : 'Casi. Inténtalo otra vez; puedes pedir una pista.';
+          : closed ? (question.explanation ?? 'Revisemos juntos cómo se resuelve.') : 'Casi. Inténtalo otra vez; puedes pedir una pista.';
     });
-    if (mounted) context.read<SyncManager>().refreshCounts();
-    context.read<SyncManager>().syncNow(); // no bloquea: si no hay red, queda PENDING
+    } catch (_) {
+      if (mounted) setState(() => _feedback = 'No se pudo completar el guardado. Vuelve a abrir la actividad para revisar tu respuesta.');
+    } finally {
+      if (mounted) setState(() => _saving = false);
+    }
   }
 
   Future<void> _help() async {
     final repo = context.read<Repository>();
+    final api = context.read<ApiClient>();
+    final question = _q;
     final attempts = await repo.attemptsCount(widget.task.id, _q.id);
+    if (!mounted) return;
     final step = (_hints + 1 > attempts + 1 ? _hints + 1 : attempts + 1).clamp(0, 3);
     String text = rules.localHint(_q.hints, step); // siempre disponible offline
     try { // si hay Internet, el tutor del servidor puede dar una pista más personalizada (sin revelar la respuesta)
-      final r = await context.read<ApiClient>().tutorTurn(widget.task.id, _q.id, step);
+      final r = await api.tutorTurn(widget.task.id, question.id, step);
       text = (r['message'] as String?) ?? text;
     } catch (_) {}
+    if (!mounted) return;
     setState(() { _hints++; _hintText = text; });
   }
 
@@ -89,11 +106,11 @@ class _ActivityScreenState extends State<ActivityScreen> {
         if (!_closed) ...[
           if (q.type == 'MULTIPLE_CHOICE')
             for (var k = 0; k < (q.options?.length ?? 0); k++)
-              Padding(padding: const EdgeInsets.only(bottom: 12), child: OutlinedButton(onPressed: () => _answer({'index': k}), child: Text(q.options![k]))),
+              Padding(padding: const EdgeInsets.only(bottom: 12), child: OutlinedButton(onPressed: _saving ? null : () => _answer({'index': k}), child: Text(q.options![k]))),
           if (q.type != 'MULTIPLE_CHOICE') ...[
             TextField(controller: _text, keyboardType: q.type == 'NUMERIC' ? const TextInputType.numberWithOptions(decimal: true) : TextInputType.text, decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Tu respuesta')),
             const SizedBox(height: 12),
-            FilledButton(onPressed: () {
+            FilledButton(onPressed: _saving ? null : () {
               if (q.type == 'NUMERIC') {
                 final v = num.tryParse(_text.text.replaceAll(',', '.'));
                 if (v != null) _answer({'value': v});
@@ -101,7 +118,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
             }, child: const Text('Responder')),
           ],
           const SizedBox(height: 8),
-          TextButton.icon(onPressed: _help, icon: const Icon(Icons.lightbulb), label: const Text('Pedir una pista')),
+          TextButton.icon(onPressed: _saving ? null : _help, icon: const Icon(Icons.lightbulb), label: const Text('Pedir una pista')),
         ],
         if (_hintText != null) Card(child: Padding(padding: const EdgeInsets.all(16), child: Text(_hintText!))),
         if (_feedback != null) Card(color: Theme.of(context).colorScheme.secondaryContainer, child: Padding(padding: const EdgeInsets.all(16), child: Text(_feedback!))),

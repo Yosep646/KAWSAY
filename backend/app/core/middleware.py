@@ -47,12 +47,8 @@ class RequestContextMiddleware(BaseHTTPMiddleware):
             response.headers["X-Frame-Options"] = "DENY"
             response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
             response.headers["Cross-Origin-Resource-Policy"] = "same-site"
-            # Conservar la CSP específica del HTML de React: el valor genérico
-            # default-src 'none' impedía cargar JavaScript, CSS y la interfaz.
-            # Las respuestas API siguen usando la CSP restrictiva por defecto.
-            if (not request.url.path.startswith(("/docs", "/openapi"))
-                    and "content-security-policy" not in response.headers):
-                response.headers["Content-Security-Policy"] = "default-src 'none'; frame-ancestors 'none'"
+            if not request.url.path.startswith(("/docs", "/openapi")):   # Swagger UI necesita sus propios recursos
+                response.headers.setdefault("Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'")
             if get_settings().is_production:
                 response.headers["Strict-Transport-Security"] = "max-age=63072000; includeSubDomains"
             elapsed = round((time.perf_counter() - start) * 1000, 1)

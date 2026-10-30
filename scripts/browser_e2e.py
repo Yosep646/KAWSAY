@@ -7,6 +7,7 @@ import secrets
 import socket
 import subprocess
 import sys
+import sysconfig
 import tempfile
 import time
 import urllib.error
@@ -46,18 +47,12 @@ def run(args: list[str], cwd: Path, env: dict[str, str]) -> None:
 
 def stop(process: subprocess.Popen) -> None:
     if process.poll() is None:
-        if os.name == "nt":
-            # El ejecutable del venv en Windows puede lanzar un Python hijo.
-            subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"], check=False,
-                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            process.wait()
-            return
         process.terminate()
         try:
             process.wait(timeout=10)
         except subprocess.TimeoutExpired:
             process.kill()
-            process.wait()
+            process.wait(timeout=10)
 
 
 def main() -> None:
@@ -75,7 +70,6 @@ def main() -> None:
             "DATABASE_URL": f"sqlite:///{Path(folder).as_posix()}/browser.db",
             "JWT_SECRET": secrets.token_hex(32),
             "CORS_ORIGINS": WEB_URL,
-            "DEMO_ALLOW_WRITES": "1",  # only SQLite file inside TemporaryDirectory, never Render
             "AI_PROVIDER": "disabled",
             "AI_API_KEY": "",
             "AUTOMATION_WEBHOOK_URL": "",
@@ -90,13 +84,19 @@ def main() -> None:
             "VITE_API_URL": API_URL,
             "VITE_TEST_TEACHER_EMAIL": "maestra@demo.pe",
             "VITE_TEST_TEACHER_PASSWORD": "Aula-Multigrado-2026!",
+            "LOGIN_RATE_LIMIT_PER_MINUTE": "100",
+            "KAWSAY_E2E_DB": str(Path(folder) / "browser.db"),
+            "KAWSAY_E2E_PYTHON": sys.executable,
         }
         run([sys.executable, "-m", "alembic", "upgrade", "head"], BACKEND, env)
         run([sys.executable, "-m", "app.cli", "create-admin", env["KAWSAY_ADMIN_EMAIL"], "Admin DEMO"], BACKEND, env)
+        # Launch the interpreter directly, avoiding Windows' venv redirector and
+        # an orphaned uvicorn child when process-tree inspection is unavailable.
+        backend_env = {**env, "PYTHONPATH": os.pathsep.join([sysconfig.get_path("purelib"), str(ROOT)])}
         backend = subprocess.Popen(
-            [sys.executable, "-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "18000",
+            [getattr(sys, "_base_executable", sys.executable), "-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "18000",
              "--no-access-log"],
-            cwd=BACKEND, env=env,
+            cwd=BACKEND, env=backend_env,
         )
         web = None
         try:
@@ -115,8 +115,12 @@ def main() -> None:
             run([sys.executable, str(ROOT / "scripts" / "demo_e2e.py")], ROOT, env)
             run(["node", str(WEB / "node_modules" / "vitest" / "vitest.mjs"),
                  "run", "src/test/integration.test.ts"], WEB, env)
+            production = any("playwright.offline.config" in arg for arg in sys.argv)
+            vite = ["node", str(WEB / "node_modules" / "vite" / "bin" / "vite.js")]
+            if production:
+                run([*vite, "build"], WEB, env)
             web = subprocess.Popen(
-                ["node", str(WEB / "node_modules" / "vite" / "bin" / "vite.js"),
+                [*vite, *(["preview"] if production else []),
                  "--host", "127.0.0.1", "--port", "15173", "--strictPort"],
                 cwd=WEB, env=env,
             )

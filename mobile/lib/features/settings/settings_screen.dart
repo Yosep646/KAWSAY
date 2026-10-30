@@ -44,10 +44,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<void> _save() async {
+    final api = context.read<ApiClient>();
+    final repo = context.read<Repository>();
+    final sync = context.read<SyncManager>();
     try {
-      final saved = await context.read<ApiClient>().setLanguages(_mother, _motherVariantId, _preferred);
-      await context.read<Repository>().saveLanguages(saved['mother_language'] as String?, saved['preferred_language'] as String?);
-      await context.read<SyncManager>().syncNow();
+      final saved = await api.setLanguages(_mother, _motherVariantId, _preferred);
+      await repo.saveLanguages(saved['mother_language'] as String?, saved['preferred_language'] as String?);
+      await sync.syncNow();
       if (!mounted) return;
       setState(() => _msg = 'Guardado. Verás el contenido en ese idioma cuando exista una traducción verificada.');
     } on NetworkException {
@@ -66,10 +69,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: AppBar(title: const Text('Ajustes')),
       body: ListView(padding: const EdgeInsets.all(16), children: [
         if (_loading) const LinearProgressIndicator(),
+        // Keep value for the declared Flutter 3.22 minimum (initialValue requires a newer SDK).
+        // ignore: deprecated_member_use
         DropdownButtonFormField<String?>(value: _mother, items: items(), onChanged: _loading ? null : (v) => setState(() { _mother = v; _motherVariantId = null; }), decoration: const InputDecoration(labelText: 'Mi lengua materna')),
         if (variants.isNotEmpty) ...[
           const SizedBox(height: 16),
           DropdownButtonFormField<String?>(
+            // ignore: deprecated_member_use
             value: _motherVariantId,
             items: [const DropdownMenuItem(value: null, child: Text('Sin indicar')), for (final v in variants) DropdownMenuItem(value: v['id'] as String, child: Text('${v['name']}'))],
             onChanged: (v) => setState(() => _motherVariantId = v),
@@ -77,6 +83,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ],
         const SizedBox(height: 16),
+        // ignore: deprecated_member_use
         DropdownButtonFormField<String?>(value: _preferred, items: items(), onChanged: _loading ? null : (v) => setState(() => _preferred = v), decoration: const InputDecoration(labelText: 'Prefiero aprender en')),
         const SizedBox(height: 16),
         const Text('El idioma se registra según lo que tú o tu familia declaran. No se determina por tu ubicación.'),

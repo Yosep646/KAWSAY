@@ -1,5 +1,7 @@
 /// Reglas pedagógicas LOCALES (sin IA, sin Internet). Espejo de backend/app/domain/adaptive.py.
 /// Es lo que permite corregir, dar pistas y estimar progreso sin conexión. El servidor RE-corrige y recalcula.
+library;
+
 import 'dart:convert';
 
 const double scoreClean = 1.0, scoreSome = 0.7, scoreMuch = 0.4, scoreWrong = 0.0;

@@ -1,0 +1,12 @@
+# KAWSAY AI — respaldo de código fuente recuperado
+
+Origen: archivo `KAWSAY-AI(1).zip` compartido previamente el 26/10/2026.
+
+**IMPORTANTE:** este archivo NO es una descarga verificada del estado actual de GitHub y NO incluye las modificaciones de OpenCode realizadas localmente el 30/10/2026, salvo que estuvieran ya presentes en el archivo original. El repositorio GitHub `alcides18huerto-svg/-KAWSAY-AI` tiene actualmente las ramas `main`, `feature/entrenamiento-ia` e `improve-system-load-structure-a9165`; no tiene publicada `auditoria-kawsay-20261030`.
+
+Esta copia conserva el código fuente, archivos de pruebas, scripts, documentación, configuraciones y modelos incluidos en el ZIP de origen. Se retiraron carpetas de dependencias, cachés, artefactos de compilación, `.git`, archivos de entorno privados y bases de datos locales. Instala dependencias nuevamente según `README.md` y `docs/GUIA_VSCODE.md`.
+
+**Para obtener el proyecto con todos los cambios actuales de OpenCode** debes generar el ZIP directamente desde tu carpeta `C:\proyectos python\KAWSAY` o subir esa rama a GitHub. Este entorno no puede leer el disco de tu computadora.
+
+Repo original: https://github.com/alcides18huerto-svg/-KAWSAY-AI
+ZIP GitHub de rama main: https://github.com/alcides18huerto-svg/-KAWSAY-AI/archive/refs/heads/main.zip

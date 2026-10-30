@@ -13,12 +13,6 @@ class PasswordLogin(_In):
     device_id: uuid.UUID | None = None
 
 
-class StudentEmailLoginIn(_In):
-    email: EmailStr
-    password: str = Field(min_length=1, max_length=256)
-    device_id: uuid.UUID
-
-
 class StudentLogin(_In):
     login_code: str = Field(min_length=4, max_length=12)
     pin: str = Field(min_length=4, max_length=12)
