@@ -7,7 +7,6 @@ from sqlalchemy.orm import Session
 
 from app.core.exceptions import ConflictError, NotFoundError
 from app.modules.classrooms.models import Classroom, ClassroomStudent, ClassroomTeacher
-from app.modules.assignments.service import assign_published_to_new_student
 from app.modules.curriculum.models import Grade
 from app.modules.students.models import StudentProfile
 from app.modules.teachers.models import TeacherProfile
@@ -147,6 +146,7 @@ def enroll_existing_student(db: Session, teacher: User, classroom_id: uuid.UUID,
     else:
         db.add(ClassroomStudent(classroom_id=room.id, student_user_id=student_id))
     db.flush()
+    from app.modules.assignments.service import assign_published_to_new_student
     assign_published_to_new_student(db, room, student_id)
     db.commit()
     return {"student_id": student_id, "classroom_id": room.id, "status": "ENROLLED",
