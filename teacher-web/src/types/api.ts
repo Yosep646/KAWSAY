@@ -46,4 +46,14 @@ export interface Framework { id: string; name: string; version_label: string; is
 export interface FrameworkTree extends Framework { subjects: { id: string; name: string; competencies: { id: string; name: string; capacities: { id: string; name: string }[] }[] }[] }
 export interface AdaptResult { assignment_id: string; results: { variant_id: string; grade_id: number; status: string; reasons: string[] }[] }
 export interface ForecastItem { student: { id: string; display_name: string }; competency: { id: string; name: string | null }; probability: number; above_threshold: boolean; model_id: string; model_status: string; warning: string | null; advisory: string; inference_ms?: number; evidence_count?: number; difficulty_recommendation?: CompetencyProgress["difficulty_recommendation"] }
-export interface Forecast { available: boolean; experimental?: boolean; reason?: string; items: ForecastItem[] }
+export interface TeacherSupportGuidance {
+  student: {id:string;display_name:string};
+  competency: {id:string;name:string|null};
+  evidence_count:number;
+  action:"LOWER"|"MAINTAIN"|"RAISE"|"INSUFFICIENT_EVIDENCE";
+  suggested_difficulty:number|null;
+  reason:string;
+  source:"RULES";
+  requires_teacher_decision:true;
+}
+export interface Forecast { available: boolean; experimental?: boolean; reason?: string; items: ForecastItem[]; guidance?: TeacherSupportGuidance[] }
