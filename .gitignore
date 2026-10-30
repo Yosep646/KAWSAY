@@ -26,3 +26,11 @@
 # Sistema
 .DS_Store
 Thumbs.db
+
+# Datos de menores y modelos ML entrenados: solo almacenamiento privado, nunca Git
+ml/datasets/
+ml/models/
+ml/registry/private/
+ml/reports/private/
+ml/**/raw/
+ml/**/authorized/
