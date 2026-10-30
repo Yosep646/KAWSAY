@@ -5,6 +5,7 @@ import { Icon, type IconName } from "../components/Icon";
 import { AdminOverview, type AdminStatistics } from "./AdminOverview";
 import { CurriculumDocuments } from "../components/CurriculumDocuments";
 import { AdminPlanningReview } from "../components/AdminPlanningReview";
+import { StorageBackups } from "../components/StorageBackups";
 import "./admin-sections.css";
 import "./admin-institutions.css";
 import { useAsync } from "../hooks/useAsync";
@@ -27,7 +28,7 @@ const pageMeta: Record<Exclude<AdminSection,"overview">,{label:string;title:stri
   system:{label:"SEGURIDAD Y CONTROL",title:"Auditoría y registros",description:"Consulta las operaciones registradas y los eventos de automatización.",icon:"shield"},
   users:{label:"SEGURIDAD Y CONTROL",title:"Usuarios y roles",description:"Supervisa el acceso del personal y los permisos activos.",icon:"students"},
   configuration:{label:"CONFIGURACIÓN",title:"Configuración del sistema",description:"Consulta los controles de acceso y la configuración disponible.",icon:"settings"},
-  backups:{label:"SEGURIDAD DE DATOS",title:"Respaldos y persistencia",description:"Revisa el estado de almacenamiento y sus limitaciones.",icon:"database"},
+  backups:{label:"SEGURIDAD DE DATOS",title:"Respaldos y persistencia",description:"Comprueba SQLite y descarga copias verificables de seguridad.",icon:"database"},
 };
 
 export function Admin({ section = "overview" }: { section?: AdminSection }) {
@@ -329,11 +330,7 @@ export function Admin({ section = "overview" }: { section?: AdminSection }) {
         <h2>Configuración</h2><p>KAWSAY AI utiliza permisos por roles, autenticación y registro de auditoría. Las opciones de configuración del servidor se administran de forma privada desde Render.</p>
         <div className="admin-sup-rows"><div><span>Autenticación</span><strong>Habilitada</strong></div><div><span>Acceso administrativo</span><strong>Restringido</strong></div></div>
       </section>}
-      {section === "backups" && <section className="admin-supplement">
-        <h2>Respaldos</h2><p>Atención: esta demostración utiliza SQLite en el sistema de archivos efímero de Render Free. El contenido puede perderse durante reinicios o despliegues.</p>
-        <p>Para datos escolares reales se necesita una base de datos persistente, respaldos automatizados y una política de recuperación antes de usar este servicio.</p>
-        <div className="admin-sup-rows"><div><span>Persistencia garantizada</span><strong>No disponible en esta demo</strong></div></div>
-      </section>}
+      {section === "backups" && <StorageBackups />}
     </div>
   );
 }
