@@ -194,6 +194,19 @@ function RoomPanel({ roomId }: { roomId: string }) {
       <Card title="Pronóstico de apoyo (ML, opcional)">
         <span className="badge muted">Herramienta complementaria</span>
         <ErrorBox message={forecast.error} />
+        {!forecast.loading && !forecast.error && (forecast.data?.guidance?.length ?? 0) > 0 && (
+          <section className="teacher-ml-guidance" aria-label="Sugerencias pedagógicas basadas en respuestas reales">
+            <h4>Recomendaciones basadas en ejercicios realizados</h4>
+            <p>Estas sugerencias por reglas funcionan aun sin modelo ML. No cambian el grado ni asignan actividades automáticamente.</p>
+            <ul>{forecast.data?.guidance?.filter(g=>g.action!=="INSUFFICIENT_EVIDENCE").slice(0,8).map(g=>
+              <li key={g.student.id+g.competency.id}><strong>{g.student.display_name}</strong>
+                <span>{g.competency.name} · {g.evidence_count} ejercicios cerrados</span>
+                <p>{g.reason}{g.suggested_difficulty!==null ? ` Dificultad orientativa: ${g.suggested_difficulty} de 3.` : ""}</p>
+                <small>Recomendación, no asignación: requiere decisión del docente.</small>
+              </li>)}</ul>
+            {forecast.data?.guidance?.every(g=>g.action==="INSUFFICIENT_EVIDENCE") &&
+              <p>Aún no hay suficiente evidencia para recomendar una dificultad. No se ha calculado ningún nivel.</p>}
+          </section>)}
         {forecast.loading ? <Loading /> : forecast.error ? <p className="muted">Las alertas por reglas siguen funcionando.</p> : !forecast.data?.available ? <p className="muted">{forecast.data?.reason ?? "No disponible."} Las alertas por reglas siguen funcionando.</p> : forecast.data.items.length === 0
           ? <p className="muted">Aún no hay suficientes ejercicios para estimar.</p> : (
             <>
