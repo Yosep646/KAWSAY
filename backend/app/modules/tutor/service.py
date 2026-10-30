@@ -9,10 +9,12 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.exceptions import NotFoundError
+from app.modules.automation.events import TUTOR_HELP_REQUESTED
+from app.modules.automation.models import DomainEvent
 from app.domain.adaptive import RULES
 from app.modules.ai.gateway import AIGateway, AIProviderError, AIRequest, AITimeout, AIUnavailable
 from app.modules.ai.validators import EMAIL_RE, URL_RE, norm
-from app.modules.assignments.models import AssignmentVariant, Question, StudentAssignment
+from app.modules.assignments.models import Assignment, AssignmentVariant, Question, StudentAssignment
 from app.modules.curriculum.models import Grade
 from app.modules.learning.models import LearningAttempt
 from app.modules.planning.models import CurriculumTopic
@@ -92,6 +94,22 @@ def turn(db: Session, gateway: AIGateway, student: User, student_assignment_id: 
         base = GENERIC[step]
     grade = db.get(Grade, v.grade_id)
     topic = db.get(CurriculumTopic, v.topic_id)
+    if step >= 2:
+        # Una señal real y deduplicada por actividad y pregunta, sin nombre ni respuesta.
+        # El outbox aguarda n8n si la automatización aún no está configurada.
+        event_id = uuid.uuid5(uuid.NAMESPACE_URL, f"kawsay:tutor:help:{sa.id}:{q.id}")
+        if db.get(DomainEvent, event_id) is None:
+            assignment = db.get(Assignment, sa.assignment_id)
+            db.add(DomainEvent(
+                id=event_id, type=TUTOR_HELP_REQUESTED,
+                payload={
+                    "student_id": str(student.id),
+                    "assignment_id": str(sa.assignment_id),
+                    "teacher_id": str(assignment.teacher_id) if assignment else None,
+                    "classroom_id": str(assignment.classroom_id) if assignment else None,
+                    "question_id": str(q.id), "min_help_step": 2,
+                },
+            ))
     db.commit()  # SQLite: soltar el bloqueo antes de llamar a la IA
     ai = _ai_hint(gateway, q, topic.title if topic else "", f"{grade.number}.º {grade.level}" if grade else "",
                   hints[min(step, len(hints) - 1)] if hints else None, step) if step >= 1 else None
