@@ -2,7 +2,9 @@
   ADMIN_PASSWORD=... python -m app.cli create-admin correo@dominio "Nombre"   (no existen usuarios por defecto)
   python -m app.cli backup [carpeta] [copias_a_conservar]                      (copia consistente de la base SQLite)
   python -m app.cli check-db                                                    (integridad + claves foráneas)
+  python -m app.cli db-status                                                   (ruta exacta + conteos, solo lectura)
 """
+import json
 import os
 import sqlite3
 import sys
@@ -40,14 +42,53 @@ def backup(dest_dir: str = "backups", keep: int = 14) -> Path:
     return dest
 
 
-def check_db() -> dict:
+def _existing_database_path() -> Path:
+    """Nunca abrir SQLite en modo creación al diagnosticar la base."""
     path = _db_path(get_settings().database_url)
-    if path is None:
-        raise SystemExit("Base de datos no encontrada")
-    with closing(sqlite3.connect(path)) as c:
+    if path is None or not path.is_file():
+        raise SystemExit("No se encontró la base de datos SQLite configurada; ejecuta setup antes de iniciar.")
+    return path.resolve()
+
+
+def _read_only_connection(path: Path) -> sqlite3.Connection:
+    return sqlite3.connect(path.as_uri() + "?mode=ro", uri=True)
+
+
+def check_db() -> dict:
+    path = _existing_database_path()
+    with closing(_read_only_connection(path)) as c:
         return {"integrity": c.execute("PRAGMA integrity_check").fetchone()[0],
                 "foreign_key_violations": len(c.execute("PRAGMA foreign_key_check").fetchall()),
                 "journal_mode": c.execute("PRAGMA journal_mode").fetchone()[0]}
+
+
+def db_status() -> dict:
+    """Ruta real y conteos sin exponer información personal; la lectura no crea archivos."""
+    path = _existing_database_path()
+    check = check_db()
+    with closing(_read_only_connection(path)) as c:
+        tables = {row[0] for row in c.execute(
+            "SELECT name FROM sqlite_master WHERE type='table'"
+        )}
+        version = c.execute("SELECT version_num FROM alembic_version").fetchone()[0] \
+            if "alembic_version" in tables else None
+        names = ("schools", "classrooms", "student_profiles", "assignments",
+                 "student_assignments", "curriculum_documents")
+        counts = {name: int(c.execute(f'SELECT COUNT(*) FROM "{name}"').fetchone()[0])
+                  for name in names if name in tables}
+    return {
+        "database": "sqlite",
+        "path": str(path),
+        "size_bytes": path.stat().st_size,
+        "migration_version": version,
+        "tables_present": len(tables),
+        "records": counts,
+        "integrity": check["integrity"],
+        "foreign_key_violations": check["foreign_key_violations"],
+        "storage_persistence": "not_verified",
+        "note": ("Los registros sobreviven a reinicios si este archivo permanece en un disco persistente. "
+                 "Render Free no conserva SQLite dentro del contenedor; no usarlo para datos reales."),
+    }
 
 
 def main() -> int:
@@ -63,6 +104,10 @@ def main() -> int:
         keep = int(sys.argv[3]) if len(sys.argv) > 3 else 14
         print("Copia creada:", backup(folder, keep))
         return 0
+    if cmd == "db-status":
+        info = db_status()
+        print(json.dumps(info, ensure_ascii=False, indent=2))
+        return 0 if info["integrity"] == "ok" and info["foreign_key_violations"] == 0 and info["migration_version"] else 1
     if cmd == "check-db":
         res = check_db()
         print(res)
