@@ -1,5 +1,6 @@
+import asyncio
 import os
-from contextlib import asynccontextmanager
+from contextlib import asynccontextmanager, suppress
 from pathlib import Path
 
 from fastapi import APIRouter, FastAPI, HTTPException
@@ -42,7 +43,26 @@ def create_app() -> FastAPI:
 
     @asynccontextmanager
     async def lifespan(_: FastAPI):
-        yield
+        dispatch_task: asyncio.Task[None] | None = None
+        # Opt-in: no modifica el comportamiento de las instalaciones existentes.
+        # Un solo proceso despachador por base SQLite; n8n conserva el event_id
+        # para evitar notificaciones duplicadas durante reintentos.
+        if (settings.automation_auto_dispatch
+                and settings.automation_webhook_url
+                and settings.automation_webhook_secret):
+            from app.workers.auto_dispatch import dispatch_loop
+
+            dispatch_task = asyncio.create_task(
+                dispatch_loop(settings.automation_dispatch_interval_seconds),
+                name="kawsay-automation-dispatch",
+            )
+        try:
+            yield
+        finally:
+            if dispatch_task is not None:
+                dispatch_task.cancel()
+                with suppress(asyncio.CancelledError):
+                    await dispatch_task
 
     app = FastAPI(
         title=settings.app_name,
