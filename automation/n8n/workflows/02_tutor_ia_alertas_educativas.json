@@ -1,0 +1,303 @@
+{
+  "name": "KAWSAY 02 - Automatización de alertas del Tutor IA (HMAC + SMTP)",
+  "nodes": [
+    {
+      "name": "Webhook KAWSAY Educativo",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        180,
+        300
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "kawsay-educativo",
+        "responseMode": "responseNode",
+        "options": {
+          "rawBody": true
+        }
+      }
+    },
+    {
+      "name": "Validar HMAC y evento",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        410,
+        300
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const crypto = require('crypto');\nconst item = $input.first();\nconst headers = item.json.headers ?? {};\nconst timestamp = String(headers['x-kawsay-timestamp'] ?? '');\nconst signature = String(headers['x-kawsay-signature'] ?? '');\nlet raw = null;\nif (typeof item.json.body === 'string') raw = item.json.body;\nelse if (item.binary?.data?.data) raw = Buffer.from(item.binary.data.data, 'base64').toString('utf8');\n// Nunca reconstruir JSON desde un objeto parseado: la firma cubre exactamente los bytes recibidos.\ntry {\n  const secret = String($env.KAWSAY_WEBHOOK_SECRET ?? '');\n  const ts = Number(timestamp);\n  const fresh = Number.isFinite(ts) && Math.abs(Date.now() / 1000 - ts) <= 300;\n  if (!raw || raw.length > 16384 || secret.length < 16 || !fresh || !/^sha256=[0-9a-f]{64}$/.test(signature)) {\n    return [{json:{valid:false,notify:false,reason:'bad_signature_or_body'}}];\n  }\n  const expected = 'sha256=' + crypto.createHmac('sha256', secret)\n    .update(timestamp + '.' + raw).digest('hex');\n  const valid = crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected));\n  if (!valid) return [{json:{valid:false,notify:false,reason:'invalid_signature'}}];\n  const event = JSON.parse(raw);\n  if (!event || typeof event.event_id !== 'string' || typeof event.type !== 'string') {\n    return [{json:{valid:false,notify:false,reason:'invalid_event'}}];\n  }\n  const supported = ['tutor.help.requested','student.support_flag.created'].includes(event.type);\n  const from = String($env.KAWSAY_NOTIFY_FROM ?? '');\n  const to = String($env.KAWSAY_NOTIFY_TO ?? '');\n  const configured = from.includes('@') && to.includes('@');\n  return [{json:{\n    valid:true,notify:supported,configured,\n    event_id:event.event_id, event_type:event.type,\n    subject:event.type==='tutor.help.requested'?'KAWSAY: tutor solicita acompanamiento':'KAWSAY: alerta de aprendizaje',\n    body:event.type==='tutor.help.requested'\n      ? 'Un estudiante ha solicitado varias pistas del Tutor KAWSAY. Revise Alertas educativas en la plataforma. El docente decide como acompanarlo.\\nEvento: '+event.event_id\n      : 'Se detecto una alerta educativa mediante evidencia registrada. Revise Alertas educativas en la plataforma.\\nEvento: '+event.event_id,\n  }}];\n} catch (error) {\n  return [{json:{valid:false,notify:false,reason:'verification_error'}}];\n}"
+      }
+    },
+    {
+      "name": "Firma válida",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        660,
+        300
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "valid",
+              "leftValue": "={{$json.valid}}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Evento educativo notificable",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        880,
+        180
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "notify",
+              "leftValue": "={{$json.notify}}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Correo destinatario configurado",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        90
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "configured",
+              "leftValue": "={{$json.configured}}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Enviar aviso por SMTP",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        -10
+      ],
+      "parameters": {
+        "fromEmail": "={{$env.KAWSAY_NOTIFY_FROM}}",
+        "toEmail": "={{$env.KAWSAY_NOTIFY_TO}}",
+        "subject": "={{$json.subject}}",
+        "emailFormat": "text",
+        "text": "={{$json.body}}",
+        "options": {}
+      }
+    },
+    {
+      "name": "Responder enviado 200",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        -10
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {ok:true, status:\"smtp_accepted\"} }}",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    },
+    {
+      "name": "Responder SMTP pendiente 503",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        180
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {ok:false,reason:\"smtp_not_configured\"} }}",
+        "options": {
+          "responseCode": 503
+        }
+      }
+    },
+    {
+      "name": "Responder evento ignorado 200",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        330
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {ok:true,status:\"event_ignored\"} }}",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    },
+    {
+      "name": "Responder firma inválida 401",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        880,
+        510
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {ok:false,reason:\"invalid_signature\"} }}",
+        "options": {
+          "responseCode": 401
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook KAWSAY Educativo": {
+      "main": [
+        [
+          {
+            "node": "Validar HMAC y evento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar HMAC y evento": {
+      "main": [
+        [
+          {
+            "node": "Firma válida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Firma válida": {
+      "main": [
+        [
+          {
+            "node": "Evento educativo notificable",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder firma inválida 401",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evento educativo notificable": {
+      "main": [
+        [
+          {
+            "node": "Correo destinatario configurado",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder evento ignorado 200",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Correo destinatario configurado": {
+      "main": [
+        [
+          {
+            "node": "Enviar aviso por SMTP",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder SMTP pendiente 503",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar aviso por SMTP": {
+      "main": [
+        [
+          {
+            "node": "Responder enviado 200",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Lima"
+  },
+  "active": false
+}

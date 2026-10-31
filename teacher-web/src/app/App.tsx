@@ -11,6 +11,7 @@ import { Students } from "../pages/Students";
 import { StudentHome } from "../pages/StudentHome";
 import { StudentActivity } from "../pages/StudentActivity";
 import { StudentLanguageSettings } from "../pages/StudentLanguageSettings";
+import { StudentTutor } from "../pages/StudentTutor";
 import { AuthProvider, useAuth } from "./AuthContext";
 import type { Role } from "../types/api";
 import { Brand, Icon, type IconName } from "../components/Icon";
@@ -40,6 +41,7 @@ const studentLinks: typeof teacherLinks = [
   { to: "/estudiante", label: "Mi inicio", icon: "dashboard" },
   { to: "/estudiante/cursos", label: "Mis cursos", icon: "book" },
   { to: "/estudiante/actividades", label: "Mis actividades", icon: "tasks" },
+  { to: "/estudiante/tutor", label: "Tutor IA", icon: "spark" },
   { to: "/estudiante/progreso", label: "Mi progreso", icon: "activity" },
   { to: "/estudiante/idioma", label: "Mi idioma", icon: "settings" },
 ];
@@ -119,6 +121,7 @@ function Shell() {
           <Route path="/estudiante/actividades" element={<Protected roles={["STUDENT"]}><StudentHome focus="activities" /></Protected>} />
           <Route path="/estudiante/progreso" element={<Protected roles={["STUDENT"]}><StudentHome focus="progress" /></Protected>} />
           <Route path="/estudiante/idioma" element={<Protected roles={["STUDENT"]}><StudentLanguageSettings /></Protected>} />
+          <Route path="/estudiante/tutor" element={<Protected roles={["STUDENT"]}><StudentTutor /></Protected>} />
           <Route path="/estudiante/actividad/:id" element={<Protected roles={["STUDENT"]}><StudentActivity /></Protected>} />
           <Route path="/aulas" element={<Protected roles={["TEACHER"]}><Classrooms /></Protected>} />
           <Route path="/estudiantes" element={<Protected roles={["TEACHER"]}><Students /></Protected>} />

@@ -82,6 +82,47 @@ class AnthropicProvider:
         return AIResponse(text=text, provider=self.name, model=self.model)
 
 
+class OllamaProvider:
+    """Tutor con modelo LOCAL (Ollama): funciona sin Internet si el servidor escolar y el modelo están instalados.
+
+    Es una conexión HTTP al servicio Ollama de confianza, no una simulación de respuestas.
+    El navegador y los móviles nunca reciben la URL privada ni las claves del servidor.
+    """
+
+    name = "ollama"
+
+    def __init__(self, model: str, base_url: str, timeout: float, client: httpx.Client | None = None):
+        self.model, self._url = model, base_url.rstrip("/")
+        self._client = client or httpx.Client(timeout=timeout, trust_env=False)
+
+    def generate(self, req: AIRequest) -> AIResponse:
+        try:
+            response = self._client.post(f"{self._url}/api/chat", json={
+                "model": self.model,
+                "stream": False,
+                "messages": [
+                    {"role": "system", "content": req.system},
+                    {"role": "user", "content": req.user},
+                ],
+                "options": {"temperature": 0.3, "num_predict": req.max_tokens},
+            })
+        except httpx.TimeoutException as exc:
+            raise AITimeout("El modelo local no respondió a tiempo") from exc
+        except httpx.HTTPError as exc:
+            raise AIUnavailable("No se pudo conectar al modelo local de la institución") from exc
+        if response.status_code in (429, 500, 502, 503, 504):
+            raise AIUnavailable(f"El modelo local no está disponible ({response.status_code})")
+        if response.status_code != 200:
+            raise AIProviderError(f"El modelo local rechazó la petición ({response.status_code})")
+        try:
+            text = response.json()["message"]["content"]
+            if not isinstance(text, str):
+                raise TypeError("contenido no textual")
+        except (ValueError, KeyError, TypeError, AttributeError) as exc:
+            raise AIProviderError("La respuesta del modelo local tiene formato inválido") from exc
+        return AIResponse(text=text, provider=self.name, model=self.model)
+
+
 class AIGateway:
     """Reintentos acotados + circuit breaker (evita tormentas de reintentos si el proveedor está caído)."""
 
@@ -116,4 +157,6 @@ def get_gateway() -> AIGateway:
     s = get_settings()
     if s.ai_provider == "anthropic" and s.ai_api_key and s.ai_model:
         return AIGateway(AnthropicProvider(s.ai_api_key, s.ai_model, s.ai_base_url, s.ai_timeout_seconds))
+    if s.ai_provider == "ollama" and s.ai_model:
+        return AIGateway(OllamaProvider(s.ai_model, s.ollama_base_url, s.ai_timeout_seconds))
     return AIGateway(DisabledProvider())

@@ -14,3 +14,11 @@
 .role-student .student-tutor-box button{background:#087e83;color:#fff;border:0;border-radius:9px;min-height:44px;padding:10px 15px;font-weight:700;}
 .role-student .student-tutor-box .student-tutor-source{font-size:11px;color:#336975;}
 .role-student .student-tutor-box button:disabled{opacity:.5;}
+
+.role-student .student-tutor-landing{display:grid;gap:18px;min-width:0}
+.role-student .student-tutor-activity-list{display:grid;gap:12px;margin:22px 0}
+.role-student .student-tutor-activity{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border:1px solid #87afba;border-radius:12px;padding:14px;background:rgba(34,147,149,.08)}
+.role-student .student-tutor-activity strong{font-size:16px;line-height:1.4}
+.role-student .student-tutor-activity p{font-size:13px;opacity:.85;margin:5px 0}
+.role-student .student-tutor-activity a{display:inline-flex;align-items:center;gap:8px;border-radius:9px;background:#087e83;color:#fff;padding:11px 14px;text-decoration:none;font-weight:700}
+@media(max-width:540px){.role-student .student-tutor-activity a{width:100%;justify-content:center}}
