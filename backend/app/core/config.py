@@ -29,13 +29,16 @@ class Settings(BaseSettings):
 
     # Reservados (fases posteriores)
     ml_allow_experimental: bool = False   # solo para demostraciones: permite usar un modelo CANDIDATE (siempre con advertencia)
-    ai_provider: Literal["disabled", "anthropic"] = "disabled"
+    ai_provider: Literal["disabled", "anthropic", "ollama"] = "disabled"
     ai_api_key: str = ""
     ai_model: str = ""
     ai_base_url: str = "https://api.anthropic.com"
+    ollama_base_url: str = "http://127.0.0.1:11434"  # servidor de IA local en la escuela o PC
     ai_timeout_seconds: float = 20.0
     automation_webhook_url: str = ""
     automation_webhook_secret: str = ""
+    automation_auto_dispatch: bool = False  # opt-in: despachar webhook sin intervención de administrador
+    automation_dispatch_interval_seconds: int = 15
     storage_endpoint: str = ""
     storage_bucket: str = ""
     redis_url: str = ""
