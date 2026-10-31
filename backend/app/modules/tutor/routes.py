@@ -34,6 +34,21 @@ def turn(body: TurnIn, db: Annotated[Session, Depends(get_db)], student: Annotat
     return service.turn(db, gateway, student, body.student_assignment_id, body.question_id, body.step)
 
 
+@router.get("/status")
+def tutor_status(_: Annotated[User, Depends(require_roles(Role.STUDENT, Role.TEACHER, Role.ADMIN))],
+                 gateway: Annotated[AIGateway, Depends(get_gateway)]) -> dict:
+    """Diferencia un modelo CONFIGURADO de uno efectivamente probado durante una pista."""
+    return {
+        "ai_configured": gateway.enabled,
+        "provider": gateway.provider.name if gateway.enabled else "none",
+        "offline_hints_available": True,
+        "model_health_verified": False,
+        "message": ("Un modelo de IA está configurado. Su disponibilidad se comprueba al solicitar una pista."
+                    if gateway.enabled else
+                    "Tutor basado en pistas pedagógicas y reglas, sin modelo generativo configurado."),
+    }
+
+
 @router.get("/help-requests")
 def teacher_help_requests(
     db: Annotated[Session, Depends(get_db)],
