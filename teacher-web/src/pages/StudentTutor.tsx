@@ -9,6 +9,7 @@ import { offlineTasks, type OfflineTask } from "../services/offlineTasks";
 import "./student-preferences.css";
 
 type Pull = { tasks: OfflineTask[]; has_more: boolean; cursor: number };
+type TutorStatus = { ai_configured: boolean; provider: string; model_health_verified: boolean; message: string };
 
 /** Acceso visible al Tutor IA: solo actúa sobre tareas asignadas al estudiante.
  * Sin conexión se usan las preguntas y pistas descargadas; nunca inventamos contenido.
@@ -16,6 +17,7 @@ type Pull = { tasks: OfflineTask[]; has_more: boolean; cursor: number };
 export function StudentTutor() {
   const { user } = useAuth();
   const recent = useAsync(() => api.get<Pull>("/sync/pull?cursor=0&limit=50"), []);
+  const tutorStatus = useAsync(() => api.get<TutorStatus>("/tutor/status"), []);
   const [downloaded, setDownloaded] = useState<OfflineTask[]>([]);
   const [localError, setLocalError] = useState<string | null>(null);
   useEffect(() => {
@@ -37,6 +39,10 @@ export function StudentTutor() {
     </header>
     <Card title="¿En qué ejercicio necesitas ayuda?">
       <p>Elige una actividad y pulsa «Pedir una pista». El tutor no responde el ejercicio por ti. Sin Internet utiliza las pistas descargadas y reglas educativas.</p>
+      {tutorStatus.data && <p role="status">{tutorStatus.data.ai_configured
+        ? `IA configurada: ${tutorStatus.data.provider}. La disponibilidad se comprueba al pedir una pista.`
+        : "Tutor pedagógico mediante reglas. Aún no se ha configurado un modelo generativo de IA."}</p>}
+      {tutorStatus.error && <p role="note">El estado del modelo no se pudo verificar. Las pistas descargadas siguen disponibles.</p>}
       <ErrorBox message={localError}/>
       {recent.error && <p role="status">Sin conexión con el servidor. Se muestran tus actividades guardadas, si las hay.</p>}
       {recent.loading && !tasks.length ? <Loading/> : !tasks.length
